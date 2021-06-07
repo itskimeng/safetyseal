@@ -5,7 +5,7 @@
       <div class="col-md-12">
         <div class="py-5">
           <div class="form-box">
-            <form class="bg-white  rounded-5 shadow-5-strong p-5">
+            <form class="bg-white  rounded-5 shadow-5-strong p-5" style="border-radius: 5px;">
               <div class="col-md-12">
                 <div class="row text-center">
 
