@@ -60,6 +60,19 @@ border-radius: 5px;
 
 }
 
+.inquiries_complaints{
+    background-image: url("../images/inquiries_complaints.svg");
+    background-repeat: no-repeat;
+    background-size: cover;
+
+}
+.application{
+    background-image: url("../images/application_safety.svg");
+    background-repeat: no-repeat;
+    background-size: cover;
+
+}
+
 
 /*jeck*/
 .btn-light-primary

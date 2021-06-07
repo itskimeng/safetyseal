@@ -20,7 +20,7 @@
 
                         <div class="col-md-6">
                             <label for="validationGovDept" class="form-label">Name of Government Establishment</label>
-                            <input type="text" class="form-control" name="governmenr_esta" id="validationGovDept" required>
+                            <input type="text" class="form-control" name="government_esta" id="validationGovDept" required>
                             <div class="invalid-feedback">
                                 Required Fields!
                             </div>
@@ -44,7 +44,7 @@
 
                         <div class="col-md-4">
                             <label for="validatelname" class="form-label">Last Name</label>
-                            <input required type="text" class="form-control" name="validatelname" id="lname" aria-describedby="emailHelp">
+                            <input required type="text" class="form-control" name="lname" id="lname" aria-describedby="emailHelp">
                             <div class="invalid-feedback">
                                 Required Fields!
 
