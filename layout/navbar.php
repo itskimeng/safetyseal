@@ -14,9 +14,6 @@
             <a class="nav-link" href="#">Guidelines </a>
           </li>
           <li class="nav-item">
-            <a class="nav-link" href="#">Guidelines </a>
-          </li>
-          <li class="nav-item">
             <a class="nav-link" href="#">Application </a>
           </li>
           <li class="nav-item">

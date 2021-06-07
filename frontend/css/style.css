@@ -23,3 +23,8 @@ header{
     width: 120px;
     height: auto;
 }
+.banner{
+    background-image: url("../images/safetyseal.svg");
+    background-repeat: no-repeat;
+    height: 500px;
+}
