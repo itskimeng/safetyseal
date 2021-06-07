@@ -29,8 +29,14 @@ border-radius: 5px;
 .banner-guidelines{
     background-image: url("../images/banner_guidelines.svg");
     background-repeat: no-repeat;
-    height: auto;
-    width:100%;
+    background-size: cover;
+   
+}
+.contact-banner{
+    background-image: url("../images/contacts.svg");
+    background-repeat: no-repeat;
+    background-size: cover;
+
 }
 
 .registration-image {
@@ -40,4 +46,35 @@ border-radius: 5px;
   -o-background-size: cover;
   background-size: cover;
  
+}
+.list_establishment-banner{
+    background-image: url("../images/list_establishment.svg");
+    background-repeat: no-repeat;
+    background-size: cover;
+
+}
+.request_forms-banner{
+    background-image: url("../images/request_forms.svg");
+    background-repeat: no-repeat;
+    background-size: cover;
+
+}
+
+
+/*jeck*/
+.btn-light-primary
+{
+    color: #480272;
+    background-color: #f2dffe;
+    border-color: transparent;
+}
+.btn-light-primary:hover
+{
+    color: #FFFFFF; 
+    background-color: #480272; 
+    border-color: transparent;
+}
+.h5 
+{
+    font-family: sans-serif;
 }

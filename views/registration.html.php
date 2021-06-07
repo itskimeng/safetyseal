@@ -1,20 +1,26 @@
 <div class="registration-image">
-      <div class="container">
-          <div class="pt-5">            <div class="row align-items-center heading">
+  <div class="container">
+    <div class="pt-5">
+      <div class="row align-items-center heading">
 
-              <div class="col-lg-7 mb-4 text-white">
-                <!-- <header class="py-5 mt-5"> -->
-                <header>
-                    <h1 class="display-6 headingText">Local Governance Regional Resource Center (LGRRC) CALABARZON</h1>
-                    <p class="lead mb-0" style=" font-size:17px; color:#e8e7e7;">Building learning communities in the whole CALABARZON Region that pursue local governance excellence through knowledge sharing</p>
-                    <!-- <a href="#facilitiesId" class="btn btn-primary btn-lg mt-3 scrollTo">Who Are We</a> -->
-                    <a href="#facilitiesId" class="btn btn-primary btn-lg mt-3 scrollTo" style="background-color: #c30718; border-color:#ad0735;">Who Are We</a>
-                </header>
-              </div>
-              <div class="col-md-5">
-                <div class="py-5">
-                   <div class="form-box">
-                   <form class="bg-white  rounded-5 shadow-5-strong p-5">
+        <div class="col-lg-7 mb-4 text-white">
+          <!-- <header class="py-5 mt-5"> -->
+          <header>
+            <h1 class="display-6 headingText">Safety Seal Registration</h1>
+            <p class="lead mb-0" style=" font-size:17px; color:#e8e7e7;">
+              The Safety Seal Certification is a voluntary certification scheme that a firms
+              that an establishment is compliant with the maximum public health standards set
+              by the goverment and uses or integrates its contact tracing with StaySafe.ph.
+              governance excellence through knowledge sharing</p>
+            <a href="#facilitiesId" class="btn btn-primary btn-lg mt-3 scrollTo" style="background-color: #c30718; border-color:#ad0735;">Who Are We</a>
+          </header>
+        </div>
+
+
+        <div class="col-md-5">
+          <div class="py-5">
+            <div class="form-box shadow p-3 mb-5 bg-body rounded">
+              <form class="bg-white  rounded-5 shadow-5-strong p-5">
                 <!-- Email input -->
                 <div class="form-outline mb-4">
                   <input type="text" id="form1Example1" class="form-control" />
@@ -41,54 +47,48 @@
 
                   <div class="col text-center">
                     <!-- Simple link -->
-                    <a href="#!">Forgot password?</a>
+                    <a href="#!" data-bs-toggle="modal" data-bs-target="#exampleModal">Sign-up here!</a>
                   </div>
                 </div>
 
                 <!-- Submit button -->
-                <button type="submit"  onclick="modalRegister();" class="btn btn-primary btn-block">Sign in</button>
+                <button class="btn btn-primary btn-block">Sign in</button>
               </form>
-                    
-                    </div>
-                </div>
-              </div>
-
-
-            <!-------------------------------- MODAL RESET PASSWORD ----------------------------->
-            <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-              <div class="modal-dialog" role="document">
-                <div class="modal-content">
-                  <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalLabel">Reset Password</h5>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                      <span aria-hidden="true">&times;</span>
-                    </button>
-                  </div>
-                  <div class="modal-body">
-                    <center>
-                      Username:
-                      <input type="text" class="form-control" id="passwordUsername" style="width: 70%;">
-                      <br>
-                      Enter Email:
-                      <input type="email" class="form-control" id="passwordEmail" style="width: 70%;">
-                    </center>
-                  </div>
-                  <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                    <button type="button" class="btn btn-danger" id="btnUpdatePassword">Update <i class="fa fa-paper-plane"></i></button>
-                  </div>
-                </div>
-              </div>
-            </div>
-            <!-------------------------------- MODAL RESET PASSWORD ----------------------------->
-
-            <div id="modalRegister" data-izimodal-group="group1"></div>
 
             </div>
-            <!-- <div class="row"> -->
           </div>
-      </div>
+        </div>
 
+
+
+
+      </div>
+      <!-- <div class="row"> -->
     </div>
-    <!-- bgImage -->
- 
+  </div>
+
+</div>
+<?php include 'registration_modal.php' ?>
+<script>
+  // Example starter JavaScript for disabling form submissions if there are invalid fields
+  (function() {
+    'use strict'
+
+    // Fetch all the forms we want to apply custom Bootstrap validation styles to
+    var forms = document.querySelectorAll('.needs-validation')
+
+    // Loop over them and prevent submission
+    Array.prototype.slice.call(forms)
+      .forEach(function(form) {
+        form.addEventListener('submit', function(event) {
+          if (!form.checkValidity()) {
+            event.preventDefault()
+            event.stopPropagation()
+          }
+
+          form.classList.add('was-validated')
+        }, false)
+      })
+  })()
+</script>
+<script src="/frontend/js/ajax.js"></script>

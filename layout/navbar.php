@@ -8,28 +8,28 @@
       <div class="collapse navbar-collapse" id="navbarCollapse">
         <ul class="navbar-nav me-auto mb-2 mb-md-0">
           <li class="nav-item">
-            <a class="nav-link active" aria-current="page" href="index.html.php">Home</a>
+            <a class="nav-link" aria-current="page" href="index.html.php" id="navhome">Home</a>
           </li>
           <li class="nav-item">
-            <a class="nav-link" href="#">Guidelines </a>
+            <a class="nav-link" href="guidelines.php" id="navguidelines">Guidelines </a>
           </li>
           <li class="nav-item">
             <a class="nav-link" href="application.php">Application </a>
           </li>
           <li class="nav-item">
-            <a class="nav-link" href="">Certified Establishments </a>
+            <a class="nav-link" href="#" id="navcertified">Certified Establishments </a>
           </li>
           <li class="nav-item">
-            <a class="nav-link" href="#">Inspection and Certification Teams </a>
+            <a class="nav-link" href="#" id="navinspection">Inspection and Certification Teams </a>
           </li>
           <li class="nav-item">
-            <a class="nav-link" href="#">Complaints</a>
+            <a class="nav-link" href="#" id="navcomplaints">Complaints</a>
           </li>
         
         </ul>
-        <a class="nav-link login-menu" href="registration.php">Login</a>
+        <a class="nav-link login-menu" href="registration.php" id="navlogin">Login</a>
 
-        <span><a class="nav-link contact-us" href="#" tabindex="-1" aria-disabled="true">Contact Us</a><span>
+        <span><a class="nav-link contact-us" href="#" tabindex="-1" aria-disabled="true" id="navcontact">Contact Us</a><span>
 
       </div>
     </div>
