@@ -27,13 +27,13 @@ border-radius: 5px;
     height: 500px;
 }
 .banner-guidelines{
-    background-image: url("../images/banner_guidelines.svg");
+    background-image: url("../images/banner_guidelines.png");
     background-repeat: no-repeat;
     background-size: cover;
    
 }
 .contact-banner{
-    background-image: url("../images/contacts.svg");
+    background-image: url("../images/contacts.png");
     background-repeat: no-repeat;
     background-size: cover;
 
@@ -48,26 +48,26 @@ border-radius: 5px;
  
 }
 .list_establishment-banner{
-    background-image: url("../images/list_establishment.svg");
+    background-image: url("../images/list_establishment.png");
     background-repeat: no-repeat;
     background-size: cover;
 
 }
 .request_forms-banner{
-    background-image: url("../images/request_forms.svg");
+    background-image: url("../images/request_forms.png");
     background-repeat: no-repeat;
     background-size: cover;
 
 }
 
 .inquiries_complaints{
-    background-image: url("../images/inquiries_complaints.svg");
+    background-image: url("../images/inquiries_complaints.png");
     background-repeat: no-repeat;
     background-size: cover;
 
 }
 .application{
-    background-image: url("../images/application_safety.svg");
+    background-image: url("../images/application_safety.png");
     background-repeat: no-repeat;
     background-size: cover;
 
