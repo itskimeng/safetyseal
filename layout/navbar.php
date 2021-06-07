@@ -14,10 +14,10 @@
             <a class="nav-link" href="#">Guidelines </a>
           </li>
           <li class="nav-item">
-            <a class="nav-link" href="#">Application </a>
+            <a class="nav-link" href="application.php">Application </a>
           </li>
           <li class="nav-item">
-            <a class="nav-link" href="#">Certified Establishments </a>
+            <a class="nav-link" href="">Certified Establishments </a>
           </li>
           <li class="nav-item">
             <a class="nav-link" href="#">Inspection and Certification Teams </a>
