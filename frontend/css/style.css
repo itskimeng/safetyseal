@@ -16,9 +16,7 @@ border-radius: 5px;
 .login-menu:hover{
     color: #fff;
 }
-header{
-    margin-top:7%;
-}
+
 .image{
     width: 120px;
     height: auto;
@@ -27,4 +25,19 @@ header{
     background-image: url("../images/safetyseal.svg");
     background-repeat: no-repeat;
     height: 500px;
+}
+.banner-guidelines{
+    background-image: url("../images/banner_guidelines.svg");
+    background-repeat: no-repeat;
+    height: auto;
+    width:100%;
+}
+
+.registration-image {
+    background: url("../images/LGRC_Static.png") no-repeat center center fixed; 
+  -webkit-background-size: cover;
+  -moz-background-size: cover;
+  -o-background-size: cover;
+  background-size: cover;
+ 
 }

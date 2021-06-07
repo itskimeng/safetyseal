@@ -52,7 +52,7 @@
         <!--begin::Copyright-->
         <div class="text-light order-2 order-md-1 text-light-50">
             Department of the Interior and Local Government
-            National Capital Region <br>
+            CALABARZON Region<br>
             Regional Information and Communications Technology Unit <br>
             <span class="text-muted font-weight-bold mr-2">2021©</span>
             <a href="http://calabarzon.dilg.gov.ph" target="_blank" class="text-dark-50 text-hover-primary" style="color: gainsboro;">DILG IV-A</a>

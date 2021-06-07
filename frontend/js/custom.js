@@ -24,3 +24,23 @@ $(window).scroll(function(){
         }  
     }
 });
+
+
+function modalRegister()
+{
+  $('#modalRegister').iziModal({
+  title: 'Fill Up Form',
+  headerColor: '#192f72',
+  width: 970,
+  iframe: true, 
+  iframeHeight: 600, 
+  iframeURL: 'views/registration_form.php',
+  // openFullscreen: true,
+  closeOnEscape: false,
+  closeButton: true
+  // onClosed: function(){document.getElementById("viewer1").hidden=false;}
+  });
+
+
+  $('#modalRegister').iziModal('open', this); 
+}

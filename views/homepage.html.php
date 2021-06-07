@@ -13,7 +13,7 @@
       <div class="col-md-6 bg-light">
         <div class="row" style="padding:10px;">
           <div class="col-lg-12 bg-light" style="padding: 10px;">
-            <div class="container shadow p-3 mb-5 bg-body rounded" style="background-color:#B0BEC5;height: 250px;">
+            <div class="container shadow p-3 mb-5 bg-body rounded banner-guidelines" style="background-color:#B0BEC5;height: 250px;">
               <button class="btn btn-primary btn-md">View All</button>
             </div>
           </div>

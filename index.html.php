@@ -3,9 +3,9 @@
 <?php include 'layout/header.html.php'; ?>
 <body>
     <main>
-        <div class="container">
+        <div class="container" style="margin-top: 7%;">
                 <?php include 'layout/navbar.php'; ?>
-                <?php include 'application/views/homepage.html.php'; ?>
+                <?php include 'views/homepage.html.php'; ?>
         </div>
     </main>
 </body>
