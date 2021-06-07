@@ -1,6 +1,5 @@
-  <img src="https://safetyseal.ncr.dilg.gov.ph/images/dilg-ncr.png" height="10%" alt="">
-  <img src="frontend/images/calabarzon.png" class="img-fluid image float-end">
-  <img src="frontend/images/lgrc_logo.png" class="img-fluid image float-end" style="margin-top: -2%;"><br><br>
+  <img src="frontend/images/banner_calabarzon.png" height="10%" width="100%" alt="">
+ 
 
   <div class = "container bg-light">
     <div class="row">
