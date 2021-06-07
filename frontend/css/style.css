@@ -1,0 +1,25 @@
+.contact-us{
+    color: #fff;
+}
+.contact-us:hover{
+    color:#fff;
+}
+span .contact-us{
+padding: 10px;
+border: 1px solid #fff;
+border-radius: 5px;
+}
+
+.login-menu{
+    color: #fff;
+}
+.login-menu:hover{
+    color: #fff;
+}
+header{
+    margin-top:7%;
+}
+.image{
+    width: 120px;
+    height: auto;
+}
