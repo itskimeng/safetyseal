@@ -8,7 +8,7 @@
             </div>
             <div class="modal-body">
                 <div style="height:500px;overflow:auto;padding:10px;">
-                    <form id="registration_form class="row g-3 needs-validation" novalidate>
+                    <form class="row g-3 needs-validation" novalidate>
                         <div class="col-md-6">
                             <label for="validationGovOffice" class="form-label">Name of Government Agency/Office</label>
                             <input required type="text" class="form-control" name="government_agency" id="validationGovOffice" aria-describedby="emailHelp">
@@ -96,16 +96,29 @@
                             </div>
                         </div>
 
-
-
+                        <!-- <div class="col-12">
+                            <div class="form-check">
+                                <input class="form-check-input" type="checkbox" value="" id="invalidCheck" required>
+                                <label class="form-check-label" for="invalidCheck">
+                                    Agree to terms and conditions
+                                </label>
+                                <div class="invalid-feedback">
+                                    You must agree before submitting.
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-12">
+                            <button class="btn btn-primary" type="submit">Submit form</button>
+                        </div> -->
 
                 </div>
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
                 <button type="submit" class="btn btn-primary">Save changes</button>
-                </form>
             </div>
+            </form>
+
         </div>
     </div>
 </div>
