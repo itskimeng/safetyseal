@@ -29,8 +29,14 @@ border-radius: 5px;
 .banner-guidelines{
     background-image: url("../images/banner_guidelines.svg");
     background-repeat: no-repeat;
-    height: auto;
-    width:100%;
+    background-size: cover;
+   
+}
+.contact-banner{
+    background-image: url("../images/contacts.svg");
+    background-repeat: no-repeat;
+    background-size: cover;
+
 }
 
 .registration-image {
