@@ -47,3 +47,21 @@ border-radius: 5px;
   background-size: cover;
  
 }
+
+/*jeck*/
+.btn-light-primary
+{
+    color: #480272;
+    background-color: #f2dffe;
+    border-color: transparent;
+}
+.btn-light-primary:hover
+{
+    color: #FFFFFF; 
+    background-color: #480272; 
+    border-color: transparent;
+}
+.h5 
+{
+    font-family: sans-serif;
+}

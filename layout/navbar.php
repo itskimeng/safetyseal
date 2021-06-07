@@ -11,7 +11,7 @@
             <a class="nav-link active" aria-current="page" href="index.html.php">Home</a>
           </li>
           <li class="nav-item">
-            <a class="nav-link" href="#">Guidelines </a>
+            <a class="nav-link" href="guidelines.php">Guidelines </a>
           </li>
           <li class="nav-item">
             <a class="nav-link" href="#">Application </a>
