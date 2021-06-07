@@ -8,7 +8,7 @@
                 <?php include 'views/guidelines.php'; ?>
         </div>
     </main>
-<!-- sd -->
+
     <script>
     	$( ".nav-link" ).removeClass( "active" ).addClass( "yourClass" );
     	$( "#guidelines" ).addClass( "active" );
