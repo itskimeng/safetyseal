@@ -8,6 +8,11 @@
                 <?php include 'views/homepage.html.php'; ?>
         </div>
     </main>
+
+    <script>
+      $( ".nav-link" ).removeClass( "active" ).addClass( "yourClass" );
+      $( "#navhome" ).addClass( "active" );
+    </script>
 </body>
 <?php include 'layout/footer.html.php'; ?>
 </html>

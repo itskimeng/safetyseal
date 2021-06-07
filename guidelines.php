@@ -11,7 +11,7 @@
 
     <script>
     	$( ".nav-link" ).removeClass( "active" ).addClass( "yourClass" );
-    	$( "#guidelines" ).addClass( "active" );
+    	$( "#navguidelines" ).addClass( "active" );
     </script>
 </body>
 <?php include 'layout/footer.html.php'; ?>
