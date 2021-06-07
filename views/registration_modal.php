@@ -8,7 +8,7 @@
             </div>
             <div class="modal-body">
                 <div style="height:500px;overflow:auto;padding:10px;">
-                    <form class="row g-3 needs-validation" novalidate>
+                    <form action="application/functions/registration_save.php" method="POST" class="row g-3 needs-validation" novalidate>
                         <div class="col-md-6">
                             <label for="validationGovOffice" class="form-label">Name of Government Agency/Office</label>
                             <input required type="text" class="form-control" name="government_agency" id="validationGovOffice" aria-describedby="emailHelp">
@@ -68,7 +68,7 @@
 
                         <div class="mb-4">
                             <label for="validateEmail" class="form-label">Email Address</label>
-                            <input required type="email" class="form-control" name="fname" id="validateEmail" aria-describedby="emailHelp">
+                            <input required type="email" class="form-control" name="emailAddress" id="validateEmail" aria-describedby="emailHelp">
                             <div class="invalid-feedback">
                                 Required Fields!
 
@@ -76,7 +76,7 @@
                         </div>
                         <div class="col-md-4">
                             <label for="validationUsername" class="form-label">Username</label>
-                            <input type="text" class="form-control" name="username" id="validationUsername" required>
+                            <input type="text" class="form-control" name="username" id="username" required>
                             <div class="valid-feedback">
                                 Required Fields!
                             </div>
@@ -90,7 +90,7 @@
                         </div>
                         <div class="col-md-4">
                             <label for="validationConf" class="form-label">Confirmed Password </label>
-                            <input type="password" class="form-control" name="password" id="validationConf">
+                            <input type="password" class="form-control" name="cpassword" id="validationConf">
                             <div class="valid-feedback">
                                 Required Fields!
                             </div>
@@ -115,7 +115,7 @@
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                <button type="submit" class="btn btn-primary">Save changes</button>
+                <button id="submit" class="btn btn-primary">Save changes</button>
             </div>
             </form>
 

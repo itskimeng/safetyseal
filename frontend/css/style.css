@@ -47,6 +47,19 @@ border-radius: 5px;
   background-size: cover;
  
 }
+.list_establishment-banner{
+    background-image: url("../images/list_establishment.svg");
+    background-repeat: no-repeat;
+    background-size: cover;
+
+}
+.request_forms-banner{
+    background-image: url("../images/request_forms.svg");
+    background-repeat: no-repeat;
+    background-size: cover;
+
+}
+
 
 /*jeck*/
 .btn-light-primary
