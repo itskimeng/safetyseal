@@ -19,7 +19,7 @@
 
         <div class="col-md-5">
           <div class="py-5">
-            <div class="form-box">
+            <div class="form-box shadow p-3 mb-5 bg-body rounded">
               <form class="bg-white  rounded-5 shadow-5-strong p-5">
                 <!-- Email input -->
                 <div class="form-outline mb-4">
@@ -60,7 +60,7 @@
         </div>
 
 
-    
+
 
       </div>
       <!-- <div class="row"> -->
@@ -71,23 +71,24 @@
 <?php include 'registration_modal.php' ?>
 <script>
   // Example starter JavaScript for disabling form submissions if there are invalid fields
-(function () {
+  (function() {
     'use strict'
-  
+
     // Fetch all the forms we want to apply custom Bootstrap validation styles to
     var forms = document.querySelectorAll('.needs-validation')
-  
+
     // Loop over them and prevent submission
     Array.prototype.slice.call(forms)
-      .forEach(function (form) {
-        form.addEventListener('submit', function (event) {
+      .forEach(function(form) {
+        form.addEventListener('submit', function(event) {
           if (!form.checkValidity()) {
             event.preventDefault()
             event.stopPropagation()
           }
-  
+
           form.classList.add('was-validated')
         }, false)
       })
   })()
 </script>
+<script src="/frontend/js/ajax.js"></script>
