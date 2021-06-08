@@ -5,73 +5,126 @@
 
       <div class="card">
         <div class="card-header">
-          Home/Guidelines
+          Home / Guidelines
         </div>
         <div class="card-body" style="background-color: #f9f8f8;">
 
-           <table class="table table-hover mb-0 border-bottom">
-              <tbody>
-                  <tr>
-                      <td>
-                          <div class="h5">
-                              JOINT MEMORANDUM CIRCULAR NO. 21-01 Series of 2021
-                          </div>
-                          <div class="text-muted">
-                              Implementing Guidelines of the
-                              Safety Seal Certification Program
-                          </div>
-                      </td>
-                      <td nowrap="">
-                          <a href="files/guidelines/Joint+Memorandum+Circular+No+.21-01.pdf" target="_blank" class="btn btn-light-primary" rel="noopener noreferrer"><i class="fa fa-file-download"></i> Download</a>
-                      </td>
-                  </tr>
-                  <tr>
-                      <td>
-                          <div class="h5">
-                              INGAT ANGAT : Safety Seal Toolkit
-                          </div>
-                      </td>
-                      <td nowrap="">
-                          <a href="files/guidelines/IA+Safety+Seal+Toolkit.pdf" target="_blank" class="btn btn-light-primary" rel="noopener noreferrer"><i class="fa fa-file-download"></i> Download</a>
-                      </td>
-                  </tr>
-                  <tr>
-                      <td>
-                          <div class="h5">
-                              MEMORANDUM CIRCULAR NO. 2021-053
-                          </div>
-                          <div class="text-muted">
-                              Implementing Guidelines of the
-                              Safety Seal Certification Program for this Department and the Local Government Units as Issuing
-                              Authorities
-                          </div>
-                      </td>
-                      <td nowrap="">
-                          <a href="files/guidelines/MEMORANDUM+CIRCULAR+NO.+2021-053.pdf" target="_blank" class="btn btn-light-primary" rel="noopener noreferrer"><i class="fa fa-file-download"></i> Download</a>
-                      </td>
-                  </tr>
-                  <tr>
-                      <td>
-                          <div class="h5">
-                              DILG Safety Seal Checklist
-                          </div>
-                      </td>
-                      <td nowrap="">
-                          <a href="files/guidelines/Safety+Seal+Certification+Checklist.pdf" target="_blank" class="btn btn-light-primary" rel="noopener noreferrer"><i class="fa fa-file-download"></i> Download</a>
-                      </td>
-                  </tr>
-                  <tr>
-                      <td>
-                          <div class="h5">
-                              LGU Safety Seal Checklist
-                          </div>
-                      </td>
-                      <td nowrap="">
-                          <a href="files/guidelines/Safety+Seal+Certification+Checklist+-+LGU.pdf" target="_blank" class="btn btn-light-primary" rel="noopener noreferrer"><i class="fa fa-file-download"></i> Download</a>
-                      </td>
-                  </tr>
-              </tbody>
-          </table>
+
+
+
+
+
+
+          <div class="accordion accordion-flush" id="accordionFlushExample">
+
+            <div class="accordion-item">
+              <h2 class="accordion-header" id="flush-headingOne">
+                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#flush-collapseOne" aria-expanded="false" aria-controls="flush-collapseOne">
+                  <div class="h5">
+                      JOINT MEMORANDUM CIRCULAR NO. 21-01 Series of 2021
+                    <p class="text-muted subtexts">
+                        Implementing Guidelines of the
+                        Safety Seal Certification Program
+                    </p>
+                    <a href="download-file.php?filename=files/guidelines/Joint+Memorandum+Circular+No+.21-01.pdf" target="_blank" class="btn btn-light-primary float-right" rel="noopener noreferrer"><i class="fa fa-file-download"></i> Download</a>
+                  </div>
+                </button>
+              </h2>
+              <div id="flush-collapseOne" class="accordion-collapse collapse" aria-labelledby="flush-headingOne" data-bs-parent="#accordionFlushExample">
+                <div class="accordion-body">
+                  <center>
+                    <embed src="files/guidelines/Joint+Memorandum+Circular+No+.21-01.pdf" width="800px" height="800px" />
+                  </center>
+                </div>
+              </div>
+            </div>
+
+            <div class="accordion-item">
+              <h2 class="accordion-header" id="flush-headingTwo">
+                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#flush-collapseTwo" aria-expanded="false" aria-controls="flush-collapseTwo">
+                  <div class="h5">
+                      INGAT ANGAT : Safety Seal Toolkit
+                      <p class="text-muted subtexts">
+                        <a href="files/guidelines/IA+Safety+Seal+Toolkit.pdf" target="_blank" class="btn btn-light-primary float-right" rel="noopener noreferrer"><i class="fa fa-file-download"></i> Download</a>
+                      </p>
+                  </div>
+                </button>
+              </h2>
+              <div id="flush-collapseTwo" class="accordion-collapse collapse" aria-labelledby="flush-headingTwo" data-bs-parent="#accordionFlushExample">
+                <div class="accordion-body">
+                  <center>
+                    <embed src="files/guidelines/IA+Safety+Seal+Toolkit.pdf" width="800px" height="800px" />
+                  </center>
+                </div>
+              </div>
+            </div>
+
+            <div class="accordion-item">
+              <h2 class="accordion-header" id="flush-headingThree">
+                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#flush-collapseThree" aria-expanded="false" aria-controls="flush-collapseThree">
+                  <div class="h5">
+                      Implementing Guidelines of the
+                      Safety Seal Certification Program for this Department and the Local Government Units as Issuing
+                      Authorities
+                      <p class="text-muted subtexts">
+                        <a href="files/guidelines/MEMORANDUM+CIRCULAR+NO.+2021-053.pdf" target="_blank" class="btn btn-light-primary float-right" rel="noopener noreferrer"><i class="fa fa-file-download"></i> Download</a>
+                      </p>
+                  </div>
+                </button>
+              </h2>
+              <div id="flush-collapseThree" class="accordion-collapse collapse" aria-labelledby="flush-headingThree" data-bs-parent="#accordionFlushExample">
+                <div class="accordion-body">
+                  <center>
+                    <embed src="files/guidelines/MEMORANDUM+CIRCULAR+NO.+2021-053.pdf" width="800px" height="800px" />
+                  </center>
+                </div>
+              </div>
+            </div>
+
+            <div class="accordion-item">
+              <h2 class="accordion-header" id="flush-headingFour">
+                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#flush-collapseFour" aria-expanded="false" aria-controls="flush-collapseFour">
+                  <div class="h5">
+                      DILG Safety Seal Checklist
+                      <p class="text-muted subtexts">
+                        <a href="files/guidelines/Safety+Seal+Certification+Checklist.pdf" target="_blank" class="btn btn-light-primary float-right" rel="noopener noreferrer"><i class="fa fa-file-download"></i> Download</a>
+                      </p>
+                  </div>
+                </button>
+              </h2>
+              <div id="flush-collapseFour" class="accordion-collapse collapse" aria-labelledby="flush-headingFour" data-bs-parent="#accordionFlushExample">
+                <div class="accordion-body">
+                  <center>
+                    <embed src="files/guidelines/Safety+Seal+Certification+Checklist.pdf" width="800px" height="800px" />
+                  </center>
+                </div>
+              </div>
+            </div>
+
+            <div class="accordion-item">
+              <h2 class="accordion-header" id="flush-headingFour">
+                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#flush-collapseFour" aria-expanded="false" aria-controls="flush-collapseFour">
+                  <div class="h5">
+                      LGU Safety Seal Checklist
+                      <p class="text-muted subtexts">
+                        <a href="files/guidelines/Safety+Seal+Certification+Checklist+-+LGU.pdf" target="_blank" class="btn btn-light-primary float-right" rel="noopener noreferrer"><i class="fa fa-file-download"></i> Download</a>
+                      </p>
+                  </div>
+                </button>
+              </h2>
+              <div id="flush-collapseFour" class="accordion-collapse collapse" aria-labelledby="flush-headingFour" data-bs-parent="#accordionFlushExample">
+                <div class="accordion-body">
+                  <center>
+                    <embed src="files/guidelines/Safety+Seal+Certification+Checklist+-+LGU.pdf" width="800px" height="800px" />
+                  </center>
+                </div>
+              </div>
+            </div>
+
+
+          </div>
+
+
 
         </div>
       </div>

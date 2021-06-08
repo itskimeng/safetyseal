@@ -17,7 +17,7 @@
             <a class="nav-link" href="application.php">Application </a>
           </li>
           <li class="nav-item">
-            <a class="nav-link" href="#" id="navcertified">Certified Establishments </a>
+            <a class="nav-link" href="certified-establishments.php" id="navcertified">Certified Establishments </a>
           </li>
           <li class="nav-item">
             <a class="nav-link" href="#" id="navinspection">Inspection and Certification Teams </a>

@@ -10,7 +10,7 @@
     </main>
 
     <script>
-    	$( ".nav-link" ).removeClass( "active" ).addClass( "yourClass" );
+    	$( ".nav-link" ).removeClass( "active" );
     	$( "#navguidelines" ).addClass( "active" );
     </script>
 </body>
