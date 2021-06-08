@@ -65,3 +65,8 @@ border-radius: 5px;
 {
     font-family: sans-serif;
 }
+.table th, .table td {
+    padding: 0.75rem;
+    vertical-align: top;
+    border-top: 1px solid #EBEDF3;
+}

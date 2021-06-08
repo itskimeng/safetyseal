@@ -5,7 +5,7 @@
 
       <div class="card">
         <div class="card-header">
-          Home/Guidelines
+          Home / Guidelines
         </div>
         <div class="card-body" style="background-color: #f9f8f8;">
 
@@ -22,6 +22,7 @@
                           </div>
                       </td>
                       <td nowrap="">
+                          <a href="files/guidelines/Joint+Memorandum+Circular+No+.21-01.pdf" target="_blank" class="btn btn-light-primary" rel="noopener noreferrer"><i class="fa fa-eye"></i> View</a>
                           <a href="files/guidelines/Joint+Memorandum+Circular+No+.21-01.pdf" target="_blank" class="btn btn-light-primary" rel="noopener noreferrer"><i class="fa fa-file-download"></i> Download</a>
                       </td>
                   </tr>
@@ -32,6 +33,7 @@
                           </div>
                       </td>
                       <td nowrap="">
+                          <a href="files/guidelines/Joint+Memorandum+Circular+No+.21-01.pdf" target="_blank" class="btn btn-light-primary" rel="noopener noreferrer"><i class="fa fa-eye"></i> View</a>
                           <a href="files/guidelines/IA+Safety+Seal+Toolkit.pdf" target="_blank" class="btn btn-light-primary" rel="noopener noreferrer"><i class="fa fa-file-download"></i> Download</a>
                       </td>
                   </tr>
@@ -47,6 +49,7 @@
                           </div>
                       </td>
                       <td nowrap="">
+                          <a href="files/guidelines/Joint+Memorandum+Circular+No+.21-01.pdf" target="_blank" class="btn btn-light-primary" rel="noopener noreferrer"><i class="fa fa-eye"></i> View</a>
                           <a href="files/guidelines/MEMORANDUM+CIRCULAR+NO.+2021-053.pdf" target="_blank" class="btn btn-light-primary" rel="noopener noreferrer"><i class="fa fa-file-download"></i> Download</a>
                       </td>
                   </tr>
@@ -57,6 +60,7 @@
                           </div>
                       </td>
                       <td nowrap="">
+                          <a href="files/guidelines/Joint+Memorandum+Circular+No+.21-01.pdf" target="_blank" class="btn btn-light-primary" rel="noopener noreferrer"><i class="fa fa-eye"></i> View</a>
                           <a href="files/guidelines/Safety+Seal+Certification+Checklist.pdf" target="_blank" class="btn btn-light-primary" rel="noopener noreferrer"><i class="fa fa-file-download"></i> Download</a>
                       </td>
                   </tr>
@@ -67,6 +71,7 @@
                           </div>
                       </td>
                       <td nowrap="">
+                          <a href="files/guidelines/Joint+Memorandum+Circular+No+.21-01.pdf" target="_blank" class="btn btn-light-primary" rel="noopener noreferrer"><i class="fa fa-eye"></i> View</a>
                           <a href="files/guidelines/Safety+Seal+Certification+Checklist+-+LGU.pdf" target="_blank" class="btn btn-light-primary" rel="noopener noreferrer"><i class="fa fa-file-download"></i> Download</a>
                       </td>
                   </tr>

@@ -7,6 +7,13 @@
 
     <link href="frontend/css/bootstrap.min.css" rel="stylesheet"     crossorigin="anonymous">
     <link href="frontend/css/style.css" rel="stylesheet">
+
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css"/>
+
+
+
+
     <script src="frontend/js/jquery.min.js"></script>
     <script src="frontend/js/jquery-1.8.0.min.js"></script>
     <script src="frontend/js/custom.js"></script>
