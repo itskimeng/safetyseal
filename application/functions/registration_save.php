@@ -11,7 +11,7 @@ require_once '../config/connection.php';
     $mobile_no          =    mysqli_real_escape_string($conn, $_POST['phone_no']);
     $emailAddress      =    mysqli_real_escape_string($conn, $_POST['emailAddress']);
     $username          =    mysqli_real_escape_string($conn, $_POST['username']);
-    $password          =    mysqli_real_escape_string($conn, $_POST['password']);
+    $password          =    mysqli_real_escape_string($conn, md5($_POST['password']));
     $date = date('Y-m-d', time());
 
 
@@ -21,5 +21,7 @@ require_once '../config/connection.php';
        
     } else {
     }
-header('Location:../../index.html.php');
+    mysqli_close($conn);
+
+header('Location:../../index.php');
     ?>

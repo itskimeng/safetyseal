@@ -1,5 +1,5 @@
 <header>
-  <nav class="navbar navbar-expand-md navbar-dark fixed-top" style=" background-color: #1e1e2d; ">
+  <nav class="navbar navbar-expand-md navbar-dark fixed-top navscroll" style=" background-color: #1e1e2d; ">
     <div class="container-fluid">
       <a class="navbar-brand" href="#"></a>
       <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
@@ -8,7 +8,7 @@
       <div class="collapse navbar-collapse" id="navbarCollapse">
         <ul class="navbar-nav me-auto mb-2 mb-md-0">
           <li class="nav-item">
-            <a class="nav-link" aria-current="page" href="index.html.php" id="navhome">Home</a>
+            <a class="nav-link" aria-current="page" href="index.php" id="navhome">Home</a>
           </li>
           <li class="nav-item">
             <a class="nav-link" href="guidelines.php" id="navguidelines">Guidelines </a>

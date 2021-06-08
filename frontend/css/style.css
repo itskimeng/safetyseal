@@ -22,7 +22,7 @@ border-radius: 5px;
     height: auto;
 }
 .banner{
-    background-image: url("../images/safetyseal.svg");
+    background-image: url("../images/safety_banner.svg");
     background-repeat: no-repeat;
     height: 500px;
 }
@@ -91,3 +91,6 @@ border-radius: 5px;
 {
     font-family: sans-serif;
 }
+
+/* /========= */
+

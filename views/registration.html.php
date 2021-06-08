@@ -20,16 +20,16 @@
         <div class="col-md-5">
           <div class="py-5">
             <div class="form-box shadow p-3 mb-5 bg-body rounded">
-              <form class="bg-white  rounded-5 shadow-5-strong p-5">
+              <form method = "POST" action = "views/login.php" class="bg-white  rounded-5 shadow-5-strong p-5">
                 <!-- Email input -->
                 <div class="form-outline mb-4">
-                  <input type="text" id="form1Example1" class="form-control" />
+                  <input type="text" name="username" id="form1Example1" class="form-control" autocomplete="off"/>
                   <label class="form-label" for="form1Example1">Username</label>
                 </div>
 
                 <!-- Password input -->
                 <div class="form-outline mb-4">
-                  <input type="password" id="form1Example2" class="form-control" />
+                  <input type="password" name="password" id="form1Example2" class="form-control" autocomplete="off" />
                   <label class="form-label" for="form1Example2">Password</label>
                 </div>
 
@@ -52,7 +52,7 @@
                 </div>
 
                 <!-- Submit button -->
-                <button class="btn btn-primary btn-block">Sign in</button>
+                <button type = "submit" class="btn btn-primary btn-block" name="login">Sign in</button>
               </form>
 
             </div>
