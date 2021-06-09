@@ -105,15 +105,11 @@
         
         </li>
         <li>
-          <a href="dashboard.php">
+          <a href="dashboard_user.php">
             <i class="fa fa-check"></i> <span>Application</span>
           </a>
         </li>
-        <li>
-          <a href="inspection_list.php">
-            <i class="fa fa-group"></i> <span>Inspection & Cert. Teams</span>
-          </a>
-        </li>
+    
         <!-- <li class="treeview">
           <a href="#">
             <i class="fa fa-files-o"></i>

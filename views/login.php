@@ -39,7 +39,7 @@ if(isset($_POST["login"]))
                if(mysqli_num_rows($result) > 0)  
                {  
                     $_SESSION['username'] = $username;  
-                    header("location:../dashboard.php?username=".$username."");  
+                    header("location:../dashboard_user.php?username=".$username."");  
                }  
                else  
                {  
