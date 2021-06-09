@@ -8,10 +8,8 @@
           <header>
             <h1 class="display-6 headingText">Safety Seal Registration</h1>
             <p class="lead mb-0" style=" font-size:17px; color:#e8e7e7;">
-              The Safety Seal Certification is a voluntary certification scheme that a firms
-              that an establishment is compliant with the maximum public health standards set
-              by the goverment and uses or integrates its contact tracing with StaySafe.ph.
-              governance excellence through knowledge sharing</p>
+            Register Now! for Safety Seal Certification
+             </p>
             
           </header>
         </div>
@@ -47,7 +45,7 @@
 
                   <div class="col text-center">
                     <!-- Simple link -->
-                    <a href="#!" data-bs-toggle="modal" data-bs-target="#exampleModal">Sign-up here!</a>
+                    <a href="#!" data-bs-toggle="modal" data-bs-target="#exampleModal">Create an account</a>
                   </div>
                 </div>
 
