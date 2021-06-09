@@ -3,9 +3,9 @@
 <?php include 'base_template.php'; ?>
 
 <?php startblock('title'); ?>
-  Application
+  Activity Planner
 <?php endblock('title'); ?>
 
 <?php startblock('content'); ?>
-  <?php include('views/application/index.php'); ?>
+  <?php include('views/dashboard/index.php'); ?>
 <?php endblock(); ?>

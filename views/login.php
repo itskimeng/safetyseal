@@ -26,7 +26,7 @@ if(isset($_POST["login"]))
                if(mysqli_num_rows($result) > 0)  
                {  
                     $_SESSION['username'] = $username;  
-                    header("location: ../dashboard.php?username=".md5($username)."");  
+                    header("location: ../dashboard.v2.php?username=".md5($username)."");  
                }  
                else  
                {  
