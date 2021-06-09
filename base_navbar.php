@@ -18,6 +18,10 @@
         <li class="nav-item">
           <a href="application.php" class="nav-link">Application</a>
         </li>
+
+        <li class="nav-item">
+          <a href="#" class="nav-link">Logout (dilgss_masacluti)</a>
+        </li>
         
       </ul>
     </div>
