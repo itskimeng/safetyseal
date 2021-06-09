@@ -40,26 +40,6 @@
             </div>
 
             <div class="accordion-item">
-              <h2 class="accordion-header" id="flush-headingTwo">
-                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#flush-collapseTwo" aria-expanded="false" aria-controls="flush-collapseTwo">
-                  <div class="h5">
-                      INGAT ANGAT : Safety Seal Toolkit
-                      <p class="text-muted subtexts">
-                        <a href="files/guidelines/IA+Safety+Seal+Toolkit.pdf" target="_blank" class="btn btn-light-primary float-right" rel="noopener noreferrer"><i class="fa fa-file-download"></i> Download</a>
-                      </p>
-                  </div>
-                </button>
-              </h2>
-              <div id="flush-collapseTwo" class="accordion-collapse collapse" aria-labelledby="flush-headingTwo" data-bs-parent="#accordionFlushExample">
-                <div class="accordion-body">
-                  <center>
-                    <embed src="files/guidelines/IA+Safety+Seal+Toolkit.pdf" width="800px" height="800px" />
-                  </center>
-                </div>
-              </div>
-            </div>
-
-            <div class="accordion-item">
               <h2 class="accordion-header" id="flush-headingThree">
                 <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#flush-collapseThree" aria-expanded="false" aria-controls="flush-collapseThree">
                   <div class="h5">
@@ -116,6 +96,26 @@
                 <div class="accordion-body">
                   <center>
                     <embed src="files/guidelines/Safety+Seal+Certification+Checklist+-+LGU.pdf" width="800px" height="800px" />
+                  </center>
+                </div>
+              </div>
+            </div>
+
+            <div class="accordion-item">
+              <h2 class="accordion-header" id="flush-headingTwo">
+                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#flush-collapseTwo" aria-expanded="false" aria-controls="flush-collapseTwo">
+                  <div class="h5">
+                      INGAT ANGAT : Safety Seal Toolkit
+                      <p class="text-muted subtexts">
+                        <a href="files/guidelines/IA+Safety+Seal+Toolkit.pdf" target="_blank" class="btn btn-light-primary float-right" rel="noopener noreferrer"><i class="fa fa-file-download"></i> Download</a>
+                      </p>
+                  </div>
+                </button>
+              </h2>
+              <div id="flush-collapseTwo" class="accordion-collapse collapse" aria-labelledby="flush-headingTwo" data-bs-parent="#accordionFlushExample">
+                <div class="accordion-body">
+                  <center>
+                    <embed src="files/guidelines/IA+Safety+Seal+Toolkit.pdf" width="800px" height="800px" />
                   </center>
                 </div>
               </div>
