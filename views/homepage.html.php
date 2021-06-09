@@ -34,13 +34,13 @@
       <div class="col-md-6 bg-light">
         <div class="row" style="padding:10px;">
           <div class="col-6 bg-light" style="padding: 10px;">
-            <div class="container shadow p-3 mb-5 bg-body rounded contact-banner" style="background-color:#B0BEC5; height:500px;">
+            <div class="container shadow p-3 mb-5 bg-body rounded list_establishment-banner" style="background-color:#B0BEC5; height:500px;">
             <button class="btn btn-primary btn-md">View All</button>
 
             </div>
           </div>
           <div class="col-6 bg-light" style="padding: 10px;">
-            <div class="container shadow p-3 mb-5 bg-body rounded list_establishment-banner" style="background-color:#B0BEC5; height:500px;">
+            <div class="container shadow p-3 mb-5 bg-body rounded contact-banner " style="background-color:#B0BEC5; height:500px;">
             <button class="btn btn-primary btn-md">View All</button>
 
             </div>

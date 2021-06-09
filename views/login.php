@@ -17,35 +17,38 @@ if(isset($_POST["login"]))
         if(empty($role_access))
         {
             header('Location: ../registration.php?message=failed');
+        }else{
+
+        
+          if($role_access == 'admin'){
+               $query = "SELECT * FROM tbl_userinfo WHERE UNAME = '$username' AND PASSWORD = '$password' and `ROLE`= 'admin' ";  
+               $result = mysqli_query($conn, $query);  
+               if(mysqli_num_rows($result) > 0)  
+               {  
+                    $_SESSION['username'] = $username;  
+                    header("location: ../dashboard.php?username=".md5($username)."");  
+               }  
+               else  
+               {  
+                    echo '<script>alert("Login Failed.!")</script>'; 
+                    header('Location: ../registration.php?message=failed');
+               }  
+          }else if($role_access == 'user'){
+               $query = "SELECT * FROM tbl_userinfo WHERE UNAME = '$username' AND PASSWORD = '$password' and `ROLE`= 'user' ";  
+               $result = mysqli_query($conn, $query);  
+               if(mysqli_num_rows($result) > 0)  
+               {  
+                    $_SESSION['username'] = $username;  
+                    header("location:../dashboard.php?username=".$username."");  
+               }  
+               else  
+               {  
+                    echo '<script>alert("Login Failed.!")</script>'; 
+                    header('Location: ../registration.php?message=failed ');
+               }  
+          }
         }
-        if($role_access == 'admin'){
-          $query = "SELECT * FROM tbl_userinfo WHERE UNAME = '$username' AND PASSWORD = '$password' and `ROLE`= 'admin' ";  
-          $result = mysqli_query($conn, $query);  
-          if(mysqli_num_rows($result) > 0)  
-          {  
-               $_SESSION['username'] = $username;  
-               header("location: ../dashboard.php?username=".$username."");  
-          }  
-          else  
-          {  
-               echo '<script>alert("Login Failed.!")</script>'; 
-               header('Location: ../registration.php?message=failed');
-          }  
-        }else if($role_access == 'user'){
-            $query = "SELECT * FROM tbl_userinfo WHERE UNAME = '$username' AND PASSWORD = '$password' and `ROLE`= 'user' ";  
-          $result = mysqli_query($conn, $query);  
-          if(mysqli_num_rows($result) > 0)  
-          {  
-               $_SESSION['username'] = $username;  
-               header("location:../dashboard.php?username=".$username."");  
-          }  
-          else  
-          {  
-               echo '<script>alert("Login Failed.!")</script>'; 
-               header('Location: ../registration.php?message=failed ');
-          }  
-        }
-          
+               
      }  
 } 
 mysqli_close($conn);
