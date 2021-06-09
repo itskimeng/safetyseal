@@ -12,7 +12,7 @@
               that an establishment is compliant with the maximum public health standards set
               by the goverment and uses or integrates its contact tracing with StaySafe.ph.
               governance excellence through knowledge sharing</p>
-            <a href="#facilitiesId" class="btn btn-primary btn-lg mt-3 scrollTo" style="background-color: #c30718; border-color:#ad0735;">Who Are We</a>
+            
           </header>
         </div>
 

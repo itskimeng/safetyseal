@@ -14,18 +14,18 @@
         <div class="row" style="padding:10px;">
           <div class="col-lg-12 bg-light" style="padding: 10px;">
             <div class="container shadow p-3 mb-5 bg-body rounded banner-guidelines" style="background-color:#B0BEC5;height: 250px;">
-              <button  class="btn btn-primary btn-md btn-guide">View All</button>
+              <button  class="btn btn-light-primary py-2 me-5 mr-2  btn-guide">View All</button>
             </div>
           </div>
      
           <div class="col-6 bg-light" style="padding: 10px;">
             <div class="container shadow p-3 mb-5 bg-body rounded rounded application" style="background-color:#B0BEC5; height:500px;">
-              <button  class="btn btn-primary btn-md btn-application">View All</button>
+              <button  class="btn btn-light-primary py-2 me-5 mr-2 btn-application">View All</button>
             </div>
           </div>
           <div class="col-6 bg-light" style="padding: 10px;">
             <div class="container shadow p-3 mb-5 bg-body request_forms-banner " style="background-color:#B0BEC5; height:500px;">
-              <button class="btn btn-primary btn-md btn-request">View All</button>
+              <button class="btn btn-light-primary py-2 me-5 mr-2 btn-request">View All</button>
             </div>
           </div>
         </div>
@@ -35,19 +35,19 @@
         <div class="row" style="padding:10px;">
           <div class="col-6 bg-light" style="padding: 10px;">
             <div class="container shadow p-3 mb-5 bg-body rounded list_establishment-banner" style="background-color:#B0BEC5; height:500px;">
-            <button class="btn btn-primary btn-md btn-establishment">View All</button>
+            <button class="btn btn-light-primary py-2 me-5 mr-2 btn-establishment">View All</button>
 
             </div>
           </div>
           <div class="col-6 bg-light" style="padding: 10px;">
             <div class="container shadow p-3 mb-5 bg-body rounded contact-banner " style="background-color:#B0BEC5; height:500px;">
-            <button class="btn btn-primary btn-md btn-contact">View All</button>
+            <button class="btn btn-light-primary py-2 me-5 mr-2 btn-contact">View All</button>
 
             </div>
           </div>
           <div class="col-lg-12 bg-light" style="padding: 10px;">
             <div class="container shadow p-3 mb-5 bg-body rounded inquiries_complaints" style="background-color:#B0BEC5;height: 250px;">
-            <button class="btn btn-primary btn-md btn-inquiries">View All</button>
+            <button class="btn btn-light-primary py-2 me-5 mr-2 btn-inquiries">View All</button>
 
             </div>
           </div>
