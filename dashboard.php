@@ -104,7 +104,7 @@
                                 <div class="box-header with-border">
                                     <h3 class="box-title"><i class="fa fa-tag"></i>Safety Seal</h3>
                                 </div>
-                                <div class="box-body" style="padding:35%;">
+                                <div class="box-body" style="padding:38%;">
 
                                 </div>
                                 <!-- /.box-body -->
@@ -114,7 +114,7 @@
                             <div id="myCarousel" class="carousel slide" data-ride="carousel">
                                 <!-- Indicators -->
                                 <ol class="carousel-indicators">
-                                    <li data-target="#myCarousel" data-slide-to="0" class="active"></li>
+                                    <li data-target="#myCarousel" data-slide-to="0" class="active" ></li>
                                     <li data-target="#myCarousel" data-slide-to="1"></li>
                                     <li data-target="#myCarousel" data-slide-to="2"></li>
                                 </ol>
@@ -122,15 +122,19 @@
                                 <!-- Wrapper for slides -->
                                 <div class="carousel-inner">
                                     <div class="item active">
-                                        <img src="frontend/images/safety_banner.svg" alt="Los Angeles" style="width:100%;">
+                                        <img src="frontend/images/carousel/1.png" alt="Los Angeles" style="width:100%;height:90%;">
                                     </div>
 
                                     <div class="item">
-                                        <img src="frontend/images/safety_banner.svg" alt="Chicago" style="width:100%;">
+                                        <img src="frontend/images//carousel/2.png" alt="Chicago" style="width:100%;">
                                     </div>
 
                                     <div class="item">
-                                        <img src="frontend/images/safety_banner.svg" alt="New york" style="width:100%;">
+                                        <img src="frontend/images/carousel/3.png" alt="New york" style="width:100%;">
+                                    </div>
+
+                                    <div class="item">
+                                        <img src="frontend/images/carousel/4.png" alt="New york" style="width:100%;">
                                     </div>
                                 </div>
 
@@ -147,6 +151,7 @@
                         </div>
                     </div>
                 </div>
+                <br>
                 <!-- Default box -->
                 <div class="box box-success color-palette-box">
                                 <div class="box-header with-border">
