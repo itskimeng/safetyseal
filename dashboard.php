@@ -243,7 +243,7 @@
     <script src="frontend/bower_components/fastclick/lib/fastclick.js"></script>
     <!-- AdminLTE App -->
     <script src="frontend/dist/js/adminlte.min.js"></script>
-    <!-- AdminLTE for demo purposes -->
+    <!-- AdminLTE for demo purposes -->     
     <script src="frontend/dist/js/demo.js"></script>
     <script>
         $(document).ready(function() {
