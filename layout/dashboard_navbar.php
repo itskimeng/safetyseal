@@ -105,7 +105,7 @@
         
         </li>
         <li>
-          <a href="dashboard.php">
+          <a href="admin/application.php">
             <i class="fa fa-check"></i> <span>Application</span>
           </a>
         </li>
