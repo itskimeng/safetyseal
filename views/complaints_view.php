@@ -5,7 +5,7 @@
 
       <div class="card">
         <div class="card-header">
-          Home / Certified Establishments
+          Home / Complaints
         </div>
         <div class="card-body" style="background-color: #f9f8f8;">
 
@@ -34,53 +34,36 @@
         <table class="table table-hover mb-0 border-bottom">
             <thead>
                 <tr>
-                    <th width="25%">AGENCY</th>
-                    <th width="25%">ESTABLISHMENT</th>
-                    <th width="40%">ADDRESS</th>
-                    <th width="15%">SAFETY SEAL NO</th>
-                    <th width="10%">ISSUED ON</th>
-                    <th width="10%">VALID UNTIL</th>
-                    <th width="10%">STATUS</th>
+                    <th width="10%">PROVINCE</th>
+                    <th width="10%">CITY / MUNICIPALITY</th>
+                    <th width="10%">ICT COMPLAINT HOTLINE</th>
+                    <th width="10%">EMAIL ADDRESS FOR COMPLAINTS</th>
+                 
+
+                   
                 </tr>
             </thead>
             <tbody>
+                
                 <tr class="clickable-row" data-href="https://safetyseal.ncr.dilg.gov.ph/establishments/16">
                         <td class="align-middle">
                             <a href="https://safetyseal.ncr.dilg.gov.ph/establishments/16" class="">
                                 <div class="font-weight-bold">
-                                    Bureau of Permits
+                                </div>
+                                <div class="text-muted">
                                 </div>
                             </a>
                         </td>
                         <td class="align-middle">
-                            <a href="https://safetyseal.ncr.dilg.gov.ph/establishments/16" class="">
-                                <div class="font-weight-bold">
-                                    Bureau of Permits
-                                </div>
-                            </a>
-                        </td>
-                        <td class="align-middle">
-                            Room 110, Manila City Hall, Padre Burgos St., Ermita, Barangay 659-A, CITY OF MANILA, NCR, FIRST DISTRICT, NATIONAL CAPITAL REGION
+                           
                         </td>
                         <td class="align-middle" nowrap="">
-                                NCR-2021-0000065
-                        </td>
+                                                                  
+                                                            </td>
                         <td class="align-middle" nowrap="">
                             <span class="label label-lg label-light-success label-inline font-weight-bold py-4">
                                 <i class="la la-clipboard-check mr-2"></i>
-                                June 1, 2021
-                            </span>
-                        </td>
-                        <td class="align-middle" nowrap="">
-                            <span class="label label-lg label-light-success label-inline font-weight-bold py-4">
-                                <i class="la la-clipboard-check mr-2"></i>
-                                December 1, 2021
-                            </span>
-                        </td>
-                        <td class="align-middle" nowrap="">
-                            <span class="label label-lg label-light-success label-inline font-weight-bold py-4">
-                                <i class="la la-clipboard-check mr-2"></i>
-                                Passed
+                                
                             </span>
                         </td>
                     </tr>

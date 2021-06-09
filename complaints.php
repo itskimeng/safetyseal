@@ -5,13 +5,13 @@
     <main>
         <div class="container" style="margin-top: 7%;">
                 <?php include 'layout/navbar.php'; ?>
-                <?php include 'views/inspection_view.php'; ?>
+                <?php include 'views/complaints_view.php'; ?>
         </div>
     </main>
 
     <script>
     	$( ".nav-link" ).removeClass( "active" );
-    	$( "#navinspection" ).addClass( "active" );
+    	$( "#navcomplaints" ).addClass( "active" );
     </script>
 </body>
 <?php include 'layout/footer.html.php'; ?>
