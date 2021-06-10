@@ -77,6 +77,6 @@ $files = $_FILES['files']['tmp_name'];
 
     finfo_close($finfo);
 
-    header('location:../../safetyseal/wbstapplication.php');
+    header('location:../wbstapplication.php');
 
 
