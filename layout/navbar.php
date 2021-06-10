@@ -15,7 +15,7 @@
             <a class="nav-link" href="guidelines.php" id="navguidelines">Guidelines </a>
           </li>
           <li class="nav-item">
-            <a class="nav-link" href="registration.php">Application </a>
+            <a class="nav-link" href="wbstapplication.php">Application </a>
           </li>
           <li class="nav-item">
             <a class="nav-link" href="certified-establishments.php" id="navcertified">Certified Establishments </a>

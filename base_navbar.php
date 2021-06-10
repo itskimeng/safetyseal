@@ -16,7 +16,7 @@
           <a href="dashboard.v2.php" class="nav-link">Dashboard</a>
         </li>
         <li class="nav-item">
-          <a href="application.php" class="nav-link">Application</a>
+          <a href="admin_application.php" class="nav-link">Application</a>
         </li>
 
         <li class="nav-item">
