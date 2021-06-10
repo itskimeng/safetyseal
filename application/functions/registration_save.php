@@ -1,4 +1,5 @@
 <?php
+session_start();
 date_default_timezone_set('Asia/Manila');
 require_once '../config/connection.php';
     $error = NULL;
@@ -14,6 +15,8 @@ require_once '../config/connection.php';
     $password          =    mysqli_real_escape_string($conn, md5($_POST['password']));
     $password2          =    mysqli_real_escape_string($conn, md5($_POST['cpassword']));
     $vkey = md5(time(). $username);
+    $_SESSION['username'] = $username;
+    $_SESSION['password'] = $password;
 
     $date = date('Y-m-d', time());
     if(strlen($username) < 5)
@@ -53,14 +56,12 @@ require_once '../config/connection.php';
     if(isset($_POST['resend']))
     {
         $to = $_POST['emailTo'];
-        $subject = "Email Verification";
+        $subject = "Safety Seal Email Verification";
         $message = "<a style='font-size:24px;font-family:centuryGothic;' href='http://safetyseal.calabarzon.dilg.gov.ph/application/functions/verify.php?vkey=".$vkey."'>Verify Account</a>";
         $headers = "From: safetyseal@calabarzon.dilg.gov.ph \r\n";
         $headers .= "MIME-Version: 1.0" . "\r\n";
         $headers .= "Content-type:text/html;charset=UTF-800". "\r\n";
         mail($to,$subject,$message,$headers);
-       
-        echo 'success';
     }
     
 
