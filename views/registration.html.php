@@ -89,4 +89,3 @@
       })
   })()
 </script>
-<script src="/frontend/js/ajax.js"></script>

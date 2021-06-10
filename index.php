@@ -12,3 +12,5 @@
 </body>
 <?php include 'layout/footer.html.php'; ?>
 </html>
+<script src="frontend/js/banner.js"></script>
+

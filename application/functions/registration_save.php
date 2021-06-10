@@ -23,31 +23,45 @@ require_once '../config/connection.php';
     }else{
         // Form is valid
 
-        // Generate Key
-        $vkey = md5(time(). $username);
+            // Generate Key
+            $vkey = md5(time(). $username);
 
-        //insert to db
-        
-    $sql = "INSERT INTO `tbl_userinfo`(`ID`, `FIRST_NAME`, `MIDDLE_NAME`, `LAST_NAME`, `ADDRESS`, `MOBILE_NO`, `EMAIL_ADDRESS`, `GOV_AGENCY_NAME`, `GOV_ESTB_NAME`, `UNAME`, `PASSWORD`, `VERIFICATION_CODE`, `DATE_REGISTERED`, `IS_APPROVE`, `IS_VERIFIED`, `ROLE`, `PROVINCE`, `CITY_MUNICIPALITY`)
-    VALUES (NULL,'$firstname','$middlename','$lastname','$address','$mobile_no','$emailAddress','$agency_name','$establishment_name','$username','$password','$vkey','$date', '0','0', 'user','Province', 'Municipality')";
-       if (mysqli_query($conn, $sql)) {
-        //    send email
+            //insert to db
+            
+        $sql = "INSERT INTO `tbl_userinfo`(`ID`, `FIRST_NAME`, `MIDDLE_NAME`, `LAST_NAME`, `ADDRESS`, `MOBILE_NO`, `EMAIL_ADDRESS`, `GOV_AGENCY_NAME`, `GOV_ESTB_NAME`, `UNAME`, `PASSWORD`, `VERIFICATION_CODE`, `DATE_REGISTERED`, `IS_APPROVE`, `IS_VERIFIED`, `ROLE`, `PROVINCE`, `CITY_MUNICIPALITY`)
+        VALUES (NULL,'$firstname','$middlename','$lastname','$address','$mobile_no','$emailAddress','$agency_name','$establishment_name','$username','$password','$vkey','$date', '0','0', 'user','Province', 'Municipality')";
+        if (mysqli_query($conn, $sql)) {
+            //    send email
 
 
-        $to = 'markkimsacluti10101996@gmail.com';
+            $to = $emailAddress;
+            $subject = "Email Verification";
+            $message = "<a style='font-sizehref='http://safetyseal.calabarzon.dilg.gov.ph/application/functions/verify.php?vkey=".$vkey."'>Register Account</a>";
+            $headers = "From: safetyseal@calabarzon.dilg.gov.ph \r\n";
+            $headers .= "MIME-Version: 1.0" . "\r\n";
+            $headers .= "Content-type:text/html;charset=UTF-800". "\r\n";
+            mail($to,$subject,$message,$headers);
+        } else {
+            echo $mysqli->error;
+    }
+    }
+
+    // resend email
+    if(isset($_POST['resend']))
+    {
+        $to = $emailAddress;
         $subject = "Email Verification";
-        $message = "<a href='http://safetyseal.calabarzon.dilg.gov.ph/application/functions/verify.php?vkey=".$vkey."'>Register Account</a>";
+        $message = "<a style='font-sizehref='http://safetyseal.calabarzon.dilg.gov.ph/application/functions/verify.php?vkey=".$vkey."'>Register Account</a>";
         $headers = "From: safetyseal@calabarzon.dilg.gov.ph \r\n";
         $headers .= "MIME-Version: 1.0" . "\r\n";
         $headers .= "Content-type:text/html;charset=UTF-800". "\r\n";
         mail($to,$subject,$message,$headers);
-    } else {
-        echo $mysqli->error;
-    }
     }
     
 
 
     mysqli_close($conn);
 
-    header('Location:../../registration.php?message=Thank you for signing up!  We have sent a verification email to abc@gmail.com. You need to verify your email address to continue');
+    header('Location:../../registration.php?flag=1&email='.$emailAddress.'');
+?>
+
