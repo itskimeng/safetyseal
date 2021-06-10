@@ -13,7 +13,7 @@
             (DILG as Issuing Authority)
              </p>
             
-          </header>
+          </header> 
         </div>
 
         <div class="col-md-12">
@@ -23,12 +23,12 @@
                 
                 <?php include 'checklist.php'; ?>
                 <!-- Submit button -->
-                <div class="row">
+                <!-- <div class="row">
                   <div class="btn-group">
                     <button type = "submit" class="btn btn-primary btn-block" name="login">Proceed</button>
                   </div>
                   
-                </div>
+                </div> -->
               </form>
 
             </div>
@@ -40,6 +40,9 @@
   </div>
 
 </div>
+
+<?php include 'modal_attachments.php';?>
+
 <script>
   // Example starter JavaScript for disabling form submissions if there are invalid fields
   (function() {

@@ -9,12 +9,13 @@
   <thead style="background-color: #1da6da; color: white;">
     <tr>
       <th class="text-center" style="width:2%;">#</th>
-      <th class="text-center" style="width:20%;">REQUIREMENTS</th>
-      <th class="text-center" style="width:20%;">MOVs to be Produced/ Uploaded</th>
-      <th class="text-center" style="width:6%;">YES</th>
-      <th class="text-center" style="width:6%;">NO</th>
-      <th class="text-center" style="width:6%;">N/A</th>
+      <th class="text-center" style="width:10%;">REQUIREMENTS</th>
+      <th class="text-center" style="width:10%;">MOVs to be Produced/ Uploaded</th>
+      <th class="text-center" style="width:2%;">YES</th>
+      <th class="text-center" style="width:2%;">NO</th>
+      <th class="text-center" style="width:2%;">N/A</th>
       <th class="text-center" style="width:10%;">Reason why N/A</th>
+      <th class="text-center" style="width:2%;">Attachments</th>
     </tr>
   </thead>
   <tbody id="chklist_body">
@@ -50,6 +51,13 @@
         <td class="text-center">
           <div class="form-group">
             <textarea class="form-control form-check-reason" id="exampleFormControlTextarea1" rows="3" name="chklist_reason[]" disabled></textarea>
+          </div>
+        </td> 
+        <td class="text-center">
+          <div class="btn-group">
+            <button type="button" class="btn btn-success btn-sm" data-bs-toggle="modal" data-bs-target="#exampleModal">
+              <i class="fa fa-plus-square"></i> Upload
+            </button>
           </div>
         </td> 
 

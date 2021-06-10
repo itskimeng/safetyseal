@@ -16,7 +16,7 @@
 
     <script src="frontend/js/jquery.min.js"></script>
     <script src="frontend/js/jquery-1.8.0.min.js"></script>
-    <script src="frontend/js/custom.js"></script>
+    <!-- <script src="frontend/js/custom.js"></script> -->
 
     <script type='text/javascript' src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
 
