@@ -21,6 +21,7 @@ if (isset($_POST['login'])) {
 
           if ($verified == 1) {
 
+               $_SESSION['userid']  = $userid;
                if ($role_access == 'admin') {
                  $_SESSION['username']  = $username;
                     header("location: ../dashboard.v2.php?username=" . md5($username) . "");
@@ -28,7 +29,6 @@ if (isset($_POST['login'])) {
                     $_SESSION['username'] =$username;
                     header("location:../index.php?username=" . md5($username) . "");
                }
-               $_SESSION['userid']  = $userid;
 
           } else {
                $error = "This account has not yet been verified.";
