@@ -25,6 +25,7 @@
         method: "POST",
         data: {
             resend:'resend',
+            emailTo:<?php echo $_GET['email'];?>,
         },
         success: function (data) {
 
