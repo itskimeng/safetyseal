@@ -44,16 +44,16 @@
                 </tr>
             </thead>
             <tbody>
-                <tr class="clickable-row" data-href="https://safetyseal.ncr.dilg.gov.ph/establishments/16">
+                <tr class="clickable-row" data-href="establishment-profile.php">
                         <td class="align-middle">
-                            <a href="https://safetyseal.ncr.dilg.gov.ph/establishments/16" class="">
+                            <a href="establishment-profile.php" target="_blank" class="">
                                 <div class="font-weight-bold">
                                     Bureau of Permits
                                 </div>
                             </a>
                         </td>
                         <td class="align-middle">
-                            <a href="https://safetyseal.ncr.dilg.gov.ph/establishments/16" class="">
+                            <a href="establishment-profile.php" class="">
                                 <div class="font-weight-bold">
                                     Bureau of Permits
                                 </div>
