@@ -1,4 +1,5 @@
 <?php
+session_start();
 if (isset($_GET['vkey'])) {
     //Process Verification
     $vkey = $_GET['vkey'];
@@ -6,17 +7,25 @@ if (isset($_GET['vkey'])) {
 
     $resultSet = $conn->query("SELECT IS_VERIFIED, VERIFICATION_CODE from tbl_userinfo where IS_VERIFIED=0 and VERIFICATION_CODE='$vkey' LIMIT 1");
     if ($resultSet->num_rows == 1) {
-        //validate email
+        $row = $resultSet->fetch_assoc();
+      
         $update = $conn->query("UPDATE tbl_userinfo SET IS_VERIFIED = 1 where VERIFICATION_CODE='$vkey' LIMIT 1");
         if ($update) {
-
-            echo 'Your account has been verified. You may now login.';
+           
+            ?>
+           <script>window.location='../../registration.php?verified=1';</script>
+            <?php
+        
         } else {
             echo $conn->error;
         }
     } else {
-        echo 'This account invalid or already verified';
+        ?>
+        <script>window.location='../../registration.php?verified=0';</script>
+         <?php
+       
     }
 } else {
     die('Something went wrong');
 }
+?>
