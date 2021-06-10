@@ -13,6 +13,9 @@
       <!-- Left navbar links -->
       <ul class="navbar-nav">
         <li class="nav-item">
+          <a href="#" class="nav-link">Home</a>
+        </li>
+        <li class="nav-item">
           <a href="dashboard.v2.php" class="nav-link">Dashboard</a>
         </li>
         <li class="nav-item">
@@ -22,10 +25,10 @@
         <li class="nav-item">
           <a href="#" class="nav-link">Logout (dilgss_masacluti)</a>
         </li>
-        
+
       </ul>
-      
+
     </div>
-    
+
   </div>
 </nav>

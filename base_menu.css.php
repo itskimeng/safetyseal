@@ -6,9 +6,8 @@
 <link rel="stylesheet" href="frontend/dist/css/adminlte3.min.css">
 
 <!-- DataTables -->
-<link rel="stylesheet" href="frontend/bower_components/datatables-bs4/css/dataTables.bootstrap4.min.css">
-<link rel="stylesheet" href="frontend/bower_components/datatables-responsive/css/responsive.bootstrap4.min.css">
-<link rel="stylesheet" href="frontend/bower_components/datatables-buttons/css/buttons.bootstrap4.min.css">
+<link rel="stylesheet" href="frontend/bower_components/datatables.net-bs/css/dataTables.bootstrap.min.css">
+
 <style>
     @media (min-width: 1200px) {
     .container{
