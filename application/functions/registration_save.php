@@ -1,7 +1,7 @@
 <?php
 date_default_timezone_set('Asia/Manila');
-
 require_once '../config/connection.php';
+$error = NULL;
     $agency_name =  mysqli_real_escape_string($conn, $_POST['government_agency']);
     $establishment_name   =    mysqli_real_escape_string($conn, $_POST['government_esta']);
     $firstname             =    mysqli_real_escape_string($conn, $_POST['fname']);
@@ -12,16 +12,46 @@ require_once '../config/connection.php';
     $emailAddress      =    mysqli_real_escape_string($conn, $_POST['emailAddress']);
     $username          =    mysqli_real_escape_string($conn, $_POST['username']);
     $password          =    mysqli_real_escape_string($conn, md5($_POST['password']));
+    $password2          =    mysqli_real_escape_string($conn, md5($_POST['cpassword']));
+   
     $date = date('Y-m-d', time());
 
 
-    $sql = "INSERT INTO `tbl_userinfo`(`ID`, `FIRST_NAME`, `MIDDLE_NAME`, `LAST_NAME`, `ADDRESS`, `MOBILE_NO`, `EMAIL_ADDRESS`, `GOV_AGENCY_NAME`, `GOV_ESTB_NAME`, `UNAME`, `PASSWORD`, `DATE_REGISTERED`, `IS_APPROVE`, `ROLE`)
-    VALUES (NULL,'$firstname','$middlename','$lastname','$address','$mobile_no','$emailAddress','$agency_name','$establishment_name','$username','$password','$date', '0', 'user')";
-       if (mysqli_query($conn, $sql)) {
-       
-    } else {
-    }
-    mysqli_close($conn);
+    if(strlen($username) < 5)
+    {
+        $error = "Your username muust be at least 10 characters";
+    }else if($password != $password2)
+    {
+        $error = "Your passwords do not match.";
+    }else{
+        // Form is valid
 
-header('Location:../../index.php');
+        // Generate Key
+        $vkey = md5(time(). $username);
+
+        //insert to db
+        
+    $sql = "INSERT INTO `tbl_userinfo`(`ID`, `FIRST_NAME`, `MIDDLE_NAME`, `LAST_NAME`, `ADDRESS`, `MOBILE_NO`, `EMAIL_ADDRESS`, `GOV_AGENCY_NAME`, `GOV_ESTB_NAME`, `UNAME`, `PASSWORD`, `VERIFICATION_CODE`, `DATE_REGISTERED`, `IS_APPROVE`, `IS_VERIFIED`, `ROLE`, `PROVINCE`, `CITY_MUNICIPALITY`)
+    VALUES (NULL,'$firstname','$middlename','$lastname','$address','$mobile_no','$emailAddress','$agency_name','$establishment_name','$username','$password','$vkey','$date', '0','0', 'user','Province', 'Municipality')";
+       if (mysqli_query($conn, $sql)) {
+        //    send email
+
+
+        $to = $emailAddress;
+        $subject = "Email Verification";
+        $message = "<a href='http://localhost/registration/verify.php'>Register Account</a>";
+        $headers = "From: markkimsacluti10101996@gmail.com \r\n";
+        $headers .= "MIME-Version: 1.0" . "\r\n";
+        $headers .= "Content-type:text/html;charset=UTF-800". "\r\n";
+        mail($to,$subject,$message);
+    } else {
+        echo $mysqli->error;
+    }
+    }
+    echo $error;
+
+
+//     mysqli_close($conn);
+
+// header('Location:../../index.php');
     ?>
