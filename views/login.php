@@ -12,7 +12,6 @@ if (isset($_POST['login'])) {
 
      // Query the database
      $resultSet = $conn->query("SELECT * from tbl_userinfo where UNAME = '$username' AND PASSWORD = '$password' LIMIT 1");
-     echo "SELECT * from tbl_userinfo where UNAME = '$username' AND PASSWORD = '$password' LIMIT 1";
      if ($resultSet->num_rows !== 0) {
           //Process the login
           $row = $resultSet->fetch_assoc();
