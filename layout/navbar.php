@@ -25,11 +25,38 @@
           <li class="nav-item">
             <a class="nav-link" href="complaints.php" id="navcomplaints">Complaints</a>
           </li>
-        
-        </ul>
-        <a class="nav-link login-menu" href="registration.php" id="navlogin">Login</a>
 
-        <span><a class="nav-link contact-us" href="#" tabindex="-1" aria-disabled="true" id="navcontact">Contact Us</a><span>
+        </ul>
+        <?php
+        if (isset($_GET['username'])) {
+        ?>
+          <ul class="navbar-nav ">
+            <li class="nav-item dropdown">
+              <a class="nav-link dropdown-toggle" href="#" id="navbarDarkDropdownMenuLink" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                Logout(<?php echo $_SESSION['username']; ?>)
+              </a>
+              <ul class="dropdown-menu dropdown-menu-dark" aria-labelledby="navbarDarkDropdownMenuLink">
+                <li><a class="dropdown-item" href="#">My Profile</a></li>
+                <li><a class="dropdown-item" href="#">My Establishments</a></li>
+                <li><a class="dropdown-item" href="views/logout.php">Log out</a></li>
+              </ul>
+            </li>
+          </ul>
+        <?php
+        }else{
+          ?>
+           <a class="nav-link login-menu" href="registration.php" id="navlogin">
+           Login
+           </a>
+           <span><a class="nav-link contact-us" href="#" tabindex="-1" aria-disabled="true" id="navcontact">Contact Us</a><span>
+          <?php
+        }
+        ?>
+       
+
+
+
+        
 
       </div>
     </div>

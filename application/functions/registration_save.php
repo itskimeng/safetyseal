@@ -1,7 +1,7 @@
 <?php
 date_default_timezone_set('Asia/Manila');
 require_once '../config/connection.php';
-$error = NULL;
+    $error = NULL;
     $agency_name =  mysqli_real_escape_string($conn, $_POST['government_agency']);
     $establishment_name   =    mysqli_real_escape_string($conn, $_POST['government_esta']);
     $firstname             =    mysqli_real_escape_string($conn, $_POST['fname']);
@@ -13,10 +13,7 @@ $error = NULL;
     $username          =    mysqli_real_escape_string($conn, $_POST['username']);
     $password          =    mysqli_real_escape_string($conn, md5($_POST['password']));
     $password2          =    mysqli_real_escape_string($conn, md5($_POST['cpassword']));
-   
     $date = date('Y-m-d', time());
-
-
     if(strlen($username) < 5)
     {
         $error = "Your username muust be at least 10 characters";
@@ -44,7 +41,6 @@ $error = NULL;
         $headers .= "MIME-Version: 1.0" . "\r\n";
         $headers .= "Content-type:text/html;charset=UTF-800". "\r\n";
         mail($to,$subject,$message,$headers);
-        echo 'success';
     } else {
         echo $mysqli->error;
     }
@@ -52,7 +48,6 @@ $error = NULL;
     
 
 
-//     mysqli_close($conn);
+    mysqli_close($conn);
 
-// header('Location:../../index.php');
-    ?>
+    header('Location:../../registration.php?message=Thank you for signing up!  We have sent a verification email to abc@gmail.com. You need to verify your email address to continue');
