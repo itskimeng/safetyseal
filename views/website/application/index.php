@@ -20,15 +20,22 @@
           <div class="py-1">
             <div class="form-box shadow p-1 mb-5 bg-body rounded">
               <form method="POST" action="entity/post_application.php" class="bg-white  rounded-5 shadow-5-strong p-5">
+                <input type="hidden" name="is_new" value="<?php echo $is_new; ?>">
                 
+                <!-- user details -->
+                <?php include 'user_details.php'; ?>
+
+                <!-- checklist -->
                 <?php include 'checklist.php'; ?>
+                
+
                 <!-- Submit button -->
-                <!-- <div class="row">
+                <div class="row">
                   <div class="btn-group">
                     <button type = "submit" class="btn btn-primary btn-block" name="login">Proceed</button>
                   </div>
                   
-                </div> -->
+                </div>
               </form>
 
             </div>
@@ -67,6 +74,18 @@
 </script>
 <script type="text/javascript">
   $(document).ready(function(){
+
+    <?php
+      // toastr output & session reset
+      // session_start();
+      if (isset($_SESSION['toastr'])) {
+        echo 'tata.'.$_SESSION['toastr']['type'].'("'.$_SESSION['toastr']['title'].'", "'.$_SESSION['toastr']['message'].'", {
+          duration: 5000
+        })';
+        unset($_SESSION['toastr']);
+      }
+    ?> 
+
     $(document).on('click', '.form-check-input', function(){
       let tr = $(this).closest('tr');
       let chkcol = $(this).data('chkcol');
@@ -81,11 +100,13 @@
 
         } else {
           let reason = tr.find('.form-check-reason');
+          reason.val('');
           reason.attr('disabled', true);          
         }
 
       } else {
         let reason = tr.find('.form-check-reason');
+        reason.val('');
         reason.attr('disabled', true);
       }
     });

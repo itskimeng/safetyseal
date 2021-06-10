@@ -6,24 +6,30 @@
         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
       </div>
       <form method="post" enctype="multipart/form-data" action="entity/post_attachments.php">
-      <div class="modal-body">
-          <div class="mb-3">
-            <!-- <input class="form-control" type="file" id="formFileMultiple" multiple> -->
-            <div class="form-group">
-              <div class="custom-file">
-                <input type="file" name="files[]" multiple class="custom-file-input form-control" id="customFile">
+        <div class="modal-body">
+            <div class="mb-3">
+              <!-- <input class="form-control" type="file" id="formFileMultiple" multiple> -->
+              <div class="form-group">
+                <div class="custom-file">
+                  <input type="file" name="files[]" multiple class="custom-file-input form-control" id="customFile" required>
+                </div>
               </div>
             </div>
-          </div>
-      </div>
-      <div class="modal-footer">
-        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-        <button type="submit  " class="btn btn-primary">Save</button>
-      </div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal"><i class="fa fa-window-close"></i> Close</button>
+          <button type="submit  " class="btn btn-primary"><i class="fa fa-save"></i> Save</button>
+        </div>
       </form>
     </div>
   </div>
 </div>
+
+<style type="text/css">
+  .modal-header {
+    background-color: #ffcd39;
+  }
+</style>
 
 <script type="text/javascript">
   $('input[type="file"]').on("change", function() {

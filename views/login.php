@@ -17,6 +17,7 @@ if (isset($_POST['login'])) {
           $row = $resultSet->fetch_assoc();
           $verified = $row['IS_VERIFIED'];
           $role_access = $row['ROLE'];
+          $userid = $row['ID'];
 
           if ($verified == 1) {
 
@@ -27,6 +28,8 @@ if (isset($_POST['login'])) {
                     $_SESSION['username'] =$username;
                     header("location:../index.php?username=" . md5($username) . "");
                }
+               $_SESSION['userid']  = $userid;
+
           } else {
                $error = "This account has not yet been verified.";
                echo $error;

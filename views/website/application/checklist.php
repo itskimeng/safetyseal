@@ -23,7 +23,8 @@
       <tr>
         <td>
           <?php echo $key+1; ?>
-          <input type="hidden" name="chklist_id[<?php echo $list['id']; ?>]">    
+          <input type="hidden" name="chklist_id[<?php echo $list['clist_id']; ?>]" value="<?php echo $list['clist_id']; ?>">
+          <input type="hidden" name="ulist_id[<?php echo $list['ulist_id']; ?>]" value="<?php echo $list['ulist_id']; ?>">    
         </td>
         <td><?php echo $list['requirement']; ?></td>
         <td>
@@ -35,28 +36,28 @@
         </td>
         <td class="text-center">
           <div class="form-group">
-            <input class="form-check-input chklist_yes" type="checkbox" value="" name="chklist_yes[]" data-chkcol="yes">
+            <input class="form-check-input chklist_yes" type="checkbox" value="" name="chklist_yes[<?php echo $list['clist_id']; ?>]" data-chkcol="yes" <?php echo $list['answer'] == 'yes' ? 'checked' : ''; ?>>
           </div>
         </td>
         <td class="text-center">
           <div class="form-group">
-            <input class="form-check-input chklist_no" type="checkbox" value="" name="chklist_no[]" data-chkcol="no">
+            <input class="form-check-input chklist_no" type="checkbox" value="" name="chklist_no[<?php echo $list['clist_id']; ?>]" data-chkcol="no" <?php echo $list['answer'] == 'no' ? 'checked' : ''; ?>>
           </div>
         </td>
         <td class="text-center">
           <div class="form-group">
-            <input class="form-check-input chklist_na" type="checkbox" value="" name="chklist_na[]" data-chkcol="na">
+            <input class="form-check-input chklist_na" type="checkbox" value="" name="chklist_na[<?php echo $list['clist_id']; ?>]" data-chkcol="na" <?php echo $list['answer'] == 'n/a' ? 'checked' : ''; ?>>
           </div>
         </td>
         <td class="text-center">
           <div class="form-group">
-            <textarea class="form-control form-check-reason" id="exampleFormControlTextarea1" rows="3" name="chklist_reason[]" disabled></textarea>
+            <textarea class="form-control form-check-reason" id="exampleFormControlTextarea1" rows="3" name="chklist_reason[<?php echo $list['clist_id']; ?>]" <?php echo $list['answer'] == 'n/a' ? '' : 'disabled'; ?>><?php echo $list['reason']; ?></textarea>
           </div>
         </td> 
         <td class="text-center">
           <div class="btn-group">
-            <button type="button" class="btn btn-success btn-sm" data-bs-toggle="modal" data-bs-target="#exampleModal">
-              <i class="fa fa-plus-square"></i> Upload
+            <button type="button" class="btn btn-warning btn-sm" data-bs-toggle="modal" data-bs-target="#exampleModal">
+              <i class="fa fa-link"></i> Upload
             </button>
           </div>
         </td> 
