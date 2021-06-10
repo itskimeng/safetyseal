@@ -10,7 +10,7 @@ require_once 'google-api-php-client/src/contrib/Google_DriveService.php';
 $client = new Google_Client();
 $client->setClientId('312607959862-4po30giaf5ft6gk4e214nadae33dp8rl.apps.googleusercontent.com');
 $client->setClientSecret('i0aX5UG17jovoF2aPgqfoGvS');
-$client->setRedirectUri('https://localhost/safetyseal/wbstapplication.php');
+$client->setRedirectUri($url);
 $client->setScopes(array('https://www.googleapis.com/auth/drive'));
 
 
@@ -77,6 +77,6 @@ $files = $_FILES['files']['tmp_name'];
 
     finfo_close($finfo);
 
-    header('location:../../safetyseal/wbstapplication.php');
+    header('location:../wbstapplication.php');
 
 
