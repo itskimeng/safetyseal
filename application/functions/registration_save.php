@@ -51,7 +51,7 @@ require_once '../config/connection.php';
     {
         $to = $emailAddress;
         $subject = "Email Verification";
-        $message = "<a style='font-sizehref='http://safetyseal.calabarzon.dilg.gov.ph/application/functions/verify.php?vkey=".$vkey."'>Register Account</a>";
+        $message = "<a style='font-size:24px;font-family:centuryGothic;' href='http://safetyseal.calabarzon.dilg.gov.ph/application/functions/verify.php?vkey=".$vkey."'>Verify Account</a>";
         $headers = "From: safetyseal@calabarzon.dilg.gov.ph \r\n";
         $headers .= "MIME-Version: 1.0" . "\r\n";
         $headers .= "Content-type:text/html;charset=UTF-800". "\r\n";
