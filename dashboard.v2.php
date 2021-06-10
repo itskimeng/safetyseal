@@ -3,7 +3,7 @@
 <?php include 'base_template.php'; ?>
 
 <?php startblock('title'); ?>
-  Activity Planner
+  Dashboard
 <?php endblock('title'); ?>
 
 <?php startblock('content'); ?>

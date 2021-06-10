@@ -48,7 +48,7 @@ require_once '../config/connection.php';
         } else {
             echo $mysqli->error;
     }
-    header('Location:../../registration.php?flag=1&email='.$emailAddress.'');
+     header('Location:../../registration.php?flag=1&email='.$emailAddress.'');
 
     }
 

@@ -9,3 +9,10 @@
 <link rel="stylesheet" href="frontend/bower_components/datatables-bs4/css/dataTables.bootstrap4.min.css">
 <link rel="stylesheet" href="frontend/bower_components/datatables-responsive/css/responsive.bootstrap4.min.css">
 <link rel="stylesheet" href="frontend/bower_components/datatables-buttons/css/buttons.bootstrap4.min.css">
+<style>
+    @media (min-width: 1200px) {
+    .container{
+        max-width: 1500px;
+    }
+}
+</style>
