@@ -1,5 +1,4 @@
 <?php
-session_start();
 date_default_timezone_set('Asia/Manila');
 
 require 'application/config/connection.php';
@@ -18,3 +17,4 @@ if (!empty($appchecklists_edit)) {
 } else {
 	$appchecklists = $app->getChecklists();
 }
+	
