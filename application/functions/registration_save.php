@@ -13,6 +13,8 @@ require_once '../config/connection.php';
     $username          =    mysqli_real_escape_string($conn, $_POST['username']);
     $password          =    mysqli_real_escape_string($conn, md5($_POST['password']));
     $password2          =    mysqli_real_escape_string($conn, md5($_POST['cpassword']));
+    $vkey = md5(time(). $username);
+
     $date = date('Y-m-d', time());
     if(strlen($username) < 5)
     {
@@ -24,7 +26,6 @@ require_once '../config/connection.php';
         // Form is valid
 
             // Generate Key
-            $vkey = md5(time(). $username);
 
             //insert to db
             
@@ -44,6 +45,8 @@ require_once '../config/connection.php';
         } else {
             echo $mysqli->error;
     }
+    header('Location:../../registration.php?flag=1&email='.$emailAddress.'');
+
     }
 
     // resend email
@@ -62,6 +65,5 @@ require_once '../config/connection.php';
 
     mysqli_close($conn);
 
-    header('Location:../../registration.php?flag=1&email='.$emailAddress.'');
 ?>
 
