@@ -78,6 +78,21 @@
     font-size: 20pt;
   }
 
+  .chklist_yes:checked {
+    background-color: #198754;
+    border-color: #0d6efd;
+  }
+
+  .chklist_no:checked {
+    background-color: #dc3545;
+    border-color: #0d6efd;
+  }
+
+  .chklist_na:checked {
+    background-color: #6c757d;
+    border-color: #0d6efd;
+  }
+
 </style>
 
 

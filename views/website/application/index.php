@@ -30,12 +30,21 @@
                 
 
                 <!-- Submit button -->
-                <div class="row">
-                  <div class="btn-group">
-                    <button type = "submit" class="btn btn-primary btn-block" name="login">Proceed</button>
+                <div class="panel panel-default">
+                  <div class="row">
+                    
+                    <div class="col-md-6">
+                      <button type = "submit" class="btn btn-primary btn-block" name="login" style="width: 100%;"><i class="fa fa-pen-alt"></i> 
+                        <?php echo $is_new ? 'Save' : 'Update' ;?>  
+                      </button>
+                    </div>
+
+                    <div class="col-md-6">
+                      <button type="button" class="btn btn-success btn-block" name="login" data-bs-toggle="modal" data-bs-target="#modall_proceed" style="width: 100%;"><i class="fa fa-share"></i> Submit</button>
+                    </div>
+                    
                   </div>
-                  
-                </div>
+                </div>  
               </form>
 
             </div>
@@ -49,6 +58,8 @@
 </div>
 
 <?php include 'modal_attachments.php';?>
+<?php include 'modal_proceed.php';?>
+
 
 <script>
   // Example starter JavaScript for disabling form submissions if there are invalid fields
