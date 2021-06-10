@@ -118,6 +118,8 @@
                         <div class="item active">
                             <img src="frontend/images/carousel/1.png" alt="Los Angeles" style="width:100%;height:90%;">
                         </div>
+                        
+                        
 
                         <!-- <div class="item">
                             <img src="frontend/images//carousel/2.png" alt="Chicago" style="width:100%;">
