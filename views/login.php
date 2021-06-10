@@ -21,10 +21,10 @@ if (isset($_POST['login'])) {
           if ($verified == 1) {
 
                if ($role_access == 'admin') {
-                    $username = $_SESSION['username'];
+                 $_SESSION['username']  = $username;
                     header("location: ../dashboard.v2.php?username=" . md5($username) . "");
                } else if ($role_access == 'user') {
-                    $username = $_SESSION['username'];
+                    $_SESSION['username'] =$username;
                     header("location:../index.php?username=" . md5($username) . "");
                }
           } else {
@@ -36,3 +36,4 @@ if (isset($_POST['login'])) {
      echo 'something wrong';
 }
 mysqli_close($conn);
+?>
