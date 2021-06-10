@@ -3,7 +3,6 @@ $(function(){
 });
 // set btn to bottom part of the div
 
-
 $(window).scroll(function(){
     if($(document).scrollTop() > 0)
     {
