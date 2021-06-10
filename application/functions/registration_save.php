@@ -37,18 +37,19 @@ $error = NULL;
         //    send email
 
 
-        $to = $emailAddress;
+        $to = 'markkimsacluti10101996@gmail.com';
         $subject = "Email Verification";
-        $message = "<a href='http://localhost/registration/verify.php'>Register Account</a>";
-        $headers = "From: markkimsacluti10101996@gmail.com \r\n";
+        $message = "<a href='http://localhost/application/functions/verify.php?vkey=".$vkey."'>Register Account</a>";
+        $headers = "From: safetyseal@calabarzon.dilg.gov.ph \r\n";
         $headers .= "MIME-Version: 1.0" . "\r\n";
         $headers .= "Content-type:text/html;charset=UTF-800". "\r\n";
-        mail($to,$subject,$message);
+        mail($to,$subject,$message,$headers);
+        echo 'success';
     } else {
         echo $mysqli->error;
     }
     }
-    echo $error;
+    
 
 
 //     mysqli_close($conn);
