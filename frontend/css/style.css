@@ -104,3 +104,10 @@ border-radius: 5px;
     font-size: 15px;
     margin-top: 10px !important;
 }
+
+div.alert-messages {
+    top: 50px;
+    left: 25%;
+    right: 25%;
+    z-index: 7000;
+}

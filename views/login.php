@@ -31,6 +31,8 @@ if (isset($_POST['login'])) {
                $error = "This account has not yet been verified.";
                echo $error;
           }
+     }else{
+         header('Location: ../registration.php?login=failed');
      }
 } else {
      echo 'something wrong';
