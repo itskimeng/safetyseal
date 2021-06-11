@@ -5,13 +5,13 @@
   <div class="tab-pane active" id="a">
   <div class="col-md-12">
     <div class="row">
-      <div class="form-outline mb-1 col-md-4">
+      <div class="form-outline mb-2 col-md-4">
         <label class="form-label" for="form1Example1">Control No.:</label><br>
-        <input type="text" id="form1Example1" class="form-control" value="<?php echo ''; ?>" disabled/>
+        <input type="text" id="form1Example1" class="form-control" value="<?php echo $userinfo['code']; ?>" placeholder="" disabled/>
       </div>
-      <div class="form-outline mb-1 col-md-4">
+      <div class="form-outline mb-2 col-md-4">
       </div>
-      <div class="form-outline mb-1 col-md-4">
+      <div class="form-outline mb-2 col-md-4">
         <label class="form-label" for="form1Example1">Date:</label><br>
         <input type="text" id="form1Example1" class="form-control" value="<?php echo $userinfo['date_created']; ?>" disabled />
       </div>
@@ -20,7 +20,7 @@
 
   <div class="col-md-12">
     <div class="row">
-      <div class="form-outline mb-1 col-md-12">
+      <div class="form-outline mb-2 col-md-12">
         <label class="form-label" for="form1Example1">Name of Government Agency/ Office:</label><br>
         <input type="text" id="form1Example1" class="form-control" value="<?php echo $userinfo['agency']; ?>" disabled/>
       </div>
@@ -29,7 +29,7 @@
 
   <div class="col-md-12">
     <div class="row">
-      <div class="form-outline mb-1 col-md-12">
+      <div class="form-outline mb-2 col-md-12">
         <label class="form-label" for="form1Example1">Name of Government Establlishment/ Department/ Office/ Unit:</label><br>
         <input type="text" id="form1Example1" class="form-control" value="<?php echo $userinfo['establishment']; ?>" disabled/>
       </div>
@@ -38,7 +38,7 @@
 
   <div class="col-md-12">
     <div class="row">
-      <div class="form-outline mb-1 col-md-12">
+      <div class="form-outline mb-2 col-md-12">
         <label class="form-label" for="form1Example1">Nature of Government Establlishment/ Department/ Office/ Unit:</label><br>
         <input type="text" id="form1Example1" class="form-control" value="<?php echo $userinfo['nature']; ?>" disabled/>
       </div>
@@ -47,7 +47,7 @@
 
   <div class="col-md-12">
     <div class="row">
-      <div class="form-outline mb-1 col-md-12">
+      <div class="form-outline mb-2 col-md-12">
         <label class="form-label" for="form1Example1">Address:</label><br>
         <input type="text" id="form1Example1" class="form-control" value="<?php echo $userinfo['address']; ?>" disabled/>
       </div>
@@ -56,12 +56,12 @@
 
   <div class="col-md-12">
     <div class="row">
-      <div class="form-outline mb-1 col-md-6">
+      <div class="form-outline mb-2 col-md-6">
         <label class="form-label" for="form1Example1">Name of Person in Charge:</label><br>
         <input type="text" id="form1Example1" class="form-control" value="<?php echo $userinfo['fname']; ?>" disabled/>
       </div>
 
-      <div class="form-outline mb-1 col-md-2">
+      <div class="form-outline mb-2 col-md-2">
       </div>
 
       <div class="form-outline mb-4 col-md-4">

@@ -4,8 +4,12 @@
     <small><b>Instruction: (✓) Check the appropriate box (Yes/No), if the following requirement is provided</b></small>
   </div>
 
+
   <!-- Table -->
-  <table class="table table-responsive table-hover table-striped" style="font-size: 11pt;">
+  <div class="table-responsive p-0" style="height: 700px;">
+    
+  
+  <table class="table table-responsive table-hover table-striped tableFixHead" style="font-size: 11pt;">
   <thead style="background-color: #1da6da; color: white;">
     <tr>
       <th class="text-center" style="width:2%;">#</th>
@@ -67,6 +71,7 @@
   </tbody>
 </table>
 </div>
+</div>
 
 
 <style type="text/css">
@@ -91,6 +96,17 @@
   .chklist_na:checked {
     background-color: #6c757d;
     border-color: #0d6efd;
+  }
+
+  .tableFixHead { 
+    overflow: auto; height: 100px; 
+  }
+  
+  .tableFixHead thead th { 
+    position: sticky; 
+    top: 0; 
+    z-index: 1; 
+    background-color: #1da6da;
   }
 
 </style>

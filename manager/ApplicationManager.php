@@ -8,7 +8,6 @@ class ApplicationManager
     const STATUS_APPROVED = "Approved";
     const STATUS_FOR_APPROVAL = "For Approval";
 
-
     function __construct() 
     {
         $this->conn = mysqli_connect("localhost","calabarzondilggo_safetysealuser","'xPR<W5dm$#-[RQf","calabarzondilggo_safetyseal");
@@ -44,9 +43,9 @@ class ApplicationManager
         return $result['id'];
     }
 
-    public function insertChecklist($userid, $date_created)
+    public function insertChecklist($control_no, $userid, $date_created)
     {
-        $sql = 'INSERT INTO tbl_app_checklist (user_id, date_created) VALUES ('.$userid.', "'.$date_created.'")';
+        $sql = 'INSERT INTO tbl_app_checklist (control_no, user_id, date_created) VALUES ("'.$control_no.'", '.$userid.', "'.$date_created.'")';
         $result = mysqli_query($this->conn, $sql);
 
         return $result;
@@ -148,16 +147,21 @@ class ApplicationManager
     {
         $sql = "SELECT 
             a.id as id, 
-            DATE_FORMAT(a.date_created, '%Y-%m-%d') as date_created,
+            DATE_FORMAT(a.date_created, '%M %d, %Y') as date_created,
             u.ADDRESS as address, 
             u.GOV_AGENCY_NAME as agency, 
             u.GOV_ESTB_NAME as establishment, 
             u.GOV_NATURE_NAME as nature,
+            p.code as pcode,
+            m.code as mcode,
             CONCAT(u.FIRST_NAME, ' ', u.LAST_NAME) as fname, 
             u.MOBILE_NO as contact_details,
-            a.status as status
+            a.status as status,
+            a.control_no as control_no
             FROM tbl_userinfo u 
             LEFT JOIN tbl_app_checklist a on u.id = a.user_id
+            LEFT JOIN tbl_province p on p.id = u.PROVINCE
+            LEFT JOIN tbl_citymun m on m.id = u.CITY_MUNICIPALITY
             WHERE u.id = $user";
         
         $query = mysqli_query($this->conn, $sql);
@@ -180,8 +184,11 @@ class ApplicationManager
                 'nature' => $row['nature'],
                 'fname' => $row['fname'],
                 'contact_details' => $row['contact_details'],
-                'status' => !empty($row['status']) ? $row['status'] : 'Draft'
-            ];    
+                'status' => !empty($row['status']) ? $row['status'] : 'Draft',
+                'pcode' => $row['pcode'],
+                'mcode' => $row['mcode'],
+                'code' => !empty($row['control_no']) ? $row['control_no'] : 'R4A-'.$row['pcode'].'-'.$row['mcode'].'-____'
+            ];      
         }
 
         return $data;
@@ -210,6 +217,75 @@ class ApplicationManager
             'title'     => $title,
             'message'   => $message
         ];
+
+        return $data;
+    }
+
+    public function getProvinces()
+    {
+        $sql = "SELECT id, code, name FROM tbl_province";
+        
+        $query = mysqli_query($this->conn, $sql);
+        $data = [];
+        
+        while ($row = mysqli_fetch_assoc($query)) {
+            $data[] = [
+                'id' => $row['id'],
+                'code' => $row['code'],
+                'name' => $row['name']
+            ];    
+        }
+
+        return $data;
+    }
+
+    public function getCityMuns()
+    {
+        $sql = "SELECT id, province, code, name FROM tbl_citymun";
+        
+        $query = mysqli_query($this->conn, $sql);
+        $data = [];
+        
+        while ($row = mysqli_fetch_assoc($query)) {
+            $data[] = [
+                'id' => $row['id'],
+                'province' => $row['province'],
+                'code' => $row['code'],
+                'name' => $row['name']
+            ];    
+        }
+
+        return $data;
+    }
+
+    public function getApplicationLists($status)
+    {
+        $sql = "SELECT 
+        ac.id as id,
+        CONCAT(ui.FIRST_NAME, ' ', ui.LAST_NAME) as fname,
+        ui.GOV_AGENCY_NAME as agency,
+        ui.ADDRESS as address,
+        DATE_FORMAT(ac.date_created, '%Y-%m-%d') as date_created,
+        ui.id as userid,
+        ac.control_no as control_no
+        FROM tbl_app_checklist ac
+        LEFT JOIN tbl_userinfo ui on ui.id = ac.user_id
+        WHERE ac.status = '".$status."'";
+        
+        $query = mysqli_query($this->conn, $sql);
+        $data = [];
+        
+        while ($row = mysqli_fetch_assoc($query)) {
+            $data[] = [
+                'id' => $row['id'],
+                'userid' => $row['userid'],
+                'fname' => $row['fname'],
+                'agency' => $row['agency'],
+                'address' => $row['address'],
+                'date_created' => $row['date_created'],
+                'control_no' => $row['control_no']
+            ];    
+        }
 
         return $data;
     }
