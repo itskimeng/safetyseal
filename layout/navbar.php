@@ -35,6 +35,10 @@
         if (isset($_SESSION['username'])) {
         ?>
           <ul class="navbar-nav ">
+            <li class="nav-item">
+              <a class="nav-link" href="certificate.php" id="navcomplaints" target="_blank"><span class="certificationTxt">My Certification <i class="fa fa-certificate"></i></span></a>
+            </li>
+
             <li class="nav-item dropdown">
               <a class="nav-link dropdown-toggle" href="#" id="navbarDarkDropdownMenuLink" role="button" data-bs-toggle="dropdown" aria-expanded="false">
                 Logout(<?php echo $_SESSION['username']; ?>)
