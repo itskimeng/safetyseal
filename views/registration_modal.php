@@ -40,7 +40,20 @@
                                 <input required type="text" class="form-control" name="position" id="validatePosition" aria-describedby="emailHelp">
                                 <div class="invalid-feedback">
                                     Position is required
-
+                                </div>
+                            </div>
+                            <div class="mb-12">
+                                <label for="validateProvince" class="form-label">Province</label>
+                                <input required type="text" class="form-control" name="province" id="validatePosition" aria-describedby="emailHelp">
+                                <div class="invalid-feedback">
+                                    Province is required
+                                </div>
+                            </div>
+                            <div class="mb-12">
+                                <label for="validateMun" class="form-label">Municipality</label>
+                                <input required type="text" class="form-control" name="municipality" id="validatePosition" aria-describedby="emailHelp">
+                                <div class="invalid-feedback">
+                                    Municipality is required
                                 </div>
                             </div>
                             <div class="mb-4">
