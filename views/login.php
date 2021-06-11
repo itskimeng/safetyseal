@@ -17,9 +17,11 @@ if (isset($_POST['login'])) {
           $row = $resultSet->fetch_assoc();
           $verified = $row['IS_VERIFIED'];
           $role_access = $row['ROLE'];
+          $userid = $row['ID'];
 
           if ($verified == 1) {
 
+               $_SESSION['userid']  = $userid;
                if ($role_access == 'admin') {
                  $_SESSION['username']  = $username;
                     header("location: ../dashboard.v2.php?username=" . md5($username) . "");
@@ -27,6 +29,7 @@ if (isset($_POST['login'])) {
                     $_SESSION['username'] =$username;
                     header("location:../index.php?username=" . md5($username) . "");
                }
+
           } else {
                $error = "This account has not yet been verified.";
                echo $error;

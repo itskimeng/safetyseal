@@ -1,4 +1,4 @@
-
+<?php session_start(); ?>
 <header>
   <nav class="navbar navbar-expand-md navbar-dark fixed-top navscroll" style=" background-color: #1e1e2d; ">
     <div class="container-fluid">
@@ -33,7 +33,7 @@
 
         </ul>
         <?php
-        if (isset($_GET['username'])) {
+        if (isset($_SESSION['username'])) {
         ?>
           <ul class="navbar-nav ">
             <li class="nav-item dropdown">
