@@ -10,6 +10,8 @@ require_once '../config/connection.php';
     $lastname             =    mysqli_real_escape_string($conn, $_POST['lname']);
     $address   =    mysqli_real_escape_string($conn, $_POST['validateAddress']);
     $position   =    mysqli_real_escape_string($conn, $_POST['position']);
+    $province   =    mysqli_real_escape_string($conn, $_POST['province']);
+    $municipalities   =    mysqli_real_escape_string($conn, $_POST['municipality']);
     $mobile_no          =    mysqli_real_escape_string($conn, $_POST['phone_no']);
     $emailAddress      =    mysqli_real_escape_string($conn, $_POST['emailAddress']);
     $username          =    mysqli_real_escape_string($conn, $_POST['username']);
@@ -34,7 +36,7 @@ require_once '../config/connection.php';
             //insert to db
             
         $sql = "INSERT INTO `tbl_userinfo`(`ID`, `FIRST_NAME`, `MIDDLE_NAME`, `LAST_NAME`, `ADDRESS`, `POSITION`, `MOBILE_NO`, `EMAIL_ADDRESS`, `GOV_AGENCY_NAME`, `GOV_ESTB_NAME`, `UNAME`, `PASSWORD`, `VERIFICATION_CODE`, `DATE_REGISTERED`, `IS_APPROVE`, `IS_VERIFIED`, `ROLE`, `PROVINCE`, `CITY_MUNICIPALITY`)
-        VALUES (NULL,'$firstname','$middlename','$lastname','$address','$mobile_no','$emailAddress','$position','$agency_name','$establishment_name','$username','$password','$vkey','$date', '0','0', 'user','Province', 'Municipality')";
+        VALUES (NULL,'$firstname','$middlename','$lastname','$address','$mobile_no','$emailAddress','$position','$agency_name','$establishment_name','$username','$password','$vkey','$date', '0','0', 'user','$province', '$municipalities')";
         if (mysqli_query($conn, $sql)) {
             //    send email
 
