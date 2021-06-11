@@ -7,11 +7,20 @@ require '../manager/ApplicationManager.php';
 $app = new ApplicationManager();
 $today = new DateTime();
 
-$uid = $_SESSION['userid'];
+$userid = $_SESSION['userid'];
 $uname = $_SESSION['username'];
 
 $checklists = $_POST['chklist_id'];
 $is_new = $_POST['is_new'];
+
+
+if ($is_new) {
+	$app->insertChecklist($userid, $today->format('Y-m-d H:i:s'));
+} else {
+	$app->updateChecklist($userid, $today->format('Y-m-d H:i:s'));			
+}
+
+$parent_id = $app->findChecklist($userid);
 
 foreach ($checklists as $key => $id) {
 	$check_val = $reason = '';
@@ -26,17 +35,18 @@ foreach ($checklists as $key => $id) {
 	} 
 
 	$data = [
+		'parent_id' => $parent_id,
 		'chklist_id' => $is_new ? $key : $ulist_id,
-		'user_id' => $uid,
+		'user_id' => $userid,
 		'answer' => $check_val,
 		'reason' => $reason,
 		'date_created' => $today->format('Y-m-d H:i:s')
 	];
 
 	if ($is_new) {
-		$app->insertUserChecklist($data);			
+		$app->insertChecklistEntry($data);			
 	} else {
-		$app->updateUserChecklist($data);			
+		$app->updateChecklistEntry($data);			
 	}
 }
 

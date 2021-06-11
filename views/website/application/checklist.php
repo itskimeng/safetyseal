@@ -36,17 +36,17 @@
         </td>
         <td class="text-center">
           <div class="form-group">
-            <input class="form-check-input chklist_yes" type="checkbox" value="" name="chklist_yes[<?php echo $list['clist_id']; ?>]" data-chkcol="yes" <?php echo $list['answer'] == 'yes' ? 'checked' : ''; ?>>
+            <input class="form-check-input chklist_yes" type="checkbox" value="" name="chklist_yes[<?php echo $list['clist_id']; ?>]" data-chkcol="yes" <?php echo $list['answer'] == 'yes' ? 'checked' : ''; ?> <?php echo $userinfo['status'] == 'Draft' ? '' : 'disabled'; ?>>
           </div>
         </td>
         <td class="text-center">
           <div class="form-group">
-            <input class="form-check-input chklist_no" type="checkbox" value="" name="chklist_no[<?php echo $list['clist_id']; ?>]" data-chkcol="no" <?php echo $list['answer'] == 'no' ? 'checked' : ''; ?>>
+            <input class="form-check-input chklist_no" type="checkbox" value="" name="chklist_no[<?php echo $list['clist_id']; ?>]" data-chkcol="no" <?php echo $list['answer'] == 'no' ? 'checked' : ''; ?> <?php echo $userinfo['status'] == 'Draft' ? '' : 'disabled'; ?>>
           </div>
         </td>
         <td class="text-center">
           <div class="form-group">
-            <input class="form-check-input chklist_na" type="checkbox" value="" name="chklist_na[<?php echo $list['clist_id']; ?>]" data-chkcol="na" <?php echo $list['answer'] == 'n/a' ? 'checked' : ''; ?>>
+            <input class="form-check-input chklist_na" type="checkbox" value="" name="chklist_na[<?php echo $list['clist_id']; ?>]" data-chkcol="na" <?php echo $list['answer'] == 'n/a' ? 'checked' : ''; ?> <?php echo $userinfo['status'] == 'Draft' ? '' : 'disabled'; ?>>
           </div>
         </td>
         <td class="text-center">
@@ -56,7 +56,7 @@
         </td> 
         <td class="text-center">
           <div class="btn-group">
-            <button type="button" class="btn btn-warning btn-sm" data-bs-toggle="modal" data-bs-target="#exampleModal">
+            <button type="button" class="btn btn-warning btn-sm" data-bs-toggle="modal" data-bs-target="#exampleModal" <?php echo $userinfo['status'] == 'Draft' ? '' : 'disabled'; ?>>
               <i class="fa fa-link"></i> Upload
             </button>
           </div>

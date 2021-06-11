@@ -5,7 +5,8 @@
         <h5 class="modal-title" id="exampleModalLabel"><i class="fa fa-share"></i> Proceed</h5>
         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
       </div>
-      <form method="post" enctype="multipart/form-data" action="entity/post_attachments.php">
+      <form method="post" enctype="multipart/form-data" action="entity/post_proceed.php">
+        <input type="hidden" name="chklist_id" value="<?php echo $userinfo['id']; ?>">
         <div class="modal-body">
             <div class="mb-3">
               <table>
@@ -13,7 +14,7 @@
                   <tr>
                     <td style="text-align:center; width:10%;">
                       <div class="form-group">
-                      <input class="form-check-input" type="checkbox" value="" name="consent" style="padding: 12pt;"> 
+                      <input class="form-check-input check_consent" type="checkbox" value="" name="consent" style="padding: 12pt;"> 
                     </div>
                     </td>
                     <td>
@@ -31,7 +32,7 @@
         </div>
         <div class="modal-footer">
           <button type="button" class="btn btn-secondary" data-bs-dismiss="modal"><i class="fa fa-window-close"></i> Close</button>
-          <button type="submit  " class="btn btn-success"><i class="fa fa-step-forward"></i> Proceed</button>
+          <button type="submit" class="btn btn-success btn-consent" disabled><i class="fa fa-step-forward"></i> Proceed</button>
         </div>
       </form>
     </div>
@@ -52,20 +53,15 @@
 </style>
 
 <script type="text/javascript">
-  $('input[type="file"]').on("change", function() {
-    let filenames = [];
-    let files = this.files;
-    if (files.length > 1) {
-      filenames.push("Total Files (" + files.length + ")");
-    } else {
-      for (let i in files) {
-        if (files.hasOwnProperty(i)) {
-          filenames.push(files[i].name);
-        }
+  $(document).on('click', '.check_consent', function(){
+      let tr = $(this).closest('tr');
+      let btn_consent = $('.btn-consent');
+
+      if ($(this).is(':checked')) {
+        btn_consent.attr('disabled', false);
+      } else {
+        btn_consent.attr('disabled', true);
       }
-    }
-    $(this)
-      .next(".custom-file-label")
-      .html(filenames.join(","));
-  });
+      
+    });
 </script>

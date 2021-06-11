@@ -13,7 +13,7 @@
       </div>
       <div class="form-outline mb-1 col-md-4">
         <label class="form-label" for="form1Example1">Date:</label><br>
-        <input type="text" id="form1Example1" class="form-control" value="<?php echo $userinfo['DATE_APPLICATION_CREATED']; ?>" disabled />
+        <input type="text" id="form1Example1" class="form-control" value="<?php echo $userinfo['date_created']; ?>" disabled />
       </div>
     </div>
   </div>
@@ -22,7 +22,7 @@
     <div class="row">
       <div class="form-outline mb-1 col-md-12">
         <label class="form-label" for="form1Example1">Name of Government Agency/ Office:</label><br>
-        <input type="text" id="form1Example1" class="form-control" value="<?php echo $userinfo['GOV_AGENCY_NAME']; ?>" disabled/>
+        <input type="text" id="form1Example1" class="form-control" value="<?php echo $userinfo['agency']; ?>" disabled/>
       </div>
     </div>
   </div>
@@ -31,7 +31,7 @@
     <div class="row">
       <div class="form-outline mb-1 col-md-12">
         <label class="form-label" for="form1Example1">Name of Government Establlishment/ Department/ Office/ Unit:</label><br>
-        <input type="text" id="form1Example1" class="form-control" value="<?php echo $userinfo['GOV_ESTB_NAME']; ?>" disabled/>
+        <input type="text" id="form1Example1" class="form-control" value="<?php echo $userinfo['establishment']; ?>" disabled/>
       </div>
     </div>
   </div>
@@ -40,7 +40,7 @@
     <div class="row">
       <div class="form-outline mb-1 col-md-12">
         <label class="form-label" for="form1Example1">Nature of Government Establlishment/ Department/ Office/ Unit:</label><br>
-        <input type="text" id="form1Example1" class="form-control" value="<?php echo $userinfo['GOV_NATURE_NAME']; ?>" disabled/>
+        <input type="text" id="form1Example1" class="form-control" value="<?php echo $userinfo['nature']; ?>" disabled/>
       </div>
     </div>
   </div>
@@ -49,7 +49,7 @@
     <div class="row">
       <div class="form-outline mb-1 col-md-12">
         <label class="form-label" for="form1Example1">Address:</label><br>
-        <input type="text" id="form1Example1" class="form-control" value="<?php echo $userinfo['ADDRESS']; ?>" disabled/>
+        <input type="text" id="form1Example1" class="form-control" value="<?php echo $userinfo['address']; ?>" disabled/>
       </div>
     </div>
   </div>
@@ -58,7 +58,7 @@
     <div class="row">
       <div class="form-outline mb-1 col-md-6">
         <label class="form-label" for="form1Example1">Name of Person in Charge:</label><br>
-        <input type="text" id="form1Example1" class="form-control" value="<?php echo $userinfo['FULLNAME']; ?>" disabled/>
+        <input type="text" id="form1Example1" class="form-control" value="<?php echo $userinfo['fname']; ?>" disabled/>
       </div>
 
       <div class="form-outline mb-1 col-md-2">
@@ -66,7 +66,7 @@
 
       <div class="form-outline mb-4 col-md-4">
         <label class="form-label" for="form1Example1">Contact Details:</label><br>
-        <input type="text" id="form1Example1" class="form-control" value="<?php echo $userinfo['MOBILE_NO']; ?>" disabled/>
+        <input type="text" id="form1Example1" class="form-control" value="<?php echo $userinfo['contact_details']; ?>" disabled/>
       </div>
     </div>
   </div>  
