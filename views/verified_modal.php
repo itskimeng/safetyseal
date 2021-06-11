@@ -3,7 +3,7 @@
 		<div class="modal-content">
 			<div class="modal-header">
 				<div class="icon-box">
-					<i class="material-icons fa fa-check"></i>
+					<i class="fa fa-check"></i>
 				</div>				
 				<h4 class="modal-title w-100">Success!</h4>	
 			</div>

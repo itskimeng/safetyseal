@@ -142,7 +142,7 @@
         <div class="row">
             <div class="card">
                 <div class="card-header">
-                    <h5 class="header-title">Datatable</h5>
+                    <h5 class="header-title">List of Establishmemts</h5>
                 </div>
                 <div class="card-body" style="background-color: #f9f8f8;">
                     <table id="table1" class="table table-hover mb-0 border-bottom">
@@ -180,20 +180,16 @@
                                     NCR-2021-0000065
                                 </td>
                                 <td class="align-middle" nowrap="">
-                                    <span class="label label-lg label-light-success label-inline font-weight-bold py-4">
-                                        <i class="la la-clipboard-check mr-2"></i>
+                                
                                         June 1, 2021
-                                    </span>
                                 </td>
                                 <td class="align-middle" nowrap="">
-                                    <span class="label label-lg label-light-success label-inline font-weight-bold py-4">
-                                        <i class="la la-clipboard-check mr-2"></i>
+                                    
                                         December 1, 2021
-                                    </span>
                                 </td>
                                 <td class="align-middle" nowrap="">
                                     <span class="label label-lg label-light-success label-inline font-weight-bold py-4">
-                                        <i class="la la-clipboard-check mr-2"></i>
+                                        <i class="fa fa-check-circle"></i>
                                         Passed
                                     </span>
                                 </td>
@@ -212,13 +208,6 @@
 <script>
     $(function() {
         $('#table1').DataTable();
-
-        /* ChartJS
-         * -------
-         * Here we will create a few charts using ChartJS
-         */
-
-
 
 
         var areaChartData = {
@@ -286,14 +275,6 @@
         }
 
 
-
-
-
-
-
-        //-------------
-        //- BAR CHART -
-        //-------------
         var barChartCanvas = $('#barChart').get(0).getContext('2d')
         var barChart = new Chart(barChartCanvas)
         var barChartData = areaChartData
@@ -331,39 +312,6 @@
         barChartOptions.datasetFill = false
         barChart.Bar(barChartData, barChartOptions)
     })
-</script>
-</body>
-
-</html>
-
-<!-- DataTables -->
-<script src="frontend/bower_components/datatables.net/js/jquery.dataTables.min.js"></script>
-<script src="frontend/bower_components/datatables.net-bs/js/dataTables.bootstrap.min.js"></script>
-
-<script>
-  $(function () {
-    $('#example1').DataTable()
-   
-  })
-</script>
-</body>
-</html>
-
-
- 
-
-<script>
-  $(function () {
-    $('#example1').DataTable()
-    $('#example2').DataTable({
-      'paging'      : true,
-      'lengthChange': false,
-      'searching'   : false,
-      'ordering'    : true,
-      'info'        : true,
-      'autoWidth'   : false
-    })
-  })
 </script>
 </body>
 </html>
