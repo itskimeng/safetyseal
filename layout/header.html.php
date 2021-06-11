@@ -16,10 +16,10 @@
 
 <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.15/css/dataTables.jqueryui.min.css"/>
 
-
-
     <script src="frontend/js/jquery.min.js"></script>
     <script src="frontend/js/jquery-1.8.0.min.js"></script>
+    <script src="frontend/bower_components/tata-master/dist/tata.js"></script>
+
     <!-- <script src="frontend/js/custom.js"></script> -->
 
     <script type='text/javascript' src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>

@@ -15,7 +15,7 @@
                                 <label for="validationGovOffice" class="form-label">Name of Government Agency/Office</label>
                                 <input required type="text" class="form-control" name="government_agency" id="validationGovOffice" aria-describedby="emailHelp">
                                 <div class="invalid-feedback">
-                                    Required Fields!
+                                Name of Government Agency/Office is required
 
                                 </div>
                             </div>
@@ -24,15 +24,36 @@
                                 <label for="validationGovDept" class="form-label">Name of Government Establishment</label>
                                 <input type="text" class="form-control" name="government_esta" id="validationGovDept" required>
                                 <div class="invalid-feedback">
-                                    Required Fields!
+                                Name of Government Establishment is required
                                 </div>
                             </div>
                             <div class="mb-12">
                                 <label for="validateAddress" class="form-label">Address</label>
                                 <input required type="text" class="form-control" name="validateAddress" id="lname" aria-describedby="emailHelp">
                                 <div class="invalid-feedback">
-                                    Required Fields!
+                                    Address is required
 
+                                </div>
+                            </div>
+                            <div class="mb-12">
+                                <label for="validatePosition" class="form-label">Position</label>
+                                <input required type="text" class="form-control" name="position" id="validatePosition" aria-describedby="emailHelp">
+                                <div class="invalid-feedback">
+                                    Position is required
+                                </div>
+                            </div>
+                            <div class="mb-12">
+                                <label for="validateProvince" class="form-label">Province</label>
+                                <input required type="text" class="form-control" name="province" id="validatePosition" aria-describedby="emailHelp">
+                                <div class="invalid-feedback">
+                                    Province is required
+                                </div>
+                            </div>
+                            <div class="mb-12">
+                                <label for="validateMun" class="form-label">Municipality</label>
+                                <input required type="text" class="form-control" name="municipality" id="validatePosition" aria-describedby="emailHelp">
+                                <div class="invalid-feedback">
+                                    Municipality is required
                                 </div>
                             </div>
                             <div class="mb-4">
@@ -48,7 +69,7 @@
                                     <label for="vfname" class="form-label">First Name</label>
                                     <input required type="text" class="form-control" name="fname" id="vfname" aria-describedby="emailHelp">
                                     <div class="invalid-feedback">
-                                        Required Fields!
+                                        First Name is required
 
                                     </div>
                                 </div>
@@ -56,7 +77,7 @@
                                     <label for="vmname" class="form-label">Middle Name</label>
                                     <input required type="text" class="form-control" name="mname" id="vmname" aria-describedby="emailHelp">
                                     <div class="invalid-feedback">
-                                        Required Fields!
+                                        Middle Name is required
 
                                     </div>
                                 </div>
@@ -64,7 +85,7 @@
                                     <label for="validatelname" class="form-label">Last Name</label>
                                     <input required type="text" class="form-control" name="lname" id="lname" aria-describedby="emailHelp">
                                     <div class="invalid-feedback">
-                                        Required Fields!
+                                        Last Name is required
 
                                     </div>
                                 </div>
@@ -72,28 +93,30 @@
                                     <label for="validationPhone" class="form-label">Mobile No.</label>
                                     <input required type="number" class="form-control" name="phone_no" id="validationPhone" aria-describedby="emailHelp">
                                     <div class="valid-feedback">
-                                        Required Fields!
+                                        Mobile No. is required
                                     </div>
                                 </div>
                                 <div class="col-md-12">
                                     <label for="validationEmail" class="form-label">Email Address</label>
                                     <input required type="text" class="form-control" name="emailAddress" id="validationEmail" aria-describedby="emailHelp">
                                     <div class="valid-feedback">
-                                        Required Fields!
+                                        Email Address is required
                                     </div>
                                 </div>
                                 <div class="col-md-12">
                                     <label for="validationUsername" class="form-label">Username</label>
-                                    <input type="text" class="form-control" name="username" id="username" required>
+                                    <input type="text" class="form-control" name="username" id="validationUsername" required>
                                     <div class="valid-feedback">
-                                        Required Fields!
+                                        Username is required
                                     </div>
                                 </div>
                                 <div class="col-md-6">
                                     <label for="validationPass" class="form-label">Password </label>
                                     <input type="password" class="form-control" name="password" id="validationPass" required>
                                     <div class="valid-feedback">
-                                        Required Fields!
+                                        Password is required
+
+
                                     </div>
                                  </div>
                                 <div class="col-md-6">

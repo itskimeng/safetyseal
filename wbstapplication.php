@@ -1,3 +1,4 @@
+<?php session_start(); ?>
 <!DOCTYPE html>
 <html lang="en">
 <?php require_once 'layout/header.html.php'; ?>
@@ -10,3 +11,4 @@
 
 <?php require_once 'layout/footer.html.php'; ?>
 </html>
+<!-- asdasd -->

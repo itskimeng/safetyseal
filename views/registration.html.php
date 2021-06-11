@@ -8,9 +8,9 @@
           <header>
             <h1 class="display-6 headingText">Safety Seal Registration</h1>
             <p class="lead mb-0" style=" font-size:17px; color:#e8e7e7;">
-            Register Now! for Safety Seal Certification
-             </p>
-            
+              Register Now! for Safety Seal Certification
+            </p>
+
           </header>
         </div>
 
@@ -18,39 +18,58 @@
         <div class="col-md-5">
           <div class="py-5">
             <div class="form-box shadow p-3 mb-5 bg-body rounded">
-              <form method = "POST" action = "views/login.php" class="bg-white  rounded-5 shadow-5-strong p-5">
-                <!-- Email input -->
-                <div class="form-outline mb-4">
-                  <input type="text" name="username" id="form1Example1" class="form-control" autocomplete="off"/>
-                  <label class="form-label" for="form1Example1">Username</label>
+
+
+              <div class="text-center">
+                <div class="h3 font-weight-bold">
+                  Sign In to SafetySeal
+                </div>
+                <p class="text-muted">
+                  New Here?
+                  <a href="#!" data-bs-toggle="modal" data-bs-target="#exampleModal">Create an account</a>
+                </p>
+              </div>
+              <div class="alert-messages text-center">
+                
+              </div>
+              <form method="POST" action="views/login.php">
+
+                <input type="hidden" name="_token" value="9bAiLIQmMfgBUrC2hmmc1TbPIYW7n9IJDJJeCXqx">
+                <!-- Email Address -->
+                <div class="form-group mt-9">
+                  <label class="form-label font-weight-bolder" for="email">
+                    Username
+                  </label>
+
+                  <input class="form-control form-control-lg form-control-solid" name="username" required="required" autofocus="autofocus">
                 </div>
 
-                <!-- Password input -->
-                <div class="form-outline mb-4">
-                  <input type="password" name="password" id="form1Example2" class="form-control" autocomplete="off" />
-                  <label class="form-label" for="form1Example2">Password</label>
-                </div>
-
-                <!-- 2 column grid layout for inline styling -->
-                <div class="row mb-4">
-                  <div class="col d-flex justify-content-center">
-                    <!-- Checkbox -->
-                    <div class="form-check">
-                      <input class="form-check-input" type="checkbox" value="" id="form1Example3" checked />
-                      <label class="form-check-label" for="form1Example3">
-                        Remember me
-                      </label>
-                    </div>
+                <!-- Password -->
+                <div class="form-group mt-6">
+                  <div class="d-flex justify-content-between">
+                    <label class="form-label font-weight-bolder" for="password">
+                      Password
+                    </label>
+                    <!-- <a href="https://safetyseal.ncr.dilg.gov.ph/forgot-password" class="text-primary text-hover-primary" id="kt_login_forgot">Forgot your password?</a> -->
                   </div>
 
-                  <div class="col text-center">
-                    <!-- Simple link -->
-                    <a href="#!" data-bs-toggle="modal" data-bs-target="#exampleModal">Create an account</a>
-                  </div>
+                  <input class="form-control form-control-lg form-control-solid" id="password" type="password" name="password" required="required" autocomplete="current-password">
                 </div>
 
-                <!-- Submit button -->
-                <button type = "submit" class="btn btn-primary btn-block" name="login">Sign in</button>
+                <!-- Remember Me -->
+                <div class="checkbox-list">
+                  <label class="checkbox">
+                    <input id="remember_me" type="checkbox" name="remember" />
+                    <span></span>
+                    Remember me
+                  </label>
+                </div>
+
+                <div class="mt-6">
+                  <button type="submit" name="login" class="btn btn-light-primary">
+                    Login
+                  </button>
+                </div>
               </form>
 
             </div>
@@ -89,3 +108,24 @@
       })
   })()
 </script>
+<script>
+  let login = '<?php if (isset($_GET['login'])) { echo $_GET['login']; } else { } ?>';
+  if (login) {
+    showAndDismissAlert('danger', 'Login Failed!');
+  }
+
+  function showAndDismissAlert(type, message) {
+    var htmlAlert = '<div class="alert alert-' + type + '"><i class="fa fa-exclamation-triangle"></i>' + message + '</div>';
+
+    // Prepend so that alert is on top, could also append if we want new alerts to show below instead of on top.
+    $(".alert-messages").prepend(htmlAlert);
+
+    // Since we are prepending, take the first alert and tell it to fade in and then fade out.
+    // Note: if we were appending, then should use last() instead of first()
+    $(".alert-messages .alert").first().hide().fadeIn(200).delay(2000).fadeOut(1000, function() {
+      $(this).remove();
+    });
+  }
+</script>
+<style>
+</style>
