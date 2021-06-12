@@ -1,4 +1,5 @@
-<?php require_once 'controller/RegistrationComponentsController.php'; ?>
+<?php require_once 'controller/RegistrationComponentsController.php';
+?>
 
 
 <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
@@ -57,13 +58,7 @@
                                     </select>
                                     </div>
                                 </div>
-                                <div class="mb-12">
-                                    <label for="validateMun" class="form-label">Municipality</label>
-                                    <input required type="text" class="form-control" name="municipality" id="validatePosition" aria-describedby="emailHelp">
-                                    <div class="invalid-feedback">
-                                        Municipality is required
-                                    </div>
-                                </div>
+                              
                                 <div class="mb-4">
                                     <label for="validateAddress" class="form-label">Operating Hours</label><br>
                                     <input required type="radio" value="24/7">24/7
