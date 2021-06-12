@@ -4,9 +4,12 @@ class ApplicationManager
 {
     public $conn = '';
 
-    const STATUS_DRAFT = "Draft";
-    const STATUS_APPROVED = "Approved";
-    const STATUS_FOR_APPROVAL = "For Approval";
+    const STATUS_DRAFT              = "Draft";
+    const STATUS_APPROVED           = "Approved";
+    const STATUS_FOR_APPROVAL       = "For Approval";
+    const STATUS_FOR_RECEIVING      = "For Receiving";
+    const STATUS_RECEIVED           = "Received";
+
 
     function __construct() 
     {
@@ -148,6 +151,7 @@ class ApplicationManager
         $sql = "SELECT 
             a.id as id, 
             DATE_FORMAT(a.date_created, '%M %d, %Y') as date_created,
+            DATE_FORMAT(a.date_proceed, '%m-%d-%Y') as date_proceed,
             u.ADDRESS as address, 
             u.GOV_AGENCY_NAME as agency, 
             u.GOV_ESTB_NAME as establishment, 
@@ -187,7 +191,8 @@ class ApplicationManager
                 'status' => !empty($row['status']) ? $row['status'] : 'Draft',
                 'pcode' => $row['pcode'],
                 'mcode' => $row['mcode'],
-                'code' => !empty($row['control_no']) ? $row['control_no'] : 'R4A-'.$row['pcode'].'-'.$row['mcode'].'-____'
+                'code' => !empty($row['control_no']) ? $row['control_no'] : 'R4A-'.$row['pcode'].'-'.$row['mcode'].'-____',
+                'date_proceed' => $row['date_proceed']
             ];      
         }
 
@@ -204,7 +209,32 @@ class ApplicationManager
 
     public function proceedChecklist($checklist_id, $has_consent, $status, $date_modified)
     {
-        $sql = "UPDATE tbl_app_checklist SET date_modified = '".$date_modified."', has_consent = '".$has_consent."', status = '".$status."' WHERE id = ".$checklist_id."";
+        $sql = "UPDATE tbl_app_checklist SET date_proceed = '".$date_modified."', date_modified = '".$date_modified."', has_consent = '".$has_consent."', status = '".$status."' WHERE id = ".$checklist_id."";
+        $result = mysqli_query($this->conn, $sql);
+
+        return $result;
+    }
+
+    public function receiveChecklist($checklist_id, $status, $date_modified)
+    {
+        $sql = "UPDATE tbl_app_checklist SET date_received = '".$date_modified."', date_modified = '".$date_modified."', status = '".$status."' WHERE id = ".$checklist_id."";
+        $result = mysqli_query($this->conn, $sql);
+
+        return $result;
+    }
+
+    public function insertValidationChecklist($appid, $defects, $receommendations, $date_created)
+    {
+        $sql = 'INSERT INTO tbl_app_checklist_onsitevalidations (chklist_id, defects, recommendations) VALUES ("'.$appid.'", "'.$defects.'", "'.$receommendations.'")';
+        $result = mysqli_query($this->conn, $sql);
+
+        return $result;
+    }
+
+
+    public function updateValidationChecklist($checklist_id, $defects, $recommendations, $date_modified)
+    {
+        $sql = 'UPDATE tbl_app_checklist_onsitevalidations SET defects = "'.utf8_encode($defects).'", recommendations = "'.utf8_encode($recommendations).'", date_modified = "'.$date_modified.'" WHERE chklist_id = '.$checklist_id.'';
         $result = mysqli_query($this->conn, $sql);
 
         return $result;
@@ -267,10 +297,11 @@ class ApplicationManager
         ui.ADDRESS as address,
         DATE_FORMAT(ac.date_created, '%Y-%m-%d') as date_created,
         ui.id as userid,
-        ac.control_no as control_no
+        ac.control_no as control_no,
+        ac.status as status
         FROM tbl_app_checklist ac
         LEFT JOIN tbl_userinfo ui on ui.id = ac.user_id
-        WHERE ac.status = '".$status."'";
+        WHERE ac.status <> '".$status."'";
         
         $query = mysqli_query($this->conn, $sql);
         $data = [];
@@ -283,7 +314,8 @@ class ApplicationManager
                 'agency' => $row['agency'],
                 'address' => $row['address'],
                 'date_created' => $row['date_created'],
-                'control_no' => $row['control_no']
+                'control_no' => $row['control_no'],
+                'status' => $row['status']
             ];    
         }
 

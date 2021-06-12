@@ -36,7 +36,7 @@
   <footer class="main-footer d-flex">
     
     <!-- Default to the left -->
-    <strong>Copyright &copy; 2014-2021 <a href="https://adminlte.io">AdminLTE.io</a>.</strong> All rights reserved.
+    <strong>Copyright &copy; 2021 SafetySeal Portal </a>.</strong> All rights reserved.
   </footer>
 </html>
 

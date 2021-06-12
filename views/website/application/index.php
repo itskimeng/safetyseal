@@ -65,7 +65,41 @@
                         </div>
                       <?php endif ?>
                     </div>
-                  </div> 
+                  </div>
+                <?php else: ?>
+                  <div class="panel panel-default pt-4">
+                  <table>
+                <tbody>
+                  <tr>
+                    <td style="text-align:center; width:8%;">
+                      <div class="form-group">
+                      <input class="form-check-input check_consent" type="checkbox" value="" name="consent" checked disabled style="padding: 12pt;"> 
+                    </div>
+                    </td>
+                    <td>
+                      <label>
+                        <small>I hereby certify that the facts stated herein are true and correct of my own personal knowledge and any misinterpresentation subjects me to criminal or administrative liability.</small>
+                      </label>
+                    </td>
+                  </tr>
+                  <tr>
+                    <td colspan="2">
+                      <div class="col-md-12">
+                          <div class="text-center" style="margin-top: 1%; margin-bottom: -1%; font-size:20pt;">
+                            <p>
+                              <b><?php echo $userinfo['fname']; ?></b>
+                              <small style="font-size:15pt;">/ <?php echo $userinfo['date_proceed']; ?></small>
+                            </p>
+                          </div>
+                          <div class="form-outline text-center" style="margin-left: 10%; margin-right: 10%;border-top: 1px solid #19191b42;">
+                            Name of Person in Charge / Date
+                          </div>
+                      </div>
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
                 <?php endif ?> 
               </form>
 
