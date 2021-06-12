@@ -23,8 +23,7 @@ echo '
    '.date('F d,Y',strtotime($row['date_created'])).' 
     </td>
     <td class="align-middle" nowrap="">
-
-        December 1, 2021
+        '.date('F d, Y', strtotime("+6 months", strtotime($row['date_created']))).'
     </td>
     <td class="align-middle" nowrap="">
         <span class="label label-lg label-light-success label-inline font-weight-bold py-4">
