@@ -1,6 +1,8 @@
 <?php 
 session_start();
-require_once 'frontend/bower_components/phpti-master/src/ti.php'; ?>
+require_once 'frontend/bower_components/phpti-master/src/ti.php'; 
+require_once 'controller/DashboardController.php';
+?>
 
 <?php include 'base_template.php'; ?>
 

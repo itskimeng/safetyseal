@@ -1,19 +1,19 @@
 <?php
 echo '
 <tr>
-
+<td class="align-middle">
+'.$row['fname'].'
+</td>
     <td class="align-middle">
         <a href="establishment-profile.php" target="_blank" class="">
             <div class="font-weight-bold">
-               '.$row['GOV_AGENCY_NAME'].'
+               '.$row['agency'].'
             </div>
         </a>
     </td>
+
     <td class="align-middle">
-       '.$row['GOV_ESTB_NAME'].'
-    </td>
-    <td class="align-middle">
-       '.$row['ADDRESS'].'
+       '.$row['address'].'
     </td>
     <td class="align-middle" nowrap="">
        '.$row['control_no'].'
@@ -28,7 +28,7 @@ echo '
     <td class="align-middle" nowrap="">
         <span class="label label-lg label-light-success label-inline font-weight-bold py-4">
             <i class="fa fa-check-circle"></i>
-            Passed
+            '.$row['status'].'
         </span>
     </td>
 </tr>';

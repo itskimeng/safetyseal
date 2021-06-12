@@ -6,6 +6,8 @@
   Application
 <?php endblock('title'); ?>
 
-<?php startblock('content'); ?>
+<?php 
+session_start();
+startblock('content'); ?>
   <?php include('views/application/index.php'); ?>
 <?php endblock(); ?>
