@@ -18,12 +18,17 @@ if (isset($_POST['login'])) {
           $verified = $row['IS_VERIFIED'];
           $role_access = $row['ROLE'];
           $userid = $row['ID'];
+          $province = $row['PROVINCE'];
+          $city_mun = $row['CITY_PROVINCE'];
+          
 
           if ($verified == 1) {
 
                $_SESSION['userid']  = $userid;
                if ($role_access == 'admin') {
                  $_SESSION['username']  = $username;
+                 $_SESSION['province']  = $province;
+                 $_SESSION['city_mun']  = $city_mun;
                     header("location: ../dashboard.v2.php?username=" . md5($username) . "");
                } else if ($role_access == 'user') {
                     $_SESSION['username'] =$username;
