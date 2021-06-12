@@ -26,16 +26,15 @@
                   <tr>
                     <td colspan="2">
                       <div class="col-md-12">
-                          
                           <div class="text-center" style="margin-top: 3%; margin-bottom: -1%; font-size:20pt;">
-                            <p><b><?php echo $userinfo['fname']; ?></b></p>
+                            <p>
+                              <b><?php echo $userinfo['fname']; ?></b>
+                              <small>/ <?php echo $today; ?></small>
+                            </p>
                           </div>
                           <div class="form-outline text-center" style="margin-left: 10%; margin-right: 10%;border-top: 1px solid;">
-
-
                             <b>Name of Person in Charge / Date</b>
                           </div>
-                        
                       </div>
                     </td>
                   </tr>

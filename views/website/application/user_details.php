@@ -12,7 +12,7 @@
       <div class="form-outline mb-2 col-md-4">
       </div>
       <div class="form-outline mb-2 col-md-4">
-        <label class="form-label" for="form1Example1">Date:</label><br>
+        <label class="form-label" for="form1Example1">Date Registered:</label><br>
         <input type="text" id="form1Example1" class="form-control" value="<?php echo $userinfo['date_created']; ?>" disabled />
       </div>
     </div>

@@ -7,6 +7,8 @@
 <!-- AdminLTE for demo purposes -->
 <script src="frontend/dist/js/demo.js"></script>
 
+<script src="frontend/bower_components/tata-master/dist/tata.js"></script>
+
 <!-- DataTables  & Plugins -->
 <script src="frontend/bower_components/datatables/jquery.dataTables.min.js"></script>
 <script src="frontend/bower_components/datatables-bs4/js/dataTables.bootstrap4.min.js"></script>

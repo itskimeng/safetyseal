@@ -7,11 +7,12 @@ if (!empty($_SESSION['userid'])) {
 
 	$userid = $_SESSION['userid'];
 	$app = new ApplicationManager();
-	$userinfo = $app->getUsers($userid);
+	$today = new DateTime();
 
-	// $appchecklists_edit = $app->getUserChecklists($userid);
+	$userinfo = $app->getUsers($userid);
 	$appchecklists_edit = $app->getUserChecklistsEntry($userid);
 	$is_new = true;
+	$today = $today->format('m-d-Y');
 
 	if (!empty($appchecklists_edit)) {
 		$appchecklists = $appchecklists_edit;	

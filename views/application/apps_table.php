@@ -25,18 +25,33 @@
                 <td><?php echo $applicant['date_created']; ?></td>
                 <td>
                   <div class="col-md-12">
-                    <a href="admin_application_view.php?appid=<?php echo $applicant['id']; ?>&ussir=<?php echo $applicant['userid']; ?>" class="btn btn-danger btn-block btn-sm" style="margin-bottom: -5%;">
-                      <i class="fa fa-th-list"></i> View Applicant
-                    </a>
-                    <button type="button" class="btn btn-success btn-block btn-sm" style="margin-bottom: -5%;">
-                      <i class="fa fa-bell"></i> Rate
-                    </button>
-                    <button type="button" class="btn btn-warning btn-block btn-sm" style="margin-bottom: -5%;">
-                      <i class="fa fa-bell"></i> Ratings
-                    </button>
-                    <button type="button" class="btn btn-secondary btn-block btn-sm">
-                      <i class="fa fa-bell"></i> History
-                    </button>
+                    <?php if ($applicant['status'] == 'For Receiving'): ?>
+
+                      <a href="admin_application_view.php?appid=<?php echo $applicant['id']; ?>&ussir=<?php echo $applicant['userid']; ?>&status=<?php echo $applicant['status']; ?>" class="btn btn-primary btn-block btn-sm" style="margin-bottom: -5%;">
+                        <i class="fa fa-box"></i> Received
+                      </a>
+
+
+                     <!--  <button type="button" class="btn btn-info btn-block btn-sm" style="margin-bottom: -5%;">
+                        <i class="fa fa-box"></i> Received
+                      </button> -->
+                    <?php else: ?>
+                      <a href="admin_application_view.php?appid=<?php echo $applicant['id']; ?>&ussir=<?php echo $applicant['userid']; ?>" class="btn btn-danger btn-block btn-sm" style="margin-bottom: -5%;">
+                        <i class="fa fa-clipboard-list"></i> View Applicant
+                      </a>
+                      <!-- <a href="admin_application_view.php?appid=<?php //echo $applicant['id']; ?>&ussir=<?php //echo $applicant['userid']; ?>" class="btn btn-danger btn-block btn-sm" style="margin-bottom: -5%;">
+                        <i class="fa fa-th-list"></i> View Applicant
+                      </a> -->
+                      <!-- <button type="button" class="btn btn-success btn-block btn-sm" style="margin-bottom: -5%;">
+                        <i class="fa fa-bell"></i> Rate
+                      </button>
+                      <button type="button" class="btn btn-warning btn-block btn-sm" style="margin-bottom: -5%;">
+                        <i class="fa fa-bell"></i> Ratings
+                      </button>
+                      <button type="button" class="btn btn-secondary btn-block btn-sm">
+                        <i class="fa fa-bell"></i> History
+                      </button> -->
+                    <?php endif ?>
                   </div>
                 </td>
               </tr>

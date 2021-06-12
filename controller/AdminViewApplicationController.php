@@ -1,5 +1,4 @@
 <?php
-session_start();
 date_default_timezone_set('Asia/Manila');
 
 require 'application/config/connection.php';
@@ -11,10 +10,11 @@ $app = new ApplicationManager();
 
 $province_opts = $app->getProvinces();
 $citymun_opts = $app->getCityMuns();
-$applicants = $app->getApplicationLists(ApplicationManager::STATUS_FOR_APPROVAL);
+$applicants = $app->getApplicationLists(ApplicationManager::STATUS_DRAFT);
 
 $applicant = getUserChecklists($conn, $appid); 
 $applicants_data = getUserChecklistsEntry($conn, $appid); 
+$app_notes = getUserChecklistsValidations($conn, $appid);
 
 function getUserChecklists($conn, $id)
 {
@@ -27,6 +27,8 @@ function getUserChecklists($conn, $id)
        	u.ADDRESS as address,
        	u.MOBILE_NO as contact_details,
         a.control_no as control_no,
+        a.status as status,
+        a.id as appid,
        	DATE_FORMAT(a.date_created, '%M %d, %Y') as date_created
         FROM tbl_app_checklist a 
         LEFT JOIN tbl_userinfo u on u.id = a.user_id
@@ -74,6 +76,28 @@ function getUserChecklistsEntry($conn, $id)
             'badge' => $badge,
             'answer' => strtoupper($row['answer']),
             'reason' => $row['reason']
+        ];    
+    }
+
+    return $data;
+}
+
+function getUserChecklistsValidations($conn, $id)
+{
+    $sql = "SELECT 
+        v.defects as defects,
+        v.recommendations as recommendations
+        FROM tbl_app_checklist_onsitevalidations v
+        LEFT JOIN tbl_app_checklist a on a.id = v.chklist_id
+        WHERE a.id = $id";
+
+    $query = mysqli_query($conn, $sql);
+    $data = [];
+
+    while ($row = mysqli_fetch_assoc($query)) {
+        $data = [
+            'defects' => utf8_decode($row['defects']),
+            'recommendations' => utf8_decode($row['recommendations'])
         ];    
     }
 
