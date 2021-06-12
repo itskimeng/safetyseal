@@ -27,7 +27,7 @@ if (isset($_POST['login'])) {
                     header("location: ../dashboard.v2.php?username=" . md5($username) . "");
                } else if ($role_access == 'user') {
                     $_SESSION['username'] =$username;
-                    header("location:../index.php?username=" . md5($username) . "");
+                    header("location:../dashboard_user.php?username=" . md5($username) . "");
                }
 
           } else {

@@ -1,66 +1,16 @@
+<?php session_start() ?>
 <!DOCTYPE html>
-<html>
-<?php include 'layout/dashboard_header.php'; ?>
-
-<body class="hold-transition skin-blue sidebar-mini">
-    <!-- Site wrapper -->
-    <div class="wrapper">
-        <?php include 'layout/dashboard_navbar_user.php'; ?>
-
-        <!-- Content Wrapper. Contains page content -->
-        <div class="content-wrapper">
-            <!-- Content Header (Page header) -->
-            <section class="content-header">
-                <h1>
-                    Blank page
-                    <small>it all starts here</small>
-                </h1>
-                <ol class="breadcrumb">
-                    <li><a href="#"><i class="fa fa-dashboard"></i> Home</a></li>
-                    <li><a href="#">Examples</a></li>
-                    <li class="active">Blank page</li>
-                </ol>
-            </section>
-
-            <!-- Main content -->
-            <section class="content">
-                <!-- content here -->
-               
-
-            </section>
-            <!-- /.content -->
+<html lang="en">
+<?php include 'layout/header.html.php'; ?>
+<body>
+    <main>
+        <div class="container" style="margin-top: 10%;">
+                <?php include 'layout/navbar.php'; ?>
+                <?php include 'views/homepage.html.php'; ?>
         </div>
-        <!-- /.content-wrapper -->
-
-        <footer class="main-footer">
-            <div class="pull-right hidden-xs">
-                <b>Version</b> 2.4.13
-            </div>
-            <strong>Copyright &copy; 2014-2019 <a href="https://adminlte.io">AdminLTE</a>.</strong> All rights
-            reserved.
-        </footer>
-
-
-    </div>
-    <!-- ./wrapper -->
-
-    <!-- jQuery 3 -->
-    <script src="frontend/bower_components/jquery/dist/jquery.min.js"></script>
-    <!-- Bootstrap 3.3.7 -->
-    <script src="frontend/bower_components/bootstrap/dist/js/bootstrap.min.js"></script>
-    <!-- SlimScroll -->
-    <script src="frontend/bower_components/jquery-slimscroll/jquery.slimscroll.min.js"></script>
-    <!-- FastClick -->
-    <script src="frontend/bower_components/fastclick/lib/fastclick.js"></script>
-    <!-- AdminLTE App -->
-    <script src="frontend/dist/js/adminlte.min.js"></script>
-    <!-- AdminLTE for demo purposes -->     
-    <script src="frontend/dist/js/demo.js"></script>
-    <script>
-        $(document).ready(function() {
-            $('.sidebar-menu').tree()
-        })
-    </script>
+    </main>
 </body>
-
+<?php include 'layout/footer.html.php'; ?>
 </html>
+<script src="frontend/js/banner.js"></script>
+

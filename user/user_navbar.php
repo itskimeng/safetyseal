@@ -1,5 +1,4 @@
-<header>
-  <nav class="navbar navbar-expand-md navbar-dark fixed-top navscroll" style=" background-color: #1e1e2d; ">
+<nav class="navbar navbar-expand-md navbar-dark fixed-top navscroll" style=" background-color: #1e1e2d; ">
     <div class="container-fluid">
       <a class="navbar-brand" href="#"></a>
       <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
@@ -7,7 +6,7 @@
       </button>
       <div class="collapse navbar-collapse" id="navbarCollapse">
         <ul class="navbar-nav me-auto mb-2 mb-md-0">
-          <li class="nav-item">
+          <!-- <li class="nav-item">
             <a class="nav-link" aria-current="page" href="index.php" id="navhome">Home</a>
           </li>
           <li class="nav-item">
@@ -28,7 +27,7 @@
           </li>
           <li class="nav-item">
             <a class="nav-link" href="complaints.php" id="navcomplaints">Complaints</a>
-          </li>
+          </li> -->
 
         </ul>
         <?php
@@ -40,9 +39,9 @@
                 Logout(<?php echo $_SESSION['username']; ?>)
               </a>
               <ul class="dropdown-menu dropdown-menu-dark" aria-labelledby="navbarDarkDropdownMenuLink">
-                <li><a class="dropdown-item" href="../user/user_profile.php">My Profile</a></li>
+                <li><a class="dropdown-item" href="user_profile.php">My Profile</a></li>
                 <li><a class="dropdown-item" href="#">My Establishments</a></li>
-                <li><a class="dropdown-item" href="views/logout.php">Log out</a></li>
+                <li><a class="dropdown-item" href="logout.php">Log out</a></li>
               </ul>
             </li>
           </ul>
@@ -65,4 +64,3 @@
       </div>
     </div>
   </nav>
-</header>
