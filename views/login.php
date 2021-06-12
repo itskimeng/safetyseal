@@ -23,6 +23,8 @@ if (isset($_POST['login'])) {
                  $_SESSION['username']  = $user_data['UNAME'];
                  $_SESSION['province']  = $user_data['PROVINCE'];
                  $_SESSION['city_mun']  = $user_data['CITY_MUNICIPALITY'];
+                 $_SESSION['userid']  = $user_data['ID'];
+
                     header("location: ../dashboard.v2.php?username=" . md5($username) . "");
                } else if ($user_data['ROLE'] == 'user') {
                     $_SESSION['username']  = $user_data['UNAME'];
