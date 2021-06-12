@@ -10,7 +10,7 @@ $today = new DateTime();
 $userid = $_SESSION['userid'];
 $uname = $_SESSION['username'];
 
-$checklist_id = $_POST['appid'];
+$checklist_id = $_POST['chklist_id'];
 $has_consent = isset($_POST['consent']) ? true : false;
 
 $app->proceedChecklist($checklist_id, $has_consent, ApplicationManager::STATUS_FOR_RECEIVING, $today->format('Y-m-d H:i:s'));			
