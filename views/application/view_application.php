@@ -21,97 +21,12 @@
 <!-- Main content -->
 <div class="content">
   <div class="container">
-    <div class="row">
-      <div class="col-lg-12 col-md-6 col-sm-3">
-          <div class="card card-default">
-              <div class="card-header">
-                <h3 class="card-title"><i class="fa fa-info-circle" aria-hidden="true"></i> <b>APPLICATION DETAILS</b></h3>
-                <div class="card-tools">
-                  <span  class="badge bg-primary" style="font-size:13pt;"><?php echo $applicant['status']; ?></span>
-                  <button type="button" class="btn btn-tool" data-card-widget="collapse">
-                    <i class="fas fa-minus"></i>
-                  </button>
-                  
-                </div>
-              </div>
-              <!-- /.card-header -->
-              <div class="card-body table-responsive p-0">
-                
-                <div class="col-md-12">
-                  <div class="row pl-2 pr-2 pt-3">
-                    <div class="form-outline mb-2 col-md-4">
-                      <label class="form-label" for="form1Example1">Control No:</label><br>
-                      <input type="text" id="form1Example1" class="form-control" value="<?php echo $applicant['control_no']; ?>" disabled/>
-                    </div>
-                    <div class="form-outline mb-2 col-md-5">
-                    </div>
-                    <div class="form-outline mb-2 col-md-3">
-                      <label class="form-label" for="form1Example1">Date:</label><br>
-                      <input type="text" id="form1Example1" class="form-control" value="<?php echo $applicant['date_created']; ?>" disabled />
-                    </div>
-                  </div>
-                </div>
-
-                <div class="col-md-12">
-                  <div class="row pl-2 pr-2">
-                    <div class="form-outline mb-2 col-md-12">
-                      <label class="form-label" for="form1Example1">Name of Government Agency/ Office:</label><br>
-                      <input type="text" id="form1Example1" class="form-control" value="<?php echo $applicant['agency']; ?>" disabled/>
-                    </div>
-                  </div>
-                </div>
-
-                <div class="col-md-12">
-                  <div class="row pl-2 pr-2">
-                    <div class="form-outline mb-2 col-md-12">
-                      <label class="form-label" for="form1Example1">Name of Government Establlishment/ Department/ Office/ Unit:</label><br>
-                      <input type="text" id="form1Example1" class="form-control" value="<?php echo $applicant['establishment']; ?>" disabled/>
-                    </div>
-                  </div>
-                </div>
-
-                <div class="col-md-12">
-                  <div class="row pl-2 pr-2">
-                    <div class="form-outline mb-2 col-md-12">
-                      <label class="form-label" for="form1Example1">Nature of Government Establlishment/ Department/ Office/ Unit:</label><br>
-                      <input type="text" id="form1Example1" class="form-control" value="<?php echo $applicant['nature']; ?>" disabled/>
-                    </div>
-                  </div>
-                </div>
-
-                <div class="col-md-12">
-                  <div class="row pl-2 pr-2">
-                    <div class="form-outline mb-2 col-md-12">
-                      <label class="form-label" for="form1Example1">Address:</label><br>
-                      <input type="text" id="form1Example1" class="form-control" value="<?php echo $applicant['address']; ?>" disabled/>
-                    </div>
-                  </div>
-                </div>
-
-                <div class="col-md-12">
-                  <div class="row pl-2 pr-2 pb-3">
-                    <div class="form-outline mb-2 col-md-6">
-                      <label class="form-label" for="form1Example1">Name of Person in Charge:</label><br>
-                      <input type="text" id="form1Example1" class="form-control" value="<?php echo $applicant['fname']; ?>" disabled/>
-                    </div>
-                    <div class="form-outline mb-2 col-md-2">
-                    </div>
-                    <div class="form-outline mb-2 col-md-4">
-                      <label class="form-label" for="form1Example1">Contact Details:</label><br>
-                      <input type="text" id="form1Example1" class="form-control" value="<?php echo $applicant['contact_details']; ?>" disabled />
-                    </div>
-                  </div>
-                </div>
-              
-              </div>
-              <!-- /.card-body -->
-            </div> 
-      </div>
-    </div>
+    
+    <?php include 'form/applicant_details.php'; ?>
       
     <div class="row mb-4">
       <?php if ($applicant['status'] <> 'For Receiving' AND $applicant['status'] <> 'Draft'): ?>
-      <form method="POST" action="entity/post_assessment.php">
+      <form method="POST" action="entity/post_assessment.php" id="form-evaluation">
       <?php endif ?>  
         <input type="hidden" name="appid" value="<?php echo $applicant['appid']; ?>">
         <div class="col-lg-12 col-md-6 col-sm-3">
@@ -135,7 +50,7 @@
                         <?php endif ?> 
                       </tr>
                     </thead>
-                    <tbody>
+                    <tbody id="checklist_form">
                       <?php foreach ($applicants_data as $key => $list): ?>
                         <tr>
                           <td><b><?php echo $key+1; ?>.</b></td>
@@ -160,14 +75,29 @@
                           </td>
                           <?php if ($applicant['status'] <> 'For Receiving' AND $applicant['status'] <> 'Draft'): ?>
                           <td class="text-center">
-                            <div class="btn-group btn-group-toggle" data-toggle="buttons">
-                              <label class="btn bg-success btn-sm" style="background-color: #00800099">
-                                <input type="radio" name="options" id="option_b1" autocomplete="off"><i class="fa fa-check"></i> Pass
-                              </label>
-                              <label class="btn bg-danger btn-sm" style="background-color: #bd21308c">
-                                <input type="radio" name="options" id="option_b2" autocomplete="off"><i class="fa fa-times"></i> Failed
-                              </label>
-                            </div>
+                            <?php if ($is_readonly): ?>
+                              <div class="btn-group btn-group-toggle" data-toggle="buttons">
+                                <?php if ($list['assessment'] == 'pass'): ?>
+                                  <label class="assessments btn bg-success btn-sm bg-success_btn active" style="background-color: #00800099">
+                                  <input type="radio" name="assessments[<?php echo $list['ulist_id']; ?>]" value="pass" id="option_b1" autocomplete="off" checked><i class="fa fa-check"></i> Pass
+                                </label> 
+                                <?php else: ?>
+                                  <label class="assessments btn bg-danger btn-sm bg-danger_btn active" style="background-color: #bd21308c">
+                                  <input type="radio" name="assessments[<?php echo $list['ulist_id']; ?>]" value="failed" id="option_b2" autocomplete="off" checked><i class="fa fa-times"></i> Failed
+                                </label>
+                                <?php endif ?>
+                              </div> 
+                            <?php else: ?>
+                              <div class="btn-group btn-group-toggle" data-toggle="buttons">
+                                <label class="assessments btn bg-success btn-sm bg-success_btn <?php echo $list['assessment'] == 'pass' ? 'active' : ''; ?>" style="background-color: #00800099">
+                                  <input type="radio" name="assessments[<?php echo $list['ulist_id']; ?>]" value="pass" id="option_b1" autocomplete="off" <?php echo $list['assessment'] == 'pass' ? 'checked' : ''; ?> ><i class="fa fa-check"></i> Pass
+                                </label>
+                                <label class="assessments btn bg-danger btn-sm bg-danger_btn <?php echo $list['assessment'] == 'failed' ? 'active' : ''; ?>" style="background-color: #bd21308c">
+                                  <input type="radio" name="assessments[<?php echo $list['ulist_id']; ?>]" value="failed" id="option_b2" autocomplete="off" <?php echo $list['assessment'] == 'failed' ? 'checked' : ''; ?> ><i class="fa fa-times"></i> Failed
+                                </label>
+                              </div>
+                            <?php endif ?>
+
                           </td>
                           <?php endif ?> 
                         </tr>  
@@ -200,7 +130,13 @@
                 <div class="col-md-12">
                   <div class="form-group">
                     <label>Defects/Defeciencies noted during inspection:</label>
-                    <textarea class="form-control" rows="3" name="defects" placeholder="Enter ..." value="?php echo isset($app_notes['defects']) ? $app_notes['defects'] : ''; ?>"><?php echo isset($app_notes['defects']) ? $app_notes['defects'] : ''; ?></textarea>
+                    <textarea 
+                      class="form-control" 
+                      rows="3" 
+                      name="defects" 
+                      placeholder="Enter ..."
+                      <?php echo $is_readonly ? 'disabled' : ''; ?> 
+                      value="?php echo isset($app_notes['defects']) ? $app_notes['defects'] : ''; ?>"><?php echo isset($app_notes['defects']) ? $app_notes['defects'] : ''; ?></textarea>
                   </div>
                 </div>
               </div>
@@ -208,7 +144,15 @@
                 <div class="col-md-12" style="margin-bottom:-1%;">
                   <div class="form-group">
                     <label>Recommendations</label>
-                    <textarea class="form-control" name="recommendations" rows="3" placeholder="Enter ..." value="<?php echo isset($app_notes['recommendations']) ? $app_notes['recommendations'] : ''; ?>"><?php echo isset($app_notes['recommendations']) ? $app_notes['recommendations'] : ''; ?></textarea>
+                    <textarea 
+                      class="form-control" 
+                      name="recommendations" 
+                      rows="3" 
+                      placeholder="Enter ..." 
+                      <?php echo $is_readonly ? 'disabled' : ''; ?>
+                      value="<?php echo isset($app_notes['recommendations']) ? $app_notes['recommendations'] : ''; ?>"><?php echo isset($app_notes['recommendations']) ? $app_notes['recommendations'] : ''; ?>
+                        
+                      </textarea>
                   </div>
                 </div>
               </div>
@@ -216,48 +160,68 @@
           </div>
         </div>
         <?php endif ?> 
-
-        <div class="col-lg-12 col-md-6 col-sm-3">
-            <!-- <div class="card"> -->
-                
-              <div class="panel panel-default">
-                      <div class="row">
-                        <?php if ($applicant['status'] == 'For Receiving' AND $applicant['status'] <> 'Draft'): ?>
-                            <div class="col-md-12">
-                          <form action="entity/post_received.php" method="POST">
-                            <input type="hidden" name="appid" value="<?php echo $applicant['appid']; ?>">
-                              <button type = "submit" class="btn btn-primary btn-block" name="login" style="width: 100%;"><i class="fa fa-pen-alt"></i> 
-                                Receive  
-                              </button>
-                          </form>
-                            </div>
-                        <?php else: ?>
-                          <div class="<?php echo $is_new ? 'col-md-12' : 'col-md-6' ;?> pull-right">
-                            <button type = "submit" class="btn btn-primary btn-block" name="login" style="width: 100%;"><i class="fa fa-pen-alt"></i> 
-                              Update  
-                            </button>
-                          </div>
-                          <div class="col-md-6">
-                            <button type="button" class="btn btn-success btn-block" name="login" data-bs-toggle="modal" data-bs-target="#modall_proceed" style="width: 100%;"><i class="fa fa-share"></i> Submit</button>
-                          </div>
-                        <?php endif ?> 
+        
+        <?php if ($applicant['status'] <> 'Approved' AND $applicant['status'] <> 'Disapproved'): ?>
+          <div class="col-lg-12 col-md-6 col-sm-3">
+              <!-- <div class="card"> -->
+                 
+                <div class="panel panel-default">
+                  <div class="row">
+                    <?php if ($applicant['status'] == 'For Receiving' AND $applicant['status'] <> 'Draft'): ?>
+                        <div class="col-md-12">
+                      <form action="entity/post_received.php" method="POST">
+                        <input type="hidden" name="appid" value="<?php echo $applicant['appid']; ?>">
+                          <button type = "submit" class="btn btn-primary btn-block" name="login" style="width: 100%;"><i class="fa fa-pen-alt"></i> 
+                            Receive  
+                          </button>
+                      </form>
+                        </div>
+                    <?php else: ?>
+                      <div class="<?php echo $is_new ? 'col-md-12' : 'col-md-6' ;?> pull-right">
+                        <button type = "submit" class="btn btn-primary btn-block" name="login" style="width: 100%;"><i class="fa fa-pen-alt"></i> 
+                          Update  
+                        </button>
                       </div>
-                    </div> 
-            </div> 
-        </div>
+                      <div class="col-md-6">
+                        <button type="button" class="btn btn-success btn-block btn-proceed" data-toggle="modal" style="width: 100%;"><i class="fa fa-share"></i> Submit</button>
+                        </button>
+                      </div>
+                    <?php endif ?> 
+                  </div>
+                </div> 
+              </div> 
+              
+          </div>
+          
+        <?php endif ?>
       <?php if ($applicant['status'] <> 'For Receiving' AND $applicant['status'] <> 'Draft'): ?>
       </form>
       <?php endif ?>
     </div>
   </div>
         
+<?php include 'modal_evaluation.php'; ?>
+
 </div>
+
 
 <style type="text/css">
   .dlk-radio input[type="radio"]
 {
   margin-left:-99999px;
   display:none;
+}
+
+.bg-success_btn {
+  background-color: #28a745a6 !important;
+}
+
+/*.bg-success_btn:active {
+  background-color: #04b52c !important;
+}*/
+
+.bg-danger_btn {
+  background-color: #dc3545b3 !important;
 }
 /*.dlk-radio input[type="radio"] + .fa {
      opacity:0.15
@@ -295,5 +259,45 @@
       "autoWidth": false,
       "responsive": true,
     });
+
+    $(document).on('click', '.btn-proceed', function(){
+      let tbody = $('#checklist_form tr');
+      $counter = 0;
+      $.each(tbody, function(){
+        let tr = $(this);
+        let asmnt = tr.find('.assessments');
+        if (asmnt.hasClass('active')) {
+          $counter++;
+        }
+      });
+      
+      if ($counter < 14) {
+        tata.warn('Warning', 'All items in the checklist must be answered');
+      } else {
+        $('#modal_evaluation').modal('show');
+      }  
+    })
+
+    $(document).on('click', '.btn-save_application', function(){
+      let form = $('#form-evaluation').serialize();
+      let path = 'entity/post_evaluation.php';
+
+      postTask(path, form);
+    })
+
+    function postTask(path, data) {
+      $.post(path, data,
+        function(data, status){
+          if (status == 'success') {
+            setTimeout(function(){// wait for 5 secs(2)
+              location.reload(); // then reload the page.(3) 
+            }, 1000);
+          }
+        }
+      );
+
+      return data;
+    }
+
   });
 </script>

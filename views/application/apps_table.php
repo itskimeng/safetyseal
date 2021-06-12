@@ -12,7 +12,8 @@
               <th style="text-align: center;">Name</th>
               <th style="text-align: center; width:20%">Agency Name</th>
               <th style="text-align: center; width:20%">Location</th>
-              <th style="text-align: center; width:20%">Date Registered</th>
+              <th style="text-align: center; width:10%">Date Registered</th>
+              <th style="text-align: center; width:10%">Status</th>
               <th style="text-align: center; width:15%">Action</th>
             </tr>
           </thead>
@@ -23,6 +24,7 @@
                 <td><?php echo $applicant['agency']; ?></td>
                 <td><?php echo $applicant['address']; ?></td>
                 <td><?php echo $applicant['date_created']; ?></td>
+                <td><?php echo $applicant['status']; ?></td>
                 <td>
                   <div class="col-md-12">
                     <?php if ($applicant['status'] == 'For Receiving'): ?>
