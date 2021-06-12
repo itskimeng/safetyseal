@@ -140,62 +140,38 @@
         </div>
 
         <div class="row">
-            <div class="card">
-                <div class="card-header">
-                    <h5 class="header-title">List of Establishmemts</h5>
-                </div>
-                <div class="card-body" style="background-color: #f9f8f8;">
-                    <table id="table1" class="table table-hover mb-0 border-bottom">
-                        <thead>
-                            <tr>
-                                <th width="25%">AGENCY</th>
-                                <th width="25%">ESTABLISHMENT</th>
-                                <th width="40%">ADDRESS</th>
-                                <th width="15%">SAFETY SEAL NO</th>
-                                <th width="10%">ISSUED ON</th>
-                                <th width="10%">VALID UNTIL</th>
-                                <th width="10%">STATUS</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <tr class="clickable-row" data-href="establishment-profile.php">
-                                <td class="align-middle">
-                                    <a href="establishment-profile.php" target="_blank" class="">
-                                        <div class="font-weight-bold">
-                                            Bureau of Permits
-                                        </div>
-                                    </a>
-                                </td>
-                                <td class="align-middle">
-                                    <a href="establishment-profile.php" class="">
-                                        <div class="font-weight-bold">
-                                            Bureau of Permits
-                                        </div>
-                                    </a>
-                                </td>
-                                <td class="align-middle">
-                                    Room 110, Manila City Hall, Padre Burgos St., Ermita, Barangay 659-A, CITY OF MANILA, NCR, FIRST DISTRICT, NATIONAL CAPITAL REGION
-                                </td>
-                                <td class="align-middle" nowrap="">
-                                    NCR-2021-0000065
-                                </td>
-                                <td class="align-middle" nowrap="">
-                                
-                                        June 1, 2021
-                                </td>
-                                <td class="align-middle" nowrap="">
-                                    
-                                        December 1, 2021
-                                </td>
-                                <td class="align-middle" nowrap="">
-                                    <span class="label label-lg label-light-success label-inline font-weight-bold py-4">
-                                        <i class="fa fa-check-circle"></i>
-                                        Passed
-                                    </span>
-                                </td>
-                            </tr>
-                        </tbody>
-                    </table>
+            <div class="col-lg-12">
+                <div class="card">
+                    <div class="card-header">
+                        <h5 class="header-title">List of Establishmemts</h5>
+                    </div>
+                    <div class="card-body" style="background-color: #f9f8f8;">
+                        <table id="table1" class="table table-hover mb-0 border-bottom" style = "width:100%;">
+                            <thead>
+                                <tr>
+                                    <th width="25%">AGENCY</th>
+                                    <th width="25%">ESTABLISHMENT</th>
+                                    <th width="40%">ADDRESS</th>
+                                    <th width="15%">SAFETY SEAL NO</th>
+                                    <th width="10%">ISSUED ON</th>
+                                    <th width="10%">VALID UNTIL</th>
+                                    <th width="10%">STATUS</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <?php
+                                include 'application/config/connection.php';
+                                $resultSet = $conn->query("SELECT user.GOV_AGENCY_NAME, USER.GOV_ESTB_NAME, user.ADDRESS, checklist.date_created  from tbl_userinfo user INNER JOIN tbl_app_checklist checklist on user.ID = checklist.user_id");
+                                if ($resultSet->num_rows > 0) {
+                                    while ($row = $resultSet->fetch_assoc()) {
+                                    include 'establishment_table.php';
+                                    }
+                                }
+                                ?>
+
+                            </tbody>
+                        </table>
+                    </div>
                 </div>
             </div>
 
@@ -314,5 +290,5 @@
     })
 </script>
 </body>
-</html>
 
+</html>
