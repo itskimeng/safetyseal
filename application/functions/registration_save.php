@@ -31,8 +31,9 @@ if (strlen($username) < 5) {
 
 
     //insert to db
-    $insert = "INSERT INTO `tbl_admin_info`(`ID`, `REGION`, `PROVINCE`, `LGU`, `OFFICE`, `CMLGOO_NAME`, `UNAME`, `PASSWORD`, `ROLES`, `EMAIL`)
-    VALUES (null,'REGION IV-A - CALABARZON','$province','$municipalities','$agency_name','$firstname".' '."$middlename".' '."$lastname', '$username', '$password','user','$emailAddress')";
+    $insert = "INSERT INTO `tbl_admin_info`(`ID`, `REGION`, `PROVINCE`, `LGU`, `OFFICE`, `CMLGOO_NAME`, `UNAME`, `PASSWORD`, `VERIFICATION_CODE`, `IS_APPROVED`, `IS_VERIFIED`, `ROLES`, `EMAIL`)
+    VALUES (null,'REGION IV-A - CALABARZON','$province','$municipalities','$agency_name','$firstname".' '."$middlename".' '."$lastname', '$username', '$password','$vkey', '0', '0','user','$emailAddress')";
+
     if (mysqli_query($conn, $insert)) {
     }
     //get user id
@@ -42,8 +43,8 @@ if (strlen($username) < 5) {
 
     
 
-    $sql = "INSERT INTO `tbl_userinfo`(`ID`, `USER_ID`, `ADDRESS`, `POSITION`, `MOBILE_NO`, `EMAIL_ADDRESS`, `GOV_AGENCY_NAME`, `GOV_ESTB_NAME`, `UNAME`, `PASSWORD`, `VERIFICATION_CODE`, `DATE_REGISTERED`, `IS_APPROVE`, `IS_VERIFIED`, `ROLE`, `PROVINCE`, `CITY_MUNICIPALITY`)
-        VALUES (NULL,'$user_id','$address','$mobile_no','$emailAddress','$position','$agency_name','$establishment_name','$username','$password','$vkey','$date', '0','0', 'user','$province', '$municipalities')";
+    $sql = "INSERT INTO `tbl_userinfo`(`ID`, `USER_ID`, `ADDRESS`, `POSITION`, `MOBILE_NO`, `EMAIL_ADDRESS`, `GOV_AGENCY_NAME`, `GOV_ESTB_NAME`,`DATE_REGISTERED`, `PROVINCE`, `CITY_MUNICIPALITY`)
+        VALUES (NULL,'$user_id','$address','$mobile_no','$emailAddress','$position','$agency_name','$establishment_name','$date','$province', '$municipalities')";
     if (mysqli_query($conn, $sql)) {
         //    send email
 

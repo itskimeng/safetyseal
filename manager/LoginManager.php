@@ -12,7 +12,9 @@ class LoginManager
     
     public function getUsersRole($username,$password)
     {
-        $sql = "SELECT * from tbl_userinfo where UNAME = '$username' AND PASSWORD = '$password' LIMIT 1";
+        $sql = "SELECT * FROM `tbl_admin_info` ai 
+        LEFT JOIN tbl_userinfo ui on ai.ID = ui.USER_ID 
+        WHERE ai.UNAME = '$username' AND ai.PASSWORD = '$password' LIMIT 1";
         $query = mysqli_query($this->conn, $sql);
         $data = [];
         
@@ -21,7 +23,7 @@ class LoginManager
                 'ID' => $row['ID'],
                 'UNAME' => $row['UNAME'],
                 'IS_VERIFIED' => $row['IS_VERIFIED'],
-                'ROLE' => $row['ROLE'],
+                'ROLE' => $row['ROLES'],
                 'PROVINCE' => $row['PROVINCE'],
                 'CITY_MUNICIPALITY' => $row['CITY_MUNICIPALITY']
             ];    
