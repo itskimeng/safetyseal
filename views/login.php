@@ -9,7 +9,6 @@ if (isset($_POST['login'])) {
      } else if (isset($_POST['password_reg'])) {
           $password = ($_POST['password_reg']);
      }
-
      // Query the database
      // APPLICANT
      $resultSet = $conn->query("SELECT * from tbl_userinfo where UNAME = '$username' AND PASSWORD = '$password' LIMIT 1");
@@ -42,4 +41,5 @@ if (isset($_POST['login'])) {
      echo 'something wrong';
 }
 mysqli_close($conn);
+
 ?>

@@ -143,7 +143,7 @@
             <div class="col-lg-12">
                 <div class="card">
                     <div class="card-header">
-                        <h5 class="header-title">List of Establishmemts</h5>
+                        <h5 class="header-title">Applicants</h5>
                     </div>
                     <div class="card-body" style="background-color: #f9f8f8;">
                         <table id="table1" class="table table-hover mb-0 border-bottom" style = "width:100%;">
@@ -167,6 +167,8 @@
                                     include 'establishment_table.php';
                                     }
                                 }
+                                mysqli_close($conn);
+
                                 ?>
 
                             </tbody>

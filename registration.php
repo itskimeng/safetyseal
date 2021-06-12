@@ -64,7 +64,8 @@
                 login:'login',
             },
             success: function(data) {
-                window.location = 'index.php?username="<?php echo md5($_SESSION['username']); ?>';
+                window.location = 'index.php?username="<?php if (isset($_SESSION['username'])) { echo $_SESSION['username']; } else { echo ''; } ?>"'
+                
 
 
             }

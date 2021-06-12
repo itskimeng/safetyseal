@@ -23,7 +23,7 @@
         </li>
 
         <li class="nav-item">
-          <a href="#" class="nav-link">Logout (dilgss_masacluti)</a>
+          <a href="views/logout.php" class="nav-link">Logout(<?php echo $_SESSION['username'];?>)</a>
         </li>
 
       </ul>
