@@ -5,8 +5,9 @@
     <div class="pt-5">
       <div class="row align-items-center heading">
 
-        <div class="col-lg-12 text-white">
-          <!-- <header class="py-5 mt-5"> -->
+         <!--  <div class="row">
+        <div class="col-md-12 text-white">
+            
           <header>
             <h1 class="display-6 headingText">Safety Seal Certification Checklist</h1>
             <p class="lead" style=" font-size:17px; color:#e8e7e7;">
@@ -14,7 +15,23 @@
              </p>
             
           </header> 
-        </div>
+          </div>
+        </div> -->
+        <!-- <div class="col-md-12">
+            <div class="py-1">
+              <div class="form-box shadow p-1 bg-body rounded" style="width:100%;">
+                <header>
+                  <h1 class="display-6 headingText">Safety Seal Certification Checklist</h1>
+                  <p class="lead" style=" font-size:17px; color:#e8e7e7;">
+                  (DILG as Issuing Authority)
+                   </p>
+                  
+                </header>
+              </div>
+            </div>
+            
+          
+        </div> -->
 
         <div class="col-md-12">
           <div class="py-1">
@@ -34,19 +51,19 @@
 
                 <!-- Submit button -->
                 <?php if ($userinfo['status'] == 'Draft'): ?>
-                  <div class="panel panel-default">
+                  <div class="panel panel-default pt-4">
                     <div class="row">
                       
-                      <div class="col-md-6">
+                      <div class="<?php echo $is_new ? 'col-md-12' : 'col-md-6' ;?> pull-right">
                         <button type = "submit" class="btn btn-primary btn-block" name="login" style="width: 100%;"><i class="fa fa-pen-alt"></i> 
                           <?php echo $is_new ? 'Save' : 'Update' ;?>  
                         </button>
                       </div>
-
-                      <div class="col-md-6">
-                        <button type="button" class="btn btn-success btn-block" name="login" data-bs-toggle="modal" data-bs-target="#modall_proceed" style="width: 100%;"><i class="fa fa-share"></i> Submit</button>
-                      </div>
-                      
+                      <?php if (!$is_new): ?>
+                        <div class="col-md-6">
+                          <button type="button" class="btn btn-success btn-block" name="login" data-bs-toggle="modal" data-bs-target="#modall_proceed" style="width: 100%;"><i class="fa fa-share"></i> Submit</button>
+                        </div>
+                      <?php endif ?>
                     </div>
                   </div> 
                 <?php endif ?> 
