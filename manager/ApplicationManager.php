@@ -149,7 +149,7 @@ class ApplicationManager
     public function getUsers($user)
     {
         $sql = "SELECT 
-            a.id as id, 
+             a.id as id, 
             DATE_FORMAT(a.date_created, '%M %d, %Y') as date_created,
             DATE_FORMAT(a.date_proceed, '%m-%d-%Y') as date_proceed,
             u.ADDRESS as address, 
@@ -158,11 +158,12 @@ class ApplicationManager
             u.GOV_NATURE_NAME as nature,
             p.code as pcode,
             m.code as mcode,
-            CONCAT(u.FIRST_NAME, ' ', u.LAST_NAME) as fname, 
+            ai.CMLGOO_NAME as fname,
             u.MOBILE_NO as contact_details,
             a.status as status,
             a.control_no as control_no
             FROM tbl_userinfo u 
+            LEFT JOIN tbl_admin_info ai on u.user_id = ai.ID
             LEFT JOIN tbl_app_checklist a on u.id = a.user_id
             LEFT JOIN tbl_province p on p.id = u.PROVINCE
             LEFT JOIN tbl_citymun m on m.id = u.CITY_MUNICIPALITY
@@ -301,6 +302,7 @@ class ApplicationManager
         ac.status as status
         FROM tbl_app_checklist ac
         LEFT JOIN tbl_userinfo ui on ui.id = ac.user_id
+        LEFT JOIN tbl_admin_info ai on ui.user_id = ai.id
         WHERE ac.status <> '".$status."'";
         
         $query = mysqli_query($this->conn, $sql);
