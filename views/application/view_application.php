@@ -176,6 +176,7 @@
               </div> 
         </div>
 
+        <?php if ($applicant['status'] <> 'For Receiving' AND $applicant['status'] <> 'Draft'): ?>
         <div class="col-lg-12 col-md-6 col-sm-3">
           <div class="card card-default">
             <div class="card-header">
@@ -211,6 +212,7 @@
             </div>
           </div>
         </div>
+        <?php endif ?> 
 
         <div class="col-lg-12 col-md-6 col-sm-3">
             <!-- <div class="card"> -->
