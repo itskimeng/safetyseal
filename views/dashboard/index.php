@@ -161,7 +161,7 @@
                             <tbody>
                                 <?php
                                 include 'application/config/connection.php';
-                                $resultSet = $conn->query("SELECT user.GOV_AGENCY_NAME, USER.GOV_ESTB_NAME, user.ADDRESS, checklist.date_created  from tbl_userinfo user INNER JOIN tbl_app_checklist checklist on user.ID = checklist.user_id");
+                                $resultSet = $conn->query("SELECT checklist.control_no, user.GOV_AGENCY_NAME, user.GOV_ESTB_NAME, user.ADDRESS, checklist.date_created  from tbl_userinfo user INNER JOIN tbl_app_checklist checklist on user.ID = checklist.user_id");
                                 if ($resultSet->num_rows > 0) {
                                     while ($row = $resultSet->fetch_assoc()) {
                                     include 'establishment_table.php';

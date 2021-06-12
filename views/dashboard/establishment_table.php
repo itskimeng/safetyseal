@@ -16,11 +16,11 @@ echo '
        '.$row['ADDRESS'].'
     </td>
     <td class="align-middle" nowrap="">
-        NCR-2021-0000065
+       '.$row['control_no'].'
     </td>
     <td class="align-middle" nowrap="">
 
-   '.$row['date_created'].' 
+   '.date('F d,Y',strtotime($row['date_created'])).' 
     </td>
     <td class="align-middle" nowrap="">
 
