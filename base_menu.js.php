@@ -23,7 +23,11 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.66/vfs_fonts.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.66/pdfmake.min.js"></script>
 
-
+<!-- Input Mask -->
+<script src="frontend/bower_components/moment/moment.min.js"></script>
+<script src="frontend/bower_components/inputmask/dist/min/inputmask/jquery.inputmask.min.js"></script>
+<!-- date-range-picker -->
+<script src="frontend/bower_components/daterangepicker/daterangepicker.js"></script>
 
 <!-- jQuery 3 -->
 <!-- <script src="frontend/bower_components/jquery/dist/jquery.min.js"></script> -->

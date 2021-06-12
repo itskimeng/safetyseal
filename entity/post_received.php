@@ -12,7 +12,7 @@ $uname = $_SESSION['username'];
 
 $checklist_id = $_POST['appid'];
 
-$app->receiveChecklist($checklist_id, ApplicationManager::STATUS_RECEIVED, $today->format('Y-m-d H:i:s'));	
+$app->receiveChecklist($checklist_id, ApplicationManager::STATUS_RECEIVED, $today->format('Y-m-d H:i:s'), $userid);	
 
 $_SESSION['toastr'] = $app->addFlash('success', 'The application has been received.', 'Received');
 

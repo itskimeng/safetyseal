@@ -12,7 +12,12 @@ $province_opts = $app->getProvinces();
 $citymun_opts = $app->getCityMuns();
 $applicants = $app->getApplicationLists(ApplicationManager::STATUS_DRAFT);
 
+
 $applicant = getUserChecklists($conn, $appid); 
+$is_readonly = false;
+if ($applicant['status'] == 'Approved' OR $applicant['status'] == 'Disapproved') {
+    $is_readonly = true;
+}
 $applicants_data = getUserChecklistsEntry($conn, $appid); 
 $app_notes = getUserChecklistsValidations($conn, $appid);
 
@@ -48,7 +53,8 @@ function getUserChecklistsEntry($conn, $id)
         c.description as description,
         e.id as ulist_id,
         e.answer as answer,
-        e.reason as reason
+        e.reason as reason,
+        e.assessment as assessment
         FROM tbl_app_checklist_entry e
         LEFT JOIN tbl_app_checklist a on a.id = e.parent_id
         LEFT JOIN tbl_app_certchecklist c on c.id = e.chklist_id
@@ -75,7 +81,8 @@ function getUserChecklistsEntry($conn, $id)
             'ulist_id' => $row['ulist_id'],
             'badge' => $badge,
             'answer' => strtoupper($row['answer']),
-            'reason' => $row['reason']
+            'reason' => $row['reason'],
+            'assessment' => $row['assessment']
         ];    
     }
 

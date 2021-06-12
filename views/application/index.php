@@ -20,9 +20,7 @@
 <!-- Main content -->
 <div class="content">
   <div class="container">
-    
     <?php include 'filter.php'; ?> 
-
     <?php include 'apps_table.php'; ?>     
   </div>
 </div>
@@ -30,6 +28,7 @@
 <script>
   $(function () {
     // $('select').select2();
+  $('#reservation').daterangepicker()
 
     $("#example1").DataTable({
       // "responsive": true, "lengthChange": false, "autoWidth": false,
@@ -44,5 +43,11 @@
       "autoWidth": false,
       "responsive": true,
     });
+
+    $(document).on('click', '#btn-filter', function() {
+      
+    });
+
+
   });
 </script>

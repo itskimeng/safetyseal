@@ -6,6 +6,7 @@ class ApplicationManager
 
     const STATUS_DRAFT              = "Draft";
     const STATUS_APPROVED           = "Approved";
+    const STATUS_DISAPPROVED        = "Disapproved";
     const STATUS_FOR_APPROVAL       = "For Approval";
     const STATUS_FOR_RECEIVING      = "For Receiving";
     const STATUS_RECEIVED           = "Received";
@@ -216,9 +217,9 @@ class ApplicationManager
         return $result;
     }
 
-    public function receiveChecklist($checklist_id, $status, $date_modified)
+    public function receiveChecklist($checklist_id, $status, $date_modified, $receiver)
     {
-        $sql = "UPDATE tbl_app_checklist SET date_received = '".$date_modified."', date_modified = '".$date_modified."', status = '".$status."' WHERE id = ".$checklist_id."";
+        $sql = "UPDATE tbl_app_checklist SET date_received = '".$date_modified."', date_modified = '".$date_modified."', receiver_id = ".$receiver.", status = '".$status."' WHERE id = ".$checklist_id."";
         $result = mysqli_query($this->conn, $sql);
 
         return $result;
@@ -260,8 +261,7 @@ class ApplicationManager
         $data = [];
         
         while ($row = mysqli_fetch_assoc($query)) {
-            $data[] = [
-                'id' => $row['id'],
+            $data[$row['id']] = [
                 'code' => $row['code'],
                 'name' => $row['name']
             ];    
@@ -278,8 +278,7 @@ class ApplicationManager
         $data = [];
         
         while ($row = mysqli_fetch_assoc($query)) {
-            $data[] = [
-                'id' => $row['id'],
+            $data[$row['id']] = [
                 'province' => $row['province'],
                 'code' => $row['code'],
                 'name' => $row['name']
@@ -322,6 +321,30 @@ class ApplicationManager
         }
 
         return $data;
+    }
+
+    public function getValidationLists($appid) {
+        $sql = "SELECT * FROM tbl_app_checklist_onsitevalidations where chklist_id = $appid";
+        $query = mysqli_query($this->conn, $sql);
+           
+        $result = mysqli_fetch_array($query);
+        
+        return $result; 
+    }
+
+    public function insertAssessment($id, $assessment) {
+        $sql = "UPDATE tbl_app_checklist_entry SET assessment = '".$assessment."' WHERE id = ".$id."";
+        $query = mysqli_query($this->conn, $sql);
+         
+        return $result; 
+    }
+
+    public function evaluateChecklist($checklist_id, $status, $date_modified, $approver)
+    {
+        $sql = "UPDATE tbl_app_checklist SET date_approved = '".$date_modified."', date_modified = '".$date_modified."', approver_id = ".$approver.", status = '".$status."' WHERE id = ".$checklist_id."";
+        $result = mysqli_query($this->conn, $sql);
+
+        return $result;
     }
 
 }
