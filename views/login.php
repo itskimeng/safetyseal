@@ -8,7 +8,7 @@ if (isset($_POST['login'])) {
      $username = mysqli_real_escape_string($conn, $_POST["username"]);
 
      if (isset($_POST['password'])) {
-          $password = md5($_POST['password']);
+          $password = ($_POST['password']);
      } else if (isset($_POST['password_reg'])) {
           $password = ($_POST['password_reg']);
      }
@@ -16,20 +16,22 @@ if (isset($_POST['login'])) {
      // APPLICANT
 
      foreach ($user_cred as $key => $user_data){
+
           if($user_data['IS_VERIFIED'] ==1)
           {
-               $_SESSION['userid']  = $user_data['ID'];
-               if ($user_data['ROLE'] == 'admin') {
+
+               
+               if ($user_data['ROLES'] == 'admin') {
                  $_SESSION['username']  = $user_data['UNAME'];
                  $_SESSION['province']  = $user_data['PROVINCE'];
                  $_SESSION['city_mun']  = $user_data['CITY_MUNICIPALITY'];
+                
                  $_SESSION['userid']  = $user_data['ID'];
 
                     header("location: ../dashboard.v2.php?username=" . md5($username) . "");
                } else if ($user_data['ROLE'] == 'user') {
                     $_SESSION['username']  = $user_data['UNAME'];
                     $_SESSION['userid']  = $user_data['ID'];
-            
                     header("location:../dashboard_user.php?username=" . md5($username) . "");
                }
           }

@@ -8,6 +8,7 @@
 
 <?php 
 session_start();
+
 startblock('content'); ?>
   <?php include('views/application/index.php'); ?>
 <?php endblock(); ?>
