@@ -37,7 +37,7 @@ if (strlen($username) < 5) {
     if (mysqli_query($conn, $insert)) {
     }
     //get user id
-    $resultSet = $conn->query("SELECT * from tbl_admin_info where UNAME = '$username' AND PASSWORD = '$password' LIMIT 1");
+    $resultSet = $conn->query("SELECT * from tbl_admin_info where UNAME = '$username' AND PASSWORD = '$password' ORDER BY ID desc limit 1");
     $row = $resultSet->fetch_assoc();
     $user_id=$row['ID'];
 
