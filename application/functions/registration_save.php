@@ -32,7 +32,7 @@ if (strlen($username) < 5) {
 
     //insert to db
     $insert = "INSERT INTO `tbl_admin_info`(`ID`, `REGION`, `PROVINCE`, `LGU`, `OFFICE`, `CMLGOO_NAME`, `UNAME`, `PASSWORD`, `ROLES`, `EMAIL`)
-    VALUES (null,'REGION IV-A - CALABARZON','$province','$municipalities','OFFICE','$firstname".' '."$middlename".' '."$lastname', '$username', '$password','user','$emailAddress')";
+    VALUES (null,'REGION IV-A - CALABARZON','$province','$municipalities','$agency_name','$firstname".' '."$middlename".' '."$lastname', '$username', '$password','user','$emailAddress')";
     if (mysqli_query($conn, $insert)) {
     }
     //get user id
