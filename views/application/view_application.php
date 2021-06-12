@@ -27,6 +27,7 @@
               <div class="card-header">
                 <h3 class="card-title"><i class="fa fa-info-circle" aria-hidden="true"></i> <b>APPLICATION DETAILS</b></h3>
                 <div class="card-tools">
+                  <span  class="badge bg-primary" style="font-size:13pt;"><?php echo $applicant['status']; ?></span>
                   <button type="button" class="btn btn-tool" data-card-widget="collapse">
                     <i class="fas fa-minus"></i>
                   </button>
@@ -109,7 +110,9 @@
     </div>
       
     <div class="row mb-4">
+      <?php if ($applicant['status'] <> 'For Receiving' AND $applicant['status'] <> 'Draft'): ?>
       <form method="POST" action="entity/post_assessment.php">
+      <?php endif ?>  
         <input type="hidden" name="appid" value="<?php echo $applicant['appid']; ?>">
         <div class="col-lg-12 col-md-6 col-sm-3">
             <div class="card">
@@ -242,7 +245,9 @@
                     </div> 
             </div> 
         </div>
+      <?php if ($applicant['status'] <> 'For Receiving' AND $applicant['status'] <> 'Draft'): ?>
       </form>
+      <?php endif ?>
     </div>
   </div>
         
@@ -268,7 +273,7 @@
 
     <?php
       // toastr output & session reset
-      // session_start();
+      session_start();
       if (isset($_SESSION['toastr'])) {
         echo 'tata.'.$_SESSION['toastr']['type'].'("'.$_SESSION['toastr']['title'].'", "'.$_SESSION['toastr']['message'].'", {
           duration: 5000
