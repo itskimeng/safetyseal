@@ -28,7 +28,7 @@ function getUserChecklists($conn, $id)
        	u.GOV_ESTB_NAME as establishment,
        	u.GOV_NATURE_NAME as nature,
        	u.ADDRESS as address,
-        CONCAT(u.FIRST_NAME, ' ', u.LAST_NAME) as fname,
+        ai.CMLGOO_NAME as fname,
        	u.ADDRESS as address,
        	u.MOBILE_NO as contact_details,
         a.control_no as control_no,
@@ -37,6 +37,7 @@ function getUserChecklists($conn, $id)
        	DATE_FORMAT(a.date_created, '%M %d, %Y') as date_created
         FROM tbl_app_checklist a 
         LEFT JOIN tbl_userinfo u on u.id = a.user_id
+        LEFT JOIN tbl_admin_info ai on a.user_id = ai.id
         WHERE a.id = $id";
 
     $query = mysqli_query($conn, $sql);

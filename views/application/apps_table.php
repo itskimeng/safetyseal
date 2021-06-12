@@ -6,7 +6,7 @@
       </div>
 
       <div class="card-body">
-        <table id="example1" class="table table-bordered table-striped">
+        <table id="list_table" class="table table-bordered table-striped">
           <thead>
             <tr>
               <th style="text-align: center;">Name</th>
@@ -17,7 +17,7 @@
               <th style="text-align: center; width:15%">Action</th>
             </tr>
           </thead>
-          <tbody>
+          <tbody id="list_body">
             <?php foreach ($applicants as $key => $applicant): ?>
               <tr>
                 <td><?php echo $applicant['fname']; ?></td>

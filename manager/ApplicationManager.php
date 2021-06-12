@@ -292,7 +292,7 @@ class ApplicationManager
     {
         $sql = "SELECT 
         ac.id as id,
-        CONCAT(ui.FIRST_NAME, ' ', ui.LAST_NAME) as fname,
+        ai.CMLGOO_NAME as fname,
         ui.GOV_AGENCY_NAME as agency,
         ui.ADDRESS as address,
         DATE_FORMAT(ac.date_created, '%Y-%m-%d') as date_created,

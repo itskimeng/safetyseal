@@ -5,6 +5,7 @@
         <h3 class="card-title"><i class="fa fa-filter"></i> Filters</h3>
       </div>
 
+      <form id="form-filter">
       <div class="card-body">
         <div class="row">
           <div class="col-md-4">
@@ -62,7 +63,7 @@
           <div class="col-md-4">
             <div class="form-group">
               <label>Name</label>
-              <select class="form-control select2bs4 select2-hidden-accessible" style="width: 100%;" data-select2-id="17" tabindex="-1" aria-hidden="true">
+              <select id="cform-name" class="form-control select2bs4 select2-hidden-accessible" style="width: 100%;" data-select2-id="17" tabindex="-1" aria-hidden="true">
                 <option></option>
                 <?php foreach ($applicants as $key => $app): ?>
                   <option value="<?php echo $app['fname']; ?>"><?php echo $app['fname']; ?></option>
@@ -74,7 +75,7 @@
           <div class="col-md-4">
             <div class="form-group">
               <label>Agency</label>
-              <select class="form-control select2bs4 select2-hidden-accessible" style="width: 100%;" data-select2-id="17" tabindex="-1" aria-hidden="true">
+              <select id="cform-agency" class="form-control select2bs4 select2-hidden-accessible" style="width: 100%;" data-select2-id="17" tabindex="-1" aria-hidden="true">
                 <option></option>
                 <?php foreach ($applicants as $key => $app): ?>
                   <option value="<?php echo $app['agency']; ?>"><?php echo $app['agency'] ?></option>
@@ -86,7 +87,7 @@
           <div class="col-md-4">
             <div class="form-group">
               <label>Location</label>
-              <select class="form-control select2bs4 select2-hidden-accessible" style="width: 100%;" data-select2-id="17" tabindex="-1" aria-hidden="true">
+              <select id="cform-location" class="form-control select2bs4 select2-hidden-accessible" style="width: 100%;" data-select2-id="17" tabindex="-1" aria-hidden="true">
                 <option></option>
                 <?php foreach ($applicants as $key => $app): ?>
                   <option value="<?php echo $app['address']; ?>"><?php echo $app['address']; ?></option>
@@ -100,7 +101,7 @@
           <div class="col-md-4">
             <div class="form-group">
               <label>Status</label>
-              <select class="form-control select2bs4 select2-hidden-accessible" style="width: 100%;" data-select2-id="17" tabindex="-1" aria-hidden="true">
+              <select id="cform-status" class="form-control select2bs4 select2-hidden-accessible" style="width: 100%;" data-select2-id="17" tabindex="-1" aria-hidden="true">
                 <option></option>
                 <?php foreach ($status_opts as $key => $opt): ?>
                   <option value="<?php echo $opt; ?>"><?php echo $opt; ?></option>
@@ -143,6 +144,7 @@
         </div>
 
       </div>  
+    </form>
     </div>
   </div>
   </div>
