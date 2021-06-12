@@ -19,7 +19,7 @@ if (isset($_POST['login'])) {
           $role_access = $row['ROLE'];
           $userid = $row['ID'];
           $province = $row['PROVINCE'];
-          $city_mun = $row['CITY_PROVINCE'];
+          $city_mun = $row['CITY_MUNICIPALITY'];
           
 
           if ($verified == 1) {
