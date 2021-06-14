@@ -23,7 +23,6 @@ class LoginManager
         WHERE ai.UNAME = '$username' AND ai.PASSWORD = '$password'";
         $query = mysqli_query($this->conn, $sql);
         $data = [];
-        
         while ($row = mysqli_fetch_assoc($query)) {
             $data[] = [
                 'ID' => $row['ID'],
@@ -34,6 +33,7 @@ class LoginManager
                 'CITY_MUNICIPALITY' => $row['CITY_MUNICIPALITY']
             ];    
         }
+
 
         return $data;
     }

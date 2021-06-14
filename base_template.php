@@ -34,9 +34,11 @@
   </body>
   <!-- Main Footer -->
   <footer class="main-footer d-flex">
-    
-    <!-- Default to the left -->
-    <strong>Copyright &copy; 2021 SafetySeal Portal </a>.</strong> All rights reserved.
+    <div class="container">
+      <!-- Default to the left -->
+      <strong>Copyright &copy; 2021 SafetySeal Portal </a>.</strong> All rights reserved.
+      
+    </div>
   </footer>
 </html>
 

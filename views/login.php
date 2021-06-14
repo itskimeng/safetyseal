@@ -14,7 +14,7 @@ if (isset($_POST['login'])) {
      }
      // Query the database
      // APPLICANT
-
+     if(!empty($user_cred)){
      foreach ($user_cred as $key => $user_data){
 
           if($user_data['IS_VERIFIED'] ==1)
@@ -40,6 +40,10 @@ if (isset($_POST['login'])) {
                $error = "This account has not yet been verified.";
                echo $error;
           }
+     }
+}else{
+         header('Location: ../registration.php?login=failed');
+
      }
 }
 

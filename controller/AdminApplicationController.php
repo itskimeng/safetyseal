@@ -17,5 +17,5 @@ $status_opts = [
 ];
 
 $province_opts = $app->getProvinces();
-$citymun_opts = $app->getCityMuns();
+$citymun_opts = $app->getCityMuns($province);
 $applicants = $app->getApplicationLists($province, $citymun, ApplicationManager::STATUS_DRAFT);

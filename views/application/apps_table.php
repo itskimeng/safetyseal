@@ -9,50 +9,45 @@
         <table id="list_table" class="table table-bordered table-striped">
           <thead>
             <tr>
+              <th style="text-align: center;">Control No.</th>
               <th style="text-align: center;">Name</th>
-              <th style="text-align: center; width:20%">Agency Name</th>
-              <th style="text-align: center; width:20%">Location</th>
+              <th style="text-align: center; width:15%">Agency Name</th>
+              <th style="text-align: center; width:15%">Location</th>
               <th style="text-align: center; width:10%">Date Registered</th>
-              <th style="text-align: center; width:10%">Status</th>
+              <th style="text-align: center;">Safety Seal No.</th>
               <th style="text-align: center; width:15%">Action</th>
             </tr>
           </thead>
           <tbody id="list_body">
             <?php foreach ($applicants as $key => $applicant): ?>
               <tr>
+                <td>
+                  <span class="label label-lg bg-<?php echo $applicant['color']; ?> label-inline font-weight-bold py-3">
+                    <i class="fa fa-check-circle"></i><?php echo $applicant['status']; ?>
+                  </span>
+                  <br>
+                  <?php echo $applicant['control_no']; ?>    
+                </td>
                 <td><?php echo $applicant['fname']; ?></td>
                 <td><?php echo $applicant['agency']; ?></td>
                 <td><?php echo $applicant['address']; ?></td>
                 <td><?php echo $applicant['date_created']; ?></td>
-                <td><?php echo $applicant['status']; ?></td>
+                <td><?php echo $applicant['ss_no']; ?></td>
                 <td>
                   <div class="col-md-12">
                     <?php if ($applicant['status'] == 'For Receiving'): ?>
 
-                      <a href="admin_application_view.php?appid=<?php echo $applicant['id']; ?>&ussir=<?php echo $applicant['userid']; ?>&status=<?php echo $applicant['status']; ?>" class="btn btn-primary btn-block btn-sm" style="margin-bottom: -5%;">
+                      <a href="entity/post_received.php?appid=<?php echo $applicant['id']; ?>&ussir=<?php echo $applicant['userid']; ?>&status=<?php echo $applicant['status']; ?>" class="btn btn-primary btn-block btn-sm" style="margin-bottom: -5%;">
                         <i class="fa fa-box"></i> Receive
                       </a>
 
-
-                     <!--  <button type="button" class="btn btn-info btn-block btn-sm" style="margin-bottom: -5%;">
-                        <i class="fa fa-box"></i> Received
-                      </button> -->
+                      <!-- <a href="admin_application_view.php?appid=<?php //echo $applicant['id']; ?>&ussir=<?php //echo $applicant['userid']; ?>&status=<?php //echo $applicant['status']; ?>" class="btn btn-primary btn-block btn-sm" style="margin-bottom: -5%;">
+                        <i class="fa fa-box"></i> Receive
+                      </a> -->
                     <?php else: ?>
-                      <a href="admin_application_view.php?appid=<?php echo $applicant['id']; ?>&ussir=<?php echo $applicant['userid']; ?>" class="btn btn-danger btn-block btn-sm" style="margin-bottom: -5%;">
+                      <a href="admin_application_view.php?appid=<?php echo $applicant['id']; ?>&ussir=<?php echo $applicant['userid']; ?>" class="btn btn-info btn-block btn-sm" style="margin-bottom: -5%;">
                         <i class="fa fa-clipboard-list"></i> View Applicant
                       </a>
-                      <!-- <a href="admin_application_view.php?appid=<?php //echo $applicant['id']; ?>&ussir=<?php //echo $applicant['userid']; ?>" class="btn btn-danger btn-block btn-sm" style="margin-bottom: -5%;">
-                        <i class="fa fa-th-list"></i> View Applicant
-                      </a> -->
-                      <!-- <button type="button" class="btn btn-success btn-block btn-sm" style="margin-bottom: -5%;">
-                        <i class="fa fa-bell"></i> Rate
-                      </button>
-                      <button type="button" class="btn btn-warning btn-block btn-sm" style="margin-bottom: -5%;">
-                        <i class="fa fa-bell"></i> Ratings
-                      </button>
-                      <button type="button" class="btn btn-secondary btn-block btn-sm">
-                        <i class="fa fa-bell"></i> History
-                      </button> -->
                     <?php endif ?>
                   </div>
                 </td>

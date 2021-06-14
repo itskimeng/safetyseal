@@ -36,7 +36,7 @@
                 </div>
                 <!-- /.card-header -->
                 <div class="card-body table-responsive p-0">
-                  <table class="table table-hover table-bordered table-striped" style="font-size:10pt;">
+                  <table class="table table-hover table-striped" style="font-size:10pt;">
                     <thead class="text-center" style="background-color: #1da6da; color: white;">
                       <tr>
                         <th width="3%">#</th>
@@ -69,7 +69,7 @@
                           <td>
                             <div class="col-md-12">
                               <a href="https://www.google.com/" class="btn btn-block btn-warning btn-sm">
-                                <i class="fa fa-link"></i> Visit  
+                                <i class="fa fa-link"></i> View  
                               </a>
                             </div>
                           </td>
@@ -116,16 +116,13 @@
               <h3 class="card-title"><i class="fa fa-search" aria-hidden="true"></i> <b>FOR ONSITE VALIDATION/ INSPECTION</b></h3>
 
               <div class="card-tools">
-                <button type="button" class="btn btn-tool" data-card-widget="collapse">
+                <button type="button" class="btn btn-tool btn-tool-onsite" data-card-widget="collapse">
                   <i class="fas fa-minus"></i>
-                </button>
-                <button type="button" class="btn btn-tool" data-card-widget="remove">
-                  <i class="fas fa-times"></i>
                 </button>
               </div>
             </div>
             <!-- /.card-header -->
-            <div class="card-body">
+            <div class="card-body card-body-onsite collapse show">
               <div class="row">
                 <div class="col-md-12">
                   <div class="form-group">
@@ -177,7 +174,7 @@
                     <?php else: ?>
                       <div class="<?php echo $is_new ? 'col-md-12' : 'col-md-6' ;?> pull-right">
                         <button type = "submit" class="btn btn-primary btn-block" name="login" style="width: 100%;"><i class="fa fa-pen-alt"></i> 
-                          Update  
+                          Save as Draft  
                         </button>
                       </div>
                       <div class="col-md-6">
@@ -243,6 +240,10 @@
         unset($_SESSION['toastr']);
       }
     ?> 
+
+    $(".btn-tool-onsite").click(function(){
+      $(".card-body-onsite").collapse('toggle');
+    });
 
     $("#example1").DataTable({
       // "responsive": true, "lengthChange": false, "autoWidth": false,

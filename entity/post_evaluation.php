@@ -33,7 +33,8 @@ if (empty($notes)) {
 	$app->updateValidationChecklist($checklist_id, $defects, $recommendations, $today->format('Y-m-d H:i:s'));	
 }
 
-$app->evaluateChecklist($checklist_id, $status, $today->format('Y-m-d H:i:s'), $userid);
+$ss_no = $app->generateCode($userid);
+$app->evaluateChecklist($checklist_id, $status, $ss_no, $today->format('Y-m-d H:i:s'), $userid);
 
 
 $_SESSION['toastr'] = $app->addFlash('success', 'The application has been set to '.$status.'.', 'Success');

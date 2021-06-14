@@ -13,13 +13,7 @@
           <li class="nav-item">
             <a class="nav-link" href="guidelines.php" id="navguidelines">Guidelines </a>
           </li>
-          <li class="nav-item">
-            <?php if (isset($_SESSION['username'])): ?>
-              <a class="nav-link" href="wbstapplication.php">Application </a>
-            <?php else: ?>
-              <a class="nav-link" href="registration.php">Application </a>
-            <?php endif ?>
-          </li>
+        
           <li class="nav-item">
             <a class="nav-link" href="certified-establishments.php" id="navcertified">Certified Establishments </a>
           </li>
@@ -45,7 +39,7 @@
               </a>
               <ul class="dropdown-menu dropdown-menu-dark" aria-labelledby="navbarDarkDropdownMenuLink">
                 <li><a class="dropdown-item" href="../user/user_profile.php">My Profile</a></li>
-                <li><a class="dropdown-item" href="#">My Establishments</a></li>
+                <li><a class="dropdown-item" href="user/users_establishments.php">My Establishments</a></li>
                 <li><a class="dropdown-item" href="views/logout.php">Log out</a></li>
               </ul>
             </li>

@@ -6,18 +6,12 @@
       </button>
       <div class="collapse navbar-collapse" id="navbarCollapse">
         <ul class="navbar-nav me-auto mb-2 mb-md-0">
-          <!-- <li class="nav-item">
+        
+          <li class="nav-item">
             <a class="nav-link" aria-current="page" href="index.php" id="navhome">Home</a>
           </li>
           <li class="nav-item">
             <a class="nav-link" href="guidelines.php" id="navguidelines">Guidelines </a>
-          </li>
-          <li class="nav-item">
-            <?php if (isset($_SESSION['username'])): ?>
-              <a class="nav-link" href="wbstapplication.php">Application </a>
-            <?php else: ?>
-              <a class="nav-link" href="registration.php">Application </a>
-            <?php endif ?>
           </li>
           <li class="nav-item">
             <a class="nav-link" href="certified-establishments.php" id="navcertified">Certified Establishments </a>
@@ -27,13 +21,15 @@
           </li>
           <li class="nav-item">
             <a class="nav-link" href="complaints.php" id="navcomplaints">Complaints</a>
-          </li> -->
+          </li>
+          
 
         </ul>
         <?php
         if (isset($_SESSION['username'])) {
         ?>
           <ul class="navbar-nav ">
+       
             <li class="nav-item dropdown">
               <a class="nav-link dropdown-toggle" href="#" id="navbarDarkDropdownMenuLink" role="button" data-bs-toggle="dropdown" aria-expanded="false">
                 Logout(<?php echo $_SESSION['username']; ?>)
@@ -41,7 +37,7 @@
               <ul class="dropdown-menu dropdown-menu-dark" aria-labelledby="navbarDarkDropdownMenuLink">
                 <li><a class="dropdown-item" href="user_profile.php">My Profile</a></li>
                 <li><a class="dropdown-item" href="#">My Establishments</a></li>
-                <li><a class="dropdown-item" href="logout.php">Log out</a></li>
+                <li><a class="dropdown-item" href="../views/logout.php">Log out</a></li>
               </ul>
             </li>
           </ul>
