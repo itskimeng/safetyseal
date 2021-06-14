@@ -3,10 +3,15 @@
     <div class="card">
       <div class="card-header">
         <h3 class="card-title"><i class="fa fa-filter"></i> Filters</h3>
+        <div class="card-tools">
+          <button type="button" class="btn btn-tool btn-tool-filter" data-card-widget="collapse">
+            <i class="fas fa-minus"></i>
+          </button>
+        </div>
       </div>
 
       <form id="form-filter">
-      <div class="card-body">
+      <div class="card-body card-body-filter collapse">
         <div class="row">
           <div class="col-md-4">
             <div class="form-group">
@@ -148,3 +153,11 @@
     </div>
   </div>
   </div>
+
+<script type="text/javascript">
+  $(document).ready(function(){
+    $(".btn-tool-filter").click(function(){
+      $(".card-body-filter").collapse('toggle');
+    });
+  })
+</script>

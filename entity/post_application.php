@@ -81,7 +81,9 @@ function generateCode($conn, $user)
 	$query = mysqli_query($conn, $sql);
 	$result1 = mysqli_fetch_array($query);
 
-	$ccode = 'R4A-'.$result1['pcode'].'-'.$result1['mcode'];
+	// $ccode = 'R4A-'.$result1['pcode'].'-'.$result1['mcode'];
+	$ccode = '2021';
+
 
 	$sql = "SELECT counter, id FROM tbl_config WHERE code = '".$ccode."'";
 	$query = mysqli_query($conn, $sql);
@@ -89,12 +91,16 @@ function generateCode($conn, $user)
 
 	$cc = $result2['counter'] + 1;
 
-	if ($cc > 999) {
+	if ($cc > 9999) {
 		$new_counter = $cc;
-	} elseif ($cc > 99) {
-		$new_counter = '00'.$cc;
+	} elseif ($cc > 999) {
+		$new_counter = '0'.$cc;
 	} elseif ($cc < 10) {
+		$new_counter = '0000'.$cc;
+	} elseif ($cc < 99) {
 		$new_counter = '000'.$cc;
+	} elseif ($cc > 99 AND $cc <= 999) {
+		$new_counter = '00'.$cc;
 	}
 
 	$sql = "UPDATE tbl_config SET counter = '".$new_counter."' WHERE id = ".$result2['id']."";
