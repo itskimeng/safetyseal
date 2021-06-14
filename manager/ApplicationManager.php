@@ -272,9 +272,9 @@ class ApplicationManager
         return $data;
     }
 
-    public function getCityMuns()
+    public function getCityMuns($lgu)
     {
-        $sql = "SELECT id, province, code, name FROM tbl_citymun";
+        $sql = "SELECT id, province, code, name FROM tbl_citymun where province  = $lgu";
         
         $query = mysqli_query($this->conn, $sql);
         $data = [];
@@ -285,6 +285,7 @@ class ApplicationManager
                 'code' => $row['code'],
                 'name' => $row['name']
             ];    
+           
         }
 
         return $data;
