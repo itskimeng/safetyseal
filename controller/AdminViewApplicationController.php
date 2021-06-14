@@ -8,9 +8,12 @@ $appid = $_GET['appid'];
 
 $app = new ApplicationManager();
 
+$province = $_SESSION['province'];
+$citymun = $_SESSION['city_mun'];
+
 $province_opts = $app->getProvinces();
 $citymun_opts = $app->getCityMuns();
-$applicants = $app->getApplicationLists(ApplicationManager::STATUS_DRAFT);
+$applicants = $app->getApplicationLists($province,$citymun,ApplicationManager::STATUS_DRAFT);
 
 
 $applicant = getUserChecklists($conn, $appid); 
@@ -24,21 +27,21 @@ $app_notes = getUserChecklistsValidations($conn, $appid);
 function getUserChecklists($conn, $id)
 {
     $sql = "SELECT 
-       	u.GOV_AGENCY_NAME as agency,
-       	u.GOV_ESTB_NAME as establishment,
-       	u.GOV_NATURE_NAME as nature,
-       	u.ADDRESS as address,
+       	ui.GOV_AGENCY_NAME as agency,
+       	ui.GOV_ESTB_NAME as establishment,
+       	ui.GOV_NATURE_NAME as nature,
+       	ui.ADDRESS as address,
         ai.CMLGOO_NAME as fname,
-       	u.ADDRESS as address,
-       	u.MOBILE_NO as contact_details,
-        a.control_no as control_no,
-        a.status as status,
-        a.id as appid,
-       	DATE_FORMAT(a.date_created, '%M %d, %Y') as date_created
-        FROM tbl_app_checklist a 
-        LEFT JOIN tbl_userinfo u on u.id = a.user_id
-        LEFT JOIN tbl_admin_info ai on a.user_id = ai.id
-        WHERE a.id = $id";
+       	ui.ADDRESS as address,
+       	ui.MOBILE_NO as contact_details,
+        ac.control_no as control_no,
+        ac.status as status,
+        ac.id as appid,
+       	DATE_FORMAT(ac.date_created, '%M %d, %Y') as date_created
+        FROM tbl_app_checklist ac
+        LEFT JOIN tbl_admin_info ai on ai.id = ac.user_id
+        LEFT JOIN tbl_userinfo ui on ui.user_id = ai.id
+        WHERE ac.id = $id";
 
     $query = mysqli_query($conn, $sql);
     $data = mysqli_fetch_array($query);
@@ -57,10 +60,10 @@ function getUserChecklistsEntry($conn, $id)
         e.reason as reason,
         e.assessment as assessment
         FROM tbl_app_checklist_entry e
-        LEFT JOIN tbl_app_checklist a on a.id = e.parent_id
+        LEFT JOIN tbl_app_checklist ac on ac.id = e.parent_id
         LEFT JOIN tbl_app_certchecklist c on c.id = e.chklist_id
-        LEFT JOIN tbl_userinfo u on u.id = a.user_id
-        WHERE a.id = $id";
+        LEFT JOIN tbl_admin_info ai on ai.id = ac.user_id
+        WHERE ac.id = $id";
 
     $query = mysqli_query($conn, $sql);
     $data = [];

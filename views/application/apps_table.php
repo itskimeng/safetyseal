@@ -30,7 +30,7 @@
                     <?php if ($applicant['status'] == 'For Receiving'): ?>
 
                       <a href="admin_application_view.php?appid=<?php echo $applicant['id']; ?>&ussir=<?php echo $applicant['userid']; ?>&status=<?php echo $applicant['status']; ?>" class="btn btn-primary btn-block btn-sm" style="margin-bottom: -5%;">
-                        <i class="fa fa-box"></i> Received
+                        <i class="fa fa-box"></i> Receive
                       </a>
 
 

@@ -6,7 +6,7 @@
         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
       </div>
       <form method="post" enctype="multipart/form-data" action="entity/post_proceed.php">
-        <input type="hidden" name="chklist_id" value="<?php echo $userinfo['id']; ?>">
+        <input type="hidden" name="chklist_id" value="<?php echo $userinfo['acid']; ?>">
         <div class="modal-body">
             <div class="mb-3">
               <table>

@@ -17,7 +17,6 @@ $is_new = $_POST['is_new'];
 
 $code = generateCode($conn, $userid);
 
-
 if ($is_new) {
 	$app->insertChecklist($code, $userid, $today->format('Y-m-d H:i:s'));
 } else {
@@ -74,9 +73,9 @@ function addFlash($type, $message, $title) {
 function generateCode($conn, $user) 
 {
 	$sql = "SELECT p.code as pcode, m.code as mcode
-	FROM tbl_userinfo u
+	FROM tbl_admin_info u
 	LEFT JOIN tbl_province p on p.id = u.PROVINCE
-	LEFT JOIN tbl_citymun m on m.id = u.CITY_MUNICIPALITY
+	LEFT JOIN tbl_citymun m on m.id = u.LGU
 	WHERE u.ID = ".$user."";
 
 	$query = mysqli_query($conn, $sql);

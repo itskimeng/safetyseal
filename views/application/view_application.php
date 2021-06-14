@@ -136,7 +136,7 @@
                       name="defects" 
                       placeholder="Enter ..."
                       <?php echo $is_readonly ? 'disabled' : ''; ?> 
-                      value="?php echo isset($app_notes['defects']) ? $app_notes['defects'] : ''; ?>"><?php echo isset($app_notes['defects']) ? $app_notes['defects'] : ''; ?></textarea>
+                      value="<?php echo isset($app_notes['defects']) ? $app_notes['defects'] : ''; ?>"><?php echo isset($app_notes['defects']) ? $app_notes['defects'] : ''; ?></textarea>
                   </div>
                 </div>
               </div>
@@ -150,9 +150,7 @@
                       rows="3" 
                       placeholder="Enter ..." 
                       <?php echo $is_readonly ? 'disabled' : ''; ?>
-                      value="<?php echo isset($app_notes['recommendations']) ? $app_notes['recommendations'] : ''; ?>"><?php echo isset($app_notes['recommendations']) ? $app_notes['recommendations'] : ''; ?>
-                        
-                      </textarea>
+                      value="<?php echo isset($app_notes['recommendations']) ? $app_notes['recommendations'] : ''; ?>"><?php echo isset($app_notes['recommendations']) ? $app_notes['recommendations'] : ''; ?></textarea>
                   </div>
                 </div>
               </div>
@@ -237,7 +235,7 @@
 
     <?php
       // toastr output & session reset
-      session_start();
+      // session_start();
       if (isset($_SESSION['toastr'])) {
         echo 'tata.'.$_SESSION['toastr']['type'].'("'.$_SESSION['toastr']['title'].'", "'.$_SESSION['toastr']['message'].'", {
           duration: 5000
@@ -272,7 +270,7 @@
       });
       
       if ($counter < 14) {
-        tata.warn('Warning', 'All items in the checklist must be answered');
+        tata.warn('Warning', 'All items in the checklist must be assess.');
       } else {
         $('#modal_evaluation').modal('show');
       }  
@@ -281,6 +279,17 @@
     $(document).on('click', '.btn-save_application', function(){
       let form = $('#form-evaluation').serialize();
       let path = 'entity/post_evaluation.php';
+
+      let $this = $(this);
+
+      $this.html('<i class="fa fa-circle-notch fa-spin"></i> Processing...');
+
+      let btn_close = $("#modal_evaluation .btn-close");
+      btn_close.css('display', 'none');
+      $("#modal_evaluation").modal({
+            backdrop: 'static',
+            keyboard: false
+        });
 
       postTask(path, form);
     })
