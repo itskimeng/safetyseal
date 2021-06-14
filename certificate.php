@@ -9,7 +9,8 @@ $pdf->AddPage();
 // $pdf->SetFillColor(192);
 $pdf->RoundedRect(25, 250, 161, 42, 7, '1234', 'D');
 $pdf->Image('fpdf/disiplina.png',85,1,50);
-$pdf->Image('fpdf/safetyseallogo1.png',24,22,165);
+// $pdf->Image('fpdf/safetyseallogo2.png',24,22,165);
+$pdf->Image('fpdf/safetyseallogo2.png',8,-26,193.5);
 
 
 
