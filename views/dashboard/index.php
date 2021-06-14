@@ -1,3 +1,5 @@
+<?php require_once 'controller/DashboardController.php'; ?>
+
 <div class="content-header">
     <div class="container">
         <div class="row mb-2">
