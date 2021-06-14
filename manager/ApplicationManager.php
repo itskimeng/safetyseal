@@ -124,6 +124,7 @@ class ApplicationManager
             ulist.user_id as ulist_userid,
             ulist.answer as answer,
             ulist.reason as reason,
+            ulist.safety_seal_no as ss_no
             DATE_FORMAT(ulist.date_created, '%Y-%m-%d') as date_created
             FROM tbl_app_userchecklist ulist
             LEFT JOIN tbl_app_certchecklist clist on clist.id = ulist.chklist_id
@@ -140,6 +141,7 @@ class ApplicationManager
                 'ulist_id' => $row['ulist_id'],
                 'answer' => $row['answer'],
                 'reason' => $row['reason'],
+                'ss_no' => $row['ss_no'],
                 'date_created' => $row['date_created']
             ];    
         }
@@ -300,6 +302,7 @@ class ApplicationManager
         DATE_FORMAT(ac.date_created, '%Y-%m-%d') as date_created,
         ui.id as userid,
         ac.control_no as control_no,
+        ac.safety_seal_no as ss_no,
         ac.status as status
         FROM tbl_app_checklist ac
         LEFT JOIN tbl_admin_info ai on ai.id = ac.user_id
@@ -310,6 +313,15 @@ class ApplicationManager
         $data = [];
         
         while ($row = mysqli_fetch_assoc($query)) {
+            $color = 'green';
+            if ($row['status'] == 'For Receiving') {
+                $color = 'primary';
+            } elseif ($row['status'] == 'Received') {
+                $color = 'yellow';
+            } elseif ($row['status'] == 'Disapproved') {
+                $color = 'red';
+            }
+
             $data[] = [
                 'id' => $row['id'],
                 'userid' => $row['userid'],
@@ -318,7 +330,9 @@ class ApplicationManager
                 'address' => $row['address'],
                 'date_created' => $row['date_created'],
                 'control_no' => $row['control_no'],
-                'status' => $row['status']
+                'ss_no' => $row['ss_no'],
+                'status' => $row['status'],
+                'color' => $color
             ];    
         }
 
@@ -341,12 +355,53 @@ class ApplicationManager
         return $result; 
     }
 
-    public function evaluateChecklist($checklist_id, $status, $date_modified, $approver)
+    public function evaluateChecklist($checklist_id, $status, $safety_seal_no, $date_modified, $approver)
     {
-        $sql = "UPDATE tbl_app_checklist SET date_approved = '".$date_modified."', date_modified = '".$date_modified."', approver_id = ".$approver.", status = '".$status."' WHERE id = ".$checklist_id."";
+        $sql = "UPDATE tbl_app_checklist SET safety_seal_no = '".$safety_seal_no."', date_approved = '".$date_modified."', date_modified = '".$date_modified."', approver_id = ".$approver.", status = '".$status."' WHERE id = ".$checklist_id."";
         $result = mysqli_query($this->conn, $sql);
 
         return $result;
+    }
+
+    public function generateCode($user) 
+    {
+        $sql = "SELECT p.code as pcode, m.code as mcode
+        FROM tbl_admin_info u
+        LEFT JOIN tbl_province p on p.id = u.PROVINCE
+        LEFT JOIN tbl_citymun m on m.id = u.LGU
+        WHERE u.ID = ".$user."";
+
+        $query = mysqli_query($this->conn, $sql);
+        $result1 = mysqli_fetch_array($query);
+
+        $ccode = 'R4A-'.$result1['pcode'].'-'.$result1['mcode'];
+        // $ccode = '2021';
+
+
+        $sql = "SELECT counter, id FROM tbl_config WHERE code = '".$ccode."'";
+        $query = mysqli_query($this->conn, $sql);
+        $result2 = mysqli_fetch_array($query);
+
+        $cc = $result2['counter'] + 1;
+
+        if ($cc > 9999) {
+            $new_counter = $cc;
+        } elseif ($cc > 999) {
+            $new_counter = '0'.$cc;
+        } elseif ($cc < 10) {
+            $new_counter = '0000'.$cc;
+        } elseif ($cc < 99) {
+            $new_counter = '000'.$cc;
+        } elseif ($cc > 99 AND $cc <= 999) {
+            $new_counter = '00'.$cc;
+        }
+
+        $sql = "UPDATE tbl_config SET counter = '".$new_counter."' WHERE id = ".$result2['id']."";
+        $result = mysqli_query($this->conn, $sql);
+
+        $control_no = $ccode.'-'.$new_counter;
+       
+        return $control_no;
     }
 
 }

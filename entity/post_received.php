@@ -10,7 +10,7 @@ $today = new DateTime();
 $userid = $_SESSION['userid'];
 $uname = $_SESSION['username'];
 
-$checklist_id = $_POST['appid'];
+$checklist_id = $_GET['appid'];
 
 $app->receiveChecklist($checklist_id, ApplicationManager::STATUS_RECEIVED, $today->format('Y-m-d H:i:s'), $userid);	
 

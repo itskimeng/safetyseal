@@ -17,6 +17,7 @@ $applicants = $app->getApplicationLists($province,$citymun,ApplicationManager::S
 
 
 $applicant = getUserChecklists($conn, $appid); 
+
 $is_readonly = false;
 if ($applicant['status'] == 'Approved' OR $applicant['status'] == 'Disapproved') {
     $is_readonly = true;
@@ -37,6 +38,7 @@ function getUserChecklists($conn, $id)
         ac.control_no as control_no,
         ac.status as status,
         ac.id as appid,
+        ac.safety_seal_no as ss_no,
        	DATE_FORMAT(ac.date_created, '%M %d, %Y') as date_created
         FROM tbl_app_checklist ac
         LEFT JOIN tbl_admin_info ai on ai.id = ac.user_id
