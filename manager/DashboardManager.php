@@ -9,6 +9,18 @@ class DashboardManager
     {
         $this->conn = mysqli_connect("localhost","calabarzondilggo_safetysealuser","'xPR<W5dm$#-[RQf","calabarzondilggo_safetyseal");
     }
+
+    public function setBarChartLabel()
+    {
+        $data =   ['CAVITE', 'LAGUNA', 'BATANGAS', 'RIZAL', 'QUEZON', 'LUCENA CITY'];
+        return $data;
+       
+    }
+
+    public function dataSet(){
+        
+
+    }
     
     public function count()
     {
@@ -23,6 +35,5 @@ class DashboardManager
         
         return $data;
     }
-
   
 }

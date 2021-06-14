@@ -194,7 +194,9 @@
         </div>
     </div>
 </div>
+<?php
 
+?>
 
 
 <script>
@@ -203,19 +205,20 @@
 
 
         var areaChartData = {
-            labels: ['January', 'February', 'March', 'April', 'May', 'June', 'July'],
+           
+            labels: <?php echo json_encode(array_map(function($x) { return $x; }, $provinces_title));?>,
             datasets: [{
-                    label: 'Electronics',
+                    label: 'Applicants',
                     fillColor: 'rgba(210, 214, 222, 1)',
                     strokeColor: 'rgba(210, 214, 222, 1)',
                     pointColor: 'rgba(210, 214, 222, 1)',
                     pointStrokeColor: '#c1c7d1',
                     pointHighlightFill: '#fff',
                     pointHighlightStroke: 'rgba(220,220,220,1)',
-                    data: [65, 59, 80, 81, 56, 55, 40]
+                    data: [65, 59, 80, 81, 56, 55]
                 },
                 {
-                    label: 'Digital Goods',
+                    label: 'Approved Applicants',
                     fillColor: 'rgba(60,141,188,0.9)',
                     strokeColor: 'rgba(60,141,188,0.8)',
                     pointColor: '#3b8bba',
