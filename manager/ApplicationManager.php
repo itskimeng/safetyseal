@@ -50,6 +50,7 @@ class ApplicationManager
     public function insertChecklist($control_no, $userid, $date_created)
     {
         $sql = 'INSERT INTO tbl_app_checklist (control_no, user_id, date_created) VALUES ("'.$control_no.'", '.$userid.', "'.$date_created.'")';
+
         $result = mysqli_query($this->conn, $sql);
 
         return $result;
@@ -66,7 +67,6 @@ class ApplicationManager
     public function insertChecklistEntry($data)
     {
         $sql = 'INSERT INTO tbl_app_checklist_entry (parent_id, chklist_id, answer, reason, date_created) VALUES ('.$data["parent_id"].', '.$data["chklist_id"].', "'.$data["answer"].'", "'.$data["reason"].'", "'.$data["date_created"].'")';
-
         $result = mysqli_query($this->conn, $sql);
 
         return $result;
@@ -94,8 +94,8 @@ class ApplicationManager
             FROM tbl_app_checklist_entry e
             LEFT JOIN tbl_app_checklist a on a.id = e.parent_id
             LEFT JOIN tbl_app_certchecklist c on c.id = e.chklist_id
-            LEFT JOIN tbl_userinfo u on u.id = a.user_id
-            WHERE u.id = $user";
+            LEFT JOIN tbl_admin_info ai on ai.id = a.user_id
+            WHERE ai.id = $user";
 
         $query = mysqli_query($this->conn, $sql);
         $data = [];
@@ -150,25 +150,26 @@ class ApplicationManager
     public function getUsers($user)
     {
         $sql = "SELECT 
-             a.id as id, 
-            DATE_FORMAT(a.date_created, '%M %d, %Y') as date_created,
-            DATE_FORMAT(a.date_proceed, '%m-%d-%Y') as date_proceed,
-            u.ADDRESS as address, 
-            u.GOV_AGENCY_NAME as agency, 
-            u.GOV_ESTB_NAME as establishment, 
-            u.GOV_NATURE_NAME as nature,
+            ai.id as id,
+            ac.id as acid,
+            DATE_FORMAT(ac.date_created, '%M %d, %Y') as date_created,
+            DATE_FORMAT(ac.date_proceed, '%m-%d-%Y') as date_proceed,
+            ui.ADDRESS as address,
+            ui.GOV_AGENCY_NAME as agency,
+            ui.GOV_ESTB_NAME as establishment, 
+            ui.GOV_NATURE_NAME as nature,
+            ai.CMLGOO_NAME as fname,
             p.code as pcode,
             m.code as mcode,
-            ai.CMLGOO_NAME as fname,
-            u.MOBILE_NO as contact_details,
-            a.status as status,
-            a.control_no as control_no
-            FROM tbl_userinfo u 
-            LEFT JOIN tbl_admin_info ai on u.user_id = ai.ID
-            LEFT JOIN tbl_app_checklist a on u.id = a.user_id
-            LEFT JOIN tbl_province p on p.id = u.PROVINCE
-            LEFT JOIN tbl_citymun m on m.id = u.CITY_MUNICIPALITY
-            WHERE u.id = $user";
+            ui.MOBILE_NO as contact_details,
+            ac.status as status,
+            ac.control_no as control_no
+            FROM tbl_admin_info ai
+            LEFT JOIN tbl_userinfo ui on ui.user_id = ai.id
+            LEFT JOIN tbl_app_checklist ac on ac.user_id = ai.id
+            LEFT JOIN tbl_province p on p.id = ai.PROVINCE
+            LEFT JOIN tbl_citymun m on m.id = ai.LGU
+            WHERE ai.id = $user";
         
         $query = mysqli_query($this->conn, $sql);
         // $result = mysqli_fetch_array($query);
@@ -183,6 +184,7 @@ class ApplicationManager
             }
             $data = [
                 'id' => $row['id'],
+                'acid' => $row['acid'],
                 'date_created' => $date_created,
                 'address' => $row['address'],
                 'agency' => $row['agency'],
@@ -193,7 +195,7 @@ class ApplicationManager
                 'status' => !empty($row['status']) ? $row['status'] : 'Draft',
                 'pcode' => $row['pcode'],
                 'mcode' => $row['mcode'],
-                'code' => !empty($row['control_no']) ? $row['control_no'] : 'R4A-'.$row['pcode'].'-'.$row['mcode'].'-____',
+                'code' => !empty($row['control_no']) ? $row['control_no'] : '2021-'.'_____',
                 'date_proceed' => $row['date_proceed']
             ];      
         }
@@ -288,7 +290,7 @@ class ApplicationManager
         return $data;
     }
 
-    public function getApplicationLists($status)
+    public function getApplicationLists($province, $lgu, $status)
     {
         $sql = "SELECT 
         ac.id as id,
@@ -300,9 +302,9 @@ class ApplicationManager
         ac.control_no as control_no,
         ac.status as status
         FROM tbl_app_checklist ac
-        LEFT JOIN tbl_userinfo ui on ui.id = ac.user_id
-        LEFT JOIN tbl_admin_info ai on ui.user_id = ai.id
-        WHERE ac.status <> '".$status."'";
+        LEFT JOIN tbl_admin_info ai on ai.id = ac.user_id
+        LEFT JOIN tbl_userinfo ui on ui.user_id = ai.id
+        WHERE ai.PROVINCE = ".$province." AND ai.LGU = ".$lgu." AND ac.status <> '".$status."'";
         
         $query = mysqli_query($this->conn, $sql);
         $data = [];
