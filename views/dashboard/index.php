@@ -208,7 +208,7 @@
            
             labels: <?php echo json_encode(array_map(function($x) { return $x; }, $provinces_title));?>,
             datasets: [{
-                    labels: ['Applicants'],
+                    labels: 'Applicants',
                     fillColor: 'rgba(210, 214, 222, 1)',
                     strokeColor: 'rgba(210, 214, 222, 1)',
                     pointColor: 'rgba(210, 214, 222, 1)',
@@ -230,7 +230,6 @@
 
                 }
             ],
-            
             
             
         }
@@ -311,6 +310,7 @@
 
         barChartOptions.datasetFill = false
         barChart.Bar(barChartData, barChartOptions)
+        
     })
 </script>
 </body>
