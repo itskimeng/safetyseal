@@ -32,7 +32,7 @@
                                 </div>
                                 <div class="mb-12">
                                     <label for="validateAddress" class="form-label">Address</label>
-                                    <input required type="text" class="form-control" name="validateAddress" id="lname" aria-describedby="emailHelp">
+                                    <input required type="text" class="form-control" name="validateAddress" id="address" aria-describedby="emailHelp">
                                     <div class="invalid-feedback">
                                         Address is required
 
@@ -115,7 +115,7 @@
                                     </div>
                                     <div class="col-md-12">
                                         <label for="validationUsername" class="form-label">Username</label>
-                                        <input type="text" class="form-control" name="username" id="validationUsername" required>
+                                        <input type="text" class="form-control" name="username" id="validationUsername" onclick="setUname();"  autocomplete="off">
                                         <div class="valid-feedback">
                                             Username is required
                                         </div>
@@ -162,6 +162,16 @@
 
     })
 });
+    function setUname(){
+    var fname = $('#vfname').val();
+    var mname = $('#vmname').val();
+    var lname = $('#lname').val();
+    var username=fname.charAt(0)+""+mname.charAt(0)+""+lname;
+    $('#validationUsername').val(username.toLowerCase());
+    }
+ 
+
+
 
 
 </script>

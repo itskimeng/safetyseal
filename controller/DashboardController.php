@@ -5,7 +5,8 @@ require 'manager/DashboardManager.php';
 
 $app = new DashboardManager();
 
-$count_status = $app->count()
+$count_status = $app->count();
+$provinces_title = $app->setBarChartLabel();
 
 
 

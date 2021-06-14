@@ -29,7 +29,7 @@ if (isset($_POST['login'])) {
                  $_SESSION['userid']  = $user_data['ID'];
 
                     header("location: ../dashboard.v2.php?username=" . md5($username) . "");
-               } else if ($user_data['ROLE'] == 'user') {
+               } else if ($user_data['ROLES'] == 'user') {
                     $_SESSION['username']  = $user_data['UNAME'];
                     $_SESSION['userid']  = $user_data['ID'];
                     header("location:../dashboard_user.php?username=" . md5($username) . "");
