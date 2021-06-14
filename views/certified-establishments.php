@@ -9,14 +9,10 @@
         </div>
         <div class="card-body" style="background-color: #f9f8f8;">
 
-          <!--begin::Compact form-->
-          <div class="d-flex align-items-center row">
-              <!--begin::Input group-->
+<!--           <div class="d-flex align-items-center row">
               <div class="position-relative col-md-4 my-2">
                   <input class="form-control form-control-lg form-control-solid" name="name" value="" placeholder="Search establishment name">
               </div>
-              <!--end::Input group-->
-              <!--begin:Action-->
               <div class="d-flex align-items-left col-md-8 my-2">
                   <button type="submit" class="btn btn-light-primary py-2 me-5 mr-2">
                       <i class="fa fa-search"></i> Search
@@ -25,13 +21,11 @@
                       <i class="fa fa-sync-alt"></i> Reset
                   </a>
               </div>
-              <!--end:Action-->
-          </div>
-          <!--end::Compact form-->
+          </div> -->
          
 
 
-        <table class="table table-hover mb-0 border-bottom">
+        <table class="table table-hover mb-0 border-bottom" id="establishmentsTable">
             <thead>
                 <tr>
                     <th width="25%">AGENCY</th>
@@ -99,3 +93,11 @@
 
     </div><!-- <div class="col-md-12"> -->
   </div>
+
+  <script>
+    $('#establishmentsTable').DataTable( {
+        responsive: {
+            details: true
+        }
+    } );
+  </script>
