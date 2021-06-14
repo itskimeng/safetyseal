@@ -26,7 +26,7 @@
                 <!-- small box -->
                 <div class="small-box bg-primary">
                     <div class="inner">
-                        <h3><?php echo $count_status['For Receiving'];?></h3>
+                        <h3><?php echo $count_status['For Receiving']; ?></h3>
 
                         <p>FOR RECEIVING</p>
                     </div>
@@ -44,7 +44,7 @@
                 <!-- small box -->
                 <div class="small-box bg-green">
                     <div class="inner">
-                    <h3><?php echo $count_status['Received'];?></h3>
+                        <h3><?php echo $count_status['Received']; ?></h3>
 
                         <p>RECEIVED</p>
                     </div>
@@ -61,7 +61,7 @@
                 <!-- small box -->
                 <div class="small-box bg-yellow">
                     <div class="inner">
-                    <h3><?php echo $count_status['Approved'];?></h3>
+                        <h3><?php echo $count_status['Approved']; ?></h3>
 
 
                         <p>APPROVED</p>
@@ -79,7 +79,7 @@
                 <!-- small box -->
                 <div class="small-box bg-red">
                     <div class="inner">
-                    <h3><?php echo $count_status['Disapproved'];?></h3>
+                        <h3><?php echo $count_status['Disapproved']; ?></h3>
 
 
                         <p>DISAPPROVED</p>
@@ -95,41 +95,19 @@
         </div>
 
         <div class="row">
-            <!-- <div class="col-lg-4 col-md-6 col-sm-3">
-                <div class="card card-dark" style="height:230px;">
-                    <div class="card-header">
-                        <h5 class="card-title m-0"><i class="fa fa-tag"></i> Safety Seal</h5>
-                    </div>
-                    <div class="card-body">
-                        <h6 class="card-title">Special title treatment</h6>
-
-                        <p class="card-text">With supporting text below as a natural lead-in to additional content.</p>
-                        <a href="#" class="btn btn-primary">Go somewhere</a>
-                    </div>
-                </div>
-                <div class="card card-dark" style="height:230px;">
-                    <div class="card-header">
-                        <h5 class="card-title m-0"><i class="fa fa-tag"></i> Safety Seal</h5>
-                    </div>
-                    <div class="card-body">
-                        <h6 class="card-title">Special title treatment</h6>
-
-                        <p class="card-text">With supporting text below as a natural lead-in to additional content.</p>
-                        <a href="#" class="btn btn-primary">Go somewhere</a>
-                    </div>
-                </div>
-            </div> -->
             <div class="col-lg-12">
                 <div class="row">
+                    <!-- <div class="col-md-4">
+                    </div> -->
 
                     <div class="col-md-12">
-
-
+                    <span class="pull-right badge bg-green">APPROVED</span>
+                    <span class="pull-right badge bg-blue">FOR RECEIVING </span>
                         <!-- BAR CHART -->
                         <div class="box box-success">
 
                             <div class="box-body">
-                                <div class="chart">
+                                <div class="chart" style="border: 1px solid blue;">
                                     <canvas id="barChart" style="height:230px"></canvas>
                                 </div>
                             </div>
@@ -143,63 +121,8 @@
             </div>
         </div>
 
-        <div class="row">
-            <div class="col-lg-12">
-                <div class="card">
-                    <div class="card-header">
-                        <h5 class="header-title"> <i class="fa fa-folder"></i> Application List</h5>
-                    </div>
-                    <div class="card-body" style="background-color: #f9f8f8;">
-                        <table id="table1" class="table table-hover mb-0 border-bottom" style="width:100%;">
-                            <thead>
-                                <tr>
-                                    <th style="text-align: center; width:20%">Name</th>
-                                    <th style="text-align: center; width:20%">Agency Name</th>
-                                    <th style="text-align: center; width:20%">Location</th>
-                                    <th style="text-align: center; width:20%">Control No</th>
-                                    <th style="text-align: center; width:10%">Date Registered</th>
-                                    <th style="text-align: center; width:10%">Status</th>
-                                    <th style="text-align: center; width:15%">Action</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <?php
-                                include 'application/config/connection.php';
-
-                                $resultSet = $conn->query(" SELECT 
-                                ac.id as id,
-                                ai.CMLGOO_NAME as fname,
-                                ui.GOV_AGENCY_NAME as agency,
-                                ui.ADDRESS as address,
-                                DATE_FORMAT(ac.date_created, '%Y-%m-%d') as date_created,
-                                ui.id as userid,
-                                ac.control_no as control_no,
-                                ac.status as status
-                                FROM tbl_app_checklist ac
-                                LEFT JOIN tbl_userinfo ui on ui.id = ac.user_id
-                                LEFT JOIN tbl_admin_info ai on ui.user_id = ai.id");
-                                if ($resultSet->num_rows > 0) {
-                                    while ($row = $resultSet->fetch_assoc()) {
-                                        include 'establishment_table.php';
-                                    }
-                                }
-                                mysqli_close($conn);
-
-                                ?>
-
-                            </tbody>
-                        </table>
-                    </div>
-                </div>
-            </div>
-
-        </div>
     </div>
 </div>
-<?php
-
-?>
-
 
 <script>
     $(function() {
@@ -207,33 +130,32 @@
 
 
         var areaChartData = {
-           
-            labels: <?php echo json_encode(array_map(function($x) { return $x; }, $provinces_title));?>,
+            labels: [ 'January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December' ],
+
             datasets: [{
                     labels: 'Applicants',
-                    fillColor: 'rgba(210, 214, 222, 1)',
+                    fillColor: '#1976D2',
                     strokeColor: 'rgba(210, 214, 222, 1)',
                     pointColor: 'rgba(210, 214, 222, 1)',
                     pointStrokeColor: '#c1c7d1',
                     pointHighlightFill: '#fff',
                     pointHighlightStroke: 'rgba(220,220,220,1)',
-                    data                : [<?php echo $receiving['CAVITE'].','.$receiving['LAGUNA'].','.$receiving['BATANGAS'].','.$receiving['RIZAL'].','.$receiving['QUEZON'].','.$receiving['Lucena City'];?>],
+                    data: [<?php echo $receiving['1'] . ',' . $receiving['2'] . ',' . $receiving['3'] . ',' . $receiving['4'] . ',' . $receiving['5'] . ',' . $receiving['6'] . ',' .$receiving['7'] . ',' . $receiving['8'] . ',' . $receiving['9'] . ',' . $receiving['10'] . ',' . $receiving['11'] . ',' . $receiving['12']; ?>],
                 },
                 {
                     label: 'Approved Applicants',
-                    fillColor: 'rgba(60,141,188,0.9)',
+                    fillColor: '#43A047',
                     strokeColor: 'rgba(60,141,188,0.8)',
                     pointColor: '#3b8bba',
                     pointStrokeColor: 'rgba(60,141,188,1)',
                     pointHighlightFill: '#fff',
                     pointHighlightStroke: 'rgba(60,141,188,1)',
-                    data                : [<?php echo $approved['CAVITE'].','.$approved['LAGUNA'].','.$approved['BATANGAS'].','.$approved['RIZAL'].','.$approved['QUEZON'].','.$approved['Lucena City'];?>],
+                    data: [<?php echo $approved['1'] . ',' . $approved['2'] . ',' . $approved['3'] . ',' . $approved['4'] . ',' . $approved['5'] . ',' . $approved['6'] . ',' .$approved['7'] . ',' . $approved['8'] . ',' . $approved['9'] . ',' . $approved['10'] . ',' . $approved['11'] . ',' . $approved['12']; ?>],
 
 
                 }
             ],
-            
-            
+
         }
 
         var areaChartOptions = {
@@ -312,7 +234,7 @@
 
         barChartOptions.datasetFill = false
         barChart.Bar(barChartData, barChartOptions)
-        
+
     })
 </script>
 </body>

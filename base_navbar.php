@@ -1,4 +1,3 @@
-<?PHP session_start();?>
 <nav class="main-header navbar navbar-expand-md navbar-light navbar-dark">
   <div class="container">
     <a href="dashboard.v2.php" class="navbar-brand">

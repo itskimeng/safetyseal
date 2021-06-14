@@ -26,7 +26,7 @@
                         Implementing Guidelines of the
                         Safety Seal Certification Program
                     </p>
-                    <a href="download-file.php?filename=files/guidelines/Joint+Memorandum+Circular+No+.21-01.pdf" target="_blank" class="btn btn-light-primary float-right" rel="noopener noreferrer"><i class="fa fa-file-download"></i> Download</a>
+                    <a onclick="downloadFile('files/guidelines/Joint+Memorandum+Circular+No+.21-01.pdf');" class="btn btn-light-primary float-right" rel="noopener noreferrer"><i class="fa fa-file-download"></i> Download</a>
                   </div>
                 </button>
               </h2>
@@ -47,7 +47,8 @@
                       Safety Seal Certification Program for this Department and the Local Government Units as Issuing
                       Authorities
                       <p class="text-muted subtexts">
-                        <a href="files/guidelines/MEMORANDUM+CIRCULAR+NO.+2021-053.pdf" target="_blank" class="btn btn-light-primary float-right" rel="noopener noreferrer"><i class="fa fa-file-download"></i> Download</a>
+                        <!-- <a href="files/guidelines/MEMORANDUM+CIRCULAR+NO.+2021-053.pdf" target="_blank" class="btn btn-light-primary float-right" rel="noopener noreferrer"><i class="fa fa-file-download"></i> Download</a> -->
+                        <a onclick="downloadFile('files/guidelines/MEMORANDUM+CIRCULAR+NO.+2021-053.pdf');" class="btn btn-light-primary float-right" rel="noopener noreferrer"><i class="fa fa-file-download"></i> Download</a>
                       </p>
                   </div>
                 </button>
@@ -67,7 +68,8 @@
                   <div class="h5">
                       DILG Safety Seal Checklist
                       <p class="text-muted subtexts">
-                        <a href="files/guidelines/Safety+Seal+Certification+Checklist.pdf" target="_blank" class="btn btn-light-primary float-right" rel="noopener noreferrer"><i class="fa fa-file-download"></i> Download</a>
+                        <!-- <a href="files/guidelines/Safety+Seal+Certification+Checklist.pdf" target="_blank" class="btn btn-light-primary float-right" rel="noopener noreferrer"><i class="fa fa-file-download"></i> Download</a> -->
+                        <a onclick="downloadFile('files/guidelines/Safety+Seal+Certification+Checklist.pdf');" class="btn btn-light-primary float-right" rel="noopener noreferrer"><i class="fa fa-file-download"></i> Download</a>
                       </p>
                   </div>
                 </button>
@@ -87,7 +89,8 @@
                   <div class="h5">
                       LGU Safety Seal Checklist
                       <p class="text-muted subtexts">
-                        <a href="files/guidelines/Safety+Seal+Certification+Checklist+-+LGU.pdf" target="_blank" class="btn btn-light-primary float-right" rel="noopener noreferrer"><i class="fa fa-file-download"></i> Download</a>
+                        <!-- <a href="files/guidelines/Safety+Seal+Certification+Checklist+-+LGU.pdf" target="_blank" class="btn btn-light-primary float-right" rel="noopener noreferrer"><i class="fa fa-file-download"></i> Download</a> -->
+                        <a onclick="downloadFile('files/guidelines/Safety+Seal+Certification+Checklist+-+LGU.pdf');" class="btn btn-light-primary float-right" rel="noopener noreferrer"><i class="fa fa-file-download"></i> Download</a>
                       </p>
                   </div>
                 </button>
@@ -107,7 +110,8 @@
                   <div class="h5">
                       INGAT ANGAT : Safety Seal Toolkit
                       <p class="text-muted subtexts">
-                        <a href="files/guidelines/IA+Safety+Seal+Toolkit.pdf" target="_blank" class="btn btn-light-primary float-right" rel="noopener noreferrer"><i class="fa fa-file-download"></i> Download</a>
+                        <!-- <a href="files/guidelines/IA+Safety+Seal+Toolkit.pdf" target="_blank" class="btn btn-light-primary float-right" rel="noopener noreferrer"><i class="fa fa-file-download"></i> Download</a> -->
+                        <a onclick="downloadFile('files/guidelines/IA+Safety+Seal+Toolkit.pdf');" class="btn btn-light-primary float-right" rel="noopener noreferrer"><i class="fa fa-file-download"></i> Download</a>
                       </p>
                   </div>
                 </button>
@@ -136,3 +140,10 @@
 
     </div><!-- <div class="col-md-12"> -->
   </div>
+
+  <script>
+    function downloadFile(fileName)
+    {
+      window.open('views/download-file.php?filename='+fileName);
+    }
+  </script>
