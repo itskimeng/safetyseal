@@ -7,6 +7,8 @@ $app = new DashboardManager();
 
 $count_status = $app->count();
 $provinces_title = $app->setBarChartLabel();
+$receiving = $app->getdataForReceived();
+$approved = $app->getdataApproved();
 
 
 

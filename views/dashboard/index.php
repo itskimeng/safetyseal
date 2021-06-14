@@ -208,14 +208,14 @@
            
             labels: <?php echo json_encode(array_map(function($x) { return $x; }, $provinces_title));?>,
             datasets: [{
-                    label: 'Applicants',
+                    labels: ['Applicants'],
                     fillColor: 'rgba(210, 214, 222, 1)',
                     strokeColor: 'rgba(210, 214, 222, 1)',
                     pointColor: 'rgba(210, 214, 222, 1)',
                     pointStrokeColor: '#c1c7d1',
                     pointHighlightFill: '#fff',
                     pointHighlightStroke: 'rgba(220,220,220,1)',
-                    data: [65, 59, 80, 81, 56, 55]
+                    data                : [<?php echo $receiving['CAVITE'].','.$receiving['LAGUNA'].','.$receiving['BATANGAS'].','.$receiving['RIZAL'].','.$receiving['QUEZON'].','.$receiving['Lucena City'];?>],
                 },
                 {
                     label: 'Approved Applicants',
@@ -225,9 +225,14 @@
                     pointStrokeColor: 'rgba(60,141,188,1)',
                     pointHighlightFill: '#fff',
                     pointHighlightStroke: 'rgba(60,141,188,1)',
-                    data: [28, 48, 40, 19, 86, 27, 90]
+                    data                : [<?php echo $approved['CAVITE'].','.$approved['LAGUNA'].','.$approved['BATANGAS'].','.$approved['RIZAL'].','.$approved['QUEZON'].','.$approved['Lucena City'];?>],
+
+
                 }
-            ]
+            ],
+            
+            
+            
         }
 
         var areaChartOptions = {
