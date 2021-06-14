@@ -309,6 +309,7 @@ class ApplicationManager
         LEFT JOIN tbl_admin_info ai on ai.id = ac.user_id
         LEFT JOIN tbl_userinfo ui on ui.user_id = ai.id
         WHERE ai.PROVINCE = ".$province." AND ai.LGU = ".$lgu." AND ac.status <> '".$status."'";
+     
         
         $query = mysqli_query($this->conn, $sql);
         $data = [];

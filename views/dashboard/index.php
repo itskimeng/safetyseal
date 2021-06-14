@@ -24,7 +24,7 @@
                 <!-- small box -->
                 <div class="small-box bg-primary">
                     <div class="inner">
-                        <h3><?php echo $count_status['For Receiving'];?></h3>
+                        <h3><?php echo $count_status['For Receiving']; ?></h3>
 
                         <p>FOR RECEIVING</p>
                     </div>
@@ -42,7 +42,7 @@
                 <!-- small box -->
                 <div class="small-box bg-green">
                     <div class="inner">
-                    <h3><?php echo $count_status['Received'];?></h3>
+                        <h3><?php echo $count_status['Received']; ?></h3>
 
                         <p>RECEIVED</p>
                     </div>
@@ -59,7 +59,7 @@
                 <!-- small box -->
                 <div class="small-box bg-yellow">
                     <div class="inner">
-                    <h3><?php echo $count_status['Approved'];?></h3>
+                        <h3><?php echo $count_status['Approved']; ?></h3>
 
 
                         <p>APPROVED</p>
@@ -77,7 +77,7 @@
                 <!-- small box -->
                 <div class="small-box bg-red">
                     <div class="inner">
-                    <h3><?php echo $count_status['Disapproved'];?></h3>
+                        <h3><?php echo $count_status['Disapproved']; ?></h3>
 
 
                         <p>DISAPPROVED</p>
@@ -119,15 +119,17 @@
             </div> -->
             <div class="col-lg-12">
                 <div class="row">
+                    <!-- <div class="col-md-4">
+                    </div> -->
 
                     <div class="col-md-12">
-
-
+                    <span class="pull-right badge bg-green">APPROVED</span>
+                    <span class="pull-right badge bg-blue">FOR RECEIVING </span>
                         <!-- BAR CHART -->
                         <div class="box box-success">
 
                             <div class="box-body">
-                                <div class="chart">
+                                <div class="chart" style="border: 1px solid blue;">
                                     <canvas id="barChart" style="height:230px"></canvas>
                                 </div>
                             </div>
@@ -205,33 +207,32 @@
 
 
         var areaChartData = {
-           
-            labels: <?php echo json_encode(array_map(function($x) { return $x; }, $provinces_title));?>,
+            labels: [ 'January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December' ],
+
             datasets: [{
                     labels: 'Applicants',
-                    fillColor: 'rgba(210, 214, 222, 1)',
+                    fillColor: '#1976D2',
                     strokeColor: 'rgba(210, 214, 222, 1)',
                     pointColor: 'rgba(210, 214, 222, 1)',
                     pointStrokeColor: '#c1c7d1',
                     pointHighlightFill: '#fff',
                     pointHighlightStroke: 'rgba(220,220,220,1)',
-                    data                : [<?php echo $receiving['CAVITE'].','.$receiving['LAGUNA'].','.$receiving['BATANGAS'].','.$receiving['RIZAL'].','.$receiving['QUEZON'].','.$receiving['Lucena City'];?>],
+                    data: [<?php echo $receiving['1'] . ',' . $receiving['2'] . ',' . $receiving['3'] . ',' . $receiving['4'] . ',' . $receiving['5'] . ',' . $receiving['6'] . ',' .$receiving['7'] . ',' . $receiving['8'] . ',' . $receiving['9'] . ',' . $receiving['10'] . ',' . $receiving['11'] . ',' . $receiving['12']; ?>],
                 },
                 {
                     label: 'Approved Applicants',
-                    fillColor: 'rgba(60,141,188,0.9)',
+                    fillColor: '#43A047',
                     strokeColor: 'rgba(60,141,188,0.8)',
                     pointColor: '#3b8bba',
                     pointStrokeColor: 'rgba(60,141,188,1)',
                     pointHighlightFill: '#fff',
                     pointHighlightStroke: 'rgba(60,141,188,1)',
-                    data                : [<?php echo $approved['CAVITE'].','.$approved['LAGUNA'].','.$approved['BATANGAS'].','.$approved['RIZAL'].','.$approved['QUEZON'].','.$approved['Lucena City'];?>],
+                    data: [<?php echo $approved['1'] . ',' . $approved['2'] . ',' . $approved['3'] . ',' . $approved['4'] . ',' . $approved['5'] . ',' . $approved['6'] . ',' .$approved['7'] . ',' . $approved['8'] . ',' . $approved['9'] . ',' . $approved['10'] . ',' . $approved['11'] . ',' . $approved['12']; ?>],
 
 
                 }
             ],
-            
-            
+
         }
 
         var areaChartOptions = {
@@ -310,7 +311,7 @@
 
         barChartOptions.datasetFill = false
         barChart.Bar(barChartData, barChartOptions)
-        
+
     })
 </script>
 </body>

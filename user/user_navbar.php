@@ -8,19 +8,19 @@
         <ul class="navbar-nav me-auto mb-2 mb-md-0">
         
           <li class="nav-item">
-            <a class="nav-link" aria-current="page" href="index.php" id="navhome">Home</a>
+            <a class="nav-link" aria-current="page" href="../index.php" id="navhome">Home</a>
           </li>
           <li class="nav-item">
-            <a class="nav-link" href="guidelines.php" id="navguidelines">Guidelines </a>
+            <a class="nav-link" href="../inspection_list.php" id="navguidelines">Guidelines </a>
           </li>
           <li class="nav-item">
-            <a class="nav-link" href="certified-establishments.php" id="navcertified">Certified Establishments </a>
+            <a class="nav-link" href="../certified-establishments.php" id="navcertified">Certified Establishments </a>
           </li>
           <li class="nav-item">
-            <a class="nav-link" href="inspection-and-certification-team.php" id="navinspection">Inspection and Certification Teams </a>
+            <a class="nav-link" href="../inspection-and-certification-team.php" id="navinspection">Inspection and Certification Teams </a>
           </li>
           <li class="nav-item">
-            <a class="nav-link" href="complaints.php" id="navcomplaints">Complaints</a>
+            <a class="nav-link" href="../complaints.php" id="navcomplaints">Complaints</a>
           </li>
           
 
