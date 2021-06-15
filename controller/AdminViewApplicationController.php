@@ -12,7 +12,7 @@ $province = $_SESSION['province'];
 $citymun = $_SESSION['city_mun'];
 
 $province_opts = $app->getProvinces();
-$citymun_opts = $app->getCityMuns();
+$citymun_opts = $app->getCityMuns($province);
 $applicants = $app->getApplicationLists($province,$citymun,ApplicationManager::STATUS_DRAFT);
 
 
@@ -39,6 +39,9 @@ function getUserChecklists($conn, $id)
         ac.status as status,
         ac.id as appid,
         ac.safety_seal_no as ss_no,
+        ac.establishment as ac_establishment,
+        ac.nature as ac_nature,
+        ac.address as ac_address,
        	DATE_FORMAT(ac.date_created, '%M %d, %Y') as date_created
         FROM tbl_app_checklist ac
         LEFT JOIN tbl_admin_info ai on ai.id = ac.user_id
