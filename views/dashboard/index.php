@@ -143,57 +143,7 @@
             </div>
         </div>
 
-        <div class="row">
-            <div class="col-lg-12">
-                <div class="card">
-                    <div class="card-header">
-                        <h5 class="header-title"> <i class="fa fa-folder"></i> Application List</h5>
-                    </div>
-                    <div class="card-body" style="background-color: #f9f8f8;">
-                        <table id="table1" class="table table-hover mb-0 border-bottom" style="width:100%;">
-                            <thead>
-                                <tr>
-                                    <th style="text-align: center; width:20%">Name</th>
-                                    <th style="text-align: center; width:20%">Agency Name</th>
-                                    <th style="text-align: center; width:20%">Location</th>
-                                    <th style="text-align: center; width:20%">Control No</th>
-                                    <th style="text-align: center; width:10%">Date Registered</th>
-                                    <th style="text-align: center; width:10%">Status</th>
-                                    <th style="text-align: center; width:15%">Action</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <?php
-                                include 'application/config/connection.php';
-
-                                $resultSet = $conn->query(" SELECT 
-                                ac.id as id,
-                                ai.CMLGOO_NAME as fname,
-                                ui.GOV_AGENCY_NAME as agency,
-                                ui.ADDRESS as address,
-                                DATE_FORMAT(ac.date_created, '%Y-%m-%d') as date_created,
-                                ui.id as userid,
-                                ac.control_no as control_no,
-                                ac.status as status
-                                FROM tbl_app_checklist ac
-                                LEFT JOIN tbl_userinfo ui on ui.id = ac.user_id
-                                LEFT JOIN tbl_admin_info ai on ui.user_id = ai.id");
-                                if ($resultSet->num_rows > 0) {
-                                    while ($row = $resultSet->fetch_assoc()) {
-                                        include 'establishment_table.php';
-                                    }
-                                }
-                                mysqli_close($conn);
-
-                                ?>
-
-                            </tbody>
-                        </table>
-                    </div>
-                </div>
-            </div>
-
-        </div>
+       
     </div>
 </div>
 <?php

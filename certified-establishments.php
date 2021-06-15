@@ -4,7 +4,7 @@
 <?php include 'layout/header.html.php'; ?>
 <body>
     <main>
-        <div class="container" style="margin-top: 7%;">
+        <div class="container" style="margin-top: 4%;">
                 <?php include 'layout/navbar.php'; ?>
                 <?php include 'views/certified-establishments.php'; ?>
         </div>
