@@ -84,4 +84,24 @@ class DashboardManager
 
         return $data;
     }
+
+  
+    public function getCityMuns($province)
+    {
+        $sql = "SELECT id, province, code, name FROM tbl_citymun where province  = $province order by name";
+        
+        $query = mysqli_query($this->conn, $sql);
+        $data = [];
+        
+        while ($row = mysqli_fetch_assoc($query)) {
+            $data[$row['id']] = [
+                'province' => $row['province'],
+                'code' => $row['code'],
+                'name' => $row['name']
+            ];    
+           
+        }
+
+        return $data;
+    }
 }

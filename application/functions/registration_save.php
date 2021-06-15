@@ -5,6 +5,7 @@ require_once '../config/connection.php';
 $error = NULL;
 $agency_name =  mysqli_real_escape_string($conn, $_POST['government_agency']);
 $establishment_name   =    mysqli_real_escape_string($conn, $_POST['government_esta']);
+$gov_nature   =    mysqli_real_escape_string($conn, $_POST['government_nature']);
 $firstname             =    mysqli_real_escape_string($conn, $_POST['fname']);
 $middlename             =    mysqli_real_escape_string($conn, $_POST['mname']);
 $lastname             =    mysqli_real_escape_string($conn, $_POST['lname']);
@@ -43,8 +44,9 @@ if (strlen($username) < 5) {
 
     
 
-    $sql = "INSERT INTO `tbl_userinfo`(`ID`, `USER_ID`, `ADDRESS`, `POSITION`, `MOBILE_NO`, `EMAIL_ADDRESS`, `GOV_AGENCY_NAME`, `GOV_ESTB_NAME`,`DATE_REGISTERED`, `PROVINCE`, `CITY_MUNICIPALITY`)
-        VALUES (NULL,'$user_id','$address','$mobile_no','$emailAddress','$position','$agency_name','$establishment_name','$date','$province', '$municipalities')";
+    $sql = "INSERT INTO `tbl_userinfo` (`ID`, `USER_ID`, `ADDRESS`, `POSITION`, `MOBILE_NO`, `EMAIL_ADDRESS`, `GOV_AGENCY_NAME`, `GOV_ESTB_NAME`,`DATE_REGISTERED`,`GOV_NATURE_NAME`)
+        VALUES (NULL,'$user_id','$address','$position','$mobile_no','$emailAddress','$agency_name','$establishment_name','$date','$gov_nature')";
+        
     if (mysqli_query($conn, $sql)) {
         //    send email
 
