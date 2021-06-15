@@ -1,6 +1,11 @@
 <?php require_once 'application/config/connection.php'; ?>
 <img src="frontend/images/banner_calabarzon.png" height="10%" width="100%" alt="">
  <hr>
+ <div class="row">
+        <div class="col-lg-12 ">       
+          <img src="frontend/images/carousel/6.png" style="width: 100%;" alt=""> 
+        </div>
+      </div>
   <div class="row mt-5 mb-5">
     <div class="col-md-12">
 
@@ -33,7 +38,7 @@
                     <th width="10%">PROVINCE</th>
                     <th width="10%">CITY / MUNICIPALITY</th>
                     <th width="10%">ICT COMPLAINT HOTLINE</th>
-                    <th width="10%">EMAIL ADDRESS FOR COMPLAINTS</th>
+                    <th width="10%">ICT COMPLAINT EMAIL ADDRESS</th>
                  
 
                    
@@ -90,6 +95,8 @@
     $('#complaintsTable').DataTable( {
         responsive: {
             details: true
-        }
+        },
+        "autoWidth": false,
+        "lengthMenu": [[20, 50, -1], [20, 50, "All"]]
     } );
   </script>

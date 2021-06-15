@@ -84,12 +84,10 @@ $resultInspection = $execInspection->fetch_assoc();
 
   <script>
     $(document).ready( function(){
-    var addr = '<?php echo $resultAddress['ADDRESS']; ?>';
-    
+      var addr = '<?php echo $resultAddress['ADDRESS']; ?>';
+      
+      var embed= "<iframe width='600' height='450' frameborder='0' scrolling='no' marginheight='0' marginwidth='0' src='https://maps.google.com/maps?&amp;q="+ encodeURIComponent( addr ) + "&amp;output=embed'></iframe>";  
 
-        var embed= "<iframe width='600' height='450' frameborder='0' scrolling='no' marginheight='0' marginwidth='0' src='https://maps.google.com/maps?&amp;q="+ encodeURIComponent( addr ) + "&amp;output=embed'></iframe>";  
-
-        $('.place').html(embed);
-    
+      $('.place').html(embed);
     });
   </script>

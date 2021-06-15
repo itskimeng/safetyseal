@@ -3,7 +3,7 @@
 <?php include 'layout/header.html.php'; ?>
 <body>
     <main>
-        <div class="container" style="margin-top: 10%;">
+        <div class="container" style="margin-top: 4%;">
                 <?php include 'layout/navbar.php'; ?>
                 <?php include 'views/homepage.html.php'; ?>
         </div>

@@ -4,8 +4,15 @@
 
 <img src="frontend/images/banner_calabarzon.png" height="10%" width="100%" alt="">
  <hr>
+ <div class="row">
+        <div class="col-lg-12 ">       
+          <img src="frontend/images/carousel/3.png" style="width: 100%;" alt=""> 
+        </div>
+      </div>
   <div class="row mt-5 mb-5">
+      
     <div class="col-md-12">
+    
 
       <div class="card">
         <div class="card-header">
@@ -93,7 +100,7 @@
                         <td class="align-middle" nowrap="">
                             <span class="label label-lg label-light-success label-inline font-weight-bold py-4">
                                 <i class="la la-clipboard-check mr-2"></i>
-                             <?php echo $resultApplication['status']; ?>
+                             <?php if ($resultApplication['status'] == 'Approved') { echo '<span class="text-success">CERTIFIED<span>';} else {echo '<span class="text-danger">'.$resultApplication['status'].'<span>'; } ?>
                             </span>
                         </td>
                     </tr>
@@ -122,6 +129,8 @@
     $('#establishmentsTable').DataTable( {
         responsive: {
             details: true
-        }
+        },
+        "autoWidth": false,
+        "lengthMenu": [[20, 50, -1], [20, 50, "All"]]
     } );
   </script>
