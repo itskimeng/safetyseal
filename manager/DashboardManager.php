@@ -75,6 +75,7 @@ class DashboardManager
                     LEFT JOIN tbl_province p on p.id = ai.PROVINCE
                     LEFT JOIN tbl_citymun cm on cm.id = ai.LGU
                     WHERE p.id = '$province' AND cm.id = '$lgu' AND status = '".$stat."' ";
+                  
 
             $query = mysqli_query($this->conn, $sql);
             $result = $row = mysqli_fetch_assoc($query);

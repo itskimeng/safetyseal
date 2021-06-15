@@ -1,4 +1,4 @@
-<?php 
+<?php
 require_once 'controller/DashboardController.php'; ?>
 
 <div class="content-header">
@@ -43,7 +43,7 @@ require_once 'controller/DashboardController.php'; ?>
             <!-- small box -->
             <div class="col-lg-3 col-xs-6">
                 <!-- small box -->
-                <div class="small-box bg-green">
+                <div class="small-box bg-yellow">
                     <div class="inner">
                         <h3><?php echo $count_status['Received']; ?></h3>
 
@@ -60,7 +60,7 @@ require_once 'controller/DashboardController.php'; ?>
 
             <div class="col-lg-3 col-xs-6">
                 <!-- small box -->
-                <div class="small-box bg-yellow">
+                <div class="small-box bg-green">
                     <div class="inner">
                         <h3><?php echo $count_status['Approved']; ?></h3>
 
@@ -78,7 +78,7 @@ require_once 'controller/DashboardController.php'; ?>
 
             <div class="col-lg-3 col-xs-6">
                 <!-- small box -->
-                <div class="small-box bg-red">
+                <div class="small-box" style="background-color: #b71c1c;color:gainsboro">
                     <div class="inner">
                         <h3><?php echo $count_status['Disapproved']; ?></h3>
 
@@ -98,147 +98,189 @@ require_once 'controller/DashboardController.php'; ?>
         <div class="row">
             <div class="col-lg-12">
                 <div class="row">
-                    <!-- <div class="col-md-4">
-                    </div> -->
-
-                    <div class="col-md-12">
-                    <span class="pull-right badge bg-green">APPROVED</span>
-                    <span class="pull-right badge bg-blue">FOR RECEIVING </span>
-                        <!-- BAR CHART -->
-                        <div class="box box-success">
-
-                            <div class="box-body">
-                                <div class="chart" style="border: 1px solid blue;">
-                                    <canvas id="barChart" style="height:230px"></canvas>
-                                </div>
+                    <div class="col-md-4">
+                        <div class="card"  style="height: 255px;">
+                            <div class="card-header" style="background-color: #009688; color:#fff;">
+                                <h3 class="card-title"><img src="frontend/images/logo.png" style="width: 30px;" alt=""> LGU's </h3>
                             </div>
-                            <!-- /.box-body -->
-                        </div>
-                        <!-- /.box -->
 
+                            <div class="card-body" style="overflow:auto;">
+                                <ul class="list-group list-group-flush">
+                                    <li class="list-group-item">Cras justo odio</li>
+                                    <li class="list-group-item">Dapibus ac facilisis in</li>
+                                    <li class="list-group-item">Vestibulum at eros</li>
+                                    <li class="list-group-item">Vestibulum at eros</li>
+                                    <li class="list-group-item">Vestibulum at eros</li>
+                                    <li class="list-group-item">Vestibulum at eros</li>
+                                    <li class="list-group-item">Vestibulum at eros</li>
+                                    <li class="list-group-item">Vestibulum at eros</li>
+                                </ul>
+                            </div>
+                        </div>
+                        <div class="card"  style="height: 255px;">
+                            <div class="card-header" style="background-color: #009688; color:#fff;">
+                                <h3 class="card-title"><img src="frontend/images/logo.png" style="width: 30px;" alt=""> ESTABLISHMENTS WITH SAFETY SEAL CERTIFICATE</h3>
+                            </div>
+
+                            <div class="card-body"  style="overflow:auto;">
+                                <ul class="list-group list-group-flush">
+                                    <li class="list-group-item">Cras justo odio</li>
+                                    <li class="list-group-item">Dapibus ac facilisis in</li>
+                                    <li class="list-group-item">Vestibulum at eros</li>
+                                    <li class="list-group-item">Vestibulum at eros</li>
+                                    <li class="list-group-item">Vestibulum at eros</li>
+                                    <li class="list-group-item">Vestibulum at eros</li>
+                                    <li class="list-group-item">Vestibulum at eros</li>
+                                </ul>
+                            </div>
+                        </div>
                     </div>
-                    <!-- /.col (RIGHT) -->
+
+                    <div class="col-md-8" style="border-radius:5px">
+                        <div class=" card box box-success">
+                            <div class="card-header" style="background-color: #009688; color:#fff;">
+                            <center> LEGEND: <span class="pull-right badge bg-green">APPROVED</span>
+                                    <span class="pull-right badge bg-blue">FOR RECEIVING </span>
+                                </center>
+                            </div>
+                            <div class="box-header with-border">
+                              
+                                <!-- BAR CHART -->
+                                <div class="box box-success">
+
+                                    <div class="box-body bg-ligth">
+                                        <div class="chart">
+                                            <canvas id="barChart" style="height:230px"></canvas>
+                                        </div>
+                                    </div>
+                                    <!-- /.box-body -->
+                                </div>
+
+                                <!-- /.box -->
+
+                            </div>
+                            <!-- /.col (RIGHT) -->
+                        </div>
+                    </div>
                 </div>
+
             </div>
         </div>
 
-    </div>
-</div>
 
-?>
-<script>
-    $(function() {
-        $('#table1').DataTable();
+        <script>
+            $(function() {
+                $('#table1').DataTable();
 
 
-        var areaChartData = {
-            labels: [ 'January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December' ],
+                var areaChartData = {
+                    labels: ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'],
 
-            datasets: [{
-                    labels: 'Applicants',
-                    fillColor: '#1976D2',
-                    strokeColor: 'rgba(210, 214, 222, 1)',
-                    pointColor: 'rgba(210, 214, 222, 1)',
-                    pointStrokeColor: '#c1c7d1',
-                    pointHighlightFill: '#fff',
-                    pointHighlightStroke: 'rgba(220,220,220,1)',
-                    data: [<?php echo $receiving['1'] . ',' . $receiving['2'] . ',' . $receiving['3'] . ',' . $receiving['4'] . ',' . $receiving['5'] . ',' . $receiving['6'] . ',' .$receiving['7'] . ',' . $receiving['8'] . ',' . $receiving['9'] . ',' . $receiving['10'] . ',' . $receiving['11'] . ',' . $receiving['12']; ?>],
-                },
-                {
-                    label: 'Approved Applicants',
-                    fillColor: '#43A047',
-                    strokeColor: 'rgba(60,141,188,0.8)',
-                    pointColor: '#3b8bba',
-                    pointStrokeColor: 'rgba(60,141,188,1)',
-                    pointHighlightFill: '#fff',
-                    pointHighlightStroke: 'rgba(60,141,188,1)',
-                    data: [<?php echo $approved['1'] . ',' . $approved['2'] . ',' . $approved['3'] . ',' . $approved['4'] . ',' . $approved['5'] . ',' . $approved['6'] . ',' .$approved['7'] . ',' . $approved['8'] . ',' . $approved['9'] . ',' . $approved['10'] . ',' . $approved['11'] . ',' . $approved['12']; ?>],
+                    datasets: [{
+                            labels: 'Applicants',
+                            fillColor: '#1976D2',
+                            strokeColor: 'rgba(210, 214, 222, 1)',
+                            pointColor: 'rgba(210, 214, 222, 1)',
+                            pointStrokeColor: '#c1c7d1',
+                            pointHighlightFill: '#fff',
+                            pointHighlightStroke: 'rgba(220,220,220,1)',
+                            data: [<?php echo $receiving['1'] . ',' . $receiving['2'] . ',' . $receiving['3'] . ',' . $receiving['4'] . ',' . $receiving['5'] . ',' . $receiving['6'] . ',' . $receiving['7'] . ',' . $receiving['8'] . ',' . $receiving['9'] . ',' . $receiving['10'] . ',' . $receiving['11'] . ',' . $receiving['12']; ?>],
+                        },
+                        {
+                            label: 'Approved Applicants',
+                            fillColor: '#43A047',
+                            strokeColor: 'rgba(60,141,188,0.8)',
+                            pointColor: '#3b8bba',
+                            pointStrokeColor: 'rgba(60,141,188,1)',
+                            pointHighlightFill: '#fff',
+                            pointHighlightStroke: 'rgba(60,141,188,1)',
+                            data: [<?php echo $approved['1'] . ',' . $approved['2'] . ',' . $approved['3'] . ',' . $approved['4'] . ',' . $approved['5'] . ',' . $approved['6'] . ',' . $approved['7'] . ',' . $approved['8'] . ',' . $approved['9'] . ',' . $approved['10'] . ',' . $approved['11'] . ',' . $approved['12']; ?>],
 
+
+                        }
+                    ],
 
                 }
-            ],
 
-        }
-
-        var areaChartOptions = {
-            //Boolean - If we should show the scale at all
-            showScale: true,
-            //Boolean - Whether grid lines are shown across the chart
-            scaleShowGridLines: false,
-            //String - Colour of the grid lines
-            scaleGridLineColor: 'rgba(0,0,0,.05)',
-            //Number - Width of the grid lines
-            scaleGridLineWidth: 1,
-            //Boolean - Whether to show horizontal lines (except X axis)
-            scaleShowHorizontalLines: true,
-            //Boolean - Whether to show vertical lines (except Y axis)
-            scaleShowVerticalLines: true,
-            //Boolean - Whether the line is curved between points
-            bezierCurve: true,
-            //Number - Tension of the bezier curve between points
-            bezierCurveTension: 0.3,
-            //Boolean - Whether to show a dot for each point
-            pointDot: false,
-            //Number - Radius of each point dot in pixels
-            pointDotRadius: 4,
-            //Number - Pixel width of point dot stroke
-            pointDotStrokeWidth: 1,
-            //Number - amount extra to add to the radius to cater for hit detection outside the drawn point
-            pointHitDetectionRadius: 20,
-            //Boolean - Whether to show a stroke for datasets
-            datasetStroke: true,
-            //Number - Pixel width of dataset stroke
-            datasetStrokeWidth: 2,
-            //Boolean - Whether to fill the dataset with a color
-            datasetFill: true,
-            //String - A legend template
-            legendTemplate: '<ul class="<%=name.toLowerCase()%>-legend"><% for (var i=0; i<datasets.length; i++){%><li><span style="background-color:<%=datasets[i].lineColor%>"></span><%if(datasets[i].label){%><%=datasets[i].label%><%}%></li><%}%></ul>',
-            //Boolean - whether to maintain the starting aspect ratio or not when responsive, if set to false, will take up entire container
-            maintainAspectRatio: true,
-            //Boolean - whether to make the chart responsive to window resizing
-            responsive: true
-        }
+                var areaChartOptions = {
+                    //Boolean - If we should show the scale at all
+                    showScale: true,
+                    //Boolean - Whether grid lines are shown across the chart
+                    scaleShowGridLines: false,
+                    //String - Colour of the grid lines
+                    scaleGridLineColor: 'rgba(0,0,0,.05)',
+                    //Number - Width of the grid lines
+                    scaleGridLineWidth: 1,
+                    //Boolean - Whether to show horizontal lines (except X axis)
+                    scaleShowHorizontalLines: true,
+                    //Boolean - Whether to show vertical lines (except Y axis)
+                    scaleShowVerticalLines: true,
+                    //Boolean - Whether the line is curved between points
+                    bezierCurve: true,
+                    //Number - Tension of the bezier curve between points
+                    bezierCurveTension: 0.3,
+                    //Boolean - Whether to show a dot for each point
+                    pointDot: false,
+                    //Number - Radius of each point dot in pixels
+                    pointDotRadius: 4,
+                    //Number - Pixel width of point dot stroke
+                    pointDotStrokeWidth: 1,
+                    //Number - amount extra to add to the radius to cater for hit detection outside the drawn point
+                    pointHitDetectionRadius: 20,
+                    //Boolean - Whether to show a stroke for datasets
+                    datasetStroke: true,
+                    //Number - Pixel width of dataset stroke
+                    datasetStrokeWidth: 2,
+                    //Boolean - Whether to fill the dataset with a color
+                    datasetFill: true,
+                    //String - A legend template
+                    legendTemplate: '<ul class="<%=name.toLowerCase()%>-legend"><% for (var i=0; i<datasets.length; i++){%><li><span style="background-color:<%=datasets[i].lineColor%>"></span><%if(datasets[i].label){%><%=datasets[i].label%><%}%></li><%}%></ul>',
+                    //Boolean - whether to maintain the starting aspect ratio or not when responsive, if set to false, will take up entire container
+                    maintainAspectRatio: true,
+                    //Boolean - whether to make the chart responsive to window resizing
+                    responsive: true
+                }
 
 
-        var barChartCanvas = $('#barChart').get(0).getContext('2d')
-        var barChart = new Chart(barChartCanvas)
-        var barChartData = areaChartData
-        barChartData.datasets[1].fillColor = '#00a65a'
-        barChartData.datasets[1].strokeColor = '#00a65a'
-        barChartData.datasets[1].pointColor = '#00a65a'
-        var barChartOptions = {
-            //Boolean - Whether the scale should start at zero, or an order of magnitude down from the lowest value
-            scaleBeginAtZero: true,
-            //Boolean - Whether grid lines are shown across the chart
-            scaleShowGridLines: true,
-            //String - Colour of the grid lines
-            scaleGridLineColor: 'rgba(0,0,0,.05)',
-            //Number - Width of the grid lines
-            scaleGridLineWidth: 1,
-            //Boolean - Whether to show horizontal lines (except X axis)
-            scaleShowHorizontalLines: true,
-            //Boolean - Whether to show vertical lines (except Y axis)
-            scaleShowVerticalLines: true,
-            //Boolean - If there is a stroke on each bar
-            barShowStroke: true,
-            //Number - Pixel width of the bar stroke
-            barStrokeWidth: 2,
-            //Number - Spacing between each of the X value sets
-            barValueSpacing: 5,
-            //Number - Spacing between data sets within X values
-            barDatasetSpacing: 1,
-            //String - A legend template
-            legendTemplate: '<ul class="<%=name.toLowerCase()%>-legend"><% for (var i=0; i<datasets.length; i++){%><li><span style="background-color:<%=datasets[i].fillColor%>"></span><%if(datasets[i].label){%><%=datasets[i].label%><%}%></li><%}%></ul>',
-            //Boolean - whether to make the chart responsive
-            responsive: true,
-            maintainAspectRatio: true
-        }
+                var barChartCanvas = $('#barChart').get(0).getContext('2d')
+                var barChart = new Chart(barChartCanvas)
+                var barChartData = areaChartData
+                barChartData.datasets[1].fillColor = '#00a65a'
+                barChartData.datasets[1].strokeColor = '#00a65a'
+                barChartData.datasets[1].pointColor = '#00a65a'
+                var barChartOptions = {
+                    //Boolean - Whether the scale should start at zero, or an order of magnitude down from the lowest value
+                    scaleBeginAtZero: true,
+                    //Boolean - Whether grid lines are shown across the chart
+                    scaleShowGridLines: true,
+                    //String - Colour of the grid lines
+                    scaleGridLineColor: 'rgba(0,0,0,.05)',
+                    //Number - Width of the grid lines
+                    scaleGridLineWidth: 1,
+                    //Boolean - Whether to show horizontal lines (except X axis)
+                    scaleShowHorizontalLines: true,
+                    //Boolean - Whether to show vertical lines (except Y axis)
+                    scaleShowVerticalLines: true,
+                    //Boolean - If there is a stroke on each bar
+                    barShowStroke: true,
+                    //Number - Pixel width of the bar stroke
+                    barStrokeWidth: 2,
+                    //Number - Spacing between each of the X value sets
+                    barValueSpacing: 5,
+                    //Number - Spacing between data sets within X values
+                    barDatasetSpacing: 1,
+                    //String - A legend template
+                    legendTemplate: '<ul class="<%=name.toLowerCase()%>-legend"><% for (var i=0; i<datasets.length; i++){%><li><span style="background-color:<%=datasets[i].fillColor%>"></span><%if(datasets[i].label){%><%=datasets[i].label%><%}%></li><%}%></ul>',
+                    //Boolean - whether to make the chart responsive
+                    responsive: true,
+                    maintainAspectRatio: true
+                }
 
-        barChartOptions.datasetFill = false
-        barChart.Bar(barChartData, barChartOptions)
+                barChartOptions.datasetFill = false
+                barChart.Bar(barChartData, barChartOptions)
 
-    })
-</script>
-</body>
+            })
+        </script>
+        </body>
 
-</html>
+        </html>
