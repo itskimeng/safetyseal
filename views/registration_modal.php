@@ -12,7 +12,7 @@
             <div class="modal-body">
                 <div style="height:300px;overflow:auto;padding:10px;">
                     <form action="application/functions/registration_save.php" method="POST" class="row g-3 needs-validation" novalidate>
-                        <input type="hidden" id="cform-array_citymuns" class="array_citymuns" name="array_citymuns" value='<?php echo json_encode(array_map(function($x) { return $x; }, $city_mun)); ?>'>
+                        <input type="hidden" id="cform-array_citymuns" class="array_citymuns" name="array_citymuns" value='<?php echo $city_mun; ?>'>
                         <!-- <input type="hidden" id="cform-array_citymuns" class="array_citymuns" name="array_citymuns" value='<?php //echo json_encode($city_mun); ?>;'> -->
 
                         <div class="row">
@@ -164,7 +164,7 @@
     $(document).on('change','#province', function() {
         let province = $(this).val();
         let lgu_array = $('.array_citymuns').val();
-        let lgu_opts = JSON.parse(lgu_array);
+        let lgu_opts = JSON.parse(JSON.parse(lgu_array));
         let lgu_select = $('#city_mun');
 
         generateSelectOptions(lgu_select, lgu_opts[province]);
