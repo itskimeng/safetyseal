@@ -99,30 +99,26 @@ require_once 'controller/DashboardController.php'; ?>
             <div class="col-lg-12">
                 <div class="row">
                     <div class="col-md-4">
-                        <div class="card"  style="height: 255px;">
+                        <div class="card" style="height: 269px;">
                             <div class="card-header" style="background-color: #009688; color:#fff;">
                                 <h3 class="card-title"><img src="frontend/images/logo.png" style="width: 30px;" alt=""> LGU's </h3>
                             </div>
 
                             <div class="card-body" style="overflow:auto;">
                                 <ul class="list-group list-group-flush">
-                                    <li class="list-group-item">Cras justo odio</li>
-                                    <li class="list-group-item">Dapibus ac facilisis in</li>
-                                    <li class="list-group-item">Vestibulum at eros</li>
-                                    <li class="list-group-item">Vestibulum at eros</li>
-                                    <li class="list-group-item">Vestibulum at eros</li>
-                                    <li class="list-group-item">Vestibulum at eros</li>
-                                    <li class="list-group-item">Vestibulum at eros</li>
-                                    <li class="list-group-item">Vestibulum at eros</li>
+                                    <?php foreach ($lgu as $key => $municipalities): ?>
+                                    <?php echo '<li class="list-group-item">'.$municipalities['name'].' <span style="float: right; position:relative; top:5px;" class="badge badge-primary pull-right">Primary</span></li>';?>
+                                    <?php endforeach;?>
+                                   
                                 </ul>
                             </div>
                         </div>
-                        <div class="card"  style="height: 255px;">
+                        <div class="card" style="height: 269px;">
                             <div class="card-header" style="background-color: #009688; color:#fff;">
                                 <h3 class="card-title"><img src="frontend/images/logo.png" style="width: 30px;" alt=""> ESTABLISHMENTS WITH SAFETY SEAL CERTIFICATE</h3>
                             </div>
 
-                            <div class="card-body"  style="overflow:auto;">
+                            <div class="card-body" style="overflow:auto;">
                                 <ul class="list-group list-group-flush">
                                     <li class="list-group-item">Cras justo odio</li>
                                     <li class="list-group-item">Dapibus ac facilisis in</li>
@@ -139,12 +135,12 @@ require_once 'controller/DashboardController.php'; ?>
                     <div class="col-md-8" style="border-radius:5px">
                         <div class=" card box box-success">
                             <div class="card-header" style="background-color: #009688; color:#fff;">
-                            <center> LEGEND: <span class="pull-right badge bg-green">APPROVED</span>
+                              LEGEND: <span class="pull-right badge bg-green">APPROVED</span>
                                     <span class="pull-right badge bg-blue">FOR RECEIVING </span>
-                                </center>
+                                
                             </div>
                             <div class="box-header with-border">
-                              
+
                                 <!-- BAR CHART -->
                                 <div class="box box-success">
 
@@ -166,6 +162,38 @@ require_once 'controller/DashboardController.php'; ?>
 
             </div>
         </div>
+        <!-- <div class="row">
+            <div class="col-lg-4">
+                <div class="card" style="height: 269px;">
+                    <div class="card-header" style="background-color: #009688; color:#fff;">
+                        <h3 class="card-title"><img src="frontend/images/logo.png" style="width: 30px;" alt=""> LGU's </h3>
+                    </div>
+
+                    <div class="card-body">
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-4">
+                <div class="card" style="height: 269px;">
+                    <div class="card-header" style="background-color: #009688; color:#fff;">
+                        <h3 class="card-title"><img src="frontend/images/logo.png" style="width: 30px;" alt=""> LGU's </h3>
+                    </div>
+
+                    <div class="card-body">
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-4">
+                <div class="card" style="height: 269px;">
+                    <div class="card-header" style="background-color: #009688; color:#fff;">
+                        <h3 class="card-title"><img src="frontend/images/logo.png" style="width: 30px;" alt=""> LGU's </h3>
+                    </div>
+
+                    <div class="card-body">
+                    </div>
+                </div>
+            </div>
+        </div> -->
 
 
         <script>
