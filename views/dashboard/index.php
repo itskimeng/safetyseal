@@ -1,4 +1,5 @@
-<?php require_once 'controller/DashboardController.php'; ?>
+<?php 
+require_once 'controller/DashboardController.php'; ?>
 
 <div class="content-header">
     <div class="container">
@@ -124,6 +125,7 @@
     </div>
 </div>
 
+?>
 <script>
     $(function() {
         $('#table1').DataTable();

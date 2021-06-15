@@ -1,7 +1,7 @@
 <nav class="main-header navbar navbar-expand-md navbar-light navbar-dark">
   <div class="container">
     <a href="dashboard.v2.php" class="navbar-brand">
-      <img src="frontend/dist/img/SafetySealLogo.png" alt="SafetySeal Logo" class="brand-image img-circle elevation-3" style="opacity: .8; height: 40px;">
+      <img src="frontend/images/logo.png" alt="SafetySeal Logo" class="brand-image img-circle elevation-3" style="opacity: .8; height: 40px;">
       <span class="brand-text font-weight-light">SafetySeal</span>
     </a>
 

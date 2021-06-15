@@ -4,8 +4,15 @@
 
 <img src="frontend/images/banner_calabarzon.png" height="10%" width="100%" alt="">
  <hr>
+ <div class="row">
+        <div class="col-lg-12 ">       
+          <img src="frontend/images/carousel/3.png" style="width: 100%;" alt=""> 
+        </div>
+      </div>
   <div class="row mt-5 mb-5">
+      
     <div class="col-md-12">
+    
 
       <div class="card">
         <div class="card-header">

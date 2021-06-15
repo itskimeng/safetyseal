@@ -12,7 +12,7 @@ $province = $_SESSION['province'];
 $citymun = $_SESSION['city_mun'];
 
 $province_opts = $app->getProvinces();
-$citymun_opts = $app->getCityMuns();
+$citymun_opts = $app->getCityMuns($citymun);
 $applicants = $app->getApplicationLists($province,$citymun,ApplicationManager::STATUS_DRAFT);
 
 

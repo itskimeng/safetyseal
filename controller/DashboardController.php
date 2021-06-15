@@ -17,8 +17,8 @@ $count_status = $app->countStatus($province, $citymun);
 // palitan mo to
 $provinces_title = $app->setBarChartLabel();
 // ============
-$receiving = $app->getdataForReceived();
-$approved = $app->getdataApproved();
+$receiving = $app->getdataForReceived($province);
+$approved = $app->getdataApproved($province);
 
 
 // $province = $_SESSION['province'];
