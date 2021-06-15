@@ -10,7 +10,8 @@ class ApplicationManager
     const STATUS_FOR_APPROVAL       = "For Approval";
     const STATUS_FOR_RECEIVING      = "For Receiving";
     const STATUS_RECEIVED           = "Received";
-
+    const STATUS_FOR_REASSESSMENT   = "For Reassessment";
+    const STATUS_REASSESS           = "Reassess";
 
     function __construct() 
     {
@@ -37,28 +38,27 @@ class ApplicationManager
         return $data;
     }
 
-    public function findChecklist($userid)
+    public function findChecklist($token)
     {
-        $sql = "SELECT id FROM tbl_app_checklist WHERE user_id = $userid";
+        $sql = "SELECT id FROM tbl_app_checklist WHERE token = '".$token."'";
         $query = mysqli_query($this->conn, $sql);
-    
         $result = mysqli_fetch_assoc($query);
         
         return $result['id'];
     }
 
-    public function insertChecklist($control_no, $userid, $date_created)
+    public function insertChecklist($control_no, $establishment, $nature, $address, $userid, $date_created, $token)
     {
-        $sql = 'INSERT INTO tbl_app_checklist (control_no, user_id, date_created) VALUES ("'.$control_no.'", '.$userid.', "'.$date_created.'")';
+        $sql = 'INSERT INTO tbl_app_checklist (control_no, establishment, nature, address, user_id, date_created, token) VALUES ("'.$control_no.'", "'.$establishment.'", "'.$nature.'", "'.$address.'", '.$userid.', "'.$date_created.'", "'.$token.'")';
 
         $result = mysqli_query($this->conn, $sql);
 
         return $result;
     }
 
-    public function updateChecklist($userid, $date_modified)
+    public function updateChecklist($token, $establishment, $nature, $address, $date_modified)
     {
-        $sql = "UPDATE tbl_app_checklist SET date_modified = '".$date_modified."' WHERE user_id = ".$userid."";
+        $sql = "UPDATE tbl_app_checklist SET date_modified = '".$date_modified."', establishment = '".$establishment."', nature = '".$nature."', address = '".$address."' WHERE token = '".$token."'";
         $result = mysqli_query($this->conn, $sql);
 
         return $result;
@@ -82,7 +82,7 @@ class ApplicationManager
         return $result;
     }
 
-    public function getUserChecklistsEntry($user)
+    public function getUserChecklistsEntry($token)
     {
         $sql = "SELECT 
             c.id as clist_id,  
@@ -90,24 +90,30 @@ class ApplicationManager
             c.description as description,
             e.id as ulist_id,
             e.answer as answer,
-            e.reason as reason
+            e.reason as reason,
+            a.status as status
             FROM tbl_app_checklist_entry e
             LEFT JOIN tbl_app_checklist a on a.id = e.parent_id
             LEFT JOIN tbl_app_certchecklist c on c.id = e.chklist_id
             LEFT JOIN tbl_admin_info ai on ai.id = a.user_id
-            WHERE ai.id = $user";
+            WHERE a.token = '".$token."'";
 
         $query = mysqli_query($this->conn, $sql);
         $data = [];
 
         while ($row = mysqli_fetch_assoc($query)) {
+            $is_disabled = true;
+            if (in_array($row['status'], array('Draft', 'Disapproved', 'Reassess'))) {
+                $is_disabled = false;
+            }
             $data[] = [
                 'clist_id' => $row['clist_id'],
                 'requirement' => $row['requirement'],
                 'description' => explode('~ ', $row['description']),
                 'ulist_id' => $row['ulist_id'],
                 'answer' => $row['answer'],
-                'reason' => $row['reason']
+                'reason' => $row['reason'],
+                'is_disabled' => $is_disabled
             ];    
         }
 
@@ -149,7 +155,7 @@ class ApplicationManager
         return $data;
     }
 
-    public function getUsers($user)
+    public function getUsers($user, $token)
     {
         $sql = "SELECT 
             ai.id as id,
@@ -165,13 +171,16 @@ class ApplicationManager
             m.code as mcode,
             ui.MOBILE_NO as contact_details,
             ac.status as status,
-            ac.control_no as control_no
-            FROM tbl_admin_info ai
+            ac.control_no as control_no,
+            ac.establishment as establishment,
+            ac.nature as nature,
+            ac.address as address
+            FROM tbl_app_checklist ac
+            LEFT JOIN tbl_admin_info ai on ai.id = ac.user_id
             LEFT JOIN tbl_userinfo ui on ui.user_id = ai.id
-            LEFT JOIN tbl_app_checklist ac on ac.user_id = ai.id
             LEFT JOIN tbl_province p on p.id = ai.PROVINCE
             LEFT JOIN tbl_citymun m on m.id = ai.LGU
-            WHERE ai.id = $user";
+            WHERE ac.token = '".$token."'";
         
         $query = mysqli_query($this->conn, $sql);
         // $result = mysqli_fetch_array($query);
@@ -205,6 +214,52 @@ class ApplicationManager
         return $data;
     }
 
+    public function getApplicantDetails($user)
+    {
+        $sql = "SELECT 
+            ai.id as id,
+            ui.ADDRESS as address,
+            ui.GOV_AGENCY_NAME as agency,
+            ui.GOV_ESTB_NAME as establishment, 
+            ui.GOV_NATURE_NAME as nature,
+            ai.CMLGOO_NAME as fname,
+            p.code as pcode,
+            m.code as mcode,
+            ui.MOBILE_NO as contact_details
+            FROM tbl_admin_info ai
+            LEFT JOIN tbl_userinfo ui on ui.user_id = ai.id
+            LEFT JOIN tbl_province p on p.id = ai.PROVINCE
+            LEFT JOIN tbl_citymun m on m.id = ai.LGU
+            WHERE ai.id = $user";
+        
+        $query = mysqli_query($this->conn, $sql);
+        // $result = mysqli_fetch_array($query);
+        $data = [];
+        $today = new DateTime();
+        $today = $today->format('F d, Y');
+
+        while ($row = mysqli_fetch_assoc($query)) {
+            $data = [
+                'id' => $row['id'],
+                'acid' => $row['acid'],
+                'date_created' => $today,
+                'address' => $row['address'],
+                'agency' => $row['agency'],
+                'establishment' => $row['establishment'],
+                'nature' => $row['nature'],
+                'fname' => $row['fname'],
+                'contact_details' => $row['contact_details'],
+                'status' => 'Draft',
+                'pcode' => $row['pcode'],
+                'mcode' => $row['mcode'],
+                'code' => '2021-'.'_____',
+                'date_proceed' => ''
+            ];      
+        }
+
+        return $data;
+    }
+
     public function setUserApplicationDate($user, $date)
     {
         $sql = "UPDATE tbl_userinfo SET DATE_APPLICATION_CREATED = '".$date."' WHERE id = ".$user."";
@@ -216,6 +271,14 @@ class ApplicationManager
     public function proceedChecklist($checklist_id, $has_consent, $status, $date_modified)
     {
         $sql = "UPDATE tbl_app_checklist SET date_proceed = '".$date_modified."', date_modified = '".$date_modified."', has_consent = '".$has_consent."', status = '".$status."' WHERE id = ".$checklist_id."";
+        $result = mysqli_query($this->conn, $sql);
+
+        return $result;
+    }
+
+    public function reassessChecklist($user, $token, $status, $date_modified)
+    {
+        $sql = "UPDATE tbl_app_checklist SET reassessed_by = ".$user.", date_reassessed = '".$date_modified."', date_modified = '".$date_modified."', status = '".$status."' WHERE token = '".$token."'";
         $result = mysqli_query($this->conn, $sql);
 
         return $result;
@@ -274,9 +337,9 @@ class ApplicationManager
         return $data;
     }
 
-    public function getCityMuns($lgu)
+    public function getCityMuns($province)
     {
-        $sql = "SELECT id, province, code, name FROM tbl_citymun where province  = $lgu";
+        $sql = "SELECT id, province, code, name FROM tbl_citymun where province  = $province";
         
         $query = mysqli_query($this->conn, $sql);
         $data = [];
@@ -304,7 +367,8 @@ class ApplicationManager
         ui.id as userid,
         ac.control_no as control_no,
         ac.safety_seal_no as ss_no,
-        ac.status as status
+        ac.status as status,
+        ac.address as ac_address
         FROM tbl_app_checklist ac
         LEFT JOIN tbl_admin_info ai on ai.id = ac.user_id
         LEFT JOIN tbl_userinfo ui on ui.user_id = ai.id
@@ -334,7 +398,8 @@ class ApplicationManager
                 'control_no' => $row['control_no'],
                 'ss_no' => $row['ss_no'],
                 'status' => $row['status'],
-                'color' => $color
+                'color' => $color,
+                'ac_address' => $row['ac_address']
             ];    
         }
 
@@ -426,6 +491,19 @@ class ApplicationManager
         }
 
         return $id;
+    }
+
+    public function getCertChecklists() 
+    {
+        $sql = "SELECT id FROM tbl_app_certchecklist";
+        $query = mysqli_query($this->conn, $sql);
+        $data = [];
+
+        while ($row = mysqli_fetch_assoc($query)) {
+            $data[$row['id']] = $row['id'];    
+        }
+        
+        return $data;    
     }
 
 }

@@ -5,7 +5,9 @@
         <h5 class="modal-title" id="exampleModalLabel"><i class="fa fa-link"></i> Attachments</h5>
         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
       </div>
-      <form method="post" enctype="multipart/form-data" action="entity/post_attachments.php">
+      <form method="post" enctype="multipart/form-data" action="entity/post_attachments2.php">
+        <input type="hidden" name="checklist_order" value="1"/>
+        <input type="hidden" name="control_no" value="<?php echo $userinfo['code']; ?>"/>        
         <div class="modal-body">
             <div class="mb-3">
               <!-- <input class="form-control" type="file" id="formFileMultiple" multiple> -->

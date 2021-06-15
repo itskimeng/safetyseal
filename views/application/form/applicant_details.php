@@ -46,7 +46,7 @@
           <div class="row pl-2 pr-2">
             <div class="form-outline mb-2 col-md-12">
               <label class="form-label" for="form1Example1">Name of Government Establlishment/ Department/ Office/ Unit:</label><br>
-              <input type="text" id="form1Example1" class="form-control" value="<?php echo $applicant['establishment']; ?>" disabled/>
+              <input type="text" id="form1Example1" class="form-control" value="<?php echo $applicant['ac_establishment']; ?>" disabled/>
             </div>
           </div>
         </div>
@@ -55,7 +55,7 @@
           <div class="row pl-2 pr-2">
             <div class="form-outline mb-2 col-md-12">
               <label class="form-label" for="form1Example1">Nature of Government Establlishment/ Department/ Office/ Unit:</label><br>
-              <input type="text" id="form1Example1" class="form-control" value="<?php echo $applicant['nature']; ?>" disabled/>
+              <input type="text" id="form1Example1" class="form-control" value="<?php echo $applicant['ac_nature']; ?>" disabled/>
             </div>
           </div>
         </div>
@@ -64,7 +64,7 @@
           <div class="row pl-2 pr-2">
             <div class="form-outline mb-2 col-md-12">
               <label class="form-label" for="form1Example1">Address:</label><br>
-              <input type="text" id="form1Example1" class="form-control" value="<?php echo $applicant['address']; ?>" disabled/>
+              <input type="text" id="form1Example1" class="form-control" value="<?php echo $applicant['ac_address']; ?>" disabled/>
             </div>
           </div>
         </div>

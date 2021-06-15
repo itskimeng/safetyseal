@@ -11,4 +11,3 @@
 
 <?php require_once 'layout/footer.html.php'; ?>
 </html>
-<!-- asdasd -->
