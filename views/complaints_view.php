@@ -33,7 +33,7 @@
                     <th width="10%">PROVINCE</th>
                     <th width="10%">CITY / MUNICIPALITY</th>
                     <th width="10%">ICT COMPLAINT HOTLINE</th>
-                    <th width="10%">EMAIL ADDRESS FOR COMPLAINTS</th>
+                    <th width="10%">ICT COMPLAINT EMAIL ADDRESS</th>
                  
 
                    
@@ -90,6 +90,8 @@
     $('#complaintsTable').DataTable( {
         responsive: {
             details: true
-        }
+        },
+        "autoWidth": false,
+        "lengthMenu": [[20, 50, -1], [20, 50, "All"]]
     } );
   </script>
