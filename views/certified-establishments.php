@@ -64,16 +64,16 @@
                 $execAddress = $conn->query($selectAddress);
                 $resultAddress = $execAddress->fetch_assoc();
                ?>
-                <tr class="clickable-row" data-href="establishment-profile.php?unique_id=<?php echo $resultApplication['user_id']; ?>">
+                <tr class="clickable-row" data-href="establishment-profile.php?unique_id=<?php echo $resultApplication['id']; ?>">
                         <td class="align-middle">
-                            <a href="establishment-profile.php?unique_id=<?php echo $resultApplication['user_id']; ?>" target="_blank" class="">
+                            <a href="establishment-profile.php?unique_id=<?php echo $resultApplication['id']; ?>" target="_blank" class="">
                                 <div class="font-weight-bold">
                                    <?php echo $resultAddress['GOV_AGENCY_NAME']; ?>
                                 </div>
                             </a>
                         </td>
                         <td class="align-middle">
-                            <a href="establishment-profile.php?unique_id=<?php echo $resultApplication['user_id']; ?>" class="">
+                            <a href="establishment-profile.php?unique_id=<?php echo $resultApplication['id']; ?>" class="">
                                 <div class="font-weight-bold">
                                    <?php echo $resultAddress['GOV_ESTB_NAME']; ?>
                                 </div>
