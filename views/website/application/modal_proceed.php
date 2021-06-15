@@ -7,6 +7,7 @@
       </div>
       <form method="post" enctype="multipart/form-data" action="entity/post_proceed.php">
         <input type="hidden" name="chklist_id" value="<?php echo $userinfo['acid']; ?>">
+        <input type="hidden" name="token" value="<?php echo !empty($_GET['ssid']) ? $_GET['ssid'] : ''; ?>">
         <div class="modal-body">
             <div class="mb-3">
               <table>

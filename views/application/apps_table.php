@@ -30,12 +30,12 @@
                 </td>
                 <td><?php echo $applicant['fname']; ?></td>
                 <td><?php echo $applicant['agency']; ?></td>
-                <td><?php echo $applicant['address']; ?></td>
+                <td><?php echo $applicant['ac_address']; ?></td>
                 <td><?php echo $applicant['date_created']; ?></td>
                 <td><?php echo $applicant['ss_no']; ?></td>
                 <td>
                   <div class="col-md-12">
-                    <?php if ($applicant['status'] == 'For Receiving'): ?>
+                    <?php if (in_array($applicant['status'], ['For Receiving', 'For Reassessment'])): ?>
 
                       <a href="entity/post_received.php?appid=<?php echo $applicant['id']; ?>&ussir=<?php echo $applicant['userid']; ?>&status=<?php echo $applicant['status']; ?>" class="btn btn-primary btn-block btn-sm" style="margin-bottom: -5%;">
                         <i class="fa fa-box"></i> Receive

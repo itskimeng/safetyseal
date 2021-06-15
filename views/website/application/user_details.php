@@ -31,7 +31,11 @@
     <div class="row">
       <div class="form-outline mb-2 col-md-12">
         <label class="form-label" for="form1Example1">Name of Government Establlishment/ Department/ Office/ Unit:</label><br>
-        <input type="text" id="form1Example1" class="form-control" value="<?php echo $userinfo['establishment']; ?>" disabled/>
+        <?php if ($is_new): ?>
+          <input type="text" id="form1Example1" name="establishment" class="form-control" value=""/>
+        <?php else: ?>  
+          <input type="text" id="form1Example1" name="establishment" class="form-control" value="<?php echo $userinfo['establishment']; ?>"/>
+        <?php endif ?>
       </div>
     </div>
   </div>
@@ -40,7 +44,11 @@
     <div class="row">
       <div class="form-outline mb-2 col-md-12">
         <label class="form-label" for="form1Example1">Nature of Government Establlishment/ Department/ Office/ Unit:</label><br>
-        <input type="text" id="form1Example1" class="form-control" value="<?php echo $userinfo['nature']; ?>" disabled/>
+        <?php if ($is_new): ?>
+          <input type="text" id="form1Example1" name="nature" class="form-control" value=""/>
+        <?php else: ?>  
+          <input type="text" id="form1Example1" name="nature" class="form-control" value="<?php echo $userinfo['nature']; ?>"/>
+        <?php endif ?>
       </div>
     </div>
   </div>
@@ -49,7 +57,11 @@
     <div class="row">
       <div class="form-outline mb-2 col-md-12">
         <label class="form-label" for="form1Example1">Address:</label><br>
-        <input type="text" id="form1Example1" class="form-control" value="<?php echo $userinfo['address']; ?>" disabled/>
+        <?php if ($is_new): ?>
+          <input type="text" id="form1Example1" name="address" class="form-control" value=""/>
+        <?php else: ?>  
+          <input type="text" id="form1Example1" name="address" class="form-control" value="<?php echo $userinfo['address']; ?>"/>
+        <?php endif ?>
       </div>
     </div>
   </div>

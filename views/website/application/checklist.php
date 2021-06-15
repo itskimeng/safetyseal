@@ -28,7 +28,7 @@
         <td>
           <?php echo $key+1; ?>
           <input type="hidden" name="chklist_id[<?php echo $list['clist_id']; ?>]" value="<?php echo $list['clist_id']; ?>">
-          <input type="hidden" name="ulist_id[<?php echo $list['ulist_id']; ?>]" value="<?php echo $list['ulist_id']; ?>">    
+          <input type="hidden" name="ulist_id[<?php echo $list['clist_id']; ?>]" value="<?php echo $list['ulist_id']; ?>">    
         </td>
         <td><?php echo $list['requirement']; ?></td>
         <td>
@@ -40,17 +40,17 @@
         </td>
         <td class="text-center">
           <div class="form-group">
-            <input class="form-check-input chklist_yes" type="checkbox" value="" name="chklist_yes[<?php echo $list['clist_id']; ?>]" data-chkcol="yes" <?php echo $list['answer'] == 'yes' ? 'checked' : ''; ?> <?php echo $userinfo['status'] == 'Draft' ? '' : 'disabled'; ?>>
+            <input class="form-check-input chklist_yes" type="checkbox" value="" name="chklist_yes[<?php echo $list['clist_id']; ?>]" data-chkcol="yes" <?php echo $list['answer'] == 'yes' ? 'checked' : ''; ?> <?php echo $list['is_disabled'] ? 'disabled' : ''; ?>>
           </div>
         </td>
         <td class="text-center">
           <div class="form-group">
-            <input class="form-check-input chklist_no" type="checkbox" value="" name="chklist_no[<?php echo $list['clist_id']; ?>]" data-chkcol="no" <?php echo $list['answer'] == 'no' ? 'checked' : ''; ?> <?php echo $userinfo['status'] == 'Draft' ? '' : 'disabled'; ?>>
+            <input class="form-check-input chklist_no" type="checkbox" value="" name="chklist_no[<?php echo $list['clist_id']; ?>]" data-chkcol="no" <?php echo $list['answer'] == 'no' ? 'checked' : ''; ?> <?php echo $list['is_disabled'] ? 'disabled' : ''; ?>>
           </div>
         </td>
         <td class="text-center">
           <div class="form-group">
-            <input class="form-check-input chklist_na" type="checkbox" value="" name="chklist_na[<?php echo $list['clist_id']; ?>]" data-chkcol="na" <?php echo $list['answer'] == 'n/a' ? 'checked' : ''; ?> <?php echo $userinfo['status'] == 'Draft' ? '' : 'disabled'; ?>>
+            <input class="form-check-input chklist_na" type="checkbox" value="" name="chklist_na[<?php echo $list['clist_id']; ?>]" data-chkcol="na" <?php echo $list['answer'] == 'n/a' ? 'checked' : ''; ?> <?php echo $list['is_disabled'] ? 'disabled' : ''; ?>>
           </div>
         </td>
         <td class="text-center">
@@ -60,7 +60,7 @@
         </td> 
         <td class="text-center">
           <div class="btn-group">
-            <button type="button" class="btn btn-warning btn-sm" data-bs-toggle="modal" data-bs-target="#exampleModal" <?php echo $userinfo['status'] == 'Draft' ? '' : 'disabled'; ?>>
+            <button type="button" class="btn btn-warning btn-sm" data-bs-toggle="modal" data-bs-target="#exampleModal" <?php echo $list['is_disabled'] ? 'disabled' : ''; ?>>
               <i class="fa fa-link"></i> Upload
             </button>
           </div>

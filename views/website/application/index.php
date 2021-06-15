@@ -4,35 +4,6 @@
   <div class="container">
     <div class="pt-5">
       <div class="row align-items-center heading">
-
-         <!--  <div class="row">
-        <div class="col-md-12 text-white">
-            
-          <header>
-            <h1 class="display-6 headingText">Safety Seal Certification Checklist</h1>
-            <p class="lead" style=" font-size:17px; color:#e8e7e7;">
-            (DILG as Issuing Authority)
-             </p>
-            
-          </header> 
-          </div>
-        </div> -->
-        <!-- <div class="col-md-12">
-            <div class="py-1">
-              <div class="form-box shadow p-1 bg-body rounded" style="width:100%;">
-                <header>
-                  <h1 class="display-6 headingText">Safety Seal Certification Checklist</h1>
-                  <p class="lead" style=" font-size:17px; color:#e8e7e7;">
-                  (DILG as Issuing Authority)
-                   </p>
-                  
-                </header>
-              </div>
-            </div>
-            
-          
-        </div> -->
-
         <div class="col-md-12">
           <div class="py-1">
             <div class="form-box shadow p-1 mb-5 bg-body rounded box">
@@ -41,16 +12,20 @@
               
               <form method="POST" action="entity/post_application.php" class="bg-white  rounded-5 shadow-5-strong p-5">
                 <input type="hidden" name="is_new" value="<?php echo $is_new; ?>">
-                
-                <!-- user details -->
-                <?php include 'user_details.php'; ?>
+                <input type="hidden" name="token" value="<?php echo !empty($_GET['ssid']) ? $_GET['ssid'] : ''; ?>">
 
-                <!-- checklist -->
-                <?php include 'checklist.php'; ?>
-                
+                <!-- user details -->
+                <div class="col-md-12">
+                  <?php include 'user_details.php'; ?>
+                </div>
+
+                <?php if (!$is_new): ?>
+                  <!-- checklist -->
+                  <?php include 'checklist.php'; ?>
+                <?php endif ?>
 
                 <!-- Submit button -->
-                <?php if ($userinfo['status'] == 'Draft'): ?>
+                <?php if (in_array($userinfo['status'], ['Draft', 'Disapproved', 'Reassess'])): ?>
                   <div class="panel panel-default pt-4">
                     <div class="row">
                       
@@ -59,7 +34,11 @@
                           <?php echo $is_new ? 'Save' : 'Update' ;?>  
                         </button>
                       </div>
-                      <?php if (!$is_new): ?>
+                      <?php if (in_array($userinfo['status'], ['Disapproved','Reassess'])): ?>
+                        <div class="col-md-6">
+                          <a href="entity/post_reassess.php?ssid=<?php echo $_GET['ssid']; ?>&stt=FA" type="button" class="btn btn-success btn-block" style="width: 100%;"><i class="fa fa-share"></i> Reassess</a>
+                        </div>
+                      <?php elseif (!$is_new): ?>
                         <div class="col-md-6">
                           <button type="button" class="btn btn-success btn-block" name="login" data-bs-toggle="modal" data-bs-target="#modall_proceed" style="width: 100%;"><i class="fa fa-share"></i> Submit</button>
                         </div>
@@ -120,10 +99,10 @@
   /*width: 200px;*/
   /*height: 300px;*/
   position: relative;
-  border: 1px solid #bbb;
-  background: #eee;
-  float: left;
-  margin: 20px;
+  /*border: 1px solid #bbb;*/
+  /*background: #eee;*/
+  /*float: left;*/
+  /*margin: 20px;*/
 }
 .ribbon {
   position: absolute;

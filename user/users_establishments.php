@@ -14,15 +14,26 @@
 
             <div class="container">
                 <div class="col-md-12">
+                    <div class="row">
+                        <span class="label label-lg label-light-success label-inline font-weight-bold mt-3 py-3">
+                            <!-- <i class="la la-clipboard-check mr-2"></i> -->
+                            <a href="../wbstapplication.php?create_new" class="btn btn-primary btn-md">
+                                <i class="fa fa-edit"></i> Add New
+                            </a>
+                        </span>
+                    </div>
+                </div>
+                <div class="col-md-12">
 
                     <div class="card">
                         <div class="card-header">
                             Home / My Establishments
                         </div>
                         <div class="card-body" style="background-color: #f9f8f8;">
-                            <table class="table table-hover mb-0 border-bottom" id="establishmentsTable">
+                            <table class="table table-hover mb-0 border-bottom" id="establishmentsTable" style="font-size: 10pt;">
                                 <thead>
                                     <tr>
+                                        <th width="25%">Control No.</th>
                                         <th width="25%">NAME</th>
                                         <th width="25%">AGENCY</th>
                                         <th width="25%">ESTABLISHMENT</th>

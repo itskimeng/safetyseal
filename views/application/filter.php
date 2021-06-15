@@ -44,7 +44,7 @@
               <select class="form-control select2bs4 select2-hidden-accessible" style="width: 100%;" data-select2-id="17" tabindex="-1" aria-hidden="true" disabled>
                 <option></option>
                 <?php foreach ($citymun_opts as $key => $opts): ?>
-                  <?php if ($key == $citymun): ?>
+                  <?php if ($opts['code'] == $citymun): ?>
                     <option value="<?php echo $key; ?>" data-province="<?php echo $opts['province']; ?>" data-code="<?php echo $opts['code']; ?>" selected><?php echo $opts['name']; ?></option>
                   <?php else: ?>
                     <option value="<?php echo $key; ?>" data-province="<?php echo $opts['province']; ?>" data-code="<?php echo $opts['code']; ?>"><?php echo $opts['name']; ?></option>
