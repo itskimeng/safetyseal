@@ -56,15 +56,23 @@ class DashboardManager
         return $data;
     }
 
-    public function count()
+    public function countStatus($province, $lgu)
     {
         $val = ['For Receiving', 'Received', 'Approved', 'Disapproved'];
         $data = array();
         foreach ($val as $key => $stat) {
-            $sql = "SELECT count(*) as 'status' FROM `tbl_app_checklist` WHERE status = '$stat' ";
+            // $sql = "SELECT count(*) as 'status' FROM `tbl_app_checklist` WHERE status = '$stat' ";
+            $sql = "SELECT 
+                    count(*) as count
+                    FROM tbl_app_checklist ac
+                    LEFT JOIN tbl_admin_info ai on ai.id = ac.user_id
+                    LEFT JOIN tbl_province p on p.id = ai.PROVINCE
+                    LEFT JOIN tbl_citymun cm on cm.id = ai.LGU
+                    WHERE p.id = '$province' AND cm.id = '$lgu' AND status = '".$stat."' ";
+
             $query = mysqli_query($this->conn, $sql);
             $result = $row = mysqli_fetch_assoc($query);
-            $data[$stat] = $row['status'];
+            $data[$stat] = $row['count'];
         }
 
         return $data;

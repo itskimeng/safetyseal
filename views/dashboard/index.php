@@ -1,3 +1,5 @@
+<?php require_once 'controller/DashboardController.php'; ?>
+
 <div class="content-header">
     <div class="container">
         <div class="row mb-2">
@@ -93,30 +95,6 @@
         </div>
 
         <div class="row">
-            <!-- <div class="col-lg-4 col-md-6 col-sm-3">
-                <div class="card card-dark" style="height:230px;">
-                    <div class="card-header">
-                        <h5 class="card-title m-0"><i class="fa fa-tag"></i> Safety Seal</h5>
-                    </div>
-                    <div class="card-body">
-                        <h6 class="card-title">Special title treatment</h6>
-
-                        <p class="card-text">With supporting text below as a natural lead-in to additional content.</p>
-                        <a href="#" class="btn btn-primary">Go somewhere</a>
-                    </div>
-                </div>
-                <div class="card card-dark" style="height:230px;">
-                    <div class="card-header">
-                        <h5 class="card-title m-0"><i class="fa fa-tag"></i> Safety Seal</h5>
-                    </div>
-                    <div class="card-body">
-                        <h6 class="card-title">Special title treatment</h6>
-
-                        <p class="card-text">With supporting text below as a natural lead-in to additional content.</p>
-                        <a href="#" class="btn btn-primary">Go somewhere</a>
-                    </div>
-                </div>
-            </div> -->
             <div class="col-lg-12">
                 <div class="row">
                     <!-- <div class="col-md-4">
@@ -143,13 +121,8 @@
             </div>
         </div>
 
-       
     </div>
 </div>
-<?php
-
-?>
-
 
 <script>
     $(function() {

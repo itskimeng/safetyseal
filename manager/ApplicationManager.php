@@ -406,4 +406,26 @@ class ApplicationManager
         return $control_no;
     }
 
+    public function getChecklistOrder($pointer) 
+    {
+        $id = '';
+        switch ($pointer) {
+            case 1:
+                $id = '1ZzfOg9Lhem47BDEr8VdfL07hlfmEok9F';
+                break;
+            case 2:
+                $id = '1grbCqIy51mWyURe8E4BISnXVQ3ReSveA';
+                break;
+            case 3:
+                $id = '1grbCqIy51mWyURe8E4BISnXVQ3ReSveA';
+                break;
+
+            default:
+                // code...
+                break;
+        }
+
+        return $id;
+    }
+
 }
