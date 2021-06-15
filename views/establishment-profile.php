@@ -12,7 +12,7 @@ $execApplicantDetails = $conn->query($selectApplicantDetails);
 $resultApplicantDetails = $execApplicantDetails->fetch_assoc();
 
 
-$selectAddress = ' SELECT `ID`, `USER_ID`, `ADDRESS`, `POSITION`, `MOBILE_NO`, `EMAIL_ADDRESS`, `GOV_AGENCY_NAME`, `GOV_ESTB_NAME`, `DATE_REGISTERED`, `PROVINCE`, `CITY_MUNICIPALITY`, `GOV_NATURE_NAME` FROM `tbl_userinfo` WHERE `USER_ID` = "'.$resultApplication['user_id'].'" ';
+$selectAddress = ' SELECT `ID`, `USER_ID`, `ADDRESS`, `POSITION`, `MOBILE_NO`, `EMAIL_ADDRESS`, `GOV_AGENCY_NAME`, `GOV_ESTB_NAME`, `DATE_REGISTERED`, `GOV_NATURE_NAME` FROM `tbl_userinfo` WHERE `USER_ID` = "'.$resultApplication['user_id'].'" ';
 $execAddress = $conn->query($selectAddress);
 $resultAddress = $execAddress->fetch_assoc();
 
