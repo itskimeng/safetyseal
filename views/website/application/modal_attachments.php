@@ -7,7 +7,9 @@
       </div>
       <form method="post" enctype="multipart/form-data" action="entity/post_attachments2.php">
         <input type="hidden" name="checklist_order" value="1"/>
-        <input type="hidden" name="control_no" value="<?php echo $userinfo['code']; ?>"/>        
+        <input type="hidden" name="control_no" value="<?php echo $userinfo['code']; ?>"/>  
+        <input type="hidden" name="token_id" value="<?php echo $_GET['ssid']; ?>"/>        
+
         <div class="modal-body">
             <div class="mb-3">
               <!-- <input class="form-control" type="file" id="formFileMultiple" multiple> -->
