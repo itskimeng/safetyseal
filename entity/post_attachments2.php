@@ -4,69 +4,64 @@ $url_array = explode('?', 'https://'.$_SERVER ['HTTP_HOST'].$_SERVER['REQUEST_UR
 $url = $url_array[0];
 
 require '../manager/ApplicationManager.php';
-require '../application/config/connection.php';
-
 require_once 'google-api-php-client/src/Google_Client.php';
 require_once 'google-api-php-client/src/contrib/Google_DriveService.php';
+
 
 $app = new ApplicationManager();
 $client = getGoogleClient($url);
 
 if (isset($_POST['checklist_order'])) {
-    
-    $checklist_order = $_POST['checklist_order'];
-    $order = $app->getChecklistOrder($checklist_order);
-    $control_no = $_POST['control_no'];
-    $token = $_POST['token_id'];
-    $entry_id = $_POST['entry_id'];
+    $_SESSION['checklist_order'] = $_POST['checklist_order'];    
+    $_SESSION['order'] = $app->getChecklistOrder($_SESSION['checklist_order']);    
+    $_SESSION['control_no'] = $_POST['control_no'];
+    $_SESSION['token'] = $_POST['token_id'];
 
-    if (!empty($_POST['token_id'])) {
-        $_SESSION['ssid'] = $_POST['token_id'];
-    }
+}
+// $checklist_order = $_POST['checklist_order'];
+// $order = $app->getChecklistOrder($checklist_order);
+// $control_no = $_POST['control_no'];
+// $token = $_POST['token_id'];
 
-    if (isset($_POST['code'])) {
-        $_SESSION['accessToken'] = $client->authenticate($_POST['code']);
-        $_SESSION['toastr'] = $app->addFlash('warn', 'There seems to be a problem in uploading the file.', 'Checklist #'.$checklist_order);
-        // header('location:../wbstapplication.php?ssid='.$_SESSION['ssid'].'');exit;
-        header('location:'.$url);exit;
-    } elseif (!isset($_SESSION['accessToken'])) {
-        $client->authenticate();
-    }
-
-    $client->setAccessToken($_SESSION['accessToken']);
-    $finfo = finfo_open(FILEINFO_MIME_TYPE);
-
-    //Set the Parent Folder
-    $parent = getGoogleParentReference($order);
-
-    $files = $_FILES['files']['tmp_name'];
-
-    foreach ($files as $key => $file_name) {
-        $fileTmpPath = $file_name;
-        $fileName = $_FILES['files']['name'][$key];
-        $fileSize = $_FILES['files']['size'][$key];
-        $fileType = $_FILES['files']['type'][$key];
-        $fileNameCmps = explode(".", $fileName);
-        $fileExtension = strtolower(end($fileNameCmps));
-
-        $newFileName = $checklist_order.'-'.$control_no.'-'.md5(time() . $fileName) . '.' . $fileExtension;
-        $mime_type = finfo_file($finfo, $fileTmpPath);
-
-        // upload file to drive
-        $upFile = uploadFileToDrive($client, $fileTmpPath, $parent, $newFileName, $mime_type);
-        
-        // create entry to db
-        insertToEntry($conn, $entry_id, $upFile);
-    }
-
-    finfo_close($finfo);
-
-    $_SESSION['toastr'] = $app->addFlash('success', 'Attachments has been successfully uploaded.', 'Checklist #'.$checklist_order);
-} else {
-    $_SESSION['toastr'] = $app->addFlash('warn', 'Account has been verified. Please reupload the file.', 'Alert');
+if (isset($_GET['code'])) {
+    $_SESSION['accessToken'] = $client->authenticate($_GET['code']);
+    // print_r($_SESSION['accessToken']);
+    // die();
+    // header('location:'.$url);exit;
+    // header('location:../wbstapplication.php?ssid='.$token.'');exit;
+} elseif (!isset($_SESSION['accessToken'])) {
+    $client->authenticate();
 }
 
-header('location:../wbstapplication.php?ssid='.$_SESSION['ssid'].'');exit;
+$client->setAccessToken($_SESSION['accessToken']);
+$finfo = finfo_open(FILEINFO_MIME_TYPE);
+
+//Set the Parent Folder
+$parent = new Google_ParentReference(); //previously Google_ParentReference
+$parent->setId($_SESSION['order']);
+
+$files = $_FILES['files']['tmp_name'];
+
+foreach ($files as $key => $file_name) {
+    $fileTmpPath = $file_name;
+    $fileName = $_FILES['files']['name'][$key];
+    $fileSize = $_FILES['files']['size'][$key];
+    $fileType = $_FILES['files']['type'][$key];
+    $fileNameCmps = explode(".", $fileName);
+    $fileExtension = strtolower(end($fileNameCmps));
+
+    $newFileName = $_SESSION['control_no'].'-'.md5(time() . $fileName) . '.' . $fileExtension;
+    $mime_type = finfo_file($finfo, $fileTmpPath);
+
+    uploadFileToDrive($client, $fileTmpPath, $parent, $newFileName, $mime_type);
+    
+}
+
+finfo_close($finfo);
+
+$_SESSION['toastr'] = $app->addFlash('success', 'Attachments has been successfully uploaded.', 'Checklist #'.$_SESSION['checklist_order']);
+
+header('location:../wbstapplication.php?ssid='.$_SESSION['token'].'&code='.$_GET['code'].'&scope='.$_GET['scope'].'');exit;
 
 
 function getGoogleClient($url)
@@ -89,47 +84,14 @@ function uploadFileToDrive($client, $path, $parent, $filename, $mime_type)
     $file->setDescription('This is a '.$mime_type.' document');
     $file->setMimeType($mime_type);
     $file->setParents(array($parent));
+    $file->setAlternateLink('adadadadadasdasdasdasdasdasd');
 
     $file_content = array(
         'data' => file_get_contents($path), 
         'mimeType' => $mime_type
     );
 
-    $data = $service->files->insert($file, $file_content);
-
-    return $data;
-}
-
-function removeFile($client, $id) 
-{
-    $service = new Google_DriveService($client); 
-    $service->files->delete($id);
-
-    return 0;    
-}
-
-function retrieveAllFiles($service) {
-  $result = array();
-  $pageToken = NULL;
-
-  do {
-    try {
-      $parameters = array();
-      if ($pageToken) {
-        $parameters['pageToken'] = $pageToken;
-      }
-      $files = $service->files->listFiles($parameters);
-      // print_r($files);
-      // die();
-
-      // $result = array_merge($result, $files->getItems());
-      $pageToken = $files->getNextPageToken();
-    } catch (Exception $e) {
-      print "An error occurred: " . $e->getMessage();
-      $pageToken = NULL;
-    }
-  } while ($pageToken);
-  return $result;
+    $service->files->insert($file, $file_content);    
 }
 
 function get_files_and_folders($client)
@@ -152,24 +114,5 @@ function get_files_and_folders($client)
     }
 
     die();
-}
-
-function getGoogleParentReference($order)
-{
-    $parent = new Google_ParentReference(); //previously Google_ParentReference
-    $parent->setId($order);   
-
-    return $parent;
-}
-
-function insertToEntry($conn, $entry, $file) 
-{
-    $today = new DateTime();
-    $today = $today->format('Y-m-d H:i:s');
-
-    $sql = 'INSERT INTO tbl_app_checklist_attachments (entry_id, file_id, file_name, location, date_created) VALUES ("'.$entry.'", "'.$file['id'].'", "'.$file['originalFilename'].'", "'.$file['alternateLink'].'", "'.$today.'")';
-
-    $result = mysqli_query($conn, $sql);
-
-    return $result;
+    
 }

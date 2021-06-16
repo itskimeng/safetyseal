@@ -5,7 +5,12 @@
         <h5 class="modal-title" id="exampleModalLabel"><i class="fa fa-link"></i> Attachments</h5>
         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
       </div>
-      <form method="POST" enctype="multipart/form-data" action="entity/post_attachments2.php">
+
+      <?php if (isset($_GET['code'])): ?>
+        <form method="POST" enctype="multipart/form-data" action="entity/post_attachments2.php">
+      <?php else: ?>
+        <form method="POST" enctype="multipart/form-data" action="entity/verify_gdrive_user.php">
+      <?php endif ?>
         <input type="hidden" id="cform-checklist_order" name="checklist_order" value=""/>
         <input type="hidden" id="cform-entry_id" name="entry_id" value=""/>
         <input type="hidden" name="control_no" value="<?php echo $userinfo['code']; ?>"/>  
