@@ -7,52 +7,52 @@
         </div>
       </div>
   </div>
-  <div class="container">
-    <!-- Stack the columns on mobile by making one full-width and the other half-width -->
-    <div class="row">
-      <div class="col-md-6 bg-light">
-        <div class="row" style="padding:5px;">
-          <div class="col-lg-12 bg-light" style="padding:5px;">
-            <div class="container shadow p-3 mb-3 bg-body rounded banner-guidelines" style="background-color:#B0BEC5;height: 250px;">
-              <a href="guidelines.php" class="btn btn-light-primary py-2 me-5 mr-2  btn-guide">Read More</a>
+    <div class="container">
+      <!-- Stack the columns on mobile by making one full-width and the other half-width -->
+      <div class="row">
+        <div class="col-md-6 bg-light">
+          <div class="row" style="padding:5px;">
+            <div class="col-lg-12 bg-light" style="padding:5px;">
+              <div class="container shadow p-3 mb-3 bg-body rounded banner-guidelines" style="background-color:#B0BEC5;height: 250px;">
+                <a href="guidelines.php" class="btn btn-light-primary py-2 me-5 mr-2  btn-guide">Read More</a>
+              </div>
             </div>
-          </div>
-          <div class="col-6 bg-light" style="padding: 5px;">
-            <div class="container shadow p-3 mb-5 bg-body rounded rounded application" style="background-color:#B0BEC5; height:500px;">
-              <a href="wbstapplication.php" class="btn btn-light-primary py-2 me-5 mr-2 btn-application">Apply Now!</a>
+            <div class="col-6 bg-light" style="padding: 5px;">
+              <div class="container shadow p-3 mb-5 bg-body rounded rounded application" style="background-color:#B0BEC5; height:500px;">
+                <a href="wbstapplication.php" class="btn btn-light-primary py-2 me-5 mr-2 btn-application">Apply Now!</a>
+              </div>
             </div>
-          </div>
-          <div class="col-6 bg-light" style="padding: 5px;">
-            <div class="container shadow p-3 mb-5 bg-body request_forms-banner " style="background-color:#B0BEC5; height:500px;">
-              <button class="btn btn-light-primary py-2 me-5 mr-2 btn-request">View All</button>
-            </div>
-          </div>
-        </div>
-      </div>
-      <!-- ddd -->
-      <div class="col-md-6 bg-light">
-        <div class="row" style="padding:5px;">
-          <div class="col-6 bg-light" style="padding: 5px;">
-            <div class="container shadow p-3 mb-3 bg-body rounded list_establishment-banner" style="background-color:#B0BEC5; height:500px;">
-            <a href="certified-establishments.php" class="btn btn-light-primary py-2 me-5 mr-2 btn-establishment">View All</a>
-
-            </div>
-          </div>
-          <div class="col-6 bg-light" style="padding: 5px;">
-            <div class="container shadow p-3 mb-3 bg-body rounded contact-banner " style="background-color:#B0BEC5; height:500px;">
-            <a href="inspection-and-certification-team.php" class="btn btn-light-primary py-2 me-5 mr-2 btn-contact">View</a>
-
-            </div>
-          </div>
-          <div class="col-lg-12 bg-light" style="padding: 5px;">
-            <div class="container shadow p-3 mb-5 bg-body rounded inquiries_complaints" style="background-color:#B0BEC5;height: 250px;">
-            <a href="complaints.php" class="btn btn-light-primary py-2 me-5 mr-2 btn-inquiries">Send</a>
-
+            <div class="col-6 bg-light" style="padding: 5px;">
+              <div class="container shadow p-3 mb-5 bg-body request_forms-banner " style="background-color:#B0BEC5; height:500px;">
+                <button class="btn btn-light-primary py-2 me-5 mr-2 btn-request">View All</button>
+              </div>
             </div>
           </div>
         </div>
+        <!-- ddd -->
+        <div class="col-md-6 bg-light">
+          <div class="row" style="padding:5px;">
+            <div class="col-6 bg-light" style="padding: 5px;">
+              <div class="container shadow p-3 mb-3 bg-body rounded list_establishment-banner" style="background-color:#B0BEC5; height:500px;">
+              <a href="certified-establishments.php" class="btn btn-light-primary py-2 me-5 mr-2 btn-establishment">View All</a>
 
+              </div>
+            </div>
+            <div class="col-6 bg-light" style="padding: 5px;">
+              <div class="container shadow p-3 mb-3 bg-body rounded contact-banner " style="background-color:#B0BEC5; height:500px;">
+              <a href="inspection-and-certification-team.php" class="btn btn-light-primary py-2 me-5 mr-2 btn-contact">View</a>
+
+              </div>
+            </div>
+            <div class="col-lg-12 bg-light" style="padding: 5px;">
+              <div class="container shadow p-3 mb-5 bg-body rounded inquiries_complaints" style="background-color:#B0BEC5;height: 250px;">
+              <a href="complaints.php" class="btn btn-light-primary py-2 me-5 mr-2 btn-inquiries">Send</a>
+
+              </div>
+            </div>
+          </div>
+
+        </div>
       </div>
-    </div>
 
   
