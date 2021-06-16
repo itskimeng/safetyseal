@@ -4,6 +4,8 @@ $url_array = explode('?', 'https://'.$_SERVER ['HTTP_HOST'].$_SERVER['REQUEST_UR
 $url = $url_array[0];
 
 require '../manager/ApplicationManager.php';
+require '../application/config/connection.php';
+
 require_once 'google-api-php-client/src/Google_Client.php';
 require_once 'google-api-php-client/src/contrib/Google_DriveService.php';
 
@@ -16,6 +18,7 @@ if (isset($_POST['checklist_order'])) {
     $_SESSION['order'] = $app->getChecklistOrder($_SESSION['checklist_order']);    
     $_SESSION['control_no'] = $_POST['control_no'];
     $_SESSION['token'] = $_POST['token_id'];
+    $_SESSION['entry_id'] = $_POST['entry_id'];
 
 }
 // $checklist_order = $_POST['checklist_order'];
@@ -53,8 +56,11 @@ foreach ($files as $key => $file_name) {
     $newFileName = $_SESSION['control_no'].'-'.md5(time() . $fileName) . '.' . $fileExtension;
     $mime_type = finfo_file($finfo, $fileTmpPath);
 
-    uploadFileToDrive($client, $fileTmpPath, $parent, $newFileName, $mime_type);
+    // upload file to drive
+    $upFile = uploadFileToDrive($client, $fileTmpPath, $parent, $newFileName, $mime_type);
     
+    // create entry to db
+    insertToEntry($conn, $_SESSION['entry_id'], $upFile);
 }
 
 finfo_close($finfo);
@@ -84,35 +90,25 @@ function uploadFileToDrive($client, $path, $parent, $filename, $mime_type)
     $file->setDescription('This is a '.$mime_type.' document');
     $file->setMimeType($mime_type);
     $file->setParents(array($parent));
-    $file->setAlternateLink('adadadadadasdasdasdasdasdasd');
 
     $file_content = array(
         'data' => file_get_contents($path), 
         'mimeType' => $mime_type
     );
 
-    $service->files->insert($file, $file_content);    
+    $data = $service->files->insert($file, $file_content);
+
+    return $data;
 }
 
-function get_files_and_folders($client)
+function insertToEntry($conn, $entry, $file) 
 {
-    $service = new Google_DriveService($client);
+    $today = new DateTime();
+    $today = $today->format('Y-m-d H:i:s');
 
-    $parameters['q'] = "mimeType='application/vnd.google-apps.folder' and 'root' in parents and trashed=false";
-    print_r($service->files->get('1ZzfOg9Lhem47BDEr8VdfL07hlfmEok9F'));
-    die();
-    $files = $service->files->listFiles($parameters);
-    
-    foreach( $files as $k => $file ) {
-        print_r($file);
-        // foreach($file as $ii => $ff) {
-        //     echo $ff['title'];
-        //     echo "<br>";
-        //     echo $ff['alternateLink'];
-        //     echo "<br>";
-        // }   
-    }
+    $sql = 'INSERT INTO tbl_app_checklist_attachments (entry_id, file_id, file_name, location, date_created) VALUES ("'.$entry.'", "'.$file['id'].'", "'.$file['originalFilename'].'", "'.$file['alternateLink'].'", "'.$today.'")';
 
-    die();
-    
+    $result = mysqli_query($conn, $sql);
+
+    return $result;
 }
