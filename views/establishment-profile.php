@@ -2,7 +2,7 @@
 require_once 'application/config/connection.php'; 
 $establishmentId = $_GET['unique_id'];
 
-$selectApplication = ' SELECT `id`, `control_no`, `user_id`, `status`, `has_consent`, `date_created`, `date_proceed`, `receiver_id`, `date_received`, `approver_id`, `date_approved`, `safety_seal_no`, `date_modified` FROM `tbl_app_checklist` WHERE status = "Approved" AND `user_id` = "'.$establishmentId.'" ';
+$selectApplication = ' SELECT `id`, `control_no`, `user_id`, `establishment`, `nature`, `address`, `status`, `has_consent`, `date_created`, `date_proceed`, `receiver_id`, `date_received`, `approver_id`, `date_approved`, `safety_seal_no`, `reassessed_by`, `date_reassessed`, `date_modified`, `token` FROM `tbl_app_checklist` WHERE status = "Approved" AND `id` = "'.$establishmentId.'" ';
 $execSelectApplication = $conn->query($selectApplication);
 $resultApplication = $execSelectApplication->fetch_assoc();
 
@@ -12,7 +12,7 @@ $execApplicantDetails = $conn->query($selectApplicantDetails);
 $resultApplicantDetails = $execApplicantDetails->fetch_assoc();
 
 
-$selectAddress = ' SELECT `ID`, `USER_ID`, `ADDRESS`, `POSITION`, `MOBILE_NO`, `EMAIL_ADDRESS`, `GOV_AGENCY_NAME`, `GOV_ESTB_NAME`, `DATE_REGISTERED`, `PROVINCE`, `CITY_MUNICIPALITY`, `GOV_NATURE_NAME` FROM `tbl_userinfo` WHERE `USER_ID` = "'.$resultApplication['user_id'].'" ';
+$selectAddress = ' SELECT `ID`, `USER_ID`, `ADDRESS`, `POSITION`, `MOBILE_NO`, `EMAIL_ADDRESS`, `GOV_AGENCY_NAME`, `GOV_ESTB_NAME`, `DATE_REGISTERED`, `GOV_NATURE_NAME` FROM `tbl_userinfo` WHERE `USER_ID` = "'.$resultApplication['user_id'].'" ';
 $execAddress = $conn->query($selectAddress);
 $resultAddress = $execAddress->fetch_assoc();
 
@@ -32,8 +32,6 @@ $selectInspection = ' SELECT `ID`, `PROVINCE`, `LGU`, `NAME`, `EMAIL_ADDRESS`, `
 $execInspection = $conn->query($selectInspection);
 $resultInspection = $execInspection->fetch_assoc();
 
-
-
 ?>
 <img src="frontend/images/banner_calabarzon.png" height="10%" width="100%" alt="">
  <hr>
@@ -47,7 +45,7 @@ $resultInspection = $execInspection->fetch_assoc();
         </div>
         <div class="col-md-8 justify-content-center align-self-center">
           <h1 class="align-middle text-success">CERTIFIED</h1>
-          <h3 class="align-middle"><span class="text-muted">Safety Seal No :</span> <?php echo $resultApplication['control_no']; ?></h3>
+          <h3 class="align-middle"><span class="text-muted">Safety Seal No :</span> <?php echo $resultApplication['safety_seal_no']; ?></h3>
           <h3 class="align-middle"><span class="text-muted">Issued On :</span> <?php echo date('F d, Y',strtotime($resultApplication['date_approved'])); ?></h3>
           <h3 class="align-middle"><span class="text-muted">Valid Until :</span> <?php echo date('F d, Y', strtotime("+6 months", strtotime($resultApplication['date_approved']))); ?></h3>
         </div>
@@ -58,7 +56,7 @@ $resultInspection = $execInspection->fetch_assoc();
         <div class="col-md-5">
           <h4 class="mt-3"><span class="text-muted">Agency:</span> <?php echo $resultAddress['GOV_AGENCY_NAME']; ?></h4>
           <h6 class="mt-3"><span class="text-muted">Establishment:</span> <?php echo $resultAddress['GOV_ESTB_NAME']; ?></h6>
-          <h6 class="mt-3"><span class="text-muted">Address:</span> <?php echo $resultAddress['ADDRESS']; ?></h6>
+          <h6 class="mt-3"><span class="text-muted">Address:</span> <?php echo $resultApplication['address']; ?></h6>
           <br>
           <h6 class="mt-3"><span class="text-muted">Name of Person In Charge:</span> <?php echo $resultApplicantDetails['CMLGOO_NAME']; ?></h6>
           <center><span class="text-muted"><?php echo $resultAddress['POSITION']; ?></span></center>
@@ -84,7 +82,7 @@ $resultInspection = $execInspection->fetch_assoc();
 
   <script>
     $(document).ready( function(){
-      var addr = '<?php echo $resultAddress['ADDRESS']; ?>';
+      var addr = '<?php echo $resultApplication['address']; ?>';
       
       var embed= "<iframe width='600' height='450' frameborder='0' scrolling='no' marginheight='0' marginwidth='0' src='https://maps.google.com/maps?&amp;q="+ encodeURIComponent( addr ) + "&amp;output=embed'></iframe>";  
 

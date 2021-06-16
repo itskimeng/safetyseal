@@ -1,7 +1,16 @@
 <?php 
 session_start();
 require_once 'application/config/connection.php'; 
-$selectApplication = ' SELECT `id`, `control_no`, `user_id`, `status`, `has_consent`, `date_created`, `date_proceed`, `receiver_id`, `date_received`, `approver_id`, `date_approved`, `safety_seal_no`, `date_modified` FROM `tbl_app_checklist` WHERE status = "Approved" AND `user_id` = "'.$_SESSION['userid'].'" ';
+
+if ($_GET['control_no']) {
+	$selectApplication = ' SELECT `id`, `control_no`, `user_id`, `status`, `has_consent`, `date_created`, `date_proceed`, `receiver_id`, `date_received`, `approver_id`, `date_approved`, `safety_seal_no`, `date_modified` FROM `tbl_app_checklist` WHERE status = "Approved" AND `control_no` = "'.$_GET['control_no'].'" ';
+}
+else
+{
+	$selectApplication = ' SELECT `id`, `control_no`, `user_id`, `status`, `has_consent`, `date_created`, `date_proceed`, `receiver_id`, `date_received`, `approver_id`, `date_approved`, `safety_seal_no`, `date_modified` FROM `tbl_app_checklist` WHERE status = "Approved" AND `user_id` = "'.$_SESSION['userid'].'" ';
+}
+
+
 
 $execSelectApplication = $conn->query($selectApplication);
 $resultApplication = $execSelectApplication->fetch_assoc();
