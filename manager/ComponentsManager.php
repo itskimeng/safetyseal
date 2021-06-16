@@ -45,3 +45,4 @@ class ComponentsManager
         return $data;
     }
 }
+
