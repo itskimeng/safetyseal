@@ -1,4 +1,6 @@
 <?php
+
+
 session_start();
 date_default_timezone_set('Asia/Manila');
 require_once '../config/connection.php';
@@ -52,8 +54,8 @@ if (strlen($username) < 5) {
 
 
         $to = $emailAddress;
-        $subject = "Email Verification";
-        $message = "<a style='font-size:24px;font-family:centuryGothic;' href='http://safetyseal.calabarzon.dilg.gov.ph/application/functions/verify.php?vkey=" . $vkey . "'>Verify Account</a>";
+        $subject = "Safety Seal Email Verification";
+        $message = " Welcome to DILG CALABARZON Safety Seal Portal! <br> To complete your Safety Seal profile, we need you to confirm your email address. <br><a class='btn btn-light-primary' href='http://safetyseal.calabarzon.dilg.gov.ph/application/functions/verify.php?vkey=" . $vkey . "'>Verify Account</a>";
         $headers = "From: safetyseal@calabarzon.dilg.gov.ph \r\n";
         $headers .= "MIME-Version: 1.0" . "\r\n";
         $headers .= "Content-type:text/html;charset=UTF-800" . "\r\n";
@@ -68,7 +70,7 @@ if (strlen($username) < 5) {
 if (isset($_POST['resend'])) {
     $to = $_POST['emailTo'];
     $subject = "Safety Seal Email Verification";
-    $message = "<a style='font-size:24px;font-family:centuryGothic;' href='http://safetyseal.calabarzon.dilg.gov.ph/application/functions/verify.php?vkey=" . $vkey . "'>Verify Account</a>";
+    $message = " Welcome to DILG CALABARZON Safety Seal Portal! <br> To complete your Safety Seal profile, we need you to confirm your email address. <br><a class='btn btn-light-primary' href='http://safetyseal.calabarzon.dilg.gov.ph/application/functions/verify.php?vkey=" . $vkey . "'>Verify Account</a>";
     $headers = "From: safetyseal@calabarzon.dilg.gov.ph \r\n";
     $headers .= "MIME-Version: 1.0" . "\r\n";
     $headers .= "Content-type:text/html;charset=UTF-800" . "\r\n";
