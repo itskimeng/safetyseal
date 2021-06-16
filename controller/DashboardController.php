@@ -13,5 +13,6 @@ $count_status = $app->countStatus($province, $citymun);
 $receiving = $app->getdataForReceived($province);
 $approved = $app->getdataApproved($province);
 $lgu = $app->getCityMuns($province);
+$est_safety_seal = $app->getEstablishmentSSC($province,$citymun);
 
 ?>

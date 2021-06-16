@@ -28,14 +28,14 @@ require_once 'controller/DashboardController.php'; ?>
                 <div class="small-box bg-primary">
                     <div class="inner">
                         <h3><?php echo $count_status['For Receiving']; ?></h3>
-
                         <p>FOR RECEIVING</p>
                     </div>
                     <div class="icon">
-                        <i class="fa fa-shopping-cart"></i>
+                        <img src="frontend/images/dash_received.png" style="width:100px;margin-top:-100px;margin-right:10px;" align="right" alt="">
+
                     </div>
                     <a href="#" class="small-box-footer">
-                        More info <i class="fa fa-arrow-circle-right"></i>
+                        &nbsp;
                     </a>
                 </div>
             </div>
@@ -50,10 +50,12 @@ require_once 'controller/DashboardController.php'; ?>
                         <p>RECEIVED</p>
                     </div>
                     <div class="icon">
-                        <i class="fa fa-star"></i>
+                        <img src="frontend/images/dash_receiving.png" style="width:100px;margin-top:-100px;margin-right:10px;" align="right" alt="">
+
                     </div>
                     <a href="#" class="small-box-footer">
-                        More info <i class="fa fa-arrow-circle-right"></i>
+                        &nbsp;
+
                     </a>
                 </div>
             </div>
@@ -68,10 +70,12 @@ require_once 'controller/DashboardController.php'; ?>
                         <p>APPROVED</p>
                     </div>
                     <div class="icon">
-                        <i class="fa fa-exclamation"></i>
+                        <img src="frontend/images/dash_approved.png" style="width:100px;margin-top:-100px;margin-right:10px;" align="right" alt="">
+
                     </div>
                     <a href="#" class="small-box-footer">
-                        More info <i class="fa fa-arrow-circle-right"></i>
+                        &nbsp;
+
                     </a>
                 </div>
             </div>
@@ -86,10 +90,12 @@ require_once 'controller/DashboardController.php'; ?>
                         <p>DISAPPROVED</p>
                     </div>
                     <div class="icon">
-                        <i class="fa fa-ban"></i>
+                        <img src="frontend/images/dash_disapproved.png" style="width:100px;margin-top:-100px;margin-right:10px;" align="right" alt="">
+
                     </div>
                     <a href="#" class="small-box-footer">
-                        More info <i class="fa fa-arrow-circle-right"></i>
+                        &nbsp;
+
                     </a>
                 </div>
             </div>
@@ -106,10 +112,11 @@ require_once 'controller/DashboardController.php'; ?>
 
                             <div class="card-body" style="overflow:auto;">
                                 <ul class="list-group list-group-flush">
-                                    <?php foreach ($lgu as $key => $municipalities): ?>
-                                    <?php echo '<li class="list-group-item">'.$municipalities['name'].' <span style="float: right; position:relative; top:5px;" class="badge badge-primary pull-right">Primary</span></li>';?>
-                                    <?php endforeach;?>
-                                   
+                                    <?php foreach ($lgu as $key => $municipalities) : ?>
+                                        <?php echo '<li class="list-group-item">' . $municipalities['name'] . ' </li>'; ?>
+                                        <!-- <span style="float: right; position:relative; top:5px;" class="badge badge-primary pull-right">Primary</span> -->
+                                    <?php endforeach; ?>
+
                                 </ul>
                             </div>
                         </div>
@@ -120,13 +127,13 @@ require_once 'controller/DashboardController.php'; ?>
 
                             <div class="card-body" style="overflow:auto;">
                                 <ul class="list-group list-group-flush">
-                                    <li class="list-group-item">Cras justo odio</li>
-                                    <li class="list-group-item">Dapibus ac facilisis in</li>
-                                    <li class="list-group-item">Vestibulum at eros</li>
-                                    <li class="list-group-item">Vestibulum at eros</li>
-                                    <li class="list-group-item">Vestibulum at eros</li>
-                                    <li class="list-group-item">Vestibulum at eros</li>
-                                    <li class="list-group-item">Vestibulum at eros</li>
+                                <?php if(!empty($est_safety_seal)): ?>
+                                <?php foreach ($est_safety_seal as $key => $establishments) : ?>
+                                        <?php echo '<li class="list-group-item">' . $establishments['est'] . ' <span style="float: right; position:relative; top:5px;" class="badge badge-primary pull-right">'.$establishments['ss_no'].'</span> </li>'; ?>
+                                <?php endforeach; ?>
+                                <?php else:?>
+                                <?php echo '<li class="list-group-item">There are no establishments with safety seal certificate</li>'; ?>
+                                <?php endif;?>
                                 </ul>
                             </div>
                         </div>
@@ -135,9 +142,9 @@ require_once 'controller/DashboardController.php'; ?>
                     <div class="col-md-8" style="border-radius:5px">
                         <div class=" card box box-success">
                             <div class="card-header" style="background-color: #009688; color:#fff;">
-                              LEGEND: <span class="pull-right badge bg-green">APPROVED</span>
-                                    <span class="pull-right badge bg-blue">FOR RECEIVING </span>
-                                
+                                LEGEND: <span class="pull-right badge bg-green">APPROVED</span>
+                                <span class="pull-right badge bg-blue">FOR RECEIVING </span>
+
                             </div>
                             <div class="box-header with-border">
 
