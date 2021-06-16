@@ -33,15 +33,15 @@
                             <table class="table table-hover mb-0 border-bottom" id="establishmentsTable" style="font-size: 10pt;">
                                 <thead>
                                     <tr>
-                                        <th class="text-center" width="10%">Control No.</th>
-                                        <th class="text-center" width="18%">NAME</th>
-                                        <th class="text-center" width="18%">AGENCY</th>
-                                        <th class="text-center" width="18%">ESTABLISHMENT</th>
-                                        <th class="text-center" width="20%">LOCATION</th>
-                                        <th class="text-center" width="15%">SAFETY SEAL NO</th>
-                                        <th class="text-center" width="10%">ISSUED </th>
-                                        <th class="text-center" width="10%">VALID UNTIL</th>
-                                        <th class="text-center" width="10%">ACTION</th>
+                                        <th class="text-center" width="11%">Control No.</th>
+                                        <th class="text-center">NAME</th>
+                                        <th class="text-center" width="12%">AGENCY</th>
+                                        <th class="text-center">ESTABLISHMENT</th>
+                                        <th class="text-center">LOCATION</th>
+                                        <th class="text-center" width="11%">SAFETY SEAL NO</th>
+                                        <th class="text-center">ISSUED </th>
+                                        <th class="text-center">VALID UNTIL</th>
+                                        <th class="text-center">ACTION</th>
                                     </tr>
                                 </thead>
                                 <tbody>

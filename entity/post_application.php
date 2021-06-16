@@ -18,9 +18,9 @@ $establishment = $_POST['establishment'];
 $nature = $_POST['nature'];
 $address = $_POST['address'];
 
-$code = generateCode($conn, $userid);
 
 if ($is_new) {
+	$code = generateCode($conn, $userid);
 	$token = bin2hex(random_bytes(64));
 	$res = $app->insertChecklist($code, $establishment, $nature, $address, $userid, $today->format('Y-m-d H:i:s'), $token);
 } else {
@@ -79,24 +79,16 @@ function addFlash($type, $message, $title) {
 
 function generateCode($conn, $user) 
 {
-	$sql = "SELECT p.code as pcode, m.code as mcode
-	FROM tbl_admin_info u
-	LEFT JOIN tbl_province p on p.id = u.PROVINCE
-	LEFT JOIN tbl_citymun m on m.id = u.LGU
-	WHERE u.ID = ".$user."";
-
-	$query = mysqli_query($conn, $sql);
-	$result1 = mysqli_fetch_array($query);
-
-	// $ccode = 'R4A-'.$result1['pcode'].'-'.$result1['mcode'];
 	$ccode = '2021';
-
-
 	$sql = "SELECT counter, id FROM tbl_config WHERE code = '".$ccode."'";
 	$query = mysqli_query($conn, $sql);
-	$result2 = mysqli_fetch_array($query);
+	$result = mysqli_fetch_array($query);
 
-	$cc = $result2['counter'] + 1;
+	// if ($result['counter'] == 0) {
+	// 	$cc = $result['counter'] + 1;
+	// } else {
+	$cc = $result['counter'];
+	// }
 
 	if ($cc > 9999) {
 		$new_counter = $cc;
@@ -110,7 +102,9 @@ function generateCode($conn, $user)
 		$new_counter = '00'.$cc;
 	}
 
-	$sql = "UPDATE tbl_config SET counter = '".$new_counter."' WHERE id = ".$result2['id']."";
+	$cc = $cc + 1;
+
+	$sql = "UPDATE tbl_config SET counter = '".$cc."' WHERE id = ".$result['id']."";
     $result = mysqli_query($conn, $sql);
 
     $control_no = $ccode.'-'.$new_counter;

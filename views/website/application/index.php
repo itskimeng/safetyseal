@@ -93,6 +93,7 @@
 </div>
 
 <?php include 'modal_attachments.php';?>
+<?php include 'modal_view_attachments.php';?>
 <?php include 'modal_proceed.php';?>
 <style type="text/css">
 .box {
@@ -210,6 +211,10 @@
   left: 1000px;
 }
 
+.card-img, .card-img-top {
+    border-top-left-radius: calc(-7.75rem - 1px);
+    border-top-right-radius: calc(1.25rem - 24px);
+}
 </style>
 
 <script>
@@ -272,7 +277,92 @@
         reason.attr('disabled', true);
       }
     });
+
+    $(document).on('click', '.btn-attachments_upload', function(){
+      let tr = $(this).closest('tr');
+      let vv = $(this);
+      let id = tr.find('#cform-ulist_id');
+      let $modal = $("#exampleModal");
+      let form_id = $modal.find('#cform-entry_id');
+      let co_id = $modal.find('#cform-checklist_order');
+
+
+      form_id.val(id.val());
+      co_id.val(vv.val());
+      $modal.modal('show');
+    });
+
+    $(document).on('click', '.btn-attachments_view', function(){
+      let tr = $(this).closest('tr');
+      let id = tr.find('#cform-ulist_id');
+      let $modal = $("#modal-view_attachments");
+      let form_id = $modal.find('#cform-entry_id');
+
+
+      let path = 'entity/get_attachments.php?id='+id.val();
+
+      $.get(path, function(data, key){
+        let dd = JSON.parse(data);
+        $('#tbody-view_attchmnt').empty();
+        generateAttachments(dd, $('#tbody-view_attchmnt'));
+      })
+
+      form_id.val(id.val());
+      $modal.modal('show');
+    });
+
   })
+
+  function generateAttachments($data, $element) {
+    let tr = '';
+    $element.empty();
+    tr+= '<div class="col-md-12">';
+    tr+= '<div class="row">';
+    $.each($data, function(key, item){
+      tr+= '<div class="col-md-3 mb-1">';
+      tr+= '<div class="card" style="width: 15rem;">';
+      tr+= '<div class="checkers" style="padding-left: 1rem;">';
+      tr+= '<div class="form-group">';
+      tr+= '<input type="hidden" name="att_id['+item['caid']+']" value="'+item['file_id']+'">';
+      tr+= '<input class="form-check-input chklist_na" name="chklists['+item['caid']+']" type="checkbox" value="">';
+      tr+= '</div>';
+      tr+= '</div>';
+      tr+= '<div class="pic-holder" style="padding-top: 5%;height: 12rem;">';
+      tr+= '<img src="https://drive.google.com/uc?export=view&id='+item['file_id']+'" class="card-img-top" alt="..." style="max-width: 100%; max-height: 100%; object-fit: cover;">';
+      tr+= '</div>';
+      // tr+= '<iframe src="https://drive.google.com/uc?export=view&id='+item['file_id']+'" class="card-img-top"></iframe>';
+      tr+= '<div class="card-body" style="text-overflow: ellipsis;white-space: nowrap;overflow: hidden;height: 3.5rem;padding: 0.3rem 0.3rem;">';
+      tr+= '<a href="'+item['location']+'" class="">';
+      tr+= item['file_name'];
+      tr+= '</a>';
+      tr+= '</div>';
+      tr+= '</div>';
+      tr+= '</div>';
+
+
+     
+
+
+      // tr+='<tr>';
+      // tr+='<td style="font-size:18pt; width:10%;">';
+      // tr+= '<div class="form-group">';
+      // tr+= '<input type="hidden" name="att_id['+item['caid']+']" value="'+item['file_id']+'">';
+      // tr+= '<input class="form-check-input" type="checkbox" value="" name="chklists['+item['caid']+']">';
+      // tr+= '</div>';
+      // tr+='</td>';
+      // tr+= '<td>';
+      // // tr+= '<a href="'+item['location']+'" class="btn btn-secondary btn-block">';
+      // // tr+= item['file_name'];
+      // // tr+='</a>';
+      // tr+= '<img src="'+item['location']+'"/>';
+      // tr+= '</td>';
+      // tr+='</tr>';
+    });
+    tr+= '</div>';
+    tr+= '</div>';
+
+    $element.append(tr);
+  }
 
   function uncheckOthers(arg, tr) {
     let arr = ['yes','no','na'];

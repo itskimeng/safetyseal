@@ -1,29 +1,31 @@
-<div class="modal fade right" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-  <div class="modal-dialog modal-dialog-scrollable">
+<div class="modal fade right" id="modal-view_attachments" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-xl">
     <div class="modal-content">
       <div class="modal-header">
-        <h5 class="modal-title" id="exampleModalLabel"><i class="fa fa-link"></i> Attachments</h5>
+        <h5 class="modal-title" id="exampleModalLabel"><i class="fa fa-link"></i> View Attachments</h5>
         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
       </div>
-      <form method="POST" enctype="multipart/form-data" action="entity/post_attachments2.php">
-        <input type="hidden" id="cform-checklist_order" name="checklist_order" value=""/>
+      <form method="POST" enctype="multipart/form-data" action="entity/delete_attachments.php">
+        <input type="hidden" name="checklist_order" value="CL01"/>
         <input type="hidden" id="cform-entry_id" name="entry_id" value=""/>
         <input type="hidden" name="control_no" value="<?php echo $userinfo['code']; ?>"/>  
         <input type="hidden" name="token_id" value="<?php echo $_GET['ssid']; ?>"/>        
 
-        <div class="modal-body">
-            <div class="mb-3">
-              <!-- <input class="form-control" type="file" id="formFileMultiple" multiple> -->
-              <div class="form-group">
-                <div class="custom-file">
-                  <input type="file" name="files[]" multiple class="custom-file-input form-control" id="customFile" required>
-                </div>
-              </div>
-            </div>
+        <div class="modal-body" id="tbody-view_attchmnt">
+            <!-- <div class="mb-3">
+              <table class="table table-responsive table-striped">
+                <tbody id="tbody-view_attchmnt">
+                  
+                </tbody>
+              </table>
+            </div> -->
+
+            
+            
         </div>
         <div class="modal-footer">
           <button type="button" class="btn btn-secondary" data-bs-dismiss="modal"><i class="fa fa-window-close"></i> Close</button>
-          <button type="submit  " class="btn btn-primary"><i class="fa fa-save"></i> Save</button>
+          <button type="submit" class="btn btn-danger"><i class="fa fa-trash"></i> Remove Selected</button>
         </div>
       </form>
     </div>
