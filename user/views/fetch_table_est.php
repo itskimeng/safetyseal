@@ -5,16 +5,17 @@ foreach ($user_est as $key => $data) {
     <tr>
         <td>
             <a href="#" class="btn btn-success btn-block btn-sm active"><?php echo $data['ac_status']; ?></a>
-            
-            <br>
+        </td>
+        <td>
             <?php echo $data['control_no']; ?>
         </td>
         <td style="width:20%;"><?php echo $data['name']; ?></td>
         <td>
-            <div class="font-weight-bold">
-                <?php echo $data['agency']; ?>
-
-            </div>
+            <a href="establishment-profile.php" target="_blank" class="">
+                <div class="font-weight-bold">
+                    <?php echo $data['agency']; ?>
+                </div>
+            </a>
         </td>
         <td>
             <div class="font-weight-bold">
@@ -52,9 +53,16 @@ foreach ($user_est as $key => $data) {
 
             <?php } else { ?>
                 <div class="col-md-12" style="margin-bottom:3%;">
-                    <a href="../wbstapplication.php?ssid=<?php echo $data['token']; ?>" class="btn btn-primary btn-block btn-sm"><i class="fa fa-eye"></i> Edit</a>
+                    <a href="../wbstapplication.php?ssid=<?php echo $data['token']; ?>&code=<?php echo $gcode; ?>&scope=<?php echo $gscope; ?>" class="btn btn-primary btn-block btn-sm"><i class="fa fa-eye"></i> Edit</a>
                 </div>
             <?php } ?>
+
+            <?php if ($data['ac_status'] != 'Draft'): ?>
+                <div class="col-md-12">
+                  <a href="../entity/print_preview.php?control_no=<?php echo $data['control_no']; ?>" target="_blank" type="button" class="btn btn-warning btn-block btn-sm" style="width: 100%;">Print
+                  </a>
+                </div>
+            <?php endif ?>
         </td>
     </tr>
 <?php

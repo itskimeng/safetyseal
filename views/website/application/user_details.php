@@ -32,7 +32,7 @@
       <div class="form-outline mb-2 col-md-12">
         <label class="form-label" for="form1Example1">Name of Government Establlishment/ Department/ Office/ Unit:</label><br>
         <?php if ($is_new): ?>
-          <input type="text" id="form1Example1" name="establishment" class="form-control" value=""/>
+          <input type="text" id="form1Example1" name="establishment" class="form-control" value="<?php echo $userinfo['establishment']; ?>"/>
         <?php else: ?>  
           <input type="text" id="form1Example1" name="establishment" class="form-control" value="<?php echo $userinfo['establishment']; ?>"/>
         <?php endif ?>
@@ -47,8 +47,13 @@
         <?php if ($is_new): ?>
           <!-- <input type="text" id="form1Example1" name="nature" class="form-control" value=""/> -->
           <select class="form-control select2bs4 select2-hidden-accessible" name="nature" id="nature" tabindex="-1" aria-hidden="true" required>
+              <option></option>
               <?php foreach ($government_nature as $key => $nature):?>
-              <option value="<?php echo $nature;?>"><?php echo $nature;?></option>
+                <?php if ($key == $userinfo['nature']): ?>
+                  <option value="<?php echo $nature;?>" selected><?php echo $nature;?></option>
+                <?php else: ?>
+                  <option value="<?php echo $nature;?>"><?php echo $nature;?></option>
+                <?php endif ?>
               <?php endforeach;?>
           </select>
           
@@ -64,7 +69,7 @@
       <div class="form-outline mb-2 col-md-12">
         <label class="form-label" for="form1Example1">Address:</label><br>
         <?php if ($is_new): ?>
-          <input type="text" id="form1Example1" name="address" class="form-control" value=""/>
+          <input type="text" id="form1Example1" name="address" class="form-control" value="<?php echo $userinfo['address']; ?>"/>
         <?php else: ?>  
           <input type="text" id="form1Example1" name="address" class="form-control" value="<?php echo $userinfo['address']; ?>"/>
         <?php endif ?>
