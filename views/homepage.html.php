@@ -24,7 +24,7 @@
             </div>
             <div class="col-6 bg-light" style="padding: 5px;">
               <div class="container shadow p-3 mb-5 bg-body request_forms-banner " style="background-color:#B0BEC5; height:500px;">
-                <button class="btn btn-light-primary py-2 me-5 mr-2 btn-request">View All</button>
+                <a href="wbstapplication.php"  class="btn btn-light-primary py-2 me-5 mr-2 btn-request">Request</a>
               </div>
             </div>
           </div>

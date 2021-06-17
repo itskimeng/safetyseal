@@ -5,7 +5,7 @@
 <body >
     <main>
         <?php require_once 'layout/navbar.php'; ?>
-        <?php require_once 'views/website/application/index.php'; ?>
+        <?php require_once 'views/registration.html.php'; ?>
     </main>
 </body>
 
