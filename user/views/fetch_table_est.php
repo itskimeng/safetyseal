@@ -41,7 +41,7 @@ foreach ($user_est as $key => $data) {
         <td nowrap="">
             <?php if ($data['ac_status'] == 'Disapproved'){ ?>
                 <div class="col-md-12">
-                  <a href="../entity/post_reassess.php?ssid=<?php echo $data['token']; ?>&stt=Reassess" type="button" class="btn btn-warning btn-block" style="width: 100%;">Reassess
+                  <a href="../entity/post_reassess.php?ssid=<?php echo $data['token']; ?>&stt=Reassess" type="button" class="btn btn-danger btn-block" style="width: 100%;"><i class="fa fa-redo" aria-hidden="true"></i> Reassess
                   </a>
                 </div>
 
@@ -58,8 +58,12 @@ foreach ($user_est as $key => $data) {
             <?php } ?>
 
             <?php if ($data['ac_status'] != 'Draft'): ?>
-                <div class="col-md-12">
+                <!-- <div class="col-md-12">
                   <a href="../entity/print_preview.php?control_no=<?php echo $data['control_no']; ?>" target="_blank" type="button" class="btn btn-warning btn-block btn-sm"><i class="fa fa-print"></i> Print
+                  </a>
+                </div> -->
+                <div class="col-md-12">
+                  <a href="../entity/print_preview.php?control_no=<?php echo $data['control_no']; ?>" type="button" class="btn btn-warning btn-block" style="width: 100%;"><i class="fa fa-print"></i> Print
                   </a>
                 </div>
             <?php endif ?>
