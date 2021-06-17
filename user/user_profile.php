@@ -43,10 +43,9 @@
 
 
                                                         <?php
-                                                        foreach ($user_est as $key => $count) {
-                                                            echo $count['est'];
-                                                        }
-                                                        ?>
+                                                    
+                                                            echo $user_info['est'];
+                                                     ?>
                                                     </span>
                                                     </a>
                                                 </li>
