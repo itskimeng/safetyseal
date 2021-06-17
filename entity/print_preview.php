@@ -75,8 +75,10 @@ $pdf->writeHTML($html, true, false, true, false, '');
 $html = generateSignatory($user);
 $pdf->writeHTML($html, true, false, true, false, '');
 
-$html = generateValidations($validations);
-$pdf->writeHTML($html, true, false, true, false, '');
+if (in_array($user['status'], ['Approved', 'Disapproved'])) {
+	$html = generateValidations($validations);
+	$pdf->writeHTML($html, true, false, true, false, '');
+}
 
 
 
@@ -355,6 +357,17 @@ function generateSignatory($dd)
 	$html.= '</table>';
 
 	$html.= '<table class="table table-bordered">';
+	$html.= '<tr>';
+	$html.= '<td style="width:30%;">';
+	$html.= '';
+	$html.= '</td>';
+	$html.= '<td style="width:30%;">';
+	$html.= '';
+	$html.= '</td>';
+	$html.= '<td style="text-align:right; font-size:9pt;">';
+	$html.= '<b>'.$dd['fname'].'</b>';
+	$html.= '</td>';
+	$html.= '</tr>';
 	$html.= '<tr>';
 	$html.= '<td style="width:30%;">';
 	$html.= '';
