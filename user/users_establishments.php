@@ -18,7 +18,7 @@
                         <span class="label label-lg label-light-success label-inline font-weight-bold mt-3 py-3">
                             <!-- <i class="la la-clipboard-check mr-2"></i> -->
                             <a href="../wbstapplication.php?create_new" class="btn btn-primary btn-md">
-                                <i class="fa fa-edit"></i> Add New
+                                <i class="fa fa-plus-square"></i> Apply
                             </a>
                         </span>
                     </div>
@@ -30,14 +30,17 @@
                             Home / My Establishments
                         </div>
                         <div class="card-body" style="background-color: #f9f8f8;">
-                            <table class="table table-hover mb-0 border-bottom" id="establishmentsTable" style="font-size: 10pt;">
+                            <table class="table table-hover mb-0 border-bottom" id="establishmentsTable" style="font-size: 10pt; width: 1500px;
+    overflow-x: scroll;
+    font-size: 10pt;">
                                 <thead>
                                     <tr>
-                                        <th class="text-center" width="11%">Control No.</th>
-                                        <th class="text-center">NAME</th>
+                                        <th class="text-center" width="15%">Status</th>
+                                        <th class="text-center" width="15%">Control No.</th>
+                                        <th class="text-center" width="20%">NAME</th>
                                         <th class="text-center" width="12%">AGENCY</th>
-                                        <th class="text-center">ESTABLISHMENT</th>
-                                        <th class="text-center">LOCATION</th>
+                                        <th class="text-center" width="20%">ESTABLISHMENT</th>
+                                        <th class="text-center" width="20%">LOCATION</th>
                                         <th class="text-center" width="11%">SAFETY SEAL NO</th>
                                         <th class="text-center">ISSUED </th>
                                         <th class="text-center">VALID UNTIL</th>
@@ -57,6 +60,12 @@
 <?php include '../layout/footer.html.php'; ?>
 
 </html>
+<style type="text/css">
+    #establishmentsTable_wrapper {
+        max-width: 2500px;
+        overflow-x: scroll;
+    }
+</style>
 <script>
     $('#establishmentsTable').DataTable({
         responsive: {
