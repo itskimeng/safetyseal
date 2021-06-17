@@ -7,6 +7,7 @@ $app = new UserManager();
 $id = $_SESSION['userid'];
 
 $user_est = $app->fetchEstablishments($id);
+$user_info = $app->getUserInfo($id);
 
 
 ?>

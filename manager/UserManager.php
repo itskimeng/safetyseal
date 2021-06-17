@@ -32,6 +32,8 @@ class UserManager
 
         $query = mysqli_query($this->conn, $sql);
         $data = [];
+        $rowCount= mysqli_num_rows($query); 
+        
         while ($row = mysqli_fetch_assoc($query)) {
             $data[] = [
                 'name' => $row['name'],
@@ -45,12 +47,35 @@ class UserManager
                 'ac_establishment' => $row['ac_establishment'],
                 'ac_nature' => $row['ac_nature'],
                 'ac_address' => $row['ac_address'],
-                'ac_status' => $row['ac_status']
+                'ac_status' => $row['ac_status'],
+                'est' => $rowCount
             ];    
         }
 
 
         return $data;
+    }
+
+    public function getUserInfo($userid)
+    {
+        $sql = "SELECT ai.id as id, ai.CMLGOO_NAME as name, user.GOV_AGENCY_NAME as agency, user.POSITION as position, user.ADDRESS as address, user.MOBILE_NO as phone_no, user.EMAIL_ADDRESS  as emailaddress FROM `tbl_admin_info` ai
+        LEFT JOIN tbl_userinfo user on ai.id = user.USER_ID  WHERE ai.ID = '$userid'";
+
+        $query = mysqli_query($this->conn, $sql);
+        $data = [];
+        while ($row = mysqli_fetch_assoc($query)) {
+            $data = [
+                'name' => $row['name'],
+                'position' => $row['position'],
+                'address' => $row['address'],
+                'phone_no' => $row['phone_no'],
+                'emailladdress' => $row['emailaddress'],
+                'agency' => $row['agency']
+                
+            ];    
+        }
+        return $data;
+        
     }
 
   
