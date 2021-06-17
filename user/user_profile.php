@@ -4,6 +4,7 @@
 <?php include 'user_header.php'; ?>
 <?php include '../controller/UserController.php'; ?>
 
+
 <body>
     <main>
         <div class="container" style="margin-top: 5%;">
@@ -29,15 +30,25 @@
                                         <div class="card-header" style="background-color: #009688; color:#fff;">
                                         </div>
                                         <div class="card-body">
-                                            <center><img style="width:100px;" src="../frontend/images/logo.png" alt="User profile picture"></center>
+                                            <center><img style="width:100px;" src="../frontend/images/user.png" alt="User profile picture"></center>
 
                                             <h3 class="profile-username text-center"><?php echo $_SESSION['username']; ?></h3>
 
-                                            <p class="text-muted text-center">Software Engineer</p>
 
                                             <ul class="list-group list-group-unbordered">
                                                 <li class="list-group-item">
-                                                    <b>Establishments</b> <a class="pull-right">1,322</a>
+                                                    <a href="users_establishments.php" style="color:#000;">
+                                                    <b><i class="fa fa-home"></i> My Establishments</b>
+                                                    <span class="badge bg-primary" style="margin-left:20%;">
+
+
+                                                        <?php
+                                                        foreach ($user_est as $key => $count) {
+                                                            echo $count['est'];
+                                                        }
+                                                        ?>
+                                                    </span>
+                                                    </a>
                                                 </li>
 
                                             </ul>
@@ -58,17 +69,19 @@
                                         </div>
                                         <!-- /.box-header -->
                                         <div class="box-body">
-                                            <strong><i class="fa fa-book margin-r-5"></i> Position</strong>
-
+                                        <strong><i class="fa fa-building margin-r-5"></i> Government Agency</strong>
                                             <p class="text-muted">
-                                                B.S. in Computer Science from the University of Tennessee at Knoxville
+                                                <?php echo $user_info['agency']; ?>
                                             </p>
-
                                             <hr>
-
+                                            <strong><i class="fa fa-book margin-r-5"></i> Position</strong>
+                                            <p class="text-muted">
+                                                <?php echo $user_info['position']; ?>
+                                            </p>
+                                            <hr>
                                             <strong><i class="fa fa-map-marker margin-r-5"></i> Address</strong>
 
-                                            <p class="text-muted">Malibu, California</p>
+                                            <p class="text-muted"><?php echo $user_info['address']; ?></p>
 
 
                                         </div>
@@ -86,12 +99,12 @@
                                                 <li class="nav-item" role="presentation">
                                                     <button class="nav-link active" id="home-tab" data-bs-toggle="tab" data-bs-target="#home" type="button" role="tab" aria-controls="home" aria-selected="true">Home</button>
                                                 </li>
-                                                <li class="nav-item" role="presentation">
+                                                <!-- <li class="nav-item" role="presentation">
                                                     <button class="nav-link" id="profile-tab" data-bs-toggle="tab" data-bs-target="#profile" type="button" role="tab" aria-controls="profile" aria-selected="false">Profile</button>
                                                 </li>
                                                 <li class="nav-item" role="presentation">
                                                     <button class="nav-link" id="contact-tab" data-bs-toggle="tab" data-bs-target="#contact" type="button" role="tab" aria-controls="contact" aria-selected="false">Contact</button>
-                                                </li>
+                                                </li> -->
                                             </ul>
                                             <div class="tab-content" id="myTabContent">
                                                 <div class="tab-pane fade show active" id="home" role="tabpanel" aria-labelledby="home-tab">
@@ -103,11 +116,7 @@
                                                                 <div class="box-header with-border">
                                                                     <h3 class="box-title">No. of Approved Establishments per Month</h3>
 
-                                                                    <div class="box-tools pull-right">
-                                                                        <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i>
-                                                                        </button>
-                                                                        <button type="button" class="btn btn-box-tool" data-widget="remove"><i class="fa fa-times"></i></button>
-                                                                    </div>
+                                                                    
                                                                 </div>
                                                                 <div class="box-body">
                                                                     <div class="chart">
@@ -119,8 +128,8 @@
                                                         </div>
                                                     </div>
                                                 </div>
-                                                <div class="tab-pane fade" id="profile" role="tabpanel" aria-labelledby="profile-tab">...</div>
-                                                <div class="tab-pane fade" id="contact" role="tabpanel" aria-labelledby="contact-tab">...</div>
+                                                <!-- <div class="tab-pane fade" id="profile" role="tabpanel" aria-labelledby="profile-tab">...</div>
+                                                <div class="tab-pane fade" id="contact" role="tabpanel" aria-labelledby="contact-tab">...</div> -->
                                             </div>
 
                                             <!-- /.box -->
