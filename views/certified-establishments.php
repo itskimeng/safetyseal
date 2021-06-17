@@ -83,7 +83,7 @@
                              <?php echo $resultAddress['ADDRESS']; ?>
                         </td>
                         <td class="align-middle" nowrap="">
-                             <?php echo $resultApplication['control_no']; ?>
+                             <?php echo $resultApplication['safety_seal_no']; ?>
                         </td>
                         <td class="align-middle" nowrap="">
                             <span class="label label-lg label-light-success label-inline font-weight-bold py-4">

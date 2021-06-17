@@ -11,20 +11,16 @@ foreach ($user_est as $key => $data) {
         </td>
         <td style="width:20%;"><?php echo $data['name']; ?></td>
         <td>
-            <a href="establishment-profile.php" target="_blank" class="">
-                <div class="font-weight-bold">
-                    <?php echo $data['agency']; ?>
+            <div class="font-weight-bold">
+                <?php echo $data['agency']; ?>
 
-                </div>
-            </a>
+            </div>
         </td>
         <td>
-            <a href="establishment-profile.php" class="">
-                <div class="font-weight-bold">
-                    <?php echo $data['ac_establishment']; ?>
+            <div class="font-weight-bold">
+                <?php echo $data['ac_establishment']; ?>
 
-                </div>
-            </a>
+            </div>
         </td>
         <td><?php echo $data['ac_address']; ?>
         <td nowrap=""><?php echo $data['ss_no']; ?></td>
@@ -50,7 +46,7 @@ foreach ($user_est as $key => $data) {
 
             <?php } else if ($data['ac_status'] == 'Approved') { ?>
                 <div class="col-md-12">
-                  <a href="../certificate.php?control_no=<?php echo $data['control_no']; ?>" target="_blank" type="button" class="btn btn-warning btn-block" style="width: 100%;">View Certificate <i class="fa fa-certificate"></i>
+                  <a href="../certificate.php?token=<?php echo $data['token']; ?>" target="_blank" type="button" class="btn btn-warning btn-block" style="width: 100%;">View Certificate <i class="fa fa-certificate"></i>
                   </a>
                 </div>
 
