@@ -1,8 +1,15 @@
 <div class="registration-image">
+<div class="bg-white d-none d-sm-block">
+                    <div class="container" >
+                        <img src="frontend/images/banner_calabarzon.png" style="margin-top:5%;"width="90%" height="100%" alt="">
+                    </div>
+                </div>
   <div class="container">
+    
     <div class="pt-5">
+   
       <div class="row align-items-center heading">
-
+        
         <div class="col-lg-7 mb-4 text-white">
           <!-- <header class="py-5 mt-5"> -->
           <header>
@@ -83,7 +90,6 @@
       <!-- <div class="row"> -->
     </div>
   </div>
-
 </div>
 <?php include 'registration_modal.php' ?>
 <script>

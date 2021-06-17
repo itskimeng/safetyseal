@@ -59,13 +59,25 @@
             url: "views/login.php",
             method: "POST",
             data: {
-                username:'<?php if (isset($_SESSION['username'])) { echo $_SESSION['username']; } else { echo ''; } ?>',
-                password_reg:'<?php if (isset($_SESSION['password'])) { echo $_SESSION['password']; } else { echo ''; } ?>',
-                login:'login',
+                username: '<?php if (isset($_SESSION['username'])) {
+                                echo $_SESSION['username'];
+                            } else {
+                                echo '';
+                            } ?>',
+                password_reg: '<?php if (isset($_SESSION['password'])) {
+                                    echo $_SESSION['password'];
+                                } else {
+                                    echo '';
+                                } ?>',
+                login: 'login',
             },
             success: function(data) {
-                window.location = 'index.php?username="<?php if (isset($_SESSION['username'])) { echo $_SESSION['username']; } else { echo ''; } ?>"'
-                
+                window.location = 'index.php?username="<?php if (isset($_SESSION['username'])) {
+                                                            echo $_SESSION['username'];
+                                                        } else {
+                                                            echo '';
+                                                        } ?>"'
+
 
 
             }

@@ -44,5 +44,12 @@ class ComponentsManager
 
         return $data;
     }
+
+    public function getGovtNature(){
+
+        $data = ['DILG Regional Office', 'DILG Provincial Office', 'DILG C/M Field Office', 'PNP Regional Office', 'PNP Provincial Office', 'PNP City/Municipal Office/Station/Camp', 'BJMP Regional Office', 'Provincial Jail', 'District Jail', 'City/Municipal Jail', 'BFP Regional Office', 'BFP Provincial Office', 'BFP City/Municipal Station', 'Provincial LGU', 'City/Municipal LGU', 'Barangay LGU'];
+        sort($data);
+        return $data;
+    }
 }
 
