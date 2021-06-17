@@ -40,19 +40,19 @@ foreach ($user_est as $key => $data) {
         </td>
         <td nowrap="">
             <?php if ($data['ac_status'] == 'Disapproved'){ ?>
-                <div class="col-md-12">
+                <div class="col-md-12 mb-1">
                   <a href="../entity/post_reassess.php?ssid=<?php echo $data['token']; ?>&stt=Reassess" type="button" class="btn btn-danger btn-block" style="width: 100%;"><i class="fa fa-redo" aria-hidden="true"></i> Reassess
                   </a>
                 </div>
 
             <?php } else if ($data['ac_status'] == 'Approved') { ?>
-                <div class="col-md-12">
+                <div class="col-md-12 mb-1">
                   <a href="../certificate.php?token=<?php echo $data['token']; ?>" target="_blank" type="button" class="btn btn-warning btn-block" style="width: 100%;">View Certificate <i class="fa fa-certificate"></i>
                   </a>
                 </div>
 
             <?php } else { ?>
-                <div class="col-md-12" style="margin-bottom:3%;">
+                <div class="col-md-12 mb-1" style="margin-bottom:3%;">
                     <a href="../wbstapplication.php?ssid=<?php echo $data['token']; ?>&code=<?php echo $gcode; ?>&scope=<?php echo $gscope; ?>" class="btn btn-primary btn-block btn-sm"><i class="fa fa-eye"></i> Edit</a>
                 </div>
             <?php } ?>
@@ -62,7 +62,7 @@ foreach ($user_est as $key => $data) {
                   <a href="../entity/print_preview.php?control_no=<?php echo $data['control_no']; ?>" target="_blank" type="button" class="btn btn-warning btn-block btn-sm"><i class="fa fa-print"></i> Print
                   </a>
                 </div> -->
-                <div class="col-md-12">
+                <div class="col-md-12 mb-1">
                   <a href="../entity/print_preview.php?control_no=<?php echo $data['control_no']; ?>" type="button" class="btn btn-warning btn-block" style="width: 100%;"><i class="fa fa-print"></i> Print
                   </a>
                 </div>
