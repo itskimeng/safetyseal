@@ -43,7 +43,7 @@
                 Logout(<?php echo $_SESSION['username']; ?>)
               </a>
               <ul class="dropdown-menu dropdown-menu-dark" aria-labelledby="navbarDarkDropdownMenuLink">
-                <li><a class="dropdown-item" href="../user/user_profile.php">My Profile</a></li>
+                <li><a class="dropdown-item" href="user/user_profile.php">My Profile</a></li>
                 <li><a class="dropdown-item" href="user/users_establishments.php">My Establishments</a></li>
                 <li><a class="dropdown-item" href="views/logout.php">Log out</a></li>
               </ul>
