@@ -1,4 +1,5 @@
 <?php require_once 'controller/ApplicationController.php';?>
+<?php require_once 'controller/RegistrationComponentsController.php';?>
 
 <div class="registration-image" style="padding-top:3%;">
   <div class="container">
@@ -75,7 +76,7 @@
                           </div>
                       </div>
                     </td>
-                  </tr>
+                  </tr> 
                 </tbody>
               </table>
             </div>
