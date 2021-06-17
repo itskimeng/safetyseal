@@ -23,7 +23,7 @@
             <a class="nav-link" href="certified-establishments.php" id="navcertified">Certified Establishments </a>
           </li>
           <li class="nav-item">
-            <a class="nav-link" href="inspection-and-certification-team.php" id="navinspection">Inspection and Certification Teams </a>
+            <a class="nav-link" href="../inspection-and-certification-team.php" id="navinspection">Inspection and Certification Teams </a>
           </li>
           <li class="nav-item">
             <a class="nav-link" href="complaints.php" id="navcomplaints">Complaints</a>
