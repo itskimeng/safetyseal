@@ -37,7 +37,7 @@
 
                                             <ul class="list-group list-group-unbordered">
                                                 <li class="list-group-item">
-                                                    <a href="users_establishments.php" style="color:#000;">
+                                                    <a href="users_establishments.php" style="color:#000;text-decoration:none;">
                                                     <b><i class="fa fa-home"></i> My Establishments</b>
                                                     <span class="badge bg-primary" style="margin-left:20%;">
 

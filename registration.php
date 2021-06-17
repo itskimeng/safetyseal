@@ -18,16 +18,8 @@
 </html>
 <script>
     $(window).on('load', function() {
-        let flag = '<?php if (isset($_GET['flag'])) {
-                        echo $_GET['flag'];
-                    } else {
-                        echo '';
-                    } ?>';
-        let isVerified = '<?php if (isset($_GET['verified'])) {
-                                echo $_GET['verified'];
-                            } else {
-                                echo '';
-                            } ?>';
+        let flag = '<?php if (isset($_GET['flag'])) { echo $_GET['flag']; } else { echo ''; } ?>';
+        let isVerified = '<?php if (isset($_GET['verified'])) { echo $_GET['verified']; } else { echo ''; } ?>';
         if (flag) {
             $('#verification_modal').modal('show');
         }
@@ -59,24 +51,13 @@
             url: "views/login.php",
             method: "POST",
             data: {
-                username: '<?php if (isset($_SESSION['username'])) {
-                                echo $_SESSION['username'];
-                            } else {
-                                echo '';
-                            } ?>',
-                password_reg: '<?php if (isset($_SESSION['password'])) {
-                                    echo $_SESSION['password'];
-                                } else {
-                                    echo '';
-                                } ?>',
+                username: '<?php if (isset($_SESSION['username'])) { echo $_SESSION['username']; } else { echo ''; } ?>',
+                password_reg: '<?php if (isset($_SESSION['password'])) { echo $_SESSION['password']; } else { echo ''; } ?>',
                 login: 'login',
             },
             success: function(data) {
-                window.location = 'index.php?username="<?php if (isset($_SESSION['username'])) {
-                                                            echo $_SESSION['username'];
-                                                        } else {
-                                                            echo '';
-                                                        } ?>"'
+                window.location = 'dashboard_user.php?username="<?php if (isset($_SESSION['username'])) { echo md5($_SESSION['username']); } else { echo ''; } ?>"'
+
 
 
 
