@@ -12,8 +12,6 @@ $user = fetchtUserDetails($conn, $_GET['control_no']);
 $entry = fetchEntry($conn, $_GET['control_no']);
 $validations = getUserChecklistsValidations($conn, $_GET['control_no']);
 
-
-
 $pdf = new TCPDF(PDF_PAGE_ORIENTATION, PDF_UNIT, PDF_PAGE_FORMAT, true, 'UTF-8', false);
 
 
@@ -78,6 +76,12 @@ $pdf->writeHTML($html, true, false, true, false, '');
 if (in_array($user['status'], ['Approved', 'Disapproved'])) {
 	$html = generateValidations($validations);
 	$pdf->writeHTML($html, true, false, true, false, '');
+
+	$html = generateApprover($user);
+	$pdf->writeHTML($html, true, false, true, false, '');
+
+	$html = generateInspectionTems();
+	$pdf->writeHTML($html, true, false, true, false, '');
 }
 
 
@@ -104,9 +108,12 @@ function fetchtUserDetails($conn, $control_no)
             ac.control_no as control_no,
             ac.establishment as establishment,
             ac.nature as nature,
-            ac.address as address
+            ac.address as address,
+            aip.CMLGOO_NAME as approver,
+            DATE_FORMAT(ac.date_approved, '%m-%d-%Y') as date_approved
             FROM tbl_app_checklist ac
             LEFT JOIN tbl_admin_info ai on ai.id = ac.user_id
+            LEFT JOIN tbl_admin_info aip on aip.id = ac.approver_id
             LEFT JOIN tbl_userinfo ui on ui.user_id = ai.id
             LEFT JOIN tbl_province p on p.id = ai.PROVINCE
             LEFT JOIN tbl_citymun m on m.id = ai.LGU
@@ -137,7 +144,9 @@ function fetchtUserDetails($conn, $control_no)
                 'pcode' => $row['pcode'],
                 'mcode' => $row['mcode'],
                 'code' => !empty($row['control_no']) ? $row['control_no'] : '2021-'.'_____',
-                'date_proceed' => $row['date_proceed']
+                'date_proceed' => $row['date_proceed'],
+                'approver' => $row['approver'],
+                'date_approved' => $row['date_approved']
             ];      
         }
 
@@ -258,9 +267,14 @@ function generateValidations($dd)
 	$html = '<table class="table table-bordered" style="font-size:9pt;">';
 	$html.= '<tr>';
 	$html.= '<td>';
-	$html.= '<b>FOR ONSITE VALIDATION/ INSPECTION</b>';
+	$html.= '<b>ONSITE VALIDATION / INSPECTION</b>:';
 	$html.= '</td>';
 	$html.= '</tr>';
+	$html.= '<tr>';
+	$html.= '<td>';
+	$html.= '</td>';
+	$html.= '</tr>';
+
 	$html.= '</table>';
 
 	$html.= '<table class="table table-bordered" style="font-size:9pt;">';
@@ -272,6 +286,16 @@ function generateValidations($dd)
 	$html.= '<tr>';
 	$html.= '<td>';
 	$html.= isset($dd['defects']) ? $dd['defects'] : '';
+	$html.= '</td>';
+	$html.= '</tr>';
+	$html.= '<tr>';
+	$html.= '<td>';
+	$html.= '';
+	$html.= '</td>';
+	$html.= '</tr>';
+	$html.= '<tr>';
+	$html.= '<td>';
+	$html.= '';
 	$html.= '</td>';
 	$html.= '</tr>';
 	$html.= '</table>';
@@ -365,7 +389,7 @@ function generateSignatory($dd)
 	$html.= '';
 	$html.= '</td>';
 	$html.= '<td style="text-align:right; font-size:9pt;">';
-	$html.= '<b>'.$dd['fname'].'</b>';
+	$html.= '<b>'.$dd['fname'].' / '.$dd['date_created'].'</b>';
 	$html.= '</td>';
 	$html.= '</tr>';
 	$html.= '<tr>';
@@ -384,6 +408,174 @@ function generateSignatory($dd)
 	return $html;
 }
 
+function generateApprover($dd)
+{
+	$html = '<table class="table table-bordered">';
+	$html.= '<tr>';
+	$html.= '<td style="font-size:9pt;">';
+	$html.= '';
+	$html.= '</td>';
+	$html.= '</tr>';
+	$html.= '<tr>';
+	$html.= '<td colspan="2">';
+	$html.= '<br><br><br>';
+	$html.= '</td>';
+	$html.= '</tr>';
+	$html.= '</table>';
+
+	$html.= '<table class="table table-bordered">';
+	$html.= '<tr>';
+	$html.= '<td style="width:30%;">';
+	$html.= '';
+	$html.= '</td>';
+	$html.= '<td style="width:30%;">';
+	$html.= '';
+	$html.= '</td>';
+	$html.= '<td style="text-align:right; font-size:9pt;">';
+	$html.= '<b>'.$dd['approver'].' / '.$dd['date_approved'].'</b>';
+	$html.= '</td>';
+	$html.= '</tr>';
+	$html.= '<tr>';
+	$html.= '<td style="width:28%;">';
+	$html.= '';
+	$html.= '</td>';
+	$html.= '<td style="width:28%;">';
+	$html.= '';
+	$html.= '</td>';
+	$html.= '<td style="text-align:right; font-size:9pt; border-top: 1px solid black; width:44%;">';
+	$html.= '<b>Name and Signature of Safety Seal Inspector / Date</b>';
+	$html.= '</td>';
+	$html.= '</tr>';
+	$html.= '</table>';
+
+	return $html;
+}
+
+function generateInspectionTems()
+{
+	$html = '<table class="table table-bordered">';
+	$html.= '<tr>';
+	$html.= '<td style="text-align:center; font-size:9pt;">';
+	$html.= '';
+	$html.= '</td>';
+	$html.= '<td style="text-align:center; font-size:9pt;">';
+	$html.= '';
+	$html.= '</td>';
+	$html.= '<td style="text-align:center; font-size:9pt;">';
+	$html.= '';
+	$html.= '</td>';
+	$html.= '</tr>';
+	$html.= '<tr>';
+	$html.= '<td style="text-align:center; font-size:9pt;">';
+	$html.= '';
+	$html.= '</td>';
+	$html.= '<td style="text-align:center; font-size:9pt;">';
+	$html.= '';
+	$html.= '</td>';
+	$html.= '<td style="text-align:center; font-size:9pt;">';
+	$html.= '';
+	$html.= '</td>';
+	$html.= '</tr>';
+	$html.= '<tr>';
+	$html.= '<td style="font-size:10pt;">';
+	$html.= '<b>Inspection and Certification Teams:</b>';
+	$html.= '</td>';
+	$html.= '<td style="text-align:center; font-size:9pt;">';
+	$html.= '';
+	$html.= '</td>';
+	$html.= '<td style="text-align:center; font-size:9pt;">';
+	$html.= '';
+	$html.= '</td>';
+	$html.= '</tr>';
+	$html.= '<tr>';
+	$html.= '<td style="text-align:center; font-size:9pt;">';
+	$html.= '';
+	$html.= '</td>';
+	$html.= '<td style="text-align:center; font-size:9pt;">';
+	$html.= '';
+	$html.= '</td>';
+	$html.= '<td style="text-align:center; font-size:9pt;">';
+	$html.= '';
+	$html.= '</td>';
+	$html.= '</tr>';
+	$html.= '<tr>';
+	$html.= '<td style="text-align:center; font-size:9pt;">';
+	$html.= '';
+	$html.= '</td>';
+	$html.= '<td style="text-align:center; font-size:9pt;">';
+	$html.= '';
+	$html.= '</td>';
+	$html.= '<td style="text-align:center; font-size:9pt;">';
+	$html.= '';
+	$html.= '</td>';
+	$html.= '</tr>';
+	$html.= '<tr>';
+	$html.= '<td style="text-align:center; font-size:9pt;">';
+	$html.= '';
+	$html.= '</td>';
+	$html.= '<td style="text-align:center; font-size:9pt;">';
+	$html.= '';
+	$html.= '</td>';
+	$html.= '<td style="text-align:center; font-size:9pt;">';
+	$html.= '';
+	$html.= '</td>';
+	$html.= '</tr>';
+	$html.= '<tr>';
+	$html.= '<td style="text-align:center; font-size:9pt;">';
+	$html.= '';
+	$html.= '</td>';
+	$html.= '<td style="text-align:center; font-size:9pt;">';
+	$html.= '';
+	$html.= '</td>';
+	$html.= '<td style="text-align:center; font-size:9pt;">';
+	$html.= '';
+	$html.= '</td>';
+	$html.= '</tr>';
+	$html.= '<tr>';
+	$html.= '<td style="text-align:center; font-size:9pt;">';
+	$html.= '';
+	$html.= '</td>';
+	$html.= '<td style="text-align:center; font-size:9pt;">';
+	$html.= '';
+	$html.= '</td>';
+	$html.= '<td style="text-align:center; font-size:9pt;">';
+	$html.= '';
+	$html.= '</td>';
+	$html.= '</tr>';
+	$html.= '</table>';
+
+
+	$html.= '<table class="table table-bordered">';
+	$html.= '<tr>';
+	$html.= '<td style="text-align:center; font-size:9pt; width:33.3%;">';
+	$html.= '<u><b>Jennifer S. Quirante</b></u>';
+	$html.= '</td>';
+	$html.= '<td style="text-align:center; font-size:9pt; width:33.3%;">';
+	$html.= '<u><b>PLTCOL Jonathan B. Villamor</b></u>';
+	$html.= '</td>';
+	$html.= '<td style="text-align:center; font-size:9pt; width:33.3%;">';
+	$html.= '<u><b>FCINSP Alexander Dale Q. Baena</b></u>';
+	$html.= '</td>';
+	$html.= '</tr>';
+	$html.= '<tr>';
+	$html.= '<td style="text-align:center; font-size:9pt;">';
+	$html.= '<b>DILG OFFICER</b>';
+	$html.= '</td>';
+	$html.= '<td style="text-align:center; font-size:9pt;">';
+	$html.= '<b>PNP OFFICER</b>';
+	$html.= '</td>';
+	$html.= '<td style="text-align:center; font-size:9pt;">';
+	$html.= '<b>BFP OFFICER</b>';
+	$html.= '</td>';
+	$html.= '</tr>';
+
+	$html.= '</table>';
+
+	
+
+	return $html;
+}
+
 function getUserChecklistsValidations($conn, $id)
 {
     $sql = "SELECT 
@@ -391,7 +583,7 @@ function getUserChecklistsValidations($conn, $id)
         v.recommendations as recommendations
         FROM tbl_app_checklist_onsitevalidations v
         LEFT JOIN tbl_app_checklist a on a.id = v.chklist_id
-        WHERE a.control_no = $id";
+        WHERE a.control_no = '".$id."'";
 
     $query = mysqli_query($conn, $sql);
     $data = [];
