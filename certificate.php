@@ -28,6 +28,7 @@ ini_set('memory_limit', '-1');
 
 require 'fpdf/roundedRect1.php';
 
+date('F d, Y', strtotime("+6 months", strtotime($row['date_created'])));
 
 $pdf = new PDF();
 $pdf->AddPage();
@@ -36,7 +37,7 @@ $pdf->Image('fpdf/disiplina.png',85,1,50);
 $pdf->Image('fpdf/safetyseallogo2.png',8,-26,193.5);
 
 
-$pdf->Image('https://chart.googleapis.com/chart?chs=300x300&cht=qr&chl=http%3A%2F%2Festablishment-profile?unique_id='.$resultApplication['user_id'].'%2F&choe=UTF-8',30,255,30,0,'png');
+$pdf->Image('https://chart.googleapis.com/chart?chs=300x300&cht=qr&chl=http%3A%2F%2Fsafetyseal.calabarzon.dilg.gov.ph/establishment-profile.php?unique_id='.$resultApplication['user_id'].'%2F&choe=UTF-8',30,255,30,0,'png');
 $pdf->Image('fpdf/dilg.png',62,255,30);
 
 $pdf->SetFont('Arial','',12);
