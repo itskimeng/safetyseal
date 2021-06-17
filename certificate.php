@@ -24,7 +24,7 @@ $selectAddress = ' SELECT `ID`, `USER_ID`, `ADDRESS`, `POSITION`, `MOBILE_NO`, `
 $execAddress = $conn->query($selectAddress);
 $resultAddress = $execAddress->fetch_assoc();
 
-
+ini_set('memory_limit', '-1');
 
 require 'fpdf/roundedRect1.php';
 
