@@ -23,6 +23,7 @@ if ($applicant['status'] == 'Approved' OR $applicant['status'] == 'Disapproved')
     $is_readonly = true;
 }
 $applicants_data = getUserChecklistsEntry($conn, $appid); 
+$appchecklists_attchmnt = $app->getUserChecklistsAttachments($applicant['ssid']);
 $app_notes = getUserChecklistsValidations($conn, $appid);
 
 function getUserChecklists($conn, $id)
@@ -42,6 +43,7 @@ function getUserChecklists($conn, $id)
         ac.establishment as ac_establishment,
         ac.nature as ac_nature,
         ac.address as ac_address,
+        ac.token as ssid,
        	DATE_FORMAT(ac.date_created, '%M %d, %Y') as date_created
         FROM tbl_app_checklist ac
         LEFT JOIN tbl_admin_info ai on ai.id = ac.user_id

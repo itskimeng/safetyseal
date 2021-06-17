@@ -1,87 +1,27 @@
 <?php require_once 'controller/ApplicationController.php';?>
 
-<div class="registration-image" style="padding-top:3%;">
+<div class="registration-image">
   <div class="container">
     <div class="pt-5">
       <div class="row align-items-center heading">
         <div class="col-md-12">
           <div class="py-1">
-            <div class="form-box shadow p-1 mb-5 bg-body rounded box">
-
-              <div class="ribbon blue"><span><?php echo $userinfo['status']; ?></span></div>
-              
-              <form method="POST" action="entity/post_application.php" class="bg-white  rounded-5 shadow-5-strong p-5">
-                <input type="hidden" name="is_new" value="<?php echo $is_new; ?>">
-                <input type="hidden" name="token" value="<?php echo !empty($_GET['ssid']) ? $_GET['ssid'] : ''; ?>">
-
-                <!-- user details -->
-                <div class="col-md-12">
-                  <?php include 'user_details.php'; ?>
+            <div class="form-box shadow p-1 mb-5 bg-body rounded box text-center">
+              <div class="container" style="margin-top: 10px;margin-bottom: 10px;border-radius: 10px;border: 1px solid #b0adad;width:50%;">
+                <div>
+                  <div class="icon-box" style="width: 80px; height: 80px; border: 1px solid gray; border-radius: 50%; margin-left: 43%; background-color: #198754; margin-top: 1%; font-size: 40pt; color: white; ">
+                    <i class="fa fa-check"></i>
+                  </div>        
+                  <h4 class="modal-title w-100">Success!</h4> 
                 </div>
-
-                <?php if (!$is_new): ?>
-                  <!-- checklist -->
-                  <?php include 'checklist.php'; ?>
-                <?php endif ?>
-
-                <!-- Submit button -->
-                <?php if (in_array($userinfo['status'], ['Draft', 'Disapproved', 'Reassess'])): ?>
-                  <div class="panel panel-default pt-4">
-                    <div class="row">
-                      
-                      <div class="<?php echo $is_new ? 'col-md-12' : 'col-md-6' ;?> pull-right">
-                        <button type = "submit" class="btn btn-primary btn-block" name="login" style="width: 100%;"><i class="fa fa-pen-alt"></i> 
-                          <?php echo $is_new ? 'Save' : 'Update' ;?>  
-                        </button>
-                      </div>
-                      <?php if (in_array($userinfo['status'], ['Disapproved','Reassess'])): ?>
-                        <div class="col-md-6">
-                          <a href="entity/post_reassess.php?ssid=<?php echo $_GET['ssid']; ?>&stt=FA" type="button" class="btn btn-success btn-block" style="width: 100%;"><i class="fa fa-share"></i> Reassess</a>
-                        </div>
-                      <?php elseif (!$is_new): ?>
-                        <div class="col-md-6">
-                          <button type="button" class="btn btn-success btn-block" name="login" data-bs-toggle="modal" data-bs-target="#modall_proceed" style="width: 100%;"><i class="fa fa-share"></i> Submit</button>
-                        </div>
-                      <?php endif ?>
-                    </div>
+                <div>
+                  <p class="text-center">Account has been verified for this session.</p>
+                  <div class="form-group" style="margin-bottom: 10px;">
+                    <?php //print_r($_SESSION); ?>
+                    <a href="wbstapplication.php?ssid=<?php echo $_SESSION['ss_id']; ?>&code=<?php echo $_GET['code']; ?>&scope=<?php echo $_GET['scope']; ?>" class="btn btn-success btn-lg" style="width:100%" id="btnContinue">Continue</a>
                   </div>
-                <?php else: ?>
-                  <div class="panel panel-default pt-4">
-                  <table>
-                <tbody>
-                  <tr>
-                    <td style="text-align:center; width:8%;">
-                      <div class="form-group">
-                      <input class="form-check-input check_consent" type="checkbox" value="" name="consent" checked disabled style="padding: 12pt;"> 
-                    </div>
-                    </td>
-                    <td>
-                      <label>
-                        <small>I hereby certify that the facts stated herein are true and correct of my own personal knowledge and any misinterpresentation subjects me to criminal or administrative liability.</small>
-                      </label>
-                    </td>
-                  </tr>
-                  <tr>
-                    <td colspan="2">
-                      <div class="col-md-12">
-                          <div class="text-center" style="margin-top: 1%; margin-bottom: -1%; font-size:20pt;">
-                            <p>
-                              <b><?php echo $userinfo['fname']; ?></b>
-                              <small style="font-size:15pt;">/ <?php echo $userinfo['date_proceed']; ?></small>
-                            </p>
-                          </div>
-                          <div class="form-outline text-center" style="margin-left: 10%; margin-right: 10%;border-top: 1px solid #19191b42;">
-                            Name of Person in Charge / Date
-                          </div>
-                      </div>
-                    </td>
-                  </tr>
-                </tbody>
-              </table>
-            </div>
-                <?php endif ?> 
-              </form>
-
+                </div>
+              </div>
             </div>
           </div>
         </div>

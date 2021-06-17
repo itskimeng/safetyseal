@@ -20,6 +20,7 @@ if (!empty($_SESSION['userid'])) {
 		$is_new = false;
 		$userinfo = $app->getUsers($userid, $token);
 		$appchecklists = $app->getUserChecklistsEntry($token);
+		$appchecklists_attchmnt = $app->getUserChecklistsAttachments($token);
 	}
 	
 } else {

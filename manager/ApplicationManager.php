@@ -120,6 +120,35 @@ class ApplicationManager
         return $data;
     }
 
+    public function getUserChecklistsAttachments($token)
+    {
+        $sql = "SELECT 
+            e.id as eid,
+            ca.id as caid,
+            ca.file_id as file_id,
+            ca.file_name as file_name,
+            ca.location as location
+            FROM tbl_app_checklist_attachments ca 
+            LEFT JOIN tbl_app_checklist_entry e on e.id = ca.entry_id
+            LEFT JOIN tbl_app_checklist a on a.id = e.parent_id
+            WHERE a.token = '".$token."'";
+
+        $query = mysqli_query($this->conn, $sql);
+        $data = [];
+
+        while ($row = mysqli_fetch_assoc($query)) {
+            $data[$row['eid']][] = [
+                'eid' => $row['eid'],
+                'caid' => $row['caid'],
+                'file_id' => $row['file_id'],
+                'file_name' => $row['file_name'],
+                'location' => $row['location']
+            ];    
+        }
+
+        return $data;
+    }
+
     public function getUserChecklists($user)
     {
         $sql = "SELECT 
@@ -475,16 +504,48 @@ class ApplicationManager
     {
         $id = '';
         switch ($pointer) {
-            case 1:
+            case 'CL1':
                 $id = '1ZzfOg9Lhem47BDEr8VdfL07hlfmEok9F';
                 break;
-            case 2:
+            case 'CL2':
                 $id = '1grbCqIy51mWyURe8E4BISnXVQ3ReSveA';
                 break;
-            case 3:
-                $id = '1grbCqIy51mWyURe8E4BISnXVQ3ReSveA';
+            case 'CL3':
+                $id = '1vjnseA-lxfzM2aE_xQnWJv87jvapYwUz';
                 break;
-
+            case 'CL4':
+                $id = '1-UmqGMmyzaQAOjJ0yRmZzf-3M5uOV7JQ';
+                break;
+            case 'CL5':
+                $id = '1xdHYJhoPXIRe7MnoHj3HPSGkFfugjpcG';
+                break;
+            case 'CL6':
+                $id = '1JmGwP6U6Sqk1zV8QauBy9GRAMI61_ujC';
+                break;
+            case 'CL7':
+                $id = '1VGENErXJ7VO2zS94NqFQE781WTlqwnql';
+                break;
+            case 'CL8':
+                $id = '1SfQ44AZn3SIBfSa_QNUudePTB15etqWM';
+                break;
+            case 'CL9':
+                $id = '1e3-ZvGOWeiOtV2oSbk93_OcTQK3ncu_e';
+                break;
+            case 'CL10':
+                $id = '1J0EUlJnzrD_esbbxrYkGComWBE2PKfS_';
+                break;
+            case 'CL11':
+                $id = '1vuQvP64MDKsN5NTC1gOm78l09_enmfuq';
+                break;
+            case 'CL12':
+                $id = '1ubdhb0vil9J-n5USbyUUqOV0uGoTtpCc';
+                break;
+            case 'CL13':
+                $id = '1rEub2gfLXJmkfzhnSzo-OhEt2DIUFqjK';
+                break;
+            case 'CL14':
+                $id = '1qDFdbB4Ju9CQ7yE673dNdb5GL46IT4Yh';
+                break;
             default:
                 // code...
                 break;

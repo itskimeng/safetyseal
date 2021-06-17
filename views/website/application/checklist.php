@@ -28,7 +28,7 @@
         <td>
           <?php echo $key+1; ?>
           <input type="hidden" name="chklist_id[<?php echo $list['clist_id']; ?>]" value="<?php echo $list['clist_id']; ?>">
-          <input type="hidden" name="ulist_id[<?php echo $list['clist_id']; ?>]" value="<?php echo $list['ulist_id']; ?>">    
+          <input type="hidden" id="cform-ulist_id" name="ulist_id[<?php echo $list['clist_id']; ?>]" value="<?php echo $list['ulist_id']; ?>">    
         </td>
         <td><?php echo $list['requirement']; ?></td>
         <td>
@@ -59,10 +59,20 @@
           </div>
         </td> 
         <td class="text-center">
-          <div class="btn-group">
-            <button type="button" class="btn btn-warning btn-sm" data-bs-toggle="modal" data-bs-target="#exampleModal" <?php echo $list['is_disabled'] ? 'disabled' : ''; ?>>
+          <div class="col-md-12">
+            
+          <div class="btn-group mb-1">
+            <button type="button" class="btn btn-warning btn-sm btn-attachments_upload" data-bs-toggle="modal" <?php echo $list['is_disabled'] ? 'disabled' : ''; ?> value="CL<?php echo $key+1; ?>">
               <i class="fa fa-link"></i> Upload
             </button>
+          </div><br>
+          <div class="btn-group">
+            <?php if (!empty($appchecklists_attchmnt[$list['ulist_id']])): ?>
+              <button type="button" class="btn btn-warning btn-sm btn-attachments_view" data-bs-toggle="modal" <?php echo $list['is_disabled'] ? 'disabled' : ''; ?>>
+                <i class="fa fa-link"></i> View
+              </button>
+            <?php endif ?>
+          </div>
           </div>
         </td> 
 
