@@ -47,7 +47,7 @@ foreach ($user_est as $key => $data) {
 
             <?php } else if ($data['ac_status'] == 'Approved') { ?>
                 <div class="col-md-12 mb-1">
-                  <a href="../certificate.php?token=<?php echo $data['token']; ?>" target="_blank" type="button" class="btn btn-warning btn-block btn-sm" style="width: 100%;">View Certificate <i class="fa fa-certificate"></i>
+                  <a href="../certificate.php?token=<?php echo $data['token']; ?>" target="_blank" type="button" class="btn btn-warning btn-block btn-sm" style="width: 100%;"><i class="fa fa-certificate"></i> View Certificate
                   </a>
                 </div>
 
