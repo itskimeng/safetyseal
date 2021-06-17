@@ -44,7 +44,7 @@
                       </div>
                       <?php if (in_array($userinfo['status'], ['Disapproved','Reassess'])): ?>
                         <div class="col-md-6">
-                          <a href="entity/post_reassess.php?ssid=<?php echo $_GET['ssid']; ?>&stt=FA" type="button" class="btn btn-success btn-block" style="width: 100%;"><i class="fa fa-share"></i> Reassess</a>
+                          <a href="#" type="button" class="btn btn-success btn-block btn-reassess" style="width: 100%;"><i class="fa fa-share"></i> Reassess</a>
                         </div>
                       <?php elseif (!$is_new): ?>
                         <div class="col-md-6">
@@ -325,6 +325,22 @@
 
       if (checker1 && checker2) {
         $('#modall_proceed').modal('show');  
+      }
+    });
+
+    $(document).on('click', '.btn-reassess', function(){
+      let path = 'entity/post_reassess.php?ssid=<?php echo $_GET['ssid']; ?>&stt=FA';
+
+      let checker1 = checkAllSelected();
+      let checker2 = checkUploads();
+      if (checker1 && checker2) {
+        $.get(path, function(data, status){
+          if (status == 'success') {
+            setTimeout(function(){// wait for 5 secs(2)
+              location.reload(); // then reload the page.(3) 
+            }, 1000);
+          }
+        });
       }
     });
 
