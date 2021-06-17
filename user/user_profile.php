@@ -41,11 +41,8 @@
                                                     <b><i class="fa fa-home"></i> My Establishments</b>
                                                     <span class="badge bg-primary" style="margin-left:20%;">
 
-
-                                                        <?php
-                                                    
-                                                            echo $user_info['est'];
-                                                     ?>
+                                                    <?php if($user_info['est'] == 1){echo '0';}else{echo $user_info['est'];} ?>
+                                                   
                                                     </span>
                                                     </a>
                                                 </li>
