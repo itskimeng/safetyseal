@@ -2,8 +2,8 @@
 session_start();
 require_once 'application/config/connection.php'; 
 
-if ($_GET['control_no']) {
-	$selectApplication = ' SELECT `id`, `control_no`, `user_id`, `status`, `has_consent`, `date_created`, `date_proceed`, `receiver_id`, `date_received`, `approver_id`, `date_approved`, `safety_seal_no`, `date_modified` FROM `tbl_app_checklist` WHERE status = "Approved" AND `control_no` = "'.$_GET['control_no'].'" ';
+if ($_GET['token']) {
+	$selectApplication = ' SELECT `id`, `control_no`, `user_id`, `status`, `has_consent`, `date_created`, `date_proceed`, `receiver_id`, `date_received`, `approver_id`, `date_approved`, `safety_seal_no`, `date_modified` FROM `tbl_app_checklist` WHERE status = "Approved" AND `token` = "'.$_GET['token'].'" ';
 }
 else
 {
@@ -21,7 +21,7 @@ $execApplicantDetails = $conn->query($selectApplicantDetails);
 $resultApplicantDetails = $execApplicantDetails->fetch_assoc();
 
 
-$selectAddress = ' SELECT `ID`, `USER_ID`, `ADDRESS`, `POSITION`, `MOBILE_NO`, `EMAIL_ADDRESS`, `GOV_AGENCY_NAME`, `GOV_ESTB_NAME`, `DATE_REGISTERED`, `PROVINCE`, `CITY_MUNICIPALITY`, `GOV_NATURE_NAME` FROM `tbl_userinfo` WHERE `USER_ID` = "'.$resultApplication['user_id'].'" ';
+$selectAddress = ' SELECT `ID`, `USER_ID`, `ADDRESS`, `POSITION`, `MOBILE_NO`, `EMAIL_ADDRESS`, `GOV_AGENCY_NAME`, `GOV_ESTB_NAME`, `DATE_REGISTERED`, `GOV_NATURE_NAME` FROM `tbl_userinfo` WHERE `USER_ID` = "'.$resultApplication['user_id'].'" ';
 $execAddress = $conn->query($selectAddress);
 $resultAddress = $execAddress->fetch_assoc();
 
@@ -51,7 +51,7 @@ $pdf->Cell(10,10,'Safety Seal No : ');
 
 $pdf->SetFont('Arial','U',14);
 $pdf->SetXY(126,254);
-$pdf->Cell(10,10,$resultApplication['control_no']);
+$pdf->Cell(10,10,$resultApplication['safety_seal_no']);
 // $pdf->Cell(10,10,'                               ');
 
 $pdf->SetFont('Arial','',12);
