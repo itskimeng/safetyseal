@@ -1,4 +1,10 @@
-
+html, body {
+   
+    font-family: Poppins, Helvetica, "sans-serif";
+    -ms-text-size-adjust: 100%;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+}
 .contact-us{
     color: #fff;
 }
@@ -62,11 +68,13 @@ border-radius: 5px;
 }
 
 .registration-image {
-    background: url("../images/LGRC_Static.png") no-repeat center center fixed; 
-  -webkit-background-size: cover;
-  -moz-background-size: cover;
-  -o-background-size: cover;
-  background-size: cover;
+  
+
+
+  background: url("../images/LGRC_Static.png") no-repeat center center fixed; 
+  background-repeat: no-repeat;
+  background-size: auto;
+
  
 }
 .list_establishment-banner{
@@ -143,3 +151,4 @@ div.alert-messages {
     background-color: #f3f0f0;
     color: #1b1b53;
 }
+
