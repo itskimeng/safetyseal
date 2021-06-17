@@ -28,8 +28,6 @@ ini_set('memory_limit', '-1');
 
 require 'fpdf/roundedRect1.php';
 
-date('F d, Y', strtotime("+6 months", strtotime($row['date_created'])));
-
 $pdf = new PDF();
 $pdf->AddPage();
 $pdf->RoundedRect(25, 250, 161, 42, 7, '1234', 'D');
