@@ -14,6 +14,42 @@
 
             <div class="container">
                 <div class="col-md-12">
+                    <!-- <div class="row"> -->
+                        <!-- <div class="form-box shadow p-1 mb-5 bg-body rounded box text-center"> -->
+                          <div style="margin-top:40px; border-radius: 5px;border: 1px solid #b0adad; margin-bottom: -15px;
+">
+                            <div>
+                                <div class="pt-2 pb-2" style="background-color: #fff317; padding: 12px; color: #3a2a2a;">
+                                    <i class="fa fa-directions"></i> <b>Steps in Online Application and Processing</b>
+                                </div>
+                                <table class="table table-striped">
+                                    <tr>
+                                        <td style="width:15%;">Step 1:</td>
+                                        <td>Register an account in the Safety Seal Portal</td>
+                                    </tr>
+                                    <tr>
+                                        <td style="width:15%;">Step 2:</td>
+                                        <td>Fill-up the Online Safety Seal Self-Assessment Checklist and upload the documents for the Means of Verification (MOV).</td>
+                                    </tr>
+                                    <tr>
+                                        <td style="width:15%;">Step 3:</td>
+                                        <td>Wait for the Inspection and Assessment Team to conduct their assessment.</td>
+                                    </tr>
+                                    <tr>
+                                        <td style="width:15%;">Step 4:</td>
+                                        <td>If approved, print the Safety Seal Certification on an A4 size paper. If not approved, ask for reassessment.</td>
+                                    </tr>
+                                </table>
+                              
+
+                            </div>
+                          </div>
+                        <!-- </div> -->
+                        
+                    <!-- </div> -->
+                </div>
+
+                <div class="col-md-12">
                     <div class="row">
                         <span class="label label-lg label-light-success label-inline font-weight-bold mt-3 py-3">
                             <!-- <i class="la la-clipboard-check mr-2"></i> -->

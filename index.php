@@ -1,6 +1,8 @@
 <!DOCTYPE html>
 <html lang="en">
-<?php include 'layout/header.html.php'; ?>
+<?php
+session_start();
+include 'layout/header.html.php'; ?>
 <body>
     <main>
         <div class="container" style="margin-top: 4%;">
