@@ -59,7 +59,7 @@ foreach ($user_est as $key => $data) {
 
             <?php if ($data['ac_status'] != 'Draft'): ?>
                 <div class="col-md-12">
-                  <a href="../entity/print_preview.php?control_no=<?php echo $data['control_no']; ?>" target="_blank" type="button" class="btn btn-warning btn-block btn-sm" style="width: 100%;">Print
+                  <a href="../entity/print_preview.php?control_no=<?php echo $data['control_no']; ?>" target="_blank" type="button" class="btn btn-warning btn-block btn-sm"><i class="fa fa-print"></i> Print
                   </a>
                 </div>
             <?php endif ?>

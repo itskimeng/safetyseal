@@ -5,6 +5,7 @@
   <div class="container">
     <div class="pt-5">
       <div class="row align-items-center heading">
+        
         <div class="col-md-12">
           <div class="py-1">
             <div class="form-box shadow p-1 mb-5 bg-body rounded box">
@@ -12,11 +13,17 @@
               <div class="ribbon blue"><span><?php echo $userinfo['status']; ?></span></div>
               
               <form method="POST" action="entity/post_application.php" class="bg-white  rounded-5 shadow-5-strong p-5">
+                <span class="label label-lg label-light-success label-inline font-weight-bold py-3">
+                    <a href="user/users_establishments.php" class="btn btn-secondary btn-md">
+                        <i class="fa fa-arrow-circle-left"></i> Close
+                    </a>
+                </span>
+                <hr>
                 <input type="hidden" name="is_new" value="<?php echo $is_new; ?>">
                 <input type="hidden" name="token" value="<?php echo !empty($_GET['ssid']) ? $_GET['ssid'] : ''; ?>">
 
                 <!-- user details -->
-                <div class="col-md-12">
+                <div class="col-md-12 mt-3">
                   <?php include 'user_details.php'; ?>
                 </div>
 
@@ -32,7 +39,7 @@
                       
                       <div class="<?php echo $is_new ? 'col-md-12' : 'col-md-6' ;?> pull-right">
                         <button type = "submit" class="btn btn-primary btn-block" name="login" style="width: 100%;"><i class="fa fa-pen-alt"></i> 
-                          <?php echo $is_new ? 'Save' : 'Update' ;?>  
+                          <?php echo $is_new ? 'Save' : 'Save as Draft' ;?>  
                         </button>
                       </div>
                       <?php if (in_array($userinfo['status'], ['Disapproved','Reassess'])): ?>
@@ -41,7 +48,7 @@
                         </div>
                       <?php elseif (!$is_new): ?>
                         <div class="col-md-6">
-                          <button type="button" class="btn btn-success btn-block" name="login" data-bs-toggle="modal" data-bs-target="#modall_proceed" style="width: 100%;"><i class="fa fa-share"></i> Submit</button>
+                          <button type="button" class="btn btn-success btn-block btn-submit_application" name="login" data-bs-toggle="modal" style="width: 100%;"><i class="fa fa-share"></i> Submit</button>
                         </div>
                       <?php endif ?>
                     </div>
@@ -312,7 +319,76 @@
       $modal.modal('show');
     });
 
+    $(document).on('click', '.btn-submit_application', function(){
+      let checker1 = checkAllSelected();
+      let checker2 = checkUploads();
+
+      if (checker1 && checker2) {
+        $('#modall_proceed').modal('show');  
+      }
+    });
+
   })
+
+  function checkAllSelected()
+  {
+    let tbody = $('#chklist_body tr');
+    $counter = 0;
+    checker = true;
+    
+    $.each(tbody, function(){
+      let tr = $(this);
+      let asmnt = tr.find('.form-check-input');
+      if (asmnt.is(':checked')) {
+        $counter++;
+      }
+    });
+
+    if ($counter < 14) {
+      tata.warn('Warning', 'All items in the checklist must be assess.');
+      checker = false;
+    }
+    //  else {
+    //   $('#modal_attachments').modal('show');
+    // }
+
+    return checker;
+  }
+
+  function checkUploads()
+  {
+    let tbody = $('#chklist_body tr');
+    $counter = 0;
+    checker = true;
+    
+    $.each(tbody, function(){
+      let tr = $(this);
+      let attchmnt = tr.find('.has_attachments');
+      let asmnt = tr.find('.chklist_yes');
+
+      if (asmnt.is(':checked')) {
+        if (!attchmnt.val()) {
+          $counter++;
+        }
+      }
+    });
+
+    if ($counter > 0) {
+      tata.error('Warning', 'All checked items must have uploaded MOVs.');
+      checker = false;
+    }
+    //  else {
+    //   $('#modal_attachments').modal('show');
+    // }
+    return checker;
+  }
+
+      
+      // if ($counter < 14) {
+      //   tata.warn('Warning', 'All items in the checklist must be assess.');
+      // } else {
+      //   $('#modal_evaluation').modal('show');
+      // }  
 
   function generateAttachments($data, $element) {
     let tr = '';
@@ -331,7 +407,6 @@
       tr+= '<div class="pic-holder" style="padding-top: 5%;height: 12rem;">';
       tr+= '<img src="https://drive.google.com/uc?export=view&id='+item['file_id']+'" class="card-img-top" alt="..." style="max-width: 100%; max-height: 100%; object-fit: cover;">';
       tr+= '</div>';
-      // tr+= '<iframe src="https://drive.google.com/uc?export=view&id='+item['file_id']+'" class="card-img-top"></iframe>';
       tr+= '<div class="card-body" style="text-overflow: ellipsis;white-space: nowrap;overflow: hidden;height: 3.5rem;padding: 0.3rem 0.3rem;">';
       tr+= '<a href="'+item['location']+'" class="">';
       tr+= item['file_name'];
@@ -339,25 +414,6 @@
       tr+= '</div>';
       tr+= '</div>';
       tr+= '</div>';
-
-
-     
-
-
-      // tr+='<tr>';
-      // tr+='<td style="font-size:18pt; width:10%;">';
-      // tr+= '<div class="form-group">';
-      // tr+= '<input type="hidden" name="att_id['+item['caid']+']" value="'+item['file_id']+'">';
-      // tr+= '<input class="form-check-input" type="checkbox" value="" name="chklists['+item['caid']+']">';
-      // tr+= '</div>';
-      // tr+='</td>';
-      // tr+= '<td>';
-      // // tr+= '<a href="'+item['location']+'" class="btn btn-secondary btn-block">';
-      // // tr+= item['file_name'];
-      // // tr+='</a>';
-      // tr+= '<img src="'+item['location']+'"/>';
-      // tr+= '</td>';
-      // tr+='</tr>';
     });
     tr+= '</div>';
     tr+= '</div>';
