@@ -334,13 +334,14 @@
       let checker1 = checkAllSelected();
       let checker2 = checkUploads();
       if (checker1 && checker2) {
-        $.get(path, function(data, status){
-          if (status == 'success') {
-            setTimeout(function(){// wait for 5 secs(2)
-              location.reload(); // then reload the page.(3) 
-            }, 1000);
-          }
-        });
+        // console.log(checker2);
+        // $.get(path, function(data, status){
+        //   if (status == 'success') {
+        //     setTimeout(function(){// wait for 5 secs(2)
+        //       location.reload(); // then reload the page.(3) 
+        //     }, 1000);
+        //   }
+        // });
       }
     });
 
@@ -383,8 +384,8 @@
       let asmnt = tr.find('.chklist_yes');
 
       if (asmnt.is(':checked')) {
-        if (!attchmnt.val()) {
-          $counter++;
+        if (!attchmnt.val() || attchmnt.val() == 'false') {
+          $counter = $counter + 1;
         }
       }
     });
