@@ -16,7 +16,7 @@
                         <!-- <input type="hidden" id="cform-array_citymuns" class="array_citymuns" name="array_citymuns" value='<?php //echo json_encode($city_mun); ?>;'> -->
 
                         <div class="row">
-                            <div class="col-6">
+                            <div class="col-5">
                                 <div class="col-md-12">
                                     <label for="validationGovOffice" class="form-label">Name of Government Agency/Office</label>
                                     <input required type="text" class="form-control" name="government_agency" id="validationGovOffice" aria-describedby="emailHelp">
@@ -37,10 +37,11 @@
                                     <div class="form-group">
                                         <label for="nature">Nature of Government Establishments</label>
                                         <select class="form-control select2bs4 select2-hidden-accessible" name="government_nature" id="nature" tabindex="-1" aria-hidden="true" required>
-                                        <option></option>
-                                        <option></option>
-                                        <option></option>
-                                        <option></option>
+                                       <?php foreach ($government_nature as $key => $nature):?>
+                                        <option value="<?php echo $nature;?>"><?php echo $nature;?></option>
+                                       <?php endforeach;?>
+
+                                       
                                           
                                         </select>
                                         <div class="invalid-feedback">
@@ -88,7 +89,7 @@
                                 </div>
                              
                             </div>
-                            <div class="col-6">
+                            <div class="col-7">
                                 <div class="row">
                                     <div class="col-md-4">
                                         <label for="vfname" class="form-label">First Name</label>

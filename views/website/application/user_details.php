@@ -45,7 +45,13 @@
       <div class="form-outline mb-2 col-md-12">
         <label class="form-label" for="form1Example1">Nature of Government Establlishment/ Department/ Office/ Unit:</label><br>
         <?php if ($is_new): ?>
-          <input type="text" id="form1Example1" name="nature" class="form-control" value=""/>
+          <!-- <input type="text" id="form1Example1" name="nature" class="form-control" value=""/> -->
+          <select class="form-control select2bs4 select2-hidden-accessible" name="nature" id="nature" tabindex="-1" aria-hidden="true" required>
+              <?php foreach ($government_nature as $key => $nature):?>
+              <option value="<?php echo $nature;?>"><?php echo $nature;?></option>
+              <?php endforeach;?>
+          </select>
+          
         <?php else: ?>  
           <input type="text" id="form1Example1" name="nature" class="form-control" value="<?php echo $userinfo['nature']; ?>"/>
         <?php endif ?>
