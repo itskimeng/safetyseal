@@ -68,9 +68,12 @@
           </div><br>
           <div class="btn-group">
             <?php if (!empty($appchecklists_attchmnt[$list['ulist_id']])): ?>
+              <input type="hidden" name="has_attachments[]" class="has_attachments" value="true"/>
               <button type="button" class="btn btn-warning btn-sm btn-attachments_view" data-bs-toggle="modal" <?php echo $list['is_disabled'] ? 'disabled' : ''; ?>>
                 <i class="fa fa-link"></i> View
               </button>
+            <?php else: ?>
+              <input type="hidden" name="has_attachments[]" class="has_attachments" value="false"/>
             <?php endif ?>
           </div>
           </div>
