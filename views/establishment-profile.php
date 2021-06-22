@@ -28,7 +28,7 @@ $execLgu = $conn->query($selectLgu);
 $resultLgu = $execLgu->fetch_assoc();
 $lgu = strtoupper($resultLgu['name']);
 
-$selectInspection = ' SELECT `ID`, `PROVINCE`, `LGU`, `NAME`, `EMAIL_ADDRESS`, `CONTACT_NO`, `PNP`, `BFP`, `ICT_HOTLINE`, `EMAIL_ADDRESS_COMPLAINTS` FROM `tbl_inspection_team` WHERE `PROVINCE` = "'.$province.'" AND `LGU` = "'.$lgu.'" ';
+echo $selectInspection = ' SELECT `ID`, `PROVINCE`, `LGU`, `NAME`, `EMAIL_ADDRESS`, `CONTACT_NO`, `PNP`, `BFP`, `ICT_HOTLINE`, `EMAIL_ADDRESS_COMPLAINTS` FROM `tbl_inspection_team` WHERE `PROVINCE_ID` = "'.$resultApplicantDetails['PROVINCE'].'" AND `LGU_ID` = "'.$resultApplicantDetails['LGU'].'" ';
 $execInspection = $conn->query($selectInspection);
 $resultInspection = $execInspection->fetch_assoc();
 
