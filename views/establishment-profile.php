@@ -79,7 +79,7 @@ $resultInspection = $execInspection->fetch_assoc();
         <div class="col-md-1"></div>
         <div class="col-md-11">
           <h6><i>For any complaints, please contact the following</i></h6>
-          <h6><i>Hotline: <u><?php echo $resultInspection['ICT_HOTLINE']; ?></u></i></h6>
+          <h6><i>Hotline: <?php echo $resultInspection['ICT_HOTLINE']; ?></i></h6>
           <h6><i>Email Address: <?php echo $resultInspection['EMAIL_ADDRESS_COMPLAINTS']; ?></i></h6>
         </div>
       </div>
