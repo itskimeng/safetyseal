@@ -1,7 +1,9 @@
 <?php 
+
 $pdfFile = str_replace(' ', '+', $_GET['filename']);
 
-$pdfFile = 'http://safetyseal.calabarzon.dilg.gov.ph/files/guidelines/'.$pdfFile;
+// $pdfFile = 'http://safetyseal.calabarzon.dilg.gov.ph/files/guidelines/'.$pdfFile;
+$pdfFile = 'C:/xampp/htdocs/safetyseal/files/guidelines/'.$pdfFile; 
 
 //Set the Content-Type to application/pdf
 header('Content-Type: application/pdf');
