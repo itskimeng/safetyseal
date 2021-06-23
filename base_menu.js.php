@@ -29,6 +29,11 @@
 <!-- date-range-picker -->
 <script src="frontend/bower_components/daterangepicker/daterangepicker.js"></script>
 
+<script src="https://unpkg.com/gijgo@1.9.13/js/gijgo.min.js" type="text/javascript"></script>
+<link href="https://unpkg.com/gijgo@1.9.13/css/gijgo.min.css" rel="stylesheet" type="text/css" />
+
+<script src="frontend/bower_components/dropzone/min/dropzone.min.js"></script>
+
 <!-- jQuery 3 -->
 <!-- <script src="frontend/bower_components/jquery/dist/jquery.min.js"></script> -->
 <!-- Bootstrap 3.3.7 -->

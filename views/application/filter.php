@@ -11,7 +11,7 @@
       </div>
 
       <form id="form-filter">
-      <div class="card-body card-body-filter collapse">
+      <div class="card-body card-body-filter collapse show">
         <div class="row">
           <div class="col-md-4">
             <div class="form-group">
@@ -53,15 +53,6 @@
               </select>
             </div>
           </div>
-
-          <!-- <div class="col-md-3">
-           <div class="form-group float-right">
-              <div class="d-grid gap-2 d-md-block" style="margin-top: 19%;">
-                <button class="btn btn-primary btn-md" type="button"><i class="fa fa-search"></i> Filter</button>
-                <button class="btn btn-default btn-md" type="button"><i class="fa fa-sync-alt"></i> Reset</button>
-              </div>
-            </div>
-          </div> -->
         </div>
 
         <div class="row">
@@ -132,8 +123,22 @@
           </div>
 
           <div class="col-md-4">
+            <div class="form-group">
+              <label>Application Type:</label>
+              <select id="cform-app_type" class="form-control select2bs4 select2-hidden-accessible" style="width: 100%;" data-select2-id="17" tabindex="-1" aria-hidden="true">
+                <option></option>
+                <?php foreach ($apptype_opts as $key => $opt): ?>
+                  <option value="<?php echo $opt; ?>"><?php echo $opt; ?></option>
+                <?php endforeach ?>
+              </select>
+            </div>
+          </div>
+        </div>
+
+        <div class="row">
+          <div class="col-md-12">
             <div class="form-group float-right">
-              <div class="d-grid gap-2 d-md-block" style="margin-top: 19%;">
+              <div class="d-grid gap-2 d-md-block">
                 <button class="btn btn-primary btn-md" id="btn-filter" type="button"><i class="fa fa-search"></i> Filter</button>
                 <button class="btn btn-default btn-md" id="btn-reset" type="button"><i class="fa fa-sync-alt"></i> Reset</button>
               </div>
