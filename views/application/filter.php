@@ -15,7 +15,7 @@
         <div class="row">
           <div class="col-md-4">
             <div class="form-group">
-              <label>Province</label>
+              <label>Region</label>
               <select class="form-control select2bs4 select2-hidden-accessible" style="width: 100%;" data-select2-id="17" tabindex="-1" aria-hidden="true" disabled>
                 <option selected="selected" data-select2-id="19">Region IV-A Calabarzon</option>
               </select>
