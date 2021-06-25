@@ -11,13 +11,15 @@ $today = new DateTime();
 $userid = $_SESSION['userid'];
 $uname = $_SESSION['username'];
 
+$province = $_SESSION['province'];
+$lgu = $_SESSION['city_mun'];
+
 $checklists = isset($_POST['chklist_id']) ? $_POST['chklist_id'] : $app->getCertChecklists();
 
 $is_new = $_POST['is_new'];
 $establishment = $_POST['establishment'];
 $nature = $_POST['nature'];
 $address = $_POST['address'];
-$email = $_POST['email'];
 
 
 if ($is_new) {
@@ -64,8 +66,11 @@ if ($is_new) {
 // $app->setUserApplicationDate($userid , $today->format('Y-m-d H:i:s'));
 
 $_SESSION['toastr'] = addFlash('success', 'Successfully updated the checklist.', 'Checklist');
-notifyUser($email);
-
+$notify = $app->notifyApprover($province, $lgu);
+foreach ($notify as $key => $data) {
+	notifyUser($data['email']);
+	# code...
+}
 // header('location:../wbstapplication.php?ssid='.$token.'');
 header('location:../wbstapplication.php?ssid='.$token.'&code='.$_SESSION['gcode'].'&scope='.$_SESSION['gscope'].'');
 
@@ -76,7 +81,7 @@ header('location:../wbstapplication.php?ssid='.$token.'&code='.$_SESSION['gcode'
  function notifyUser($emailAddress){
         
 	$to = $emailAddress;
-	$subject = "Safety Seal Email Verification";
+	$subject = "Safety Seal";
 	$message = "sample message";
 	$headers = "From: safetyseal@calabarzon.dilg.gov.ph \r\n";
 	$headers .= "MIME-Version: 1.0" . "\r\n";

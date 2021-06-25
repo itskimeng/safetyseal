@@ -12,9 +12,6 @@ class ApplicationManager
     const STATUS_RECEIVED           = "Received";
     const STATUS_FOR_REASSESSMENT   = "For Reassessment";
     const STATUS_REASSESS           = "Reassess";
-    const TYPE_APPLIED              = "Applied";
-    const TYPE_ENCODED              = "Encoded";
-
 
     function __construct() 
     {
@@ -75,22 +72,36 @@ class ApplicationManager
         return $result;
     }
 
-   
+    public function notifyApprover($province, $lgu){
+        $sql = "SELECT `PROVINCE`, `LGU`, `EMAIL`, ui.MOBILE_NO FROM `tbl_admin_info` ai
+        left join tbl_userinfo ui on ai.ID = ui.USER_ID
+        WHERE PROVINCE = '".$province."' and LGU = '".$lgu."'";
+       
+        $data = [];
+        $query = mysqli_query($this->conn, $sql);
+
+        while ($row = mysqli_fetch_assoc($query)) {        
+            $data[] = [
+                'email' => $row['EMAIL'],
+                'mobile' => $row['MOBILE_NO']
+            ];
+        }
+            return $data;
+
+
+        // $to = $emailAddress;
+    //     $subject = "Safety Seal Email Verification";
+    //     $message = " Welcome to DILG CALABARZON Safety Seal Portal! <br> To complete your Safety Seal profile, we need you to confirm your email address. <br><a class='btn btn-light-primary' href='http://safetyseal.calabarzon.dilg.gov.ph/application/functions/verify.php?vkey=" . $vkey . "'>Verify Account</a>";
+    //     $headers = "From: safetyseal@calabarzon.dilg.gov.ph \r\n";
+    //     $headers .= "MIME-Version: 1.0" . "\r\n";
+    //     $headers .= "Content-type:text/html;charset=UTF-800" . "\r\n";
+    //     mail($to, $subject, $message, $headers);
+    }
 
     public function updateChecklistEntry($data)
     {
         $sql = "UPDATE tbl_app_checklist_entry 
                 SET answer = '".$data['answer']."', reason = '".$data['reason']."' WHERE id = ".$data['chklist_id']."";
-
-        $result = mysqli_query($this->conn, $sql);
-
-        return $result;
-    }
-
-    public function updateChecklistEntry2($data)
-    {
-        $sql = "UPDATE tbl_app_checklist_entry 
-                SET answer = '".$data['answer']."', reason = '".$data['reason']."', assessment = '".$data['assessment']."' WHERE id = ".$data['chklist_id']."";
 
         $result = mysqli_query($this->conn, $sql);
 
@@ -106,8 +117,7 @@ class ApplicationManager
             e.id as ulist_id,
             e.answer as answer,
             e.reason as reason,
-            a.status as status,
-            e.assessment as assessment
+            a.status as status
             FROM tbl_app_checklist_entry e
             LEFT JOIN tbl_app_checklist a on a.id = e.parent_id
             LEFT JOIN tbl_app_certchecklist c on c.id = e.chklist_id
@@ -129,7 +139,6 @@ class ApplicationManager
                 'ulist_id' => $row['ulist_id'],
                 'answer' => $row['answer'],
                 'reason' => $row['reason'],
-                'assessment' => $row['assessment'],
                 'is_disabled' => $is_disabled
             ];    
         }
@@ -206,8 +215,6 @@ class ApplicationManager
         $sql = "SELECT 
             ai.id as id,
             ac.id as acid,
-            ai.EMAIL as email,
-            ui.MOBILE_NO as phone_no,
             DATE_FORMAT(ac.date_created, '%M %d, %Y') as date_created,
             DATE_FORMAT(ac.date_proceed, '%m-%d-%Y') as date_proceed,
             ui.ADDRESS as address,
@@ -255,9 +262,7 @@ class ApplicationManager
                 'pcode' => $row['pcode'],
                 'mcode' => $row['mcode'],
                 'code' => !empty($row['control_no']) ? $row['control_no'] : '2021-'.'_____',
-                'date_proceed' => $row['date_proceed'],
-                'email' => $row['email'],
-                'mobile_no' => $row['phone_no']
+                'date_proceed' => $row['date_proceed']
             ];      
         }
 
@@ -268,8 +273,6 @@ class ApplicationManager
     {
         $sql = "SELECT 
             ai.id as id,
-            ai.EMAIL as email,
-            ui.MOBILE_NO as phone_no,
             ui.ADDRESS as address,
             ui.GOV_AGENCY_NAME as agency,
             ui.GOV_ESTB_NAME as establishment, 
@@ -283,8 +286,7 @@ class ApplicationManager
             LEFT JOIN tbl_province p on p.id = ai.PROVINCE
             LEFT JOIN tbl_citymun m on m.id = ai.LGU
             WHERE ai.id = $user";
-
-          
+        
         $query = mysqli_query($this->conn, $sql);
         // $result = mysqli_fetch_array($query);
         $data = [];
@@ -306,9 +308,7 @@ class ApplicationManager
                 'pcode' => $row['pcode'],
                 'mcode' => $row['mcode'],
                 'code' => '2021-'.'_____',
-                'date_proceed' => '',
-                'email' => $row['email'],
-                'mobile_no' => $row['phone_no']
+                'date_proceed' => ''
             ];      
         }
 
@@ -423,15 +423,12 @@ class ApplicationManager
         ac.control_no as control_no,
         ac.safety_seal_no as ss_no,
         ac.status as status,
-        ac.address as ac_address,
-        ac.application_type as app_type,
-        ac.token as token,
-        ac.agency as r_agency,
-        ac.establishment as r_establishment
+        ac.address as ac_address
         FROM tbl_app_checklist ac
         LEFT JOIN tbl_admin_info ai on ai.id = ac.user_id
         LEFT JOIN tbl_userinfo ui on ui.user_id = ai.id
         WHERE ai.PROVINCE = ".$province." AND ai.LGU = ".$lgu." AND ac.status <> '".$status."'";
+     
         
         $query = mysqli_query($this->conn, $sql);
         $data = [];
@@ -449,123 +446,15 @@ class ApplicationManager
             $data[] = [
                 'id' => $row['id'],
                 'userid' => $row['userid'],
-                'token' => $row['token'],
-                'fname' => $row['app_type'] == 'Encoded' ? $row['r_establishment'] : $row['fname'],
-                'agency' => $row['app_type'] == 'Encoded' ? $row['r_agency'] : $row['agency'],
+                'fname' => $row['fname'],
+                'agency' => $row['agency'],
                 'address' => $row['address'],
                 'date_created' => $row['date_created'],
                 'control_no' => $row['control_no'],
                 'ss_no' => $row['ss_no'],
                 'status' => $row['status'],
                 'color' => $color,
-                'ac_address' => $row['ac_address'],
-                'app_type' => $row['app_type']
-            ];    
-        }
-
-        return $data;
-    }
-
-    public function getApplicationLists2($province, $lgu, $status)
-    {
-        $sql = "SELECT 
-        ac.id as id,
-        ai.CMLGOO_NAME as fname,
-        ui.GOV_AGENCY_NAME as agency,
-        ui.ADDRESS as address,
-        DATE_FORMAT(ac.date_created, '%Y-%m-%d') as date_created,
-        ui.id as userid,
-        ac.control_no as control_no,
-        ac.safety_seal_no as ss_no,
-        ac.status as status,
-        ac.address as ac_address,
-        ac.application_type as app_type,
-        ac.token as token,
-        ac.agency as r_agency,
-        ac.establishment as r_establishment
-        FROM tbl_app_checklist ac
-        LEFT JOIN tbl_admin_info ai on ai.id = ac.user_id
-        LEFT JOIN tbl_userinfo ui on ui.user_id = ai.id
-        WHERE ai.PROVINCE = ".$province." AND ai.LGU = ".$lgu." AND ac.application_type = 'Applied' AND ac.status <> '".$status."'";
-        
-        $query = mysqli_query($this->conn, $sql);
-        $data = [];
-        
-        while ($row = mysqli_fetch_assoc($query)) {
-            $color = 'green';
-            if ($row['status'] == 'For Receiving') {
-                $color = 'primary';
-            } elseif ($row['status'] == 'Received') {
-                $color = 'yellow';
-            } elseif ($row['status'] == 'Disapproved') {
-                $color = 'red';
-            }
-
-            $data[$row['id']] = [
-                'id' => $row['id'],
-                'userid' => $row['userid'],
-                'token' => $row['token'],
-                'fname' => $row['app_type'] == 'Encoded' ? $row['r_establishment'] : $row['fname'],
-                'agency' => $row['app_type'] == 'Encoded' ? $row['r_agency'] : $row['agency'],
-                'address' => $row['address'],
-                'date_created' => $row['date_created'],
-                'control_no' => $row['control_no'],
-                'ss_no' => $row['ss_no'],
-                'status' => $row['status'],
-                'color' => $color,
-                'ac_address' => $row['ac_address'],
-                'app_type' => $row['app_type']
-            ];    
-        }
-
-
-        $sql = "SELECT 
-        ac.id as id,
-        ai.CMLGOO_NAME as fname,
-        ui.GOV_AGENCY_NAME as agency,
-        ui.ADDRESS as address,
-        DATE_FORMAT(ac.date_created, '%Y-%m-%d') as date_created,
-        ui.id as userid,
-        ac.control_no as control_no,
-        ac.safety_seal_no as ss_no,
-        ac.status as status,
-        ac.address as ac_address,
-        ac.application_type as app_type,
-        ac.token as token,
-        ac.agency as r_agency,
-        ac.establishment as r_establishment
-        FROM tbl_app_checklist ac
-        LEFT JOIN tbl_admin_info ai on ai.id = ac.user_id
-        LEFT JOIN tbl_userinfo ui on ui.user_id = ai.id
-        WHERE ai.PROVINCE = ".$province." AND ai.LGU = ".$lgu." AND ac.application_type = 'Encoded'";
-        
-        $query = mysqli_query($this->conn, $sql);
-        // $data = [];
-        
-        while ($row = mysqli_fetch_assoc($query)) {
-            $color = 'green';
-            if ($row['status'] == 'For Receiving') {
-                $color = 'primary';
-            } elseif ($row['status'] == 'Received') {
-                $color = 'yellow';
-            } elseif ($row['status'] == 'Disapproved') {
-                $color = 'red';
-            }
-
-            $data[$row['id']] = [
-                'id' => $row['id'],
-                'userid' => $row['userid'],
-                'token' => $row['token'],
-                'fname' => $row['app_type'] == 'Encoded' ? $row['r_establishment'] : $row['fname'],
-                'agency' => $row['app_type'] == 'Encoded' ? $row['r_agency'] : $row['agency'],
-                'address' => $row['address'],
-                'date_created' => $row['date_created'],
-                'control_no' => $row['control_no'],
-                'ss_no' => $row['ss_no'],
-                'status' => $row['status'],
-                'color' => $color,
-                'ac_address' => $row['ac_address'],
-                'app_type' => $row['app_type']
+                'ac_address' => $row['ac_address']
             ];    
         }
 
@@ -583,7 +472,7 @@ class ApplicationManager
 
     public function insertAssessment($id, $assessment) {
         $sql = "UPDATE tbl_app_checklist_entry SET assessment = '".$assessment."' WHERE id = ".$id."";
-        $result = mysqli_query($this->conn, $sql);
+        $query = mysqli_query($this->conn, $sql);
          
         return $result; 
     }

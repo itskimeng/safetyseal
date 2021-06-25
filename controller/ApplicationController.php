@@ -6,6 +6,7 @@ if (!empty($_SESSION['userid'])) {
 	require 'manager/ApplicationManager.php';
 
 	$userid = $_SESSION['userid'];
+
 	$app = new ApplicationManager();
 	$today = new DateTime();
 	
@@ -21,6 +22,7 @@ if (!empty($_SESSION['userid'])) {
 		$userinfo = $app->getUsers($userid, $token);
 		$appchecklists = $app->getUserChecklistsEntry($token);
 		$appchecklists_attchmnt = $app->getUserChecklistsAttachments($token);
+
 	}
 	
 } else {
