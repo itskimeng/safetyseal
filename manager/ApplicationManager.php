@@ -15,7 +15,7 @@ class ApplicationManager
 
     function __construct() 
     {
-        $this->conn = mysqli_connect("localhost","calabarzondilggo_safetysealuser","'xPR<W5dm$#-[RQf","calabarzondilggo_safetyseal");
+        $this->conn = mysqli_connect("localhost","calabarzondilggo_safetysealuser","'xPR<W5dm$#-[RQf","calabarzondilggo_safetyseal2");
     }
 
     public function getChecklists()
@@ -71,6 +71,8 @@ class ApplicationManager
 
         return $result;
     }
+
+   
 
     public function updateChecklistEntry($data)
     {
@@ -189,6 +191,8 @@ class ApplicationManager
         $sql = "SELECT 
             ai.id as id,
             ac.id as acid,
+            ai.EMAIL as email,
+            ui.MOBILE_NO as phone_no,
             DATE_FORMAT(ac.date_created, '%M %d, %Y') as date_created,
             DATE_FORMAT(ac.date_proceed, '%m-%d-%Y') as date_proceed,
             ui.ADDRESS as address,
@@ -236,7 +240,9 @@ class ApplicationManager
                 'pcode' => $row['pcode'],
                 'mcode' => $row['mcode'],
                 'code' => !empty($row['control_no']) ? $row['control_no'] : '2021-'.'_____',
-                'date_proceed' => $row['date_proceed']
+                'date_proceed' => $row['date_proceed'],
+                'email' => $row['email'],
+                'mobile_no' => $row['phone_no']
             ];      
         }
 
@@ -247,6 +253,8 @@ class ApplicationManager
     {
         $sql = "SELECT 
             ai.id as id,
+            ai.EMAIL as email,
+            ui.MOBILE_NO as phone_no,
             ui.ADDRESS as address,
             ui.GOV_AGENCY_NAME as agency,
             ui.GOV_ESTB_NAME as establishment, 
@@ -260,7 +268,8 @@ class ApplicationManager
             LEFT JOIN tbl_province p on p.id = ai.PROVINCE
             LEFT JOIN tbl_citymun m on m.id = ai.LGU
             WHERE ai.id = $user";
-        
+
+          
         $query = mysqli_query($this->conn, $sql);
         // $result = mysqli_fetch_array($query);
         $data = [];
@@ -282,7 +291,9 @@ class ApplicationManager
                 'pcode' => $row['pcode'],
                 'mcode' => $row['mcode'],
                 'code' => '2021-'.'_____',
-                'date_proceed' => ''
+                'date_proceed' => '',
+                'email' => $row['email'],
+                'mobile_no' => $row['phone_no']
             ];      
         }
 
