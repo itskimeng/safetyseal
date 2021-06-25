@@ -80,7 +80,7 @@ if (in_array($user['status'], ['Approved', 'Disapproved'])) {
 	$html = generateApprover($user);
 	$pdf->writeHTML($html, true, false, true, false, '');
 
-	$html = generateInspectionTems();
+	$html = generateInspectionTems($conn);
 	$pdf->writeHTML($html, true, false, true, false, '');
 }
 
@@ -451,7 +451,7 @@ function generateApprover($dd)
 	return $html;
 }
 
-function generateInspectionTems()
+function generateInspectionTems($conn)
 {
 	$html = '<table class="table table-bordered">';
 	$html.= '<tr>';
@@ -544,17 +544,33 @@ function generateInspectionTems()
 	$html.= '</tr>';
 	$html.= '</table>';
 
+	$sql = ' SELECT `user_id` FROM `tbl_app_checklist` WHERE `control_no` = "'.$_GET['control_no'].'" ';
+	$query = $conn->query($sql);
+	$res = $query->fetch_assoc();
+
+	$selectUserInfo = ' SELECT `ID`, `REGION`, `PROVINCE`, `LGU`, `OFFICE`, `CMLGOO_NAME`, `UNAME`, `PASSWORD`, `VERIFICATION_CODE`, `IS_APPROVED`, `IS_VERIFIED`, `ROLES`, `EMAIL` FROM `tbl_admin_info` WHERE `ID` = '.$res['user_id'].' ';
+	$execUserInfo = $conn->query($selectUserInfo);
+	$userInfo = $execUserInfo->fetch_assoc();
+	$province = $userInfo['PROVINCE'];
+	$lgu = $userInfo['LGU'];
+
+	$selectInspectionTeam = ' SELECT `ID`, `PROVINCE`, `PROVINCE_ID`, `LGU`, `LGU_ID`, `NAME`, `EMAIL_ADDRESS`, `CONTACT_NO`, `PNP`, `BFP`, `ICT_HOTLINE`, `EMAIL_ADDRESS_COMPLAINTS` FROM `tbl_inspection_team` WHERE `PROVINCE_ID` = "'.$province.'" AND `LGU_ID` = "'.$lgu.'" ';
+	$execInspectionTeam = $conn->query($selectInspectionTeam);
+	$inspector = $execInspectionTeam->fetch_assoc();
 
 	$html.= '<table class="table table-bordered">';
 	$html.= '<tr>';
 	$html.= '<td style="text-align:center; font-size:9pt; width:33.3%;">';
-	$html.= '<u><b>Jennifer S. Quirante</b></u>';
+	// $html.= '<u><b>Jennifer S. Quirante</b></u>';
+	$html.= '<u><b>'.$inspector['NAME'].'</b></u>';
 	$html.= '</td>';
 	$html.= '<td style="text-align:center; font-size:9pt; width:33.3%;">';
-	$html.= '<u><b>PLTCOL Jonathan B. Villamor</b></u>';
+	// $html.= '<u><b>PLTCOL Jonathan B. Villamor</b></u>';
+	$html.= '<u><b>'.$inspector['PNP'].'</b></u>';
 	$html.= '</td>';
 	$html.= '<td style="text-align:center; font-size:9pt; width:33.3%;">';
-	$html.= '<u><b>FCINSP Alexander Dale Q. Baena</b></u>';
+	// $html.= '<u><b>FCINSP Alexander Dale Q. Baena</b></u>';
+	$html.= '<u><b>'.$inspector['BFP'].'</b></u>';
 	$html.= '</td>';
 	$html.= '</tr>';
 	$html.= '<tr>';

@@ -28,7 +28,7 @@ $execLgu = $conn->query($selectLgu);
 $resultLgu = $execLgu->fetch_assoc();
 $lgu = strtoupper($resultLgu['name']);
 
-$selectInspection = ' SELECT `ID`, `PROVINCE`, `LGU`, `NAME`, `EMAIL_ADDRESS`, `CONTACT_NO`, `PNP`, `BFP`, `ICT_HOTLINE`, `EMAIL_ADDRESS_COMPLAINTS` FROM `tbl_inspection_team` WHERE `PROVINCE` = "'.$province.'" AND `LGU` = "'.$lgu.'" ';
+$selectInspection = ' SELECT `ID`, `PROVINCE`, `LGU`, `NAME`, `EMAIL_ADDRESS`, `CONTACT_NO`, `PNP`, `BFP`, `ICT_HOTLINE`, `EMAIL_ADDRESS_COMPLAINTS` FROM `tbl_inspection_team` WHERE `PROVINCE_ID` = "'.$resultApplicantDetails['PROVINCE'].'" AND `LGU_ID` = "'.$resultApplicantDetails['LGU'].'" ';
 $execInspection = $conn->query($selectInspection);
 $resultInspection = $execInspection->fetch_assoc();
 
@@ -70,9 +70,17 @@ $resultInspection = $execInspection->fetch_assoc();
           <h6 class="mt-3"><span class="text-muted">BJMP:</span> <?php echo $resultInspection['BFP']; ?></h6>
         </div>
         <div class="col-md-6 place">
-          <!-- <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3867.7513751493257!2d121.1518264148358!3d14.20933089005264!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x33bd63cc09a59b29%3A0x3bc408d1f2ac59e9!2sDILG%20Region%20IV-A%20(CALABARZON)!5e0!3m2!1sen!2sph!4v1623290097945!5m2!1sen!2sph" width="600" height="450" style="border:0;" allowfullscreen="" loading="lazy"></iframe> -->
-          <!-- <span class="place"></span> -->
+          <!-- map output -->
 
+        </div>
+      </div>
+
+      <div class="row mt-5">
+        <div class="col-md-1"></div>
+        <div class="col-md-11">
+          <h6><i>For any complaints, please contact the following</i></h6>
+          <h6><i>Hotline: <?php echo $resultInspection['ICT_HOTLINE']; ?></i></h6>
+          <h6><i>Email Address: <?php echo $resultInspection['EMAIL_ADDRESS_COMPLAINTS']; ?></i></h6>
         </div>
       </div>
 

@@ -13,11 +13,13 @@
           <li class="nav-item">
             <a class="nav-link" href="guidelines.php" id="navguidelines">Guidelines </a>
           </li>
-          <?php if (!isset($_SESSION['username'])): ?>
-            <li class="nav-item">
-              <a class="nav-link" href="registration.php" id="navapplication">Application </a>
-            </li>
-          <?php endif ?>
+          <li class="nav-item">
+            <?php if (!isset($_SESSION['username'])): ?>
+                <a class="nav-link" href="registration.php" id="navapplication">Application </a>
+            <?php else: ?>
+                <a class="nav-link" href="wbstapplication.php?create_new" id="navapplication">Application </a>
+            <?php endif ?>
+          </li>
         
           <li class="nav-item">
             <a class="nav-link" href="certified-establishments.php" id="navcertified">Certified Establishments </a>

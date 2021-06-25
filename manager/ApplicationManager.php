@@ -12,6 +12,9 @@ class ApplicationManager
     const STATUS_RECEIVED           = "Received";
     const STATUS_FOR_REASSESSMENT   = "For Reassessment";
     const STATUS_REASSESS           = "Reassess";
+    const TYPE_APPLIED              = "Applied";
+    const TYPE_ENCODED              = "Encoded";
+
 
     function __construct() 
     {
@@ -84,6 +87,16 @@ class ApplicationManager
         return $result;
     }
 
+    public function updateChecklistEntry2($data)
+    {
+        $sql = "UPDATE tbl_app_checklist_entry 
+                SET answer = '".$data['answer']."', reason = '".$data['reason']."', assessment = '".$data['assessment']."' WHERE id = ".$data['chklist_id']."";
+
+        $result = mysqli_query($this->conn, $sql);
+
+        return $result;
+    }
+
     public function getUserChecklistsEntry($token)
     {
         $sql = "SELECT 
@@ -93,7 +106,8 @@ class ApplicationManager
             e.id as ulist_id,
             e.answer as answer,
             e.reason as reason,
-            a.status as status
+            a.status as status,
+            e.assessment as assessment
             FROM tbl_app_checklist_entry e
             LEFT JOIN tbl_app_checklist a on a.id = e.parent_id
             LEFT JOIN tbl_app_certchecklist c on c.id = e.chklist_id
@@ -115,6 +129,7 @@ class ApplicationManager
                 'ulist_id' => $row['ulist_id'],
                 'answer' => $row['answer'],
                 'reason' => $row['reason'],
+                'assessment' => $row['assessment'],
                 'is_disabled' => $is_disabled
             ];    
         }
@@ -408,12 +423,15 @@ class ApplicationManager
         ac.control_no as control_no,
         ac.safety_seal_no as ss_no,
         ac.status as status,
-        ac.address as ac_address
+        ac.address as ac_address,
+        ac.application_type as app_type,
+        ac.token as token,
+        ac.agency as r_agency,
+        ac.establishment as r_establishment
         FROM tbl_app_checklist ac
         LEFT JOIN tbl_admin_info ai on ai.id = ac.user_id
         LEFT JOIN tbl_userinfo ui on ui.user_id = ai.id
         WHERE ai.PROVINCE = ".$province." AND ai.LGU = ".$lgu." AND ac.status <> '".$status."'";
-     
         
         $query = mysqli_query($this->conn, $sql);
         $data = [];
@@ -431,15 +449,123 @@ class ApplicationManager
             $data[] = [
                 'id' => $row['id'],
                 'userid' => $row['userid'],
-                'fname' => $row['fname'],
-                'agency' => $row['agency'],
+                'token' => $row['token'],
+                'fname' => $row['app_type'] == 'Encoded' ? $row['r_establishment'] : $row['fname'],
+                'agency' => $row['app_type'] == 'Encoded' ? $row['r_agency'] : $row['agency'],
                 'address' => $row['address'],
                 'date_created' => $row['date_created'],
                 'control_no' => $row['control_no'],
                 'ss_no' => $row['ss_no'],
                 'status' => $row['status'],
                 'color' => $color,
-                'ac_address' => $row['ac_address']
+                'ac_address' => $row['ac_address'],
+                'app_type' => $row['app_type']
+            ];    
+        }
+
+        return $data;
+    }
+
+    public function getApplicationLists2($province, $lgu, $status)
+    {
+        $sql = "SELECT 
+        ac.id as id,
+        ai.CMLGOO_NAME as fname,
+        ui.GOV_AGENCY_NAME as agency,
+        ui.ADDRESS as address,
+        DATE_FORMAT(ac.date_created, '%Y-%m-%d') as date_created,
+        ui.id as userid,
+        ac.control_no as control_no,
+        ac.safety_seal_no as ss_no,
+        ac.status as status,
+        ac.address as ac_address,
+        ac.application_type as app_type,
+        ac.token as token,
+        ac.agency as r_agency,
+        ac.establishment as r_establishment
+        FROM tbl_app_checklist ac
+        LEFT JOIN tbl_admin_info ai on ai.id = ac.user_id
+        LEFT JOIN tbl_userinfo ui on ui.user_id = ai.id
+        WHERE ai.PROVINCE = ".$province." AND ai.LGU = ".$lgu." AND ac.application_type = 'Applied' AND ac.status <> '".$status."'";
+        
+        $query = mysqli_query($this->conn, $sql);
+        $data = [];
+        
+        while ($row = mysqli_fetch_assoc($query)) {
+            $color = 'green';
+            if ($row['status'] == 'For Receiving') {
+                $color = 'primary';
+            } elseif ($row['status'] == 'Received') {
+                $color = 'yellow';
+            } elseif ($row['status'] == 'Disapproved') {
+                $color = 'red';
+            }
+
+            $data[$row['id']] = [
+                'id' => $row['id'],
+                'userid' => $row['userid'],
+                'token' => $row['token'],
+                'fname' => $row['app_type'] == 'Encoded' ? $row['r_establishment'] : $row['fname'],
+                'agency' => $row['app_type'] == 'Encoded' ? $row['r_agency'] : $row['agency'],
+                'address' => $row['address'],
+                'date_created' => $row['date_created'],
+                'control_no' => $row['control_no'],
+                'ss_no' => $row['ss_no'],
+                'status' => $row['status'],
+                'color' => $color,
+                'ac_address' => $row['ac_address'],
+                'app_type' => $row['app_type']
+            ];    
+        }
+
+
+        $sql = "SELECT 
+        ac.id as id,
+        ai.CMLGOO_NAME as fname,
+        ui.GOV_AGENCY_NAME as agency,
+        ui.ADDRESS as address,
+        DATE_FORMAT(ac.date_created, '%Y-%m-%d') as date_created,
+        ui.id as userid,
+        ac.control_no as control_no,
+        ac.safety_seal_no as ss_no,
+        ac.status as status,
+        ac.address as ac_address,
+        ac.application_type as app_type,
+        ac.token as token,
+        ac.agency as r_agency,
+        ac.establishment as r_establishment
+        FROM tbl_app_checklist ac
+        LEFT JOIN tbl_admin_info ai on ai.id = ac.user_id
+        LEFT JOIN tbl_userinfo ui on ui.user_id = ai.id
+        WHERE ai.PROVINCE = ".$province." AND ai.LGU = ".$lgu." AND ac.application_type = 'Encoded'";
+        
+        $query = mysqli_query($this->conn, $sql);
+        // $data = [];
+        
+        while ($row = mysqli_fetch_assoc($query)) {
+            $color = 'green';
+            if ($row['status'] == 'For Receiving') {
+                $color = 'primary';
+            } elseif ($row['status'] == 'Received') {
+                $color = 'yellow';
+            } elseif ($row['status'] == 'Disapproved') {
+                $color = 'red';
+            }
+
+            $data[$row['id']] = [
+                'id' => $row['id'],
+                'userid' => $row['userid'],
+                'token' => $row['token'],
+                'fname' => $row['app_type'] == 'Encoded' ? $row['r_establishment'] : $row['fname'],
+                'agency' => $row['app_type'] == 'Encoded' ? $row['r_agency'] : $row['agency'],
+                'address' => $row['address'],
+                'date_created' => $row['date_created'],
+                'control_no' => $row['control_no'],
+                'ss_no' => $row['ss_no'],
+                'status' => $row['status'],
+                'color' => $color,
+                'ac_address' => $row['ac_address'],
+                'app_type' => $row['app_type']
             ];    
         }
 
@@ -457,7 +583,7 @@ class ApplicationManager
 
     public function insertAssessment($id, $assessment) {
         $sql = "UPDATE tbl_app_checklist_entry SET assessment = '".$assessment."' WHERE id = ".$id."";
-        $query = mysqli_query($this->conn, $sql);
+        $result = mysqli_query($this->conn, $sql);
          
         return $result; 
     }
