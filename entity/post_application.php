@@ -71,9 +71,9 @@ foreach ($checklists as $key => $id) {
 $_SESSION['toastr'] = addFlash('success', 'Successfully updated the checklist.', 'Checklist');
 $notify = $app->notifyApprover($province, $lgu);
 
-foreach ($notify as $key => $data) {
-	notifyUser($data['email'], $establishment ,$name);
-}
+// foreach ($notify as $key => $data) {
+// 	notifyUser($data['email'], $establishment ,$name);
+// }
 // header('location:../wbstapplication.php?ssid='.$token.'');
 header('location:../wbstapplication.php?ssid=' . $token . '&code=' . $_SESSION['gcode'] . '&scope=' . $_SESSION['gscope'] . '');
 
