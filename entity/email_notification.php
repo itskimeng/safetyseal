@@ -2,9 +2,6 @@
 
 
 // sending email notification
-echo $email;
-print_r($notify);
-exit();
 foreach ($notify as $key => $data) {
 	notifyUser($data['email'], $establishment ,$name);
 }
