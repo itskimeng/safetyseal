@@ -264,6 +264,7 @@
     $(document).on('click', '.form-check-input', function(){
       let tr = $(this).closest('tr');
       let chkcol = $(this).data('chkcol');
+      let other_tool = tr.find('.other_tool');
 
       uncheckOthers(chkcol, tr);
 
@@ -283,6 +284,13 @@
         let reason = tr.find('.form-check-reason');
         reason.val('');
         reason.attr('disabled', true);
+      }
+
+      if ($(this).is(':checked')) {
+        other_tool.val('');
+        other_tool.prop('disabled', true);
+      } else {
+        other_tool.prop('disabled', false);
       }
     });
 
@@ -344,6 +352,34 @@
       }
     });
 
+    $(document).on('keyup', '.other_tool', function(){
+      let $this = $(this);
+      let tr = $this.closest('tr');
+      let check_yes = tr.find('.chklist_yes');
+      let check_no = tr.find('.chklist_no');
+      let check_na = tr.find('.chklist_na');
+      let reason = tr.find('.form-check-reason');
+
+      if ($this.val() != '') {
+        check_yes.prop('checked', false);
+        check_yes.prop('disabled', true);
+
+        check_no.prop('checked', false);
+        check_no.prop('disabled', true);
+
+        check_na.prop('checked', false);
+        check_na.prop('disabled', true);
+
+        reason.val('');
+        reason.prop('disabled', true);        
+      } else {
+        check_yes.prop('disabled', false);
+        check_no.prop('disabled', false);
+        check_na.prop('disabled', false);
+        reason.prop('disabled', true); 
+      }
+    });
+
   })
 
   function checkAllSelected()
@@ -355,7 +391,9 @@
     $.each(tbody, function(){
       let tr = $(this);
       let asmnt = tr.find('.form-check-input');
-      if (asmnt.is(':checked')) {
+      let other_tool = tr.find('.other_tool');
+
+      if (asmnt.is(':checked') || other_tool.val() != '') {
         $counter++;
       }
     });

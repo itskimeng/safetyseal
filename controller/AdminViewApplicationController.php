@@ -65,6 +65,7 @@ function getUserChecklistsEntry($conn, $id)
         e.id as ulist_id,
         e.answer as answer,
         e.reason as reason,
+        e.other_tool as other_tool,
         e.assessment as assessment
         FROM tbl_app_checklist_entry e
         LEFT JOIN tbl_app_checklist ac on ac.id = e.parent_id
@@ -93,7 +94,8 @@ function getUserChecklistsEntry($conn, $id)
             'badge' => $badge,
             'answer' => strtoupper($row['answer']),
             'reason' => $row['reason'],
-            'assessment' => $row['assessment']
+            'assessment' => $row['assessment'],
+            'other_tool' => $row['other_tool']
         ];    
     }
 

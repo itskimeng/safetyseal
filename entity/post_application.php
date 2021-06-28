@@ -32,8 +32,13 @@ if ($is_new) {
 
 	$parent_id = $app->findChecklist($token);
 	foreach ($checklists as $key => $id) {
-		$check_val = $reason = '';
+		$check_val = $reason = $other_tool = '';
 		$ulist_id = isset($_POST['ulist_id'][$key]) ? $_POST['ulist_id'][$key] : '';
+
+		if (isset($_POST['other_tool'][$key])) {
+			$other_tool = $_POST['other_tool'][$key];
+		}
+
 		if (isset($_POST['chklist_yes'][$key])) {
 			$check_val = 'yes';
 		} elseif (isset($_POST['chklist_no'][$key])) {
@@ -49,7 +54,8 @@ if ($is_new) {
 			'user_id' => $userid,
 			'answer' => $check_val,
 			'reason' => $reason,
-			'date_created' => $today->format('Y-m-d H:i:s')
+			'date_created' => $today->format('Y-m-d H:i:s'),
+			'other_tool' => $other_tool
 		];
 
 		if ($is_new) {
