@@ -36,7 +36,6 @@ class DashboardManager
             LEFT JOIN tbl_admin_info ai on checklist.user_id = ai.ID
             LEFT JOIN tbl_province pro on ai.PROVINCE = pro.id 
             WHERE  ai.PROVINCE= '$province' and ai.LGU = '$lgu' and MONTH(checklist.date_created) = $i and checklist.status='For Receiving'";
-            echo $sql.'<br>';
 
             //  ai.PROVINCE= '$province' and 
             $query = mysqli_query($this->conn, $sql);
