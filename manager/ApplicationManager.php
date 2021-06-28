@@ -76,9 +76,9 @@ class ApplicationManager
     }
 
     public function notifyApprover($province, $lgu){
-        $sql = "SELECT `PROVINCE`, `LGU`, `EMAIL`, ui.MOBILE_NO FROM `tbl_admin_info` ai
+        $sql = "SELECT `PROVINCE`, `LGU`, `EMAIL`, ui.MOBILE_NO, ai.ROLES AS roles FROM `tbl_admin_info` ai
         left join tbl_userinfo ui on ai.ID = ui.USER_ID
-        WHERE PROVINCE = '".$province."' and LGU = '".$lgu."'";
+        WHERE PROVINCE = '".$province."' and LGU = '".$lgu."' AND roles = 'admin' ";
        
         $data = [];
         $query = mysqli_query($this->conn, $sql);
