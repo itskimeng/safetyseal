@@ -15,7 +15,7 @@ class ApplicationManager
 
     function __construct() 
     {
-        $this->conn = mysqli_connect("localhost","calabarzondilggo_safetysealuser","'xPR<W5dm$#-[RQf","calabarzondilggo_safetyseal2");
+        $this->conn = mysqli_connect("localhost","calabarzondilggo_safetysealuser","'xPR<W5dm$#-[RQf","calabarzondilggo_safetyseal");
     }
 
     public function getChecklists()
@@ -474,7 +474,7 @@ class ApplicationManager
         $sql = "UPDATE tbl_app_checklist_entry SET assessment = '".$assessment."' WHERE id = ".$id."";
         $query = mysqli_query($this->conn, $sql);
          
-        return $result; 
+        return $query; 
     }
 
     public function evaluateChecklist($checklist_id, $status, $safety_seal_no, $date_modified, $approver)
