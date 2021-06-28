@@ -86,11 +86,10 @@ header('location:../wbstapplication.php?ssid='.$token.'&code='.$_SESSION['gcode'
 	$subject = "Safety Seal";
 	$message = '<html><body>';
 	$message .='
-	<div class="card shadow ">
+	<div class="card shadow" style="width:50%">
 		<div class="card-header" style="background-color: #009688; color:#fff;">
-			<img src="http://safetyseal.calabarzon.dilg.gov.ph/frontend/images/logo.png" style="width:50px;height:auto;float:right;"/>
-			<img src="http://safetyseal.calabarzon.dilg.gov.ph/frontend/images/calabarzon.png" style="width:50px;height:auto;float:right;"/>
-			<img src="http://safetyseal.calabarzon.dilg.gov.ph/frontend/images/SAFETY SEAL LOGO.svg" style="width:50px;height:auto;float:right;"/>
+			<img src="http://safetyseal.calabarzon.dilg.gov.ph/frontend/images/logo.png" style="width:50px;height:auto;"/>
+			<img src="http://safetyseal.calabarzon.dilg.gov.ph/frontend/images/calabarzon.png" style="width:50px;height:auto;/>
 		</div>
 	<div class="card-body">
 	<br>'.$est.'</br> submitted an application for safety seal certification
