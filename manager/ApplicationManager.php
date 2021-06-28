@@ -482,14 +482,6 @@ class ApplicationManager
         return $query; 
     }
 
-    public function getStatus($user_id)
-    {
-        $sql = "SELECT status,user_id FROM `tbl_app_checklist` where user_id = '$user_id'";
-        $query = mysqli_query($this->conn, $sql);
-        $result = mysqli_fetch_array($query);
-        return $result; 
-    }
-
     public function evaluateChecklist($checklist_id, $status, $safety_seal_no, $date_modified, $approver)
     {
         $sql = "UPDATE tbl_app_checklist SET safety_seal_no = '".$safety_seal_no."', date_approved = '".$date_modified."', date_modified = '".$date_modified."', approver_id = ".$approver.", status = '".$status."' WHERE id = ".$checklist_id."";

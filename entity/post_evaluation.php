@@ -3,7 +3,6 @@ session_start();
 date_default_timezone_set('Asia/Manila');
 
 require '../manager/ApplicationManager.php';
-require '../controller/ApplicationController.php';
 require '../application/config/connection.php';
 
 $app = new ApplicationManager();
@@ -25,16 +24,9 @@ if (!empty($assessments)) {
 			$status = ApplicationManager::STATUS_DISAPPROVED;
 			
 		}
-		$entry = $app->insertAssessment($key, $assess);
-	
+		$entry = $app->insertAssessment($key, $assess, $email);
 	}
 }
-//---
-if($status =='Approved')
-{
-	notifyUser($email);
-}
-
 
 $notes = $app->getValidationLists($checklist_id );
 if (empty($notes)) {
@@ -45,7 +37,7 @@ if (empty($notes)) {
 
 $ss_no = $app->generateCode($userid);
 $app->evaluateChecklist($checklist_id, $status, $ss_no, $today->format('Y-m-d H:i:s'), $userid);
-
+notifyUser($email);
 
 $_SESSION['toastr'] = $app->addFlash('success', 'The application has been set to '.$status.'.', 'Success');
 

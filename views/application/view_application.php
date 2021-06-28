@@ -27,6 +27,8 @@
     <div class="row mb-4">
       <?php if ($applicant['status'] <> 'For Receiving' AND $applicant['status'] <> 'Draft'): ?>
       <form method="POST" action="entity/post_assessment.php" id="form-evaluation">
+      <input type="hidden" name = "email" value="<?php echo $applicant['email']; ?>"/>
+
       <?php endif ?>  
         <input type="hidden" name="appid" value="<?php echo $applicant['appid']; ?>">
         <div class="col-lg-12 col-md-6 col-sm-3">
@@ -39,6 +41,7 @@
                   <table class="table table-hover table-striped" style="font-size:10pt;">
                     <thead class="text-center" style="background-color: #1da6da; color: white;">
                       <tr>
+                      
                         <th width="3%">#</th>
                         <th width="18%">REQUIREMENTS</th>
                         <th width="25%">MOVs to be Produced/ Uploaded</th>
