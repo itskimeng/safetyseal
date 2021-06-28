@@ -71,7 +71,7 @@ $_SESSION['toastr'] = addFlash('success', 'Successfully updated the checklist.',
 $notify = $app->notifyApprover($province, $lgu);
 
 foreach ($notify as $key => $data) {
-	notifyUser($data['email']);
+	notifyUser($data['email'], $establishment);
 }
 // header('location:../wbstapplication.php?ssid='.$token.'');
 header('location:../wbstapplication.php?ssid='.$token.'&code='.$_SESSION['gcode'].'&scope='.$_SESSION['gscope'].'');
@@ -80,11 +80,11 @@ header('location:../wbstapplication.php?ssid='.$token.'&code='.$_SESSION['gcode'
 
 // header('location:../wbstapplication.php');
 
- function notifyUser($emailAddress){
+ function notifyUser($emailAddress,$est){
         
 	$to = $emailAddress;
 	$subject = "Safety Seal";
-	$message = "submitted an application for safety seal certification";
+	$message = $est."submitted an application for safety seal certification";
 	$headers = "From: safetyseal@calabarzon.dilg.gov.ph \r\n";
 	$headers .= "MIME-Version: 1.0" . "\r\n";
 	$headers .= "Content-type:text/html;charset=UTF-800" . "\r\n";
