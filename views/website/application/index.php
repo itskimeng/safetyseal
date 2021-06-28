@@ -142,8 +142,8 @@
   background: linear-gradient(#9bc90d 0%, #79a70a 100%);
   box-shadow: 0 3px 10px -5px rgba(0, 0, 0, 1);
   position: absolute;
-  top: 41px; // change this, if no border
-  right: -20px; // change this, if no border
+  /* top: 41px; // change this, if no border */
+  /* right: -20px; // change this, if no border */
 }
 
 .ribbon span::before {

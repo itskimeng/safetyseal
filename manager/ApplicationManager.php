@@ -123,7 +123,7 @@ class ApplicationManager
             e.reason as reason,
             a.status as status,
             e.assessment as assessment,
-            e.other_tool as other_tool
+            e.other_tool as other_tool,
             a.status as status
             FROM tbl_app_checklist_entry e
             LEFT JOIN tbl_app_checklist a on a.id = e.parent_id
