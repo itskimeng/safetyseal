@@ -34,6 +34,7 @@ if (isset($_POST['login'])) {
                     $_SESSION['userid']  = $user_data['ID'];
                     $_SESSION['province']  = $user_data['PROVINCE'];
                     $_SESSION['city_mun']  = $user_data['CITY_MUNICIPALITY'];
+                    $_SESSION['name'] = $user_data['name'];
                     
                     header("location:../dashboard_user.php?username=" . md5($username) . "");
                }

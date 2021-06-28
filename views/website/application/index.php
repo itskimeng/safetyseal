@@ -25,6 +25,7 @@
                 <input type="hidden" name="mobile_no" value="<?php echo $userinfo['mobile_no'];?>">
                 <input type="hidden" name="province" value="<?php echo $_SESSION['province'];?>">
                 <input type="hidden" name="city_mun" value="<?php echo $_SESSION['city_mun'];?>">
+                <input type="hidden" name="name" value="<?php echo $_SESSION['name'];?>">
 
                 <!-- user details -->
                 <div class="col-md-12 mt-3">

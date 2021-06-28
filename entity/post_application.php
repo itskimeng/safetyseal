@@ -13,6 +13,7 @@ $uname = $_SESSION['username'];
 
 $province = $_POST['province'];
 $lgu = $_POST['city_mun'];
+$name = $_POST['name'];
 
 
 
@@ -71,7 +72,7 @@ $_SESSION['toastr'] = addFlash('success', 'Successfully updated the checklist.',
 $notify = $app->notifyApprover($province, $lgu);
 
 foreach ($notify as $key => $data) {
-	notifyUser($data['email'], $establishment);
+	notifyUser($data['email'], $establishment ,$applicant_name);
 }
 // header('location:../wbstapplication.php?ssid='.$token.'');
 header('location:../wbstapplication.php?ssid=' . $token . '&code=' . $_SESSION['gcode'] . '&scope=' . $_SESSION['gscope'] . '');
@@ -80,24 +81,24 @@ header('location:../wbstapplication.php?ssid=' . $token . '&code=' . $_SESSION['
 
 // header('location:../wbstapplication.php');
 
-function notifyUser($emailAddress, $est)
+function notifyUser($emailAddress, $est,$applicant_name)
 {
 
 	$to = $emailAddress;
 	$subject = "Safety Seal Portal";
 	$message = '<html><body>';
 	$message .= '
-<div class="container>
-	<div class="card shadow" style="width:18rem">
-		<div class="card-header" style="background-color: #009688; color:#fff;">
-			<img src="http://safetyseal.calabarzon.dilg.gov.ph/frontend/images/logo.png" style="width:50px;height:auto;"/>
-			<img src="http://safetyseal.calabarzon.dilg.gov.ph/frontend/images/calabarzon.png" style="width:20;height:auto;/>
-		</div>
-	<div class="card-body">
-	<br>' . $est . '</br> submitted an application for safety seal certification
-	</div>
-</div>
-</div>
+			<div class="container>
+				<div class="card shadow" style="width:30rem">
+					<div class="card-header" style="background-color: #009688; color:#fff;">
+						<img src="http://safetyseal.calabarzon.dilg.gov.ph/frontend/images/logo.png" style="width:50px;height:auto;"/>
+						<img src="http://safetyseal.calabarzon.dilg.gov.ph/frontend/images/calabarzon.png" style="width:10px;height:auto;/>
+					</div>
+					<div class="card-body"><br><br>
+						<br> Good day Sir/Maam, Mr. '.$applicant_name.' of ' . $est . '</br> submitted an application for safety seal certification
+					</div>
+				</div>
+			</div>
 ';
 	$message .= '</html></body>';
 	$headers = "From: safetyseal@calabarzon.dilg.gov.ph \r\n";
