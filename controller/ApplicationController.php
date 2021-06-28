@@ -24,6 +24,8 @@ if (!empty($_SESSION['userid'])) {
 		$appchecklists_attchmnt = $app->getUserChecklistsAttachments($token);
 
 	}
+
+	$status = $app->getStatus($userid);
 	
 } else {
 	header('location:../registration.php');

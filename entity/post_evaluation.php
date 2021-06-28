@@ -3,6 +3,7 @@ session_start();
 date_default_timezone_set('Asia/Manila');
 
 require '../manager/ApplicationManager.php';
+require '../controller/ApplicationController.php';
 require '../application/config/connection.php';
 
 $app = new ApplicationManager();
@@ -25,9 +26,15 @@ if (!empty($assessments)) {
 			
 		}
 		$entry = $app->insertAssessment($key, $assess);
-		notifyUser($email);
+	
 	}
 }
+//---
+if($status =='Approved')
+{
+	notifyUser($email);
+}
+
 
 $notes = $app->getValidationLists($checklist_id );
 if (empty($notes)) {
