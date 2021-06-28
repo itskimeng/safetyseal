@@ -10,8 +10,8 @@ $citymun = $_SESSION['city_mun'];
 
 
 $count_status = $app->countStatus($province, $citymun);
-$receiving = $app->getdataForReceived($province);
-$approved = $app->getdataApproved($province);
+$receiving = $app->getdataForReceived($province,$citymun);
+$approved = $app->getdataApproved($province,$citymun);
 $lgu = $app->getCityMuns($province);
 $est_safety_seal = $app->getEstablishmentSSC($province,$citymun);
 

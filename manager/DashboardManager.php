@@ -27,7 +27,7 @@ class DashboardManager
     }
 
 
-    public function getdataForReceived($province)
+    public function getdataForReceived($province,$lgu)
     {
 
         $months =  [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12];
@@ -35,7 +35,8 @@ class DashboardManager
             $sql = "SELECT pro.name as 'PROVINCE' , checklist.status, count(*) as 'count', checklist.date_created FROM `tbl_app_checklist` checklist
             LEFT JOIN tbl_admin_info ai on checklist.user_id = ai.ID
             LEFT JOIN tbl_province pro on ai.PROVINCE = pro.id 
-            WHERE  ai.PROVINCE= '$province' and MONTH(checklist.date_created) = $i and checklist.status='For Receiving'";
+            WHERE  ai.PROVINCE= '$province' and ai.LGU = '$lgu' and MONTH(checklist.date_created) = $i and checklist.status='For Receiving'";
+            echo $sql.'<br>';
 
             //  ai.PROVINCE= '$province' and 
             $query = mysqli_query($this->conn, $sql);
@@ -45,7 +46,7 @@ class DashboardManager
 
         return $data;
     }
-    public function getdataApproved($province)
+    public function getdataApproved($province,$lgu)
     {
 
         $months =  [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12];
@@ -53,7 +54,7 @@ class DashboardManager
             $sql = "SELECT pro.name as 'PROVINCE' , checklist.status, count(*) as 'count', checklist.date_created FROM `tbl_app_checklist` checklist
             LEFT JOIN tbl_admin_info ai on checklist.user_id = ai.ID
             LEFT JOIN tbl_province pro on ai.PROVINCE = pro.id 
-            WHERE  ai.PROVINCE= '$province' and MONTH(checklist.date_created) = $i and checklist.status='Approved'";
+            WHERE  ai.PROVINCE= '$province' and ai.LGU  = '$lgu' and MONTH(checklist.date_created) = $i and checklist.status='Approved'";
             // ai.PROVINCE= '$province' and 
             $query = mysqli_query($this->conn, $sql);
             $row = mysqli_fetch_assoc($query);
