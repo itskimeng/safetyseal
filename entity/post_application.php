@@ -29,10 +29,6 @@ if ($is_new) {
 	$code = generateCode($conn, $userid);
 	$token = bin2hex(random_bytes(64));
 	$res = $app->insertChecklist($code, $establishment, $nature, $address, $userid, $today->format('Y-m-d H:i:s'), $token);
-
-	foreach ($notify as $key => $data) {
-		notifyUser($data['email'], $establishment ,$name);
-	}
 } else {
 	$token = $_POST['token'];
 	$app->updateChecklist($token, $establishment, $nature, $address, $today->format('Y-m-d H:i:s'));
@@ -75,7 +71,9 @@ foreach ($checklists as $key => $id) {
 $_SESSION['toastr'] = addFlash('success', 'Successfully updated the checklist.', 'Checklist');
 $notify = $app->notifyApprover($province, $lgu);
 
-
+foreach ($notify as $key => $data) {
+	notifyUser($data['email'], $establishment ,$name);
+}
 // header('location:../wbstapplication.php?ssid='.$token.'');
 header('location:../wbstapplication.php?ssid=' . $token . '&code=' . $_SESSION['gcode'] . '&scope=' . $_SESSION['gscope'] . '');
 

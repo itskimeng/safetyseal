@@ -475,6 +475,8 @@ class ApplicationManager
         return $result; 
     }
 
+   
+
     public function insertAssessment($id, $assessment) {
         $sql = "UPDATE tbl_app_checklist_entry SET assessment = '".$assessment."' WHERE id = ".$id."";
         $query = mysqli_query($this->conn, $sql);
