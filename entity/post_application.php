@@ -91,9 +91,9 @@ function notifyUser($emailAddress, $est,$applicant_name)
 			<div class="container>
 				<div class="card shadow" style="width:30rem">
 					<div class="card-header" style="background-color: #009688; color:#fff;">
-						<img src="https://safetyseal.dilg.gov.ph/images/mail_header.png"/>
+						<center><img src="http://safetyseal.calabarzon.dilg.gov.ph/frontend/images/email_header.png" style="width:65%;height:auto;"/></center>
 					</div>
-					<div class="card-body"><br><br>
+					<div class="card-body" style="background-color:ECEFF1"><br>
 						<br> Good day Sir/Maam, Mr. '.$applicant_name.' of ' . strtoupper($est) . '</br> submitted an application for safety seal certification
 					</div>
 				</div>
