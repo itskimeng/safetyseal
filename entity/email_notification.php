@@ -1,10 +1,10 @@
 <?php
-$name = $_POST['name'];
-$establishment = $_POST['establishment'];
-$email = $_POST['email'];
+
 
 // sending email notification
-$notify = $app->notifyApprover($province, $lgu);
+echo $email;
+print_r($notify);
+exit();
 foreach ($notify as $key => $data) {
 	notifyUser($data['email'], $establishment ,$name);
 }

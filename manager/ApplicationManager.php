@@ -301,6 +301,8 @@ class ApplicationManager
             LEFT JOIN tbl_province p on p.id = ai.PROVINCE
             LEFT JOIN tbl_citymun m on m.id = ai.LGU
             WHERE ai.id = $user";
+
+        
         
         $query = mysqli_query($this->conn, $sql);
         // $result = mysqli_fetch_array($query);

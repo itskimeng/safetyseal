@@ -21,11 +21,9 @@
                 <hr>
                 <input type="hidden" name="is_new" value="<?php echo $is_new; ?>">
                 <input type="hidden" name="token" value="<?php echo !empty($_GET['ssid']) ? $_GET['ssid'] : ''; ?>">
-                <input type="hidden" name="email" value="<?php echo $userinfo['email'];?>">
                 <input type="hidden" name="mobile_no" value="<?php echo $userinfo['mobile_no'];?>">
                 <input type="hidden" name="province" value="<?php echo $_SESSION['province'];?>">
                 <input type="hidden" name="city_mun" value="<?php echo $_SESSION['city_mun'];?>">
-                <input type="hidden" name="name" value="<?php echo $_SESSION['name'];?>">
 
                 <!-- user details -->
                 <div class="col-md-12 mt-3">
