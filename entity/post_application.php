@@ -86,11 +86,18 @@ header('location:../wbstapplication.php?ssid='.$token.'&code='.$_SESSION['gcode'
 	$subject = "Safety Seal";
 	$message = '<html><body>';
 	$message .='
-	<div class="container" style="background-color:violet;">
-		<img src="http://safetyseal.calabarzon.dilg.gov.ph/frontend/images/logo.png" style="width:25px;height:auto;float:right;"/>
-		<br>
-		<br>'.$est.'</br> submitted an application for safety seal certification
-	</div>';
+	<div class="card shadow ">
+		<div class="card-header" style="background-color: #009688; color:#fff;">
+			<img src="http://safetyseal.calabarzon.dilg.gov.ph/frontend/images/logo.png" style="width:50px;height:auto;float:right;"/>
+			<img src="http://safetyseal.calabarzon.dilg.gov.ph/frontend/images/calabarzon.png" style="width:50px;height:auto;float:right;"/>
+			<img src="http://safetyseal.calabarzon.dilg.gov.ph/frontend/images/SAFETY SEAL LOGO.svg" style="width:50px;height:auto;float:right;"/>
+		</div>
+	<div class="card-body">
+	<br>'.$est.'</br> submitted an application for safety seal certification
+
+	</div>
+</div>
+';
 	$message .= '</html></body>';
 	$headers = "From: safetyseal@calabarzon.dilg.gov.ph \r\n";
 	$headers .= "MIME-Version: 1.0" . "\r\n";
