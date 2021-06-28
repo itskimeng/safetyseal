@@ -8,8 +8,8 @@
       <form method="post" enctype="multipart/form-data" action="entity/post_proceed.php">
         <input type="hidden" name="chklist_id" value="<?php echo $userinfo['acid']; ?>">
         <input type="hidden" name="token" value="<?php echo !empty($_GET['ssid']) ? $_GET['ssid'] : ''; ?>">
-        <input type="text" name="name" value="<?php echo $_SESSION['name'];?>">
-        <input type="text" name="email" value="<?php echo $_SESSION['email'];?>">
+        <input type="hidden" name="name" value="<?php echo $_SESSION['name'];?>">
+        <input type="hidden" name="email" value="<?php echo $_SESSION['email'];?>">
 
 
         <div class="modal-body">
