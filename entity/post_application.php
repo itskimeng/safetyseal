@@ -85,10 +85,12 @@ header('location:../wbstapplication.php?ssid='.$token.'&code='.$_SESSION['gcode'
 	$to = $emailAddress;
 	$subject = "Safety Seal";
 	$message = '<html><body>';
-	$message .='<table>';
-	$message .='<th style="padding:10%;background-color:violet;"><img src="../frontend/images/logo.png" style="width:25px;height:auto;float:right;"/></th>';
-	$message .= "<b>".$est."</b> submitted an application for safety seal certification";
-	$message .= '</table>';
+	$message .='
+	<div class="container" style="background-color:violet;">
+		<img src="http://safetyseal.calabarzon.dilg.gov.ph/frontend/images/logo.png" style="width:25px;height:auto;float:right;"/>
+		<br>
+		<br>'.$est.'</br> submitted an application for safety seal certification
+	</div>';
 	$message .= '</html></body>';
 	$headers = "From: safetyseal@calabarzon.dilg.gov.ph \r\n";
 	$headers .= "MIME-Version: 1.0" . "\r\n";
