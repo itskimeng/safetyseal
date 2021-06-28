@@ -36,6 +36,7 @@ function getUserChecklists($conn, $id)
         ai.CMLGOO_NAME as fname,
        	ui.ADDRESS as address,
        	ui.MOBILE_NO as contact_details,
+        ui.EMAIL_ADDRESS as email,
         ac.control_no as control_no,
         ac.status as status,
         ac.id as appid,

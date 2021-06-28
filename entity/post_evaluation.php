@@ -11,6 +11,7 @@ $today = new DateTime();
 $userid = $_SESSION['userid'];
 $uname = $_SESSION['username'];
 $checklist_id = $_POST['appid'];
+$email = $_POST['email'];
 $defects = isset($_POST['defects']) ? $_POST['defects'] : '';
 $recommendations = isset($_POST['recommendations']) ? $_POST['recommendations'] : '';
 
@@ -21,8 +22,9 @@ if (!empty($assessments)) {
 	foreach ($assessments as $key => $assess) {
 		if ($assess == 'failed') {
 			$status = ApplicationManager::STATUS_DISAPPROVED;
+			
 		}
-		$entry = $app->insertAssessment($key, $assess);
+		$entry = $app->insertAssessment($key, $assess, $email);
 	}
 }
 
@@ -36,8 +38,58 @@ if (empty($notes)) {
 $ss_no = $app->generateCode($userid);
 $app->evaluateChecklist($checklist_id, $status, $ss_no, $today->format('Y-m-d H:i:s'), $userid);
 
+$degree = getStatus($conn,$userid);
+
+if($degree == 'Approved'){
+	notifyUser($email);
+
+}
+
 
 $_SESSION['toastr'] = $app->addFlash('success', 'The application has been set to '.$status.'.', 'Success');
+
+
+function getStatus($conn, $userid) {
+	$sql = "SELECT status FROM tbl_app_checklist where user_id = $userid";
+	$query = mysqli_query($conn, $sql);
+       
+    $result = mysqli_fetch_array($query);
+	
+	return $result;
+}
+
+function notifyUser($emailAddress)
+{
+
+	$to = $emailAddress;
+	$subject = "Safety Seal Portal";
+	$message = '<html><body>';
+	$message .= '
+			<div class="container>
+				<div class="card shadow" style="width:30rem">
+					<div class="card-header" style="background-color: #009688; color:#fff;">
+						<center><img src="http://safetyseal.calabarzon.dilg.gov.ph/frontend/images/email_header.png" style="width:65%;height:auto;"/></center>
+					</div>
+					<div class="card-body" style="background-color:ECEFF1"><br>
+						<br><b>Congratulations!</b><br>
+						You passed the Safety Seal Certification as of '.date('F d, Y').' <br><br>
+						Kindly note that the Safety Seal is only valid for six(6) months unless <br><br>
+						otherwise revoked earlier due to valid complaint. You may process <br>
+						renewal one (1) month prior to the expiration of its validity.<br><br>
+
+						To keep updated please visit safetyseal.calabarzon.dilg.gov.ph or coordinate with your DILG Field officer
+						<br><br>
+						Thank you!.
+					
+					</div>
+				</div>
+			</div>';
+	$message .= '</html></body>';
+	$headers = "From: safetyseal@calabarzon.dilg.gov.ph \r\n";
+	$headers .= "MIME-Version: 1.0" . "\r\n";
+	$headers .= "Content-type:text/html;charset=UTF-800" . "\r\n";
+	mail($to, $subject, $message, $headers);
+}
 
 
 

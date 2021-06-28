@@ -12,9 +12,9 @@ class ApplicationManager
     const STATUS_RECEIVED           = "Received";
     const STATUS_FOR_REASSESSMENT   = "For Reassessment";
     const STATUS_REASSESS           = "Reassess";
-    const TYPE_APPLIED              = "Applied";
-    const TYPE_ENCODED              = "Encoded";
-
+    const TYPE_APPLIED           = "Applied";
+    const TYPE_ENCODED           = "Encoded";
+    
 
     function __construct() 
     {
@@ -76,28 +76,43 @@ class ApplicationManager
         return $result;
     }
 
-    public function insertChecklistEntry2($data)
-    {
-        $sql = 'INSERT INTO tbl_app_checklist_entry (parent_id, chklist_id, answer, reason, assessment, date_created) VALUES ('.$data["parent_id"].', '.$data["chklist_id"].', "'.$data["answer"].'", "'.$data["reason"].'", "'.$data["assessment"].'", "'.$data["date_created"].'")';
-        $result = mysqli_query($this->conn, $sql);
+    public function notifyApprover($province, $lgu){
+        $sql = "SELECT `PROVINCE`, `LGU`, `EMAIL`, ui.MOBILE_NO FROM `tbl_admin_info` ai
+        left join tbl_userinfo ui on ai.ID = ui.USER_ID
+        WHERE PROVINCE = '".$province."' and LGU = '".$lgu."'";
+       
+        $data = [];
+        $query = mysqli_query($this->conn, $sql);
 
-        return $result;
+<<<<<<< HEAD
+    public function updateChecklistEntry($data)
+    {
+        $sql = "UPDATE tbl_app_checklist_entry 
+                SET other_tool = '".$data['other_tool']."', answer = '".$data['answer']."', reason = '".$data['reason']."' WHERE id = ".$data['chklist_id']."";
+=======
+        while ($row = mysqli_fetch_assoc($query)) {        
+            $data[] = [
+                'email' => $row['EMAIL'],
+                'mobile' => $row['MOBILE_NO']
+            ];
+        }
+            return $data;
+>>>>>>> 0dc64af83e4ef8ac5973eeea597322f3615f0d23
+
+
+        // $to = $emailAddress;
+    //     $subject = "Safety Seal Email Verification";
+    //     $message = " Welcome to DILG CALABARZON Safety Seal Portal! <br> To complete your Safety Seal profile, we need you to confirm your email address. <br><a class='btn btn-light-primary' href='http://safetyseal.calabarzon.dilg.gov.ph/application/functions/verify.php?vkey=" . $vkey . "'>Verify Account</a>";
+    //     $headers = "From: safetyseal@calabarzon.dilg.gov.ph \r\n";
+    //     $headers .= "MIME-Version: 1.0" . "\r\n";
+    //     $headers .= "Content-type:text/html;charset=UTF-800" . "\r\n";
+    //     mail($to, $subject, $message, $headers);
     }
 
     public function updateChecklistEntry($data)
     {
         $sql = "UPDATE tbl_app_checklist_entry 
-                SET other_tool = '".$data['other_tool']."', answer = '".$data['answer']."', reason = '".$data['reason']."' WHERE id = ".$data['chklist_id']."";
-
-        $result = mysqli_query($this->conn, $sql);
-
-        return $result;
-    }
-
-    public function updateChecklistEntry2($data)
-    {
-        $sql = "UPDATE tbl_app_checklist_entry 
-                SET answer = '".$data['answer']."', reason = '".$data['reason']."', assessment = '".$data['assessment']."' WHERE id = ".$data['chklist_id']."";
+                SET answer = '".$data['answer']."', reason = '".$data['reason']."' WHERE id = ".$data['chklist_id']."";
 
         $result = mysqli_query($this->conn, $sql);
 
@@ -113,9 +128,13 @@ class ApplicationManager
             e.id as ulist_id,
             e.answer as answer,
             e.reason as reason,
+<<<<<<< HEAD
             a.status as status,
             e.assessment as assessment,
             e.other_tool as other_tool
+=======
+            a.status as status
+>>>>>>> 0dc64af83e4ef8ac5973eeea597322f3615f0d23
             FROM tbl_app_checklist_entry e
             LEFT JOIN tbl_app_checklist a on a.id = e.parent_id
             LEFT JOIN tbl_app_certchecklist c on c.id = e.chklist_id
@@ -140,10 +159,14 @@ class ApplicationManager
                 'ulist_id' => $row['ulist_id'],
                 'answer' => $row['answer'],
                 'reason' => $row['reason'],
+<<<<<<< HEAD
                 'assessment' => $row['assessment'],
                 'other_tool' => $row['other_tool'],
                 'is_disabled' => $is_disabled,
                 'otherTool_disabled' => empty($row['answer']) ? false : true
+=======
+                'is_disabled' => $is_disabled
+>>>>>>> 0dc64af83e4ef8ac5973eeea597322f3615f0d23
             ];    
         }
 
@@ -428,14 +451,12 @@ class ApplicationManager
         ac.safety_seal_no as ss_no,
         ac.status as status,
         ac.address as ac_address,
-        ac.application_type as app_type,
-        ac.token as token,
-        ac.agency as r_agency,
-        ac.establishment as r_establishment
+        ac.application_type as app_type
         FROM tbl_app_checklist ac
         LEFT JOIN tbl_admin_info ai on ai.id = ac.user_id
         LEFT JOIN tbl_userinfo ui on ui.user_id = ai.id
         WHERE ai.PROVINCE = ".$province." AND ai.LGU = ".$lgu." AND ac.status <> '".$status."'";
+     
         
         $query = mysqli_query($this->conn, $sql);
         $data = [];
@@ -453,6 +474,7 @@ class ApplicationManager
             $data[] = [
                 'id' => $row['id'],
                 'userid' => $row['userid'],
+<<<<<<< HEAD
                 'token' => $row['token'],
                 'fname' => $row['app_type'] == 'Encoded' ? $row['r_establishment'] : $row['fname'],
                 'agency' => $row['app_type'] == 'Encoded' ? $row['r_agency'] : $row['agency'],
@@ -562,6 +584,10 @@ class ApplicationManager
                 'token' => $row['token'],
                 'fname' => $row['app_type'] == 'Encoded' ? $row['r_establishment'] : $row['fname'],
                 'agency' => $row['app_type'] == 'Encoded' ? $row['r_agency'] : $row['agency'],
+=======
+                'fname' => $row['fname'],
+                'agency' => $row['agency'],
+>>>>>>> 0dc64af83e4ef8ac5973eeea597322f3615f0d23
                 'address' => $row['address'],
                 'date_created' => $row['date_created'],
                 'control_no' => $row['control_no'],
@@ -585,11 +611,13 @@ class ApplicationManager
         return $result; 
     }
 
+   
+
     public function insertAssessment($id, $assessment) {
         $sql = "UPDATE tbl_app_checklist_entry SET assessment = '".$assessment."' WHERE id = ".$id."";
         $query = mysqli_query($this->conn, $sql);
          
-        return $result; 
+        return $query; 
     }
 
     public function evaluateChecklist($checklist_id, $status, $safety_seal_no, $date_modified, $approver)

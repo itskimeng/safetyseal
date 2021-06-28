@@ -52,8 +52,8 @@
                         <i class="fa fa-box"></i> Receive
                       </a>
                     <?php else: ?>
-                      <a href="admin_application_view.php?appid=<?php echo $applicant['id']; ?>&ussir=<?php echo $applicant['userid']; ?>" class="btn btn-info btn-block btn-sm" style="margin-bottom: -5%;">
-                        <i class="fa fa-clipboard-list"></i> View
+                      <a href="admin_application_view.php?appid=<?php echo $applicant['id']; ?>&ussir=<?php echo $applicant['userid']; ?>" class="btn btn-success btn-block btn-sm" style="margin-bottom: -5%;">
+                        <i class="fa fa-eye"></i> View
                       </a>
                     <?php endif ?>
                   </div>
