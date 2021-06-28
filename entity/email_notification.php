@@ -6,7 +6,6 @@ foreach ($notify as $key => $data) {
 	notifyUser($data['email'], $establishment ,$name);
 }
 
-
 function notifyUser($emailAddress, $est,$applicant_name)
 {
 
