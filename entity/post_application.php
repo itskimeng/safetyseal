@@ -97,8 +97,7 @@ function notifyUser($emailAddress, $est,$applicant_name)
 						<br> Good day Sir/Maam, Mr. '.$applicant_name.' of ' . strtoupper($est) . '</br> submitted an application for safety seal certification
 					</div>
 				</div>
-			</div>
-';
+			</div>';
 	$message .= '</html></body>';
 	$headers = "From: safetyseal@calabarzon.dilg.gov.ph \r\n";
 	$headers .= "MIME-Version: 1.0" . "\r\n";

@@ -12,6 +12,9 @@ class ApplicationManager
     const STATUS_RECEIVED           = "Received";
     const STATUS_FOR_REASSESSMENT   = "For Reassessment";
     const STATUS_REASSESS           = "Reassess";
+    const TYPE_APPLIED           = "Applied";
+    const TYPE_ENCODED           = "Encoded";
+    
 
     function __construct() 
     {
@@ -423,7 +426,8 @@ class ApplicationManager
         ac.control_no as control_no,
         ac.safety_seal_no as ss_no,
         ac.status as status,
-        ac.address as ac_address
+        ac.address as ac_address,
+        ac.application_type as app_type
         FROM tbl_app_checklist ac
         LEFT JOIN tbl_admin_info ai on ai.id = ac.user_id
         LEFT JOIN tbl_userinfo ui on ui.user_id = ai.id
@@ -454,7 +458,8 @@ class ApplicationManager
                 'ss_no' => $row['ss_no'],
                 'status' => $row['status'],
                 'color' => $color,
-                'ac_address' => $row['ac_address']
+                'ac_address' => $row['ac_address'],
+                'app_type' => $row['app_type']
             ];    
         }
 
