@@ -33,7 +33,7 @@
                       <div class="col-md-12">
                           <div class="text-center" style="margin-top: 3%; margin-bottom: -1%; font-size:20pt;">
                             <p>
-                              <b><?php echo $ ['fname']; ?></b>
+                              <b><?php echo $userinfo['fname']; ?></b>
                               <small>/ <?php echo $today; ?></small>
                             </p>
                           </div>
