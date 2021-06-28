@@ -55,7 +55,14 @@
 
                         <tr>
                           <td><b><?php echo $key+1; ?>.</b></td>
-                          <td><?php echo $list['requirement']; ?></td>
+                          <!-- <td><?php //echo $list['requirement']; ?></td> -->
+                          <td>
+                            <?php echo $list['requirement']; ?>
+                            <?php if ($key == 0): ?>
+                                <br><br>Other contact tracing tool. 
+                                <span class="badge badge-info right"><?php echo $list['other_tool']; ?></span>
+                            <?php endif ?>    
+                          </td>
                           <td>
                             <ul>
                             <?php foreach ($list['description'] as $description): ?>
