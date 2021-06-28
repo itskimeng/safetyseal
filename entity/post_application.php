@@ -11,8 +11,10 @@ $today = new DateTime();
 $userid = $_SESSION['userid'];
 $uname = $_SESSION['username'];
 
-$province = $_SESSION['province'];
-$lgu = $_SESSION['city_mun'];
+$province = $_POST['province'];
+$lgu = $_POST['city_mun'];
+
+
 
 $checklists = isset($_POST['chklist_id']) ? $_POST['chklist_id'] : $app->getCertChecklists();
 
