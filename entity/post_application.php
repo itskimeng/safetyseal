@@ -72,7 +72,7 @@ $_SESSION['toastr'] = addFlash('success', 'Successfully updated the checklist.',
 $notify = $app->notifyApprover($province, $lgu);
 
 foreach ($notify as $key => $data) {
-	notifyUser($data['email'], $establishment ,$applicant_name);
+	notifyUser($data['email'], $establishment ,$name);
 }
 // header('location:../wbstapplication.php?ssid='.$token.'');
 header('location:../wbstapplication.php?ssid=' . $token . '&code=' . $_SESSION['gcode'] . '&scope=' . $_SESSION['gscope'] . '');
@@ -91,11 +91,10 @@ function notifyUser($emailAddress, $est,$applicant_name)
 			<div class="container>
 				<div class="card shadow" style="width:30rem">
 					<div class="card-header" style="background-color: #009688; color:#fff;">
-						<img src="http://safetyseal.calabarzon.dilg.gov.ph/frontend/images/logo.png" style="width:50px;height:auto;"/>
-						<img src="http://safetyseal.calabarzon.dilg.gov.ph/frontend/images/calabarzon.png" style="width:10px;height:auto;/>
+						<img src="https://safetyseal.dilg.gov.ph/images/mail_header.png"/>
 					</div>
 					<div class="card-body"><br><br>
-						<br> Good day Sir/Maam, Mr. '.$applicant_name.' of ' . $est . '</br> submitted an application for safety seal certification
+						<br> Good day Sir/Maam, Mr. '.$applicant_name.' of ' . strtoupper($est) . '</br> submitted an application for safety seal certification
 					</div>
 				</div>
 			</div>

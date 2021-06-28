@@ -17,8 +17,8 @@ class LoginManager
         ai.IS_VERIFIED AS IS_VERIFIED,
         ai.ROLES AS ROLES,
         ai.PROVINCE AS PROVINCE,
-        ai.LGU AS CITY_MUNICIPALITY 
-        ai.CMLGOO_NAME as name,
+        ai.LGU AS CITY_MUNICIPALITY ,
+        ai.CMLGOO_NAME as name
         FROM `tbl_admin_info` ai 
         LEFT JOIN tbl_userinfo ui on ai.ID = ui.USER_ID 
         WHERE ai.UNAME = '$username' AND ai.PASSWORD = '$password'";
