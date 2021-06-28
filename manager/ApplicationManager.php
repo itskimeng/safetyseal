@@ -291,6 +291,7 @@ class ApplicationManager
             ui.GOV_AGENCY_NAME as agency,
             ui.GOV_ESTB_NAME as establishment, 
             ui.GOV_NATURE_NAME as nature,
+            ui.EMAIL_ADDRESS as email,
             ai.CMLGOO_NAME as fname,
             p.code as pcode,
             m.code as mcode,
