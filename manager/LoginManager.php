@@ -18,7 +18,8 @@ class LoginManager
         ai.ROLES AS ROLES,
         ai.PROVINCE AS PROVINCE,
         ai.LGU AS CITY_MUNICIPALITY ,
-        ai.CMLGOO_NAME as name
+        ai.CMLGOO_NAME as name,
+        ai.EMAIL as email
         FROM `tbl_admin_info` ai 
         LEFT JOIN tbl_userinfo ui on ai.ID = ui.USER_ID 
         WHERE ai.UNAME = '$username' AND ai.PASSWORD = '$password'";
@@ -32,7 +33,8 @@ class LoginManager
                 'ROLES' => $row['ROLES'],
                 'PROVINCE' => $row['PROVINCE'],
                 'CITY_MUNICIPALITY' => $row['CITY_MUNICIPALITY'],
-                'name' => $row['name']
+                'name' => $row['name'],
+                'email' => $row['email']
             ];    
         }
 

@@ -1,20 +1,16 @@
 <?php
-$name = $_POST['name'];
-$establishment = $_POST['establishment'];
-$email = $_POST['email'];
+
 
 // sending email notification
-$notify = $app->notifyApprover($province, $lgu);
 foreach ($notify as $key => $data) {
-	notifyUser($data['email'], $establishment ,$name);
+	notifyUser($data['email'], $establishment ,$name, $control_no);
 }
 
-
-function notifyUser($emailAddress, $est,$applicant_name)
+function notifyUser($emailAddress, $est,$applicant_name,$control_no)
 {
 
 	$to = $emailAddress;
-	$subject = "Safety Seal Portal";
+	$subject = "Notification from DILG IV-A Safety Seal Portal:";
 	$message = '<html><body>';
 	$message .= '
 			<div class="container>
@@ -23,7 +19,9 @@ function notifyUser($emailAddress, $est,$applicant_name)
 						<center><img src="http://safetyseal.calabarzon.dilg.gov.ph/frontend/images/email_header.png" style="width:65%;height:auto;"/></center>
 					</div>
 					<div class="card-body" style="background-color:ECEFF1"><br>
-						<br> Good day Sir/Maam, Mr. '.$applicant_name.' of ' . strtoupper($est) . '</br> submitted an application for safety seal certification
+						<br> Hi,  '.$applicant_name.' of ' . strtoupper($est) . '</br> applied for Safety Seal Certification with CTRL No <b>'.$control_no.'</b><br><br>
+                        Kindly login to the portal to proceed with the assessment and issuance of certificate.
+                        
 					</div>
 				</div>
 			</div>';
@@ -33,6 +31,3 @@ function notifyUser($emailAddress, $est,$applicant_name)
 	$headers .= "Content-type:text/html;charset=UTF-800" . "\r\n";
 	mail($to, $subject, $message, $headers);
 }
-
-
-

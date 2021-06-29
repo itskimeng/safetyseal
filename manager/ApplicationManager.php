@@ -79,7 +79,7 @@ class ApplicationManager
     public function notifyApprover($province, $lgu){
         $sql = "SELECT `PROVINCE`, `LGU`, `EMAIL`, ui.MOBILE_NO, ai.ROLES AS roles FROM `tbl_admin_info` ai
         left join tbl_userinfo ui on ai.ID = ui.USER_ID
-        WHERE PROVINCE = '".$province."' and LGU = '".$lgu."' AND roles = 'admin' ";
+        WHERE PROVINCE = '".$province."' and LGU = '".$lgu."' ";
        
         $data = [];
         $query = mysqli_query($this->conn, $sql);
@@ -295,12 +295,17 @@ class ApplicationManager
             ai.CMLGOO_NAME as fname,
             p.code as pcode,
             m.code as mcode,
-            ui.MOBILE_NO as contact_details
+            ui.MOBILE_NO as contact_details,
+            cl.id as acid
             FROM tbl_admin_info ai
             LEFT JOIN tbl_userinfo ui on ui.user_id = ai.id
             LEFT JOIN tbl_province p on p.id = ai.PROVINCE
             LEFT JOIN tbl_citymun m on m.id = ai.LGU
+            LEFT JOIN tbl_app_checklist cl on ai.id = cl.user_id
             WHERE ai.id = $user";
+
+
+        
         
         $query = mysqli_query($this->conn, $sql);
         // $result = mysqli_fetch_array($query);

@@ -21,11 +21,9 @@
                 <hr>
                 <input type="hidden" name="is_new" value="<?php echo $is_new; ?>">
                 <input type="hidden" name="token" value="<?php echo !empty($_GET['ssid']) ? $_GET['ssid'] : ''; ?>">
-                <input type="hidden" name="email" value="<?php echo $userinfo['email'];?>">
                 <input type="hidden" name="mobile_no" value="<?php echo $userinfo['mobile_no'];?>">
                 <input type="hidden" name="province" value="<?php echo $_SESSION['province'];?>">
                 <input type="hidden" name="city_mun" value="<?php echo $_SESSION['city_mun'];?>">
-                <input type="hidden" name="name" value="<?php echo $_SESSION['name'];?>">
 
                 <!-- user details -->
                 <div class="col-md-12 mt-3">
@@ -142,8 +140,8 @@
   background: linear-gradient(#9bc90d 0%, #79a70a 100%);
   box-shadow: 0 3px 10px -5px rgba(0, 0, 0, 1);
   position: absolute;
-  /* top: 41px; // change this, if no border */
-  /* right: -20px; // change this, if no border */
+  top: 41px; 
+  right: -40px; 
 }
 
 .ribbon span::before {
