@@ -297,13 +297,15 @@ class ApplicationManager
             m.code as mcode,
             ui.MOBILE_NO as contact_details,
             cl.id as acid,
-            cl.control_no as control_no,
+            cl.control_no as control_no
             FROM tbl_admin_info ai
             LEFT JOIN tbl_userinfo ui on ui.user_id = ai.id
             LEFT JOIN tbl_province p on p.id = ai.PROVINCE
             LEFT JOIN tbl_citymun m on m.id = ai.LGU
             LEFT JOIN tbl_app_checklist cl on ai.id = cl.user_id
             WHERE ai.id = $user";
+
+            echo $sql;
 
         
         
