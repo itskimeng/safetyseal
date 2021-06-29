@@ -64,7 +64,7 @@ function getStatus($conn, $id,$cn) {
 	$data = [];
 	while ($row = mysqli_fetch_assoc($query)) {
 		$data[] = [
-			'status' ->$row['status'],
+			'status' =>$row['status'],
 			'safety_seal_no' => $row['safety_seal_no']
 		];
 	return $result;
