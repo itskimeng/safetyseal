@@ -52,6 +52,8 @@ foreach ($degree as $key => $data) {
 	if($data['status'] == 'Approved')
 	{
 		ApprovedApplicant($email,$data['safety_seal_no'],$control_no);
+	}else{
+		DisapprovedApplicant($email,$control_no);
 	}
 }
 function ApprovedApplicant($emailAddress,$ss_no,$control_no)
@@ -81,5 +83,28 @@ function ApprovedApplicant($emailAddress,$ss_no,$control_no)
 }
 
 
-
+function DisapprovedApplicant($emailAddress,$control_no)
+{
+	$to = $emailAddress;
+	$subject = "Notification from DILG IV-A Safety Seal Portal:";
+	$message = '<html><body>';
+	$message .= '
+			<div class="container>
+				<div class="card shadow" style="width:30rem">
+					<div class="card-header" style="background-color: #009688; color:#fff;">
+						<center><img src="http://safetyseal.calabarzon.dilg.gov.ph/frontend/images/email_header.png" style="width:65%;height:auto;"/></center>
+					</div>
+					<div class="card-body" style="background-color:ECEFF1"><br>
+						<br>Good day! Your application for Safety Seal Certification with Ctrl No:<b> '.$control_no.'</b>  has been returned.<br><br>
+                        Kindly login to the portal to complete your application.
+                        
+					</div>
+				</div>
+			</div>';
+	$message .= '</html></body>';
+	$headers = "From: safetyseal@calabarzon.dilg.gov.ph \r\n";
+	$headers .= "MIME-Version: 1.0" . "\r\n";
+	$headers .= "Content-type:text/html;charset=UTF-800" . "\r\n";
+	mail($to, $subject, $message, $headers);
+}
 
