@@ -444,7 +444,8 @@ class ApplicationManager
         ac.safety_seal_no as ss_no,
         ac.status as status,
         ac.address as ac_address,
-        ac.application_type as app_type
+        ac.application_type as app_type,
+        ac.token as token
         FROM tbl_app_checklist ac
         LEFT JOIN tbl_admin_info ai on ai.id = ac.user_id
         LEFT JOIN tbl_userinfo ui on ui.user_id = ai.id
@@ -476,7 +477,8 @@ class ApplicationManager
                 'status' => $row['status'],
                 'color' => $color,
                 'ac_address' => $row['ac_address'],
-                'app_type' => $row['app_type']
+                'app_type' => $row['app_type'],
+                'token' => $row['token']
             ];    
         }
 
