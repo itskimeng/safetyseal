@@ -305,7 +305,6 @@ class ApplicationManager
             LEFT JOIN tbl_app_checklist cl on ai.id = cl.user_id
             WHERE ai.id = $user";
 
-            echo $sql;
 
         
         
