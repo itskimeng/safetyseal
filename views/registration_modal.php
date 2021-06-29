@@ -3,9 +3,9 @@
 
 
 <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-    <div class="modal-dialog modal-xl" role="document">
+    <div class="modal-dialog modal-lg" role="document">
         <div class="modal-content">
-            <div class="modal-header">
+            <div class="modal-header"> 
                 <h5 class="modal-title" id="exampleModalLabel">Registration</h5>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
@@ -16,81 +16,8 @@
                         <!-- <input type="hidden" id="cform-array_citymuns" class="array_citymuns" name="array_citymuns" value='<?php //echo json_encode($city_mun); ?>;'> -->
 
                         <div class="row">
-                            <div class="col-5">
-                                <div class="col-md-12">
-                                    <label for="validationGovOffice" class="form-label">Name of Government Agency/Office</label>
-                                    <input required type="text" class="form-control" name="government_agency" id="validationGovOffice" aria-describedby="emailHelp">
-                                    <div class="invalid-feedback">
-                                        Name of Government Agency/Office is required
-
-                                    </div>
-                                </div>
-
-                                <div class="col-md-12">
-                                    <label for="validationGovDept" class="form-label">Name of Government Establishment</label>
-                                    <input type="text" class="form-control" name="government_esta" id="validationGovDept" required>
-                                    <div class="invalid-feedback">
-                                        Name of Government Establishment is required
-                                    </div>
-                                </div>
-                                <div class="col-mb-12">
-                                    <div class="form-group">
-                                        <label for="nature">Nature of Government Establishments</label>
-                                        <select class="form-control select2bs4 select2-hidden-accessible" name="government_nature" id="nature" tabindex="-1" aria-hidden="true" required>
-                                       <?php foreach ($government_nature as $key => $nature):?>
-                                        <option value="<?php echo $nature;?>"><?php echo $nature;?></option>
-                                       <?php endforeach;?>
-
-                                       
-                                          
-                                        </select>
-                                        <div class="invalid-feedback">
-                                        Nature of Government Establishments< is required
-
-                                    </div>
-                                    </div>
-                                </div>
-                                <div class="mb-12">
-                                    <label for="validateAddress" class="form-label">Address</label>
-                                    <input required type="text" class="form-control" name="validateAddress" id="address" aria-describedby="emailHelp">
-                                    <div class="invalid-feedback">
-                                        Address is required
-
-                                    </div>
-                                </div>
-                             
-                                <div class="col-mb-12">
-                                    <div class="form-group">
-                                        <label for="province">Province</label>
-                                        <select class="form-control select2bs4 select2-hidden-accessible" name="province" id="province" tabindex="-1" aria-hidden="true" required>
-                                        <option></option>
-                                            <?php foreach ($provinces as $key => $province): ?>
-                                                <option value="<?php echo $key;?>" data-code="<?php echo $province['code'];?>"><?php echo $province['name'];?></option>
-                                            <?php endforeach ?>
-                                        </select>
-                                        <div class="invalid-feedback">
-                                            Province is required
-
-                                        </div>
-                                    </div>
-                                </div>
-                                
-                                <div class="col-md-12">
-                                    <div class="form-group">
-                                    <label for="city_mun">City/Municipality</label>
-                                    <select class="form-control select2bs4 select2-hidden-accessible" name = "municipality" style="width: 100%;" id="city_mun" tabindex="-1" aria-hidden="true" required>
-                                    </select>
-                                    <div class="invalid-feedback">
-                                            City/Municipality is required
-
-                                        </div>
-                                    </div>
-                                    
-                                </div>
-                             
-                            </div>
-                            <div class="col-7">
-                                <div class="row">
+                            <div class="col-12">
+                            <div class="row">
                                     <div class="col-md-4">
                                         <label for="vfname" class="form-label">First Name</label>
                                         <input required type="text" class="form-control" name="fname" id="vfname" aria-describedby="emailHelp">
@@ -160,6 +87,81 @@
                                            Confirmed Password is required!
                                         </div>
                                     </div>
+                                <div class="col-md-12">
+                                    <label for="validationGovOffice" class="form-label">Name of Government Agency/Office</label>
+                                    <input required type="text" class="form-control" name="government_agency" id="validationGovOffice" aria-describedby="emailHelp">
+                                    <div class="invalid-feedback">
+                                        Name of Government Agency/Office is required
+
+                                    </div>
+                                </div>
+
+                                <div class="col-md-12">
+                                    <label for="validationGovDept" class="form-label">Name of Government Establishment</label>
+                                    <input type="text" class="form-control" name="government_esta" id="validationGovDept" required>
+                                    <div class="invalid-feedback">
+                                        Name of Government Establishment is required
+                                    </div>
+                                </div>
+                                <div class="col-mb-12">
+                                    <div class="form-group">
+                                        <label for="nature">Nature of Government Establishments</label>
+                                        <select class="form-control select2bs4 select2-hidden-accessible" name="government_nature" id="nature" tabindex="-1" aria-hidden="true" required>
+                                       <option value ="" selected></option>
+                                        <?php foreach ($government_nature as $key => $nature):?>
+                                        <option value="<?php echo $nature;?>"><?php echo $nature;?></option>
+                                       <?php endforeach;?>
+
+                                       
+                                          
+                                        </select>
+                                        <div class="invalid-feedback">
+                                        Nature of Government Establishments< is required
+
+                                    </div>
+                                    </div>
+                                </div>
+                                <div class="mb-12">
+                                    <label for="validateAddress" class="form-label">Address</label>
+                                    <input required type="text" class="form-control" name="validateAddress" id="address" aria-describedby="emailHelp">
+                                    <div class="invalid-feedback">
+                                        Address is required
+
+                                    </div>
+                                </div>
+                             
+                                <div class="col-mb-12">
+                                    <div class="form-group">
+                                        <label for="province">Province</label>
+                                        <select class="form-control select2bs4 select2-hidden-accessible" name="province" id="province" tabindex="-1" aria-hidden="true" required>
+                                        <option></option>
+                                            <?php foreach ($provinces as $key => $province): ?>
+                                                <option value="<?php echo $key;?>" data-code="<?php echo $province['code'];?>"><?php echo $province['name'];?></option>
+                                            <?php endforeach ?>
+                                        </select>
+                                        <div class="invalid-feedback">
+                                            Province is required
+
+                                        </div>
+                                    </div>
+                                </div>
+                                
+                                <div class="col-md-12">
+                                    <div class="form-group">
+                                    <label for="city_mun">City/Municipality</label>
+                                    <select class="form-control select2bs4 select2-hidden-accessible" name = "municipality" style="width: 100%;" id="city_mun" tabindex="-1" aria-hidden="true" required>
+                                    </select>
+                                    <div class="invalid-feedback">
+                                            City/Municipality is required
+
+                                        </div>
+                                    </div>
+                                    
+                                </div>
+                             
+                            </div>
+                            <div class="col-7">
+                               
                                 </div>
                             </div>
                         </div>
