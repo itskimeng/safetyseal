@@ -34,6 +34,8 @@ function getUserChecklists($conn, $id)
        	ui.GOV_NATURE_NAME as nature,
        	ui.ADDRESS as address,
         ai.CMLGOO_NAME as fname,
+        ai.EMAIL as email,
+        ai.id as user_id,
        	ui.ADDRESS as address,
        	ui.MOBILE_NO as contact_details,
         ac.control_no as control_no,

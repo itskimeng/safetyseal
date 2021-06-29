@@ -11,7 +11,11 @@ $today = new DateTime();
 $userid = $_SESSION['userid'];
 $uname = $_SESSION['username'];
 $checklist_id = $_POST['appid'];
+
+// ==================
 $email = $_POST['email'];
+$userid = $_POST['id'];
+$control_no = $_POST['control_no'];
 $defects = isset($_POST['defects']) ? $_POST['defects'] : '';
 $recommendations = isset($_POST['recommendations']) ? $_POST['recommendations'] : '';
 
@@ -38,31 +42,39 @@ if (empty($notes)) {
 $ss_no = $app->generateCode($userid);
 $app->evaluateChecklist($checklist_id, $status, $ss_no, $today->format('Y-m-d H:i:s'), $userid);
 
-$degree = getStatus($conn,$userid);
+$degree = getStatus($conn,$userid,$control_no);
 
-if($degree == 'Approved'){
-	notifyUser($email);
-
+foreach ($degree as $key => $data) {
+	if($data['status'] == 'Approved')
+	{
+		ApprovedApplicant($email,$data['safety_seal_no'],$control_no);
+	}
 }
+
+
 
 
 $_SESSION['toastr'] = $app->addFlash('success', 'The application has been set to '.$status.'.', 'Success');
 
 
-function getStatus($conn, $userid) {
-	$sql = "SELECT status FROM tbl_app_checklist where user_id = $userid";
+function getStatus($conn, $id,$cn) {
+	$sql = "SELECT status,safety_seal_no FROM tbl_app_checklist where user_id = $id and control_no = '$cn'";
 	$query = mysqli_query($conn, $sql);
-       
     $result = mysqli_fetch_array($query);
-	
+	$data = [];
+	while ($row = mysqli_fetch_assoc($query)) {
+		$data[] = [
+			'status' ->$row['status'],
+			'safety_seal_no' => $row['safety_seal_no']
+		];
 	return $result;
 }
 
-function notifyUser($emailAddress)
+function ApprovedApplicant($emailAddress,$ss_no,$control_no)
 {
 
 	$to = $emailAddress;
-	$subject = "Safety Seal Portal";
+	$subject = "Notification from DILG IV-A Safety Seal Portal:";
 	$message = '<html><body>';
 	$message .= '
 			<div class="container>
@@ -71,16 +83,9 @@ function notifyUser($emailAddress)
 						<center><img src="http://safetyseal.calabarzon.dilg.gov.ph/frontend/images/email_header.png" style="width:65%;height:auto;"/></center>
 					</div>
 					<div class="card-body" style="background-color:ECEFF1"><br>
-						<br><b>Congratulations!</b><br>
-						You passed the Safety Seal Certification as of '.date('F d, Y').' <br><br>
-						Kindly note that the Safety Seal is only valid for six(6) months unless <br><br>
-						otherwise revoked earlier due to valid complaint. You may process <br>
-						renewal one (1) month prior to the expiration of its validity.<br><br>
-
-						To keep updated please visit safetyseal.calabarzon.dilg.gov.ph or coordinate with your DILG Field officer
-						<br><br>
-						Thank you!.
-					
+						<br>Good day! Your application for Safety Seal Certification with Ctrl No:<b> '.$control_no.'</b>  and Safety Seal No: <b>'.$ss_no.'</b>  has been approved.<br><br>
+                        Kindly login to the portal to print the certificate. 
+                        
 					</div>
 				</div>
 			</div>';
@@ -90,7 +95,6 @@ function notifyUser($emailAddress)
 	$headers .= "Content-type:text/html;charset=UTF-800" . "\r\n";
 	mail($to, $subject, $message, $headers);
 }
-
 
 
 

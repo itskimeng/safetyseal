@@ -29,6 +29,9 @@
       <form method="POST" action="entity/post_assessment.php" id="form-evaluation">
       <?php endif ?>  
         <input type="hidden" name="appid" value="<?php echo $applicant['appid']; ?>">
+        <input type="hidden" name="email" value="<?php echo $applicant['email']; ?>">
+        <input type="hidden" name="id" value="<?php echo $applicant['user_id']; ?>">
+        <input type="hidden" name="control_no" value="<?php echo $applicant['control_no']; ?>">
         <div class="col-lg-12 col-md-6 col-sm-3">
             <div class="card">
                 <div class="card-header">
@@ -382,11 +385,11 @@
     function postTask(path, data) {
       $.post(path, data,
         function(data, status){
-          if (status == 'success') {
-            setTimeout(function(){// wait for 5 secs(2)
-              location.reload(); // then reload the page.(3) 
-            }, 1000);
-          }
+          // if (status == 'success') {
+          //   setTimeout(function(){// wait for 5 secs(2)
+          //     location.reload(); // then reload the page.(3) 
+          //   }, 1000);
+          // }
         }
       );
 
