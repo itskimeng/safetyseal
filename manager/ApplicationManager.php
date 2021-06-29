@@ -618,5 +618,17 @@ class ApplicationManager
         
         return $data;    
     }
+    function getStatus($conn, $id,$cn) {
+        $sql = "SELECT status,safety_seal_no FROM tbl_app_checklist where user_id = $id and control_no = '$cn'";
+        $query = mysqli_query($conn, $sql);
+        $data = [];
+        while ($row = mysqli_fetch_assoc($query)) {
+            $data[] = [
+                'status' =>$row['status'],
+                'safety_seal_no' => $row['safety_seal_no']
+            ];
+        return $data;
+    }
+    }
 
 }

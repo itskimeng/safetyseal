@@ -41,8 +41,12 @@ if (empty($notes)) {
 
 $ss_no = $app->generateCode($userid);
 $app->evaluateChecklist($checklist_id, $status, $ss_no, $today->format('Y-m-d H:i:s'), $userid);
+$_SESSION['toastr'] = $app->addFlash('success', 'The application has been set to '.$status.'.', 'Success');
 
-$degree = getStatus($conn,$userid,$control_no);
+
+
+$degree = $app->getStatus($conn,$userid,$control_no);
+
 
 foreach ($degree as $key => $data) {
 	if($data['status'] == 'Approved')
@@ -50,27 +54,6 @@ foreach ($degree as $key => $data) {
 		ApprovedApplicant($email,$data['safety_seal_no'],$control_no);
 	}
 }
-
-
-
-
-$_SESSION['toastr'] = $app->addFlash('success', 'The application has been set to '.$status.'.', 'Success');
-
-
-function getStatus($conn, $id,$cn) {
-	$sql = "SELECT status,safety_seal_no FROM tbl_app_checklist where user_id = $id and control_no = '$cn'";
-	$query = mysqli_query($conn, $sql);
-    $result = mysqli_fetch_array($query);
-	$data = [];
-	while ($row = mysqli_fetch_assoc($query)) {
-		$data[] = [
-			'status' =>$row['status'],
-			'safety_seal_no' => $row['safety_seal_no']
-		];
-	return $result;
-}
-}
-
 function ApprovedApplicant($emailAddress,$ss_no,$control_no)
 {
 
