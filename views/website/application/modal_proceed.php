@@ -10,6 +10,7 @@
         <input type="hidden" name="token" value="<?php echo !empty($_GET['ssid']) ? $_GET['ssid'] : ''; ?>">
         <input type="hidden" name="name" value="<?php echo $_SESSION['name'];?>">
         <input type="hidden" name="email" value="<?php echo $_SESSION['email'];?>">
+        <input type="hidden" name="control_no" value="<?php echo $userinfo['code'];?>">
 
 
         <div class="modal-body">
