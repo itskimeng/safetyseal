@@ -385,11 +385,11 @@
     function postTask(path, data) {
       $.post(path, data,
         function(data, status){
-          // if (status == 'success') {
-          //   setTimeout(function(){// wait for 5 secs(2)
-          //     location.reload(); // then reload the page.(3) 
-          //   }, 1000);
-          // }
+          if (status == 'success') {
+            setTimeout(function(){// wait for 5 secs(2)
+              location.reload(); // then reload the page.(3) 
+            }, 1000);
+          }
         }
       );
 
