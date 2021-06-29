@@ -69,6 +69,7 @@ function getStatus($conn, $id,$cn) {
 		];
 	return $result;
 }
+}
 
 function ApprovedApplicant($emailAddress,$ss_no,$control_no)
 {
