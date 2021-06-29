@@ -26,6 +26,7 @@ $userinfo = $app->getApplicantDetails($userid);
 
 $name = $_POST['name'];
 $establishment =$userinfo['establishment'];
+$control_no =$userinfo['code'];
 $email = $_POST['email'];
 require 'email_notification.php';
 header('location:../wbstapplication.php?ssid='.$token.'');

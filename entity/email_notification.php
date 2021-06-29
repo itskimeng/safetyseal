@@ -3,7 +3,7 @@
 
 // sending email notification
 foreach ($notify as $key => $data) {
-	notifyUser($data['email'], $establishment ,$name, $data['control_no']);
+	notifyUser($data['email'], $establishment ,$name, $control_no);
 }
 
 function notifyUser($emailAddress, $est,$applicant_name,$control_no)

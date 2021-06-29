@@ -296,8 +296,7 @@ class ApplicationManager
             p.code as pcode,
             m.code as mcode,
             ui.MOBILE_NO as contact_details,
-            cl.id as acid,
-            cl.control_no as control_no
+            cl.id as acid
             FROM tbl_admin_info ai
             LEFT JOIN tbl_userinfo ui on ui.user_id = ai.id
             LEFT JOIN tbl_province p on p.id = ai.PROVINCE
@@ -329,8 +328,7 @@ class ApplicationManager
                 'pcode' => $row['pcode'],
                 'mcode' => $row['mcode'],
                 'code' => '2021-'.'_____',
-                'date_proceed' => '',
-                'control_no' => $row['control_no']
+                'date_proceed' => ''
             ];      
         }
 
