@@ -304,9 +304,6 @@ class ApplicationManager
             LEFT JOIN tbl_app_checklist cl on ai.id = cl.user_id
             WHERE ai.id = $user";
 
-
-        
-        
         $query = mysqli_query($this->conn, $sql);
         // $result = mysqli_fetch_array($query);
         $data = [];
@@ -328,7 +325,7 @@ class ApplicationManager
                 'pcode' => $row['pcode'],
                 'mcode' => $row['mcode'],
                 'code' => '2021-'.'_____',
-                'date_proceed' => ''
+                'date_proceed' => '',
             ];      
         }
 

@@ -28,7 +28,8 @@ $name = $_POST['name'];
 $establishment =$userinfo['establishment'];
 $control_no =$_POST['control_no'];
 $email = $_POST['email'];
-require 'email_notification.php';
+// require 'post_notif.php';
+
 header('location:../wbstapplication.php?ssid='.$token.'');
 
 

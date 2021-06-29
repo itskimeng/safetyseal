@@ -16,6 +16,7 @@ if (!empty($_SESSION['userid'])) {
 	if (isset($_GET['create_new'])) {
 		$userinfo = $app->getApplicantDetails($userid);
 	
+	
 		$appchecklists = $app->getChecklists();
 	} else {
 		$token = $_GET['ssid'];
