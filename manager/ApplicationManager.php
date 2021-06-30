@@ -233,7 +233,7 @@ class ApplicationManager
             ui.MOBILE_NO as contact_details,
             ac.status as status,
             ac.control_no as control_no,
-            ac.establishment as establishment,
+            ac.establishment as establishment2,
             ac.nature as nature,
             ac.address as address
             FROM tbl_app_checklist ac
@@ -260,7 +260,7 @@ class ApplicationManager
                 'date_created' => $date_created,
                 'address' => $row['address'],
                 'agency' => $row['agency'],
-                'establishment' => $row['establishment'],
+                'establishment' => $row['establishment2'],
                 'nature' => $row['nature'],
                 'fname' => $row['fname'],
                 'contact_details' => $row['contact_details'],
@@ -490,6 +490,37 @@ class ApplicationManager
 
         $control_no = $ccode.'-'.$new_counter;
        
+        return $control_no;
+    }
+
+    public function generateControlNumber($user)
+    {
+        $ccode = '2021';
+        $sql = "SELECT counter, id FROM tbl_config WHERE code = '" . $ccode . "'";
+        $query = mysqli_query($this->conn, $sql);
+        $result = mysqli_fetch_array($query);
+
+        $cc = $result['counter'];
+        
+        if ($cc > 9999) {
+            $new_counter = $cc;
+        } elseif ($cc > 999) {
+            $new_counter = '0' . $cc;
+        } elseif ($cc < 10) {
+            $new_counter = '0000' . $cc;
+        } elseif ($cc < 99) {
+            $new_counter = '000' . $cc;
+        } elseif ($cc > 99 and $cc <= 999) {
+            $new_counter = '00' . $cc;
+        }
+
+        $cc = $cc + 1;
+
+        $sql = "UPDATE tbl_config SET counter = '" . $cc . "' WHERE id = " . $result['id'] . "";
+        $result = mysqli_query($this->conn, $sql);
+
+        $control_no = $ccode . '-' . $new_counter;
+
         return $control_no;
     }
 

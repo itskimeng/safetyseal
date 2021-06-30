@@ -1,8 +1,8 @@
 <div class="modal fade right" id="modal-view_attachments" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
   <div class="modal-dialog modal-dialog-scrollable modal-xl">
     <div class="modal-content">
-      <div class="modal-header">
-        <h5 class="modal-title" id="exampleModalLabel"><i class="fa fa-link"></i> View Attachments</h5>
+      <div class="modal-header" style="background-color: #0d6efd !important;">
+        <h5 class="modal-title" id="exampleModalLabel" style="color:white;"><i class="fa fa-link"></i> View Attachments</h5>
         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
       </div>
       <form method="POST" enctype="multipart/form-data" action="entity/delete_attachments.php">
@@ -12,15 +12,6 @@
         <input type="hidden" name="token_id" value="<?php if(isset($_GET['ssid'])){echo $_GET['ssid'];}else{}?>"/>        
 
         <div class="modal-body" id="tbody-view_attchmnt">
-            <!-- <div class="mb-3">
-              <table class="table table-responsive table-striped">
-                <tbody id="tbody-view_attchmnt">
-                  
-                </tbody>
-              </table>
-            </div> -->
-
-            
             
         </div>
         <div class="modal-footer">
@@ -33,9 +24,10 @@
 </div>
 
 <style type="text/css">
-  .modal-header {
-    background-color: #ffcd39;
-  }
+  /*.modal-header  {
+    background-color: #0d6efd !important;
+    color: white !important;
+  }*/
   .bs-callout {
       padding: 20px;
       margin: 20px 0;
