@@ -63,7 +63,7 @@
         <div class="col-md-12">
           <div class="row pl-2 pr-2">
             <div class="form-outline mb-2 col-md-12">
-              <label class="form-label" for="form1Example1">Name of Government Establlishment/ Department/ Office/ Unit:</label><br>
+              <label class="form-label" for="form1Example1">Name of Sub-Office/Unit:</label><br>
               <?php if ($is_new): ?>
                 <input type="text" id="form1Example1" name="establishment" class="form-control" value="" required/>
               <?php else: ?>

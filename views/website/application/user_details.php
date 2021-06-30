@@ -30,7 +30,7 @@
   <div class="col-md-12">
     <div class="row">
       <div class="form-outline mb-2 col-md-12">
-        <label class="form-label" for="form1Example1">Name of Government Establlishment/ Department/ Office/ Unit:</label><br>
+        <label class="form-label" for="form1Example1">Name of Sub-Office/Unit:</label><br>
         <?php if ($is_new): ?>
           <input type="text" id="form1Example1" name="establishment" class="form-control" value="<?php echo $userinfo['establishment']; ?>"/>
         <?php else: ?>  
