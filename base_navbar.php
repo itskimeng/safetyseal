@@ -19,6 +19,9 @@
         <li class="nav-item">
           <a href="admin_application.php" class="nav-link">Application</a>
         </li>
+        <li class="nav-item">
+          <a href="reports.php" class="nav-link">Generate Reports</a>
+        </li>
 
         <li class="nav-item">
           <a href="views/logout.php" class="nav-link">Logout(<?php echo $_SESSION['username'];?>)</a>
