@@ -97,7 +97,7 @@ class ApplicationManager
     public function updateChecklistEntry($data)
     {
         $sql = "UPDATE tbl_app_checklist_entry 
-                SET answer = '".$data['answer']."', reason = '".$data['reason']."' WHERE id = ".$data['chklist_id']."";
+                SET other_tool = '".$data['other_tool']."', answer = '".$data['answer']."', reason = '".$data['reason']."' WHERE id = ".$data['chklist_id']."";
 
         $result = mysqli_query($this->conn, $sql);
 
@@ -128,9 +128,7 @@ class ApplicationManager
 
         while ($row = mysqli_fetch_assoc($query)) {
             $is_disabled = true;
-            if (!empty($row['other_tool'])) {
-                $is_disabled = true;
-            } elseif (in_array($row['status'], array('Draft', 'Disapproved', 'Reassess'))) {
+            if (in_array($row['status'], array('Draft', 'Disapproved', 'Reassess'))) {
                 $is_disabled = false;
             }
 
@@ -144,8 +142,7 @@ class ApplicationManager
                 'assessment' => $row['assessment'],
                 'other_tool' => $row['other_tool'],
                 'is_disabled' => $is_disabled,
-                'otherTool_disabled' => empty($row['answer']) ? false : true,
-                'is_disabled' => $is_disabled
+                'otherTool_disabled' => empty($row['answer']) ? false : true
             ];    
         }
 
@@ -392,7 +389,6 @@ class ApplicationManager
         LEFT JOIN tbl_userinfo ui on ui.user_id = ai.id
         WHERE ai.PROVINCE = ".$province." AND ai.LGU = ".$lgu." AND ac.status <> '".$status."'";
      
-        
         $query = mysqli_query($this->conn, $sql);
         $data = [];
         
@@ -406,11 +402,60 @@ class ApplicationManager
                 $color = 'red';
             }
 
-            $data[] = [
+            $data[$row['id']] = [
                 'id' => $row['id'],
                 'userid' => $row['userid'],
                 'fname' => $row['fname'],
                 'agency' => $row['agency'],
+                'address' => $row['address'],
+                'date_created' => $row['date_created'],
+                'control_no' => $row['control_no'],
+                'ss_no' => $row['ss_no'],
+                'status' => $row['status'],
+                'color' => $color,
+                'ac_address' => $row['ac_address'],
+                'app_type' => $row['app_type'],
+                'token' => $row['token']
+            ];    
+        }
+
+        $sql2 = "SELECT 
+        ac.id as id,
+        ai.CMLGOO_NAME as fname,
+        ui.GOV_AGENCY_NAME as pagency,
+        ac.agency as cagency,
+        ui.ADDRESS as address,
+        DATE_FORMAT(ac.date_created, '%Y-%m-%d') as date_created,
+        ui.id as userid,
+        ac.control_no as control_no,
+        ac.safety_seal_no as ss_no,
+        ac.status as status,
+        ac.address as ac_address,
+        ac.application_type as app_type,
+        ac.token as token
+        FROM tbl_app_checklist ac
+        LEFT JOIN tbl_admin_info ai on ai.id = ac.user_id
+        LEFT JOIN tbl_userinfo ui on ui.user_id = ai.id
+        WHERE ai.PROVINCE = ".$province." AND ai.LGU = ".$lgu." AND ac.application_type = 'Encoded'";
+     
+        $query = mysqli_query($this->conn, $sql2);
+        $data = [];
+        
+        while ($row = mysqli_fetch_assoc($query)) {
+            $color = 'green';
+            if ($row['status'] == 'For Receiving') {
+                $color = 'primary';
+            } elseif ($row['status'] == 'Received') {
+                $color = 'yellow';
+            } elseif ($row['status'] == 'Disapproved') {
+                $color = 'red';
+            }
+
+            $data[$row['id']] = [
+                'id' => $row['id'],
+                'userid' => $row['userid'],
+                'fname' => $row['fname'],
+                'agency' => !empty($row['cagency']) ? $row['cagency'] : $row['pagency'],
                 'address' => $row['address'],
                 'date_created' => $row['date_created'],
                 'control_no' => $row['control_no'],
