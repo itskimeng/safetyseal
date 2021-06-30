@@ -55,7 +55,7 @@ $resultInspection = $execInspection->fetch_assoc();
         <div class="col-md-1"></div>
         <div class="col-md-5">
           <h4 class="mt-3"><span class="text-muted">Agency:</span> <?php echo $resultAddress['GOV_AGENCY_NAME']; ?></h4>
-          <h6 class="mt-3"><span class="text-muted">Establishment:</span> <?php echo $resultAddress['GOV_ESTB_NAME']; ?></h6>
+          <h6 class="mt-3"><span class="text-muted">Sub-Office/Unit:</span> <?php echo $resultAddress['GOV_ESTB_NAME']; ?></h6>
           <h6 class="mt-3"><span class="text-muted">Address:</span> <?php echo $resultApplication['address']; ?></h6>
           <br>
           <h6 class="mt-3"><span class="text-muted">Name of Person In Charge:</span> <?php echo $resultApplicantDetails['CMLGOO_NAME']; ?></h6>

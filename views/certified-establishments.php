@@ -40,7 +40,7 @@
             <thead>
                 <tr>
                     <th width="25%">AGENCY</th>
-                    <th width="25%">ESTABLISHMENT</th>
+                    <th width="25%">SUB-OFFICE/UNIT</th>
                     <th width="40%">ADDRESS</th>
                     <th width="15%">SAFETY SEAL NO</th>
                     <th width="10%">ISSUED ON</th>
