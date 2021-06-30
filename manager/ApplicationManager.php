@@ -92,14 +92,6 @@ class ApplicationManager
         }
             return $data;
 
-
-        // $to = $emailAddress;
-    //     $subject = "Safety Seal Email Verification";
-    //     $message = " Welcome to DILG CALABARZON Safety Seal Portal! <br> To complete your Safety Seal profile, we need you to confirm your email address. <br><a class='btn btn-light-primary' href='http://safetyseal.calabarzon.dilg.gov.ph/application/functions/verify.php?vkey=" . $vkey . "'>Verify Account</a>";
-    //     $headers = "From: safetyseal@calabarzon.dilg.gov.ph \r\n";
-    //     $headers .= "MIME-Version: 1.0" . "\r\n";
-    //     $headers .= "Content-type:text/html;charset=UTF-800" . "\r\n";
-    //     mail($to, $subject, $message, $headers);
     }
 
     public function updateChecklistEntry($data)
@@ -332,12 +324,34 @@ class ApplicationManager
         return $data;
     }
 
+    public function getApproverDetails($province,$lgu)
+    {
+        $sql = "SELECT 
+        ui.EMAIL_ADDRESS as email,
+        ai.CMLGOO_NAME as fname,
+        ui.MOBILE_NO as contact_details
+        FROM tbl_admin_info ai
+        LEFT JOIN tbl_userinfo ui on ui.user_id = ai.id
+        WHERE ai.PROVINCE = '$province' AND ai.LGU = '$lgu' and ai.ROLES = 'admin'";
+        $query = mysqli_query($this->conn, $sql);
+        $data = [];
+        
+        while ($row = mysqli_fetch_assoc($query)) {
+            $data = [
+                'email' => $row['email'],
+                'fname' => $row['fname'],
+                'mobile_no' => $row['contact_details']
+            ];   
+        }
+            return $data;
+    }
+
     public function setUserApplicationDate($user, $date)
     {
         $sql = "UPDATE tbl_userinfo SET DATE_APPLICATION_CREATED = '".$date."' WHERE id = ".$user."";
         $result = mysqli_query($this->conn, $sql);
 
-        return $result;
+        return $result; 
     }
 
     public function proceedChecklist($checklist_id, $has_consent, $status, $date_modified)
