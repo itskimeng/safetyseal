@@ -125,6 +125,8 @@
           $counter++;
         }
       });
+
+      console.log($counter);
       
       if ($counter < 14) {
         tata.warn('Warning', 'All items in the checklist must be assess.');

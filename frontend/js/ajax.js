@@ -1,15 +1,75 @@
-$('#submit').click(function () {
-    var queryString = $('#registrationForm').serialize();
-    alert(queryString);
-    // $.ajax({
-    //     url: "_editTAForm_save.php",
-    //     method: "POST",
-    //     data: $("#submit").serialize(),
-    //     success: function (data) {
-    //         setTimeout(function () {
-    //             swal("Record saved successfully!");
-    //         }, 1000);
-    //         window.location = "processing.php?division=<?php echo $_GET['division'];?>";
-    //     }
-    // });
-})
+
+
+$.ajax({
+    url: 'entity/checkPendingMessage.php',
+    dataType: 'json',
+    cache: false,
+    success: function (data) {
+        let control_no = data.control_no;
+        let content = data.content;
+        let mobile = data.contact_details;
+        let ip_address = data.ip_address;
+        if (data.for_sending == 1) {    
+            $.ajax({
+                type: "GET",
+                url: "http://"+ip_address+"/send/?pass=&number="+mobile+"&data="+content+"",
+                success: function (data) {
+                    
+                    $.ajax({
+                        type: "POST",
+                        url: "entity/post_sending.php",
+                        data: {
+                            cn:control_no,
+                            has_sent: '0',// successfully sent!
+                        },
+                        success: function (data) {
+                            console.log('SMS Notification: status(success!)');
+                        }
+                    });
+                }
+            });
+        } else {
+            console.log("fail");
+        }
+
+    }
+});
+
+
+
+$.ajax({
+    url: 'entity/checkEmailPendingMessage.php',
+    dataType: 'json',
+    cache: false,
+    success: function (data) {
+        let control_no = data.control_no;
+        let content = data.content;
+        let mobile = data.contact_details;
+        let ip_address = data.ip_address;
+        console.log(ip_address);
+        if (data.for_sending == 1) {    
+            $.ajax({
+                type: "GET",
+                url: "http://"+ip_address+"/send/?pass=&number="+mobile+"&data="+content+"",
+                success: function (data) {
+                    
+                    $.ajax({
+                        type: "POST",
+                        url: "entity/post_sending.php",
+                        data: {
+                            cn:control_no,
+                            has_sent: '0',// successfully sent!
+                        },
+                        success: function (data) {
+                            console.log('SMS Notification: status(success!)');
+                        }
+                    });
+                }
+            });
+        } else {
+            console.log("fail");
+        }
+
+    }
+});
+

@@ -1,5 +1,7 @@
 <?php require_once 'controller/ApplicationController.php';?>
-<?php require_once 'controller/RegistrationComponentsController.php';?>
+<?php require_once 'controller/RegistrationComponentsController.php';
+
+?>
 
 <div class="registration-image" style="padding-top:3%;">
   <div class="container">
@@ -21,6 +23,9 @@
                 <hr>
                 <input type="hidden" name="is_new" value="<?php echo $is_new; ?>">
                 <input type="hidden" name="token" value="<?php echo !empty($_GET['ssid']) ? $_GET['ssid'] : ''; ?>">
+                <input type="hidden" name="mobile_no" value="<?php echo $userinfo['contact_details'];?>">
+                <input type="hidden" name="province" value="<?php echo $_SESSION['province'];?>">
+                <input type="hidden" name="city_mun" value="<?php echo $_SESSION['city_mun'];?>">
 
                 <!-- user details -->
                 <div class="col-md-12 mt-3">
@@ -33,7 +38,7 @@
                 <?php endif ?>
 
                 <!-- Submit button -->
-                <?php if (in_array($userinfo['status'], ['Draft', 'Disapproved', 'Reassess'])): ?>
+                <?php if (in_array($userinfo['status'], ['Draft', 'Disapproved', 'Reassess', 'For Receiving'])): ?>
                   <div class="panel panel-default pt-4">
                     <div class="row">
                       
@@ -137,8 +142,8 @@
   background: linear-gradient(#9bc90d 0%, #79a70a 100%);
   box-shadow: 0 3px 10px -5px rgba(0, 0, 0, 1);
   position: absolute;
-  top: 41px; // change this, if no border
-  right: -20px; // change this, if no border
+  top: 41px; 
+  right: -40px; 
 }
 
 .ribbon span::before {
@@ -264,6 +269,7 @@
     $(document).on('click', '.form-check-input', function(){
       let tr = $(this).closest('tr');
       let chkcol = $(this).data('chkcol');
+      let other_tool = tr.find('.other_tool');
 
       uncheckOthers(chkcol, tr);
 
@@ -283,6 +289,13 @@
         let reason = tr.find('.form-check-reason');
         reason.val('');
         reason.attr('disabled', true);
+      }
+
+      if ($(this).is(':checked')) {
+        other_tool.val('');
+        other_tool.prop('disabled', true);
+      } else {
+        other_tool.prop('disabled', false);
       }
     });
 
@@ -329,7 +342,7 @@
     });
 
     $(document).on('click', '.btn-reassess', function(){
-      let path = 'entity/post_reassess.php?ssid=<?php echo $_GET['ssid']; ?>&stt=FA';
+      let path = 'entity/post_reassess.php?ssid=<?php echo isset($_GET['ssid']) ? $_GET['ssid'] : ''; ?>&stt=FA';
 
       let checker1 = checkAllSelected();
       let checker2 = checkUploads();
@@ -344,6 +357,34 @@
       }
     });
 
+    $(document).on('keyup', '.other_tool', function(){
+      let $this = $(this);
+      let tr = $this.closest('tr');
+      let check_yes = tr.find('.chklist_yes');
+      let check_no = tr.find('.chklist_no');
+      let check_na = tr.find('.chklist_na');
+      let reason = tr.find('.form-check-reason');
+
+      if ($this.val() != '') {
+        check_yes.prop('checked', false);
+        check_yes.prop('disabled', true);
+
+        check_no.prop('checked', false);
+        check_no.prop('disabled', true);
+
+        check_na.prop('checked', false);
+        check_na.prop('disabled', true);
+
+        reason.val('');
+        reason.prop('disabled', true);        
+      } else {
+        check_yes.prop('disabled', false);
+        check_no.prop('disabled', false);
+        check_na.prop('disabled', false);
+        reason.prop('disabled', true); 
+      }
+    });
+
   })
 
   function checkAllSelected()
@@ -355,7 +396,9 @@
     $.each(tbody, function(){
       let tr = $(this);
       let asmnt = tr.find('.form-check-input');
-      if (asmnt.is(':checked')) {
+      let other_tool = tr.find('.other_tool');
+
+      if (asmnt.is(':checked') || other_tool.val() != '') {
         $counter++;
       }
     });

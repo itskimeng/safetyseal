@@ -25,4 +25,4 @@ $apptype_opts = [
 
 $province_opts = $app->getProvinces();
 $citymun_opts = $app->getCityMuns($province);
-$applicants = $app->getApplicationLists2($province, $citymun, ApplicationManager::STATUS_DRAFT);
+$applicants = $app->getApplicationLists($province, $citymun, ApplicationManager::STATUS_DRAFT);

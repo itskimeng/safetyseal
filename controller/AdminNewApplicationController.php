@@ -171,3 +171,4 @@ function getUserChecklistsValidations($conn, $id)
 
     return $data;
 }
+

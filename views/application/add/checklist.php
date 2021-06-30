@@ -11,6 +11,8 @@
               <input type="hidden" name="token_id" value="<?php echo $_GET['appid']; ?>">
               <input type="hidden" name="gcode" value="<?php echo isset($_GET['code']) ? $_GET['code'] : ''; ?>"/>
               <input type="hidden" name="gscope" value="<?php echo isset($_GET['gscope']) ? $_GET['gscope'] : ''; ?>"/>  
+              <input type="hidden" name="filename_upload" class="filename_upload" value="">
+
               <div class="row">
                   <div class="col-lg-3">
                     <div class="btn-group w-100">
@@ -175,45 +177,45 @@
 
     // function insert(){
     // DropzoneJS Demo Code Start
-    Dropzone.autoDiscover = false
+    // Dropzone.autoDiscover = false
 
-    // Get the template HTML and remove it from the doumenthe template HTML and remove it from the doument
-    var previewNode = document.querySelector("#template")
-    previewNode.id = ""
-    var previewTemplate = previewNode.parentNode.innerHTML
-    previewNode.parentNode.removeChild(previewNode)
+    // // Get the template HTML and remove it from the doumenthe template HTML and remove it from the doument
+    // var previewNode = document.querySelector("#template")
+    // previewNode.id = ""
+    // var previewTemplate = previewNode.parentNode.innerHTML
+    // previewNode.parentNode.removeChild(previewNode)
 
-    var myDropzone = new Dropzone("#checklist_div", { // Make the whole body a dropzone
-      url: 'entity/post_admin_attachments.php', // Set the url
-      //  method: "POST",
-      thumbnailWidth: 80,
-      thumbnailHeight: 80,
-      parallelUploads: 20,
-      previewTemplate: previewTemplate,
-      autoQueue: false, // Make sure the files aren't queued until manually added
-      previewsContainer: "#previews", // Define the container to display the previews
-      clickable: ".fileinput-button" // Define the element that should be used as click trigger to select files.
-    })
-
-    myDropzone.on("addedfile", function(file) {
-
-      console.log(myDropzone);
-
-      // Hookup the start button
-      file.previewElement.querySelector(".start").onclick = function() { myDropzone.enqueueFile(file) }
-    })
-
-    // // Update the total progress bar
-    // myDropzone.on("totaluploadprogress", function(progress) {
-    //   document.querySelector("#total-progress .progress-bar").style.width = progress + "%"
+    // var myDropzone = new Dropzone("#checklist_div", { // Make the whole body a dropzone
+    //   url: 'entity/post_admin_attachments.php', // Set the url
+    //   //  method: "POST",
+    //   thumbnailWidth: 80,
+    //   thumbnailHeight: 80,
+    //   parallelUploads: 20,
+    //   previewTemplate: previewTemplate,
+    //   autoQueue: false, // Make sure the files aren't queued until manually added
+    //   previewsContainer: "#previews", // Define the container to display the previews
+    //   clickable: ".fileinput-button" // Define the element that should be used as click trigger to select files.
     // })
 
-    myDropzone.on("sending", function(file) {
-      // Show the total progress bar when upload starts
-      // document.querySelector("#total-progress").style.opacity = "1"
-      // And disable the start button
-      file.previewElement.querySelector(".start").setAttribute("disabled", "disabled")
-    })
+    // myDropzone.on("addedfile", function(file) {
+
+    //   console.log(myDropzone);
+
+    //   // Hookup the start button
+    //   file.previewElement.querySelector(".start").onclick = function() { myDropzone.enqueueFile(file) }
+    // })
+
+    // // // Update the total progress bar
+    // // myDropzone.on("totaluploadprogress", function(progress) {
+    // //   document.querySelector("#total-progress .progress-bar").style.width = progress + "%"
+    // // })
+
+    // myDropzone.on("sending", function(file) {
+    //   // Show the total progress bar when upload starts
+    //   // document.querySelector("#total-progress").style.opacity = "1"
+    //   // And disable the start button
+    //   file.previewElement.querySelector(".start").setAttribute("disabled", "disabled")
+    // })
 
     // Hide the total progress bar when nothing's uploading anymore
     // myDropzone.on("queuecomplete", function(progress) {

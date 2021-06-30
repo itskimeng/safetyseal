@@ -1,9 +1,9 @@
 <div class="modal fade right" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
   <div class="modal-dialog modal-dialog-scrollable">
     <div class="modal-content">
-      <div class="modal-header">
-        <h5 class="modal-title" id="exampleModalLabel"><i class="fa fa-link"></i> Attachments</h5>
-        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      <div class="modal-header" style="background-color: #ffcd39 !important;">
+        <h5 class="modal-title" id="exampleModalLabel" style="color:white;"><i class="fa fa-link"></i> Attachments</h5>
+        <!-- <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button> -->
       </div>
 
       <?php if (isset($_GET['code'])): ?>
@@ -14,11 +14,9 @@
         <input type="hidden" id="cform-checklist_order" name="checklist_order" value=""/>
         <input type="hidden" id="cform-entry_id" name="entry_id" value=""/>
         <input type="hidden" name="control_no" value="<?php echo $userinfo['code']; ?>"/>  
-        <input type="hidden" name="token_id" value="<?php echo $_GET['ssid']; ?>"/>
+        <input type="hidden" name="token_id" value="<?php echo isset($_GET['ssid']) ? $_GET['ssid'] : ''; ?>"/>
         <input type="hidden" name="gcode" value="<?php echo isset($_GET['code']) ? $_GET['code'] : ''; ?>"/>
         <input type="hidden" name="gscope" value="<?php echo isset($_GET['gscope']) ? $_GET['gscope'] : ''; ?>"/>        
-
-
 
         <div class="modal-body">
             <div class="mb-3">
@@ -40,9 +38,11 @@
 </div>
 
 <style type="text/css">
-  .modal-header {
-    background-color: #ffcd39;
-  }
+  /*.modal-header {
+    background-color: #ffcd39 !important;
+    color: white !important;
+  }*/
+
   .bs-callout {
       padding: 20px;
       margin: 20px 0;

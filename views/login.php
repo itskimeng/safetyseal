@@ -32,7 +32,12 @@ if (isset($_POST['login'])) {
                } else if ($user_data['ROLES'] == 'user') {
                     $_SESSION['username']  = $user_data['UNAME'];
                     $_SESSION['userid']  = $user_data['ID'];
-                   
+                    $_SESSION['province']  = $user_data['PROVINCE'];
+                    $_SESSION['city_mun']  = $user_data['CITY_MUNICIPALITY'];
+                    $_SESSION['name'] = $user_data['name'];
+                    $_SESSION['email'] = $user_data['email'];
+                    
+                
                     header("location:../dashboard_user.php?username=" . md5($username) . "");
                }
           }

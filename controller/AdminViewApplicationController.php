@@ -34,6 +34,8 @@ function getUserChecklists($conn, $id)
        	ui.GOV_NATURE_NAME as nature,
        	ui.ADDRESS as address,
         ai.CMLGOO_NAME as fname,
+        ai.EMAIL as email,
+        ai.id as user_id,
        	ui.ADDRESS as address,
        	ui.MOBILE_NO as contact_details,
         ac.control_no as control_no,
@@ -65,7 +67,10 @@ function getUserChecklistsEntry($conn, $id)
         e.id as ulist_id,
         e.answer as answer,
         e.reason as reason,
-        e.assessment as assessment
+        e.other_tool as other_tool,
+        e.assessment as assessment,
+        e.pnp_remarks as pnp_remarks,
+        e.bfp_remarks as bfp_remarks
         FROM tbl_app_checklist_entry e
         LEFT JOIN tbl_app_checklist ac on ac.id = e.parent_id
         LEFT JOIN tbl_app_certchecklist c on c.id = e.chklist_id
@@ -93,7 +98,10 @@ function getUserChecklistsEntry($conn, $id)
             'badge' => $badge,
             'answer' => strtoupper($row['answer']),
             'reason' => $row['reason'],
-            'assessment' => $row['assessment']
+            'assessment' => $row['assessment'],
+            'other_tool' => $row['other_tool'],
+            'pnp_remarks' => $row['pnp_remarks'],
+            'bfp_remarks' => $row['bfp_remarks']
         ];    
     }
 
