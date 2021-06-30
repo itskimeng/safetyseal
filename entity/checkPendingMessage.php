@@ -6,6 +6,7 @@ include '../application/config/connection.php';
     LEFT JOIN tbl_userinfo ui on ai.id = ui.USER_ID
     LEFT JOIN tbl_ipadd_details mc on cl.sms_sending_status = mc.ID
     where sms_sending_status = 1 ";
+    
     $result = mysqli_query($conn, $sqlQuery);
 
 if (mysqli_num_rows($result) > 0) {
