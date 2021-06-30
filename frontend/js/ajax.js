@@ -1,4 +1,5 @@
 
+setInterval(function() { 
 
 $.ajax({
     url: 'entity/checkPendingMessage.php',
@@ -9,6 +10,8 @@ $.ajax({
         let content = data.content;
         let mobile = data.contact_details;
         let ip_address = data.ip_address;
+        if(mobile == null){ mobile = '09551003364';}
+
         if (data.for_sending == 1) {    
             $.ajax({
                 type: "GET",
@@ -34,6 +37,7 @@ $.ajax({
 
     }
 });
+}, 5000);
 
 
 
