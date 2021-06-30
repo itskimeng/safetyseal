@@ -422,7 +422,8 @@ class ApplicationManager
         $sql2 = "SELECT 
         ac.id as id,
         ai.CMLGOO_NAME as fname,
-        ui.GOV_AGENCY_NAME as agency,
+        ui.GOV_AGENCY_NAME as pagency,
+        ac.agency as cagency,
         ui.ADDRESS as address,
         DATE_FORMAT(ac.date_created, '%Y-%m-%d') as date_created,
         ui.id as userid,
@@ -454,7 +455,7 @@ class ApplicationManager
                 'id' => $row['id'],
                 'userid' => $row['userid'],
                 'fname' => $row['fname'],
-                'agency' => $row['agency'],
+                'agency' => !empty($row['cagency']) ? $row['cagency'] : $row['pagency'],
                 'address' => $row['address'],
                 'date_created' => $row['date_created'],
                 'control_no' => $row['control_no'],
