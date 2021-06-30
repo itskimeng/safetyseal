@@ -97,10 +97,10 @@
                                 </div>
 
                                 <div class="col-md-12">
-                                    <label for="validationGovDept" class="form-label">Name of Government Establishment</label>
+                                    <label for="validationGovDept" class="form-label">  Name of Sub-office/Unit</label>
                                     <input type="text" class="form-control" name="government_esta" id="validationGovDept" required>
                                     <div class="invalid-feedback">
-                                        Name of Government Establishment is required
+                                        Name of Sub-office/Unit is required
                                     </div>
                                 </div>
                                 <div class="col-mb-12">
