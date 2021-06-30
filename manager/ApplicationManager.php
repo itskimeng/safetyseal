@@ -618,6 +618,7 @@ class ApplicationManager
         LEFT JOIN tbl_citymun m on m.id = ai.LGU
         LEFT JOIN tbl_app_checklist cl on ai.id = cl.user_id
         where cl.user_id = $id and cl.for_sending = 1";
+
         $query = mysqli_query($this->conn, $sql);
         $data = [];
         while ($row = mysqli_fetch_assoc($query)) {
@@ -676,7 +677,7 @@ class ApplicationManager
                 'mcode' => $row['mcode'],
                 'code' => '2021-'.'_____',
                 'date_proceed' => '',
-                'status' => $row['status'],
+                'status' => !empty($row['status']) ? $row['status'] : 'Draft',
                 'safetyseal_no' => $row['ss_no']
             ];      
         }
