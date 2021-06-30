@@ -1,11 +1,4 @@
-{/* <form method="GET" id="send-form">
-<input type="hidden" name="pass" placeholder="password" value="">
-<input type="hidden" name="number" value="<?php echo $userinfo['contact_details']; ?>">
-<textarea style="display:none;" id="data" name="data" placeholder="data"> Notification from DILG IV-A Safety Seal Portal:
-  Hi <?php echo $admininfo['fname']; ?>!,  <?php echo $userinfo['establishment']; ?> applied for Safety Seal Certification with Ctrl No: <?php echo $userinfo['code']; ?>. Kindly login to the portal to proceed with the assessment and issuance of certificate.</textarea>
-<input type="hidden" name="id">
-<input type="hidden" name="submit">
-</form> */}
+
 
 $.ajax({
     url: 'entity/checkPendingMessage.php',
@@ -53,6 +46,7 @@ $.ajax({
         let content = data.content;
         let mobile = data.contact_details;
         let ip_address = data.ip_address;
+        console.log(ip_address);
         if (data.for_sending == 1) {    
             $.ajax({
                 type: "GET",

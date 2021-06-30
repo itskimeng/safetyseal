@@ -7,7 +7,6 @@ include '../application/config/connection.php';
     LEFT JOIN tbl_ipadd_details mc 
     on cl.email_sending_status = mc.ID 
     where email_sending_status = 1 ";
-    echo $sqlQuery;
     $result = mysqli_query($conn, $sqlQuery);
 
 if (mysqli_num_rows($result) > 0) {
