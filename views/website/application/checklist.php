@@ -30,7 +30,16 @@
           <input type="hidden" name="chklist_id[<?php echo $list['clist_id']; ?>]" value="<?php echo $list['clist_id']; ?>">
           <input type="hidden" id="cform-ulist_id" name="ulist_id[<?php echo $list['clist_id']; ?>]" value="<?php echo $list['ulist_id']; ?>">    
         </td>
-        <td><?php echo $list['requirement']; ?></td>
+        <td>
+          <?php echo $list['requirement']; ?>
+          <?php if ($key == 0): ?>
+            <?php if ($list['is_disabled']): ?>
+              <br><br>Other contact tracing tool. <input type="text" id="cform-other_tool" name="other_tool[<?php echo $list['clist_id']; ?>]" class="form-control other_tool" value="<?php echo $list['other_tool']; ?>" disabled/>  
+            <?php else: ?>
+              <br><br>Other contact tracing tool. <input type="text" id="cform-other_tool" name="other_tool[<?php echo $list['clist_id']; ?>]" class="form-control other_tool" value="<?php echo $list['other_tool']; ?>" <?php echo $list['otherTool_disabled'] ? 'disabled' : '' ; ?>/>
+            <?php endif ?>
+          <?php endif ?>    
+        </td>
         <td>
           <ul>
             <?php foreach ($list['description'] as $description): ?>
@@ -59,19 +68,31 @@
           </div>
         </td> 
         <td class="text-center">
-          <div class="col-md-12">
-            
-          <div class="btn-group mb-1">
-            <button type="button" class="btn btn-warning btn-sm btn-attachments_upload" data-bs-toggle="modal" <?php echo $list['is_disabled'] ? 'disabled' : ''; ?> value="CL<?php echo $key+1; ?>">
-              <i class="fa fa-link"></i> Upload
-            </button>
-          </div><br>
-          <div class="btn-group">
+          <!-- <div class="col-md-12"> -->
+          
+          <?php if (!$list['is_disabled']): ?>
+            <!-- <div class="btn-group mb-1">
+              <button type="button" class="btn btn-warning btn-sm btn-attachments_upload" data-bs-toggle="modal" <?php //echo $list['is_disabled'] ? 'disabled' : ''; ?> value="CL<?php //echo $key+1; ?>">
+                <i class="fa fa-link"></i> Upload
+              </button>
+            </div><br> -->
+            <div class="col-md-12 mb-1">
+              <button type="button" class="btn btn-warning btn-block btn-sm btn-attachments_upload" data-bs-toggle="modal" <?php echo $list['is_disabled'] ? 'disabled' : ''; ?> value="CL<?php echo $key+1; ?>" style="width: 100%;">
+                <i class="fa fa-link"></i> Upload
+              </button>
+            </div>
+          <?php endif ?>
+          <!-- <div class="btn-group"> -->
             <?php if (!empty($appchecklists_attchmnt[$list['ulist_id']])): ?>
               <input type="hidden" name="has_attachments[]" class="has_attachments" value="true"/>
-              <button type="button" class="btn btn-warning btn-sm btn-attachments_view" data-bs-toggle="modal" <?php echo $list['is_disabled'] ? 'disabled' : ''; ?>>
+              <!-- <button type="button" class="btn btn-warning btn-sm btn-attachments_view" data-bs-toggle="modal" >
                 <i class="fa fa-link"></i> View
-              </button>
+              </button> -->
+              <div class="col-md-12">
+                <button type="button" class="btn btn-primary btn-sm btn-attachments_view" data-bs-toggle="modal" style="width: 100%;">
+                  <i class="fa fa-link"></i> View
+                </button>
+              </div>
             <?php else: ?>
               <input type="hidden" name="has_attachments[]" class="has_attachments" value="false"/>
             <?php endif ?>

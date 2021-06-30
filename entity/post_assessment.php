@@ -15,10 +15,30 @@ $defects = isset($_POST['defects']) ? $_POST['defects'] : '';
 $recommendations = isset($_POST['recommendations']) ? $_POST['recommendations'] : '';
 
 $assessments = isset($_POST['assessments']) ? $_POST['assessments'] : '';
+$pnp_remarks = isset($_POST['pnp_remarks']) ? $_POST['pnp_remarks'] : '';
+$bfp_remarks = isset($_POST['bfp_remarks']) ? $_POST['bfp_remarks'] : '';
 
 if (!empty($assessments)) {
-	foreach ($assessments as $key => $assess) {
-		$entry = insertAssessment($conn, $key, $assess);
+	foreach ($assessments as $key => $assessment) {
+		$entry = insertAssessment($conn, $key, $assessment);
+	}
+}
+
+// if PNP
+if (!empty($pnp_remarks)) {
+	foreach ($pnp_remarks as $key => $remark) {
+		if (!empty($remark)) {
+			$entry = insertRemarks($conn, $key, 'pnp', $remark);
+		}
+	}
+}
+
+// if BFP
+if (!empty($bfp_remarks)) {
+	foreach ($bfp_remarks as $key => $remark) {
+		if (!empty($remark)) {
+			$entry = insertRemarks($conn, $key, 'bfp', $remark);
+		}
 	}
 }
 
@@ -44,6 +64,13 @@ function getValidationLists($conn, $appid) {
 
 function insertAssessment($conn, $id, $assessment) {
 	$sql = "UPDATE tbl_app_checklist_entry SET assessment = '".$assessment."' WHERE id = ".$id."";
+	$query = mysqli_query($conn, $sql);
+     
+	return $result;	
+}
+
+function insertRemarks($conn, $id, $prefix, $remarks) {
+	$sql = "UPDATE tbl_app_checklist_entry SET ".$prefix."_remarks = '".$remarks."' WHERE id = ".$id."";
 	$query = mysqli_query($conn, $sql);
      
 	return $result;	

@@ -68,7 +68,9 @@ function getUserChecklistsEntry($conn, $id)
         e.answer as answer,
         e.reason as reason,
         e.other_tool as other_tool,
-        e.assessment as assessment
+        e.assessment as assessment,
+        e.pnp_remarks as pnp_remarks,
+        e.bfp_remarks as bfp_remarks
         FROM tbl_app_checklist_entry e
         LEFT JOIN tbl_app_checklist ac on ac.id = e.parent_id
         LEFT JOIN tbl_app_certchecklist c on c.id = e.chklist_id
@@ -97,7 +99,9 @@ function getUserChecklistsEntry($conn, $id)
             'answer' => strtoupper($row['answer']),
             'reason' => $row['reason'],
             'assessment' => $row['assessment'],
-            'other_tool' => $row['other_tool']
+            'other_tool' => $row['other_tool'],
+            'pnp_remarks' => $row['pnp_remarks'],
+            'bfp_remarks' => $row['bfp_remarks']
         ];    
     }
 
