@@ -82,5 +82,6 @@
     } else {
       btn_consent.attr('disabled', true);
     }
+    
   });
 </script>

@@ -3,7 +3,6 @@ session_start();
 date_default_timezone_set('Asia/Manila');
 
 require '../manager/ApplicationManager.php';
-require '../manager/NotificationManager.php.php';
 
 $app = new ApplicationManager();
 
