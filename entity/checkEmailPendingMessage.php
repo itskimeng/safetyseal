@@ -4,7 +4,7 @@ include '../application/config/connection.php';
     $sqlQuery = "SELECT mc.IP_ADDRESS, cl.status,cl.email_sending_status, cl.control_no,cl.safety_seal_no,  cl.user_id, cl.contact_details from tbl_app_checklist  cl
     LEFT JOIN tbl_admin_info ai on cl.user_id = ai.id
     LEFT JOIN tbl_userinfo ui on ai.id = ui.USER_ID
-    LEFT JOIN tlb_message_content mc on cl.email_sending_status = mc.ID
+    LEFT JOIN tbl_ipadd_details mc on cl.email_sending_status = mc.ID
     where email_sending_status = 1 ";
     $result = mysqli_query($conn, $sqlQuery);
 
