@@ -13,6 +13,8 @@
         <input type="hidden" name="name" value="<?php echo $_SESSION['name']; ?>">
         <input type="hidden" name="email" value="<?php echo $_SESSION['email']; ?>">
         <input type="hidden" name="control_no" value="<?php echo $userinfo['code']; ?>">
+        <input type="hidden" name="contact_details" value="<?php echo $userinfo['contact_details']; ?>">
+
 
 
         <div class="modal-body">
