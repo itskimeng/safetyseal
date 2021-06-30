@@ -611,13 +611,13 @@ class ApplicationManager
         cl.status as status,
         cl.safety_seal_no as ss_no,
         cl.control_no as control_no,
-        cl.for_sending as for_sending
+        cl.sms_sending_status as for_sending
         FROM tbl_admin_info ai
         LEFT JOIN tbl_userinfo ui on ui.user_id = ai.id
         LEFT JOIN tbl_province p on p.id = ai.PROVINCE
         LEFT JOIN tbl_citymun m on m.id = ai.LGU
         LEFT JOIN tbl_app_checklist cl on ai.id = cl.user_id
-        where cl.user_id = $id and cl.for_sending = 1";
+        where cl.user_id = $id and cl.sms_sending_status = 1";
 
         $query = mysqli_query($this->conn, $sql);
         $data = [];
@@ -626,7 +626,7 @@ class ApplicationManager
                 'status' =>$row['status'],
                 'control_no' => $row['control_no'],
                 'safety_seal_no' => $row['ss_no'],
-                'for_sending' => $row['for_sending'],
+                'for_sending' => $row['sms_sending_status'],
                 'contact_details' => $row['contact_details']
             ];
         return $data;
