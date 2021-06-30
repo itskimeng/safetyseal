@@ -30,13 +30,17 @@
           <li class="nav-item">
             <a class="nav-link" href="complaints.php" id="navcomplaints">Complaints</a>
           </li>
+           <!--  <li class="nav-item">
+              <a class="nav-link" href="certificate.php" id="navcomplaints" target="_blank"><span class="certificationTxt">My Certification <i class="fa fa-certificate"></i></span></a>
+            </li> -->
 
         </ul>
         <?php
         if (isset($_SESSION['username'])) {
         ?>
           <ul class="navbar-nav ">
-            <!-- <li class="nav-item">
+
+           <!--  <li class="nav-item">
               <a class="nav-link" href="certificate.php" id="navcomplaints" target="_blank"><span class="certificationTxt">My Certification <i class="fa fa-certificate"></i></span></a>
             </li> -->
 
