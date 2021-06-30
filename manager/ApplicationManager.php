@@ -275,76 +275,6 @@ class ApplicationManager
         return $data;
     }
 
-    public function getApplicantDetails($user)
-    {
-        $sql = "SELECT 
-            ai.id as id,
-            ui.ADDRESS as address,
-            ui.GOV_AGENCY_NAME as agency,
-            ui.GOV_ESTB_NAME as establishment, 
-            ui.GOV_NATURE_NAME as nature,
-            ui.EMAIL_ADDRESS as email,
-            ai.CMLGOO_NAME as fname,
-            p.code as pcode,
-            m.code as mcode,
-            ui.MOBILE_NO as contact_details,
-            cl.id as acid
-            FROM tbl_admin_info ai
-            LEFT JOIN tbl_userinfo ui on ui.user_id = ai.id
-            LEFT JOIN tbl_province p on p.id = ai.PROVINCE
-            LEFT JOIN tbl_citymun m on m.id = ai.LGU
-            LEFT JOIN tbl_app_checklist cl on ai.id = cl.user_id
-            WHERE ai.id = $user";
-
-        $query = mysqli_query($this->conn, $sql);
-        // $result = mysqli_fetch_array($query);
-        $data = [];
-        $today = new DateTime();
-        $today = $today->format('F d, Y');
-
-        while ($row = mysqli_fetch_assoc($query)) {
-            $data = [
-                'id' => $row['id'],
-                'acid' => $row['acid'],
-                'date_created' => $today,
-                'address' => $row['address'],
-                'agency' => $row['agency'],
-                'establishment' => $row['establishment'],
-                'nature' => $row['nature'],
-                'fname' => $row['fname'],
-                'contact_details' => $row['contact_details'],
-                'status' => 'Draft',
-                'pcode' => $row['pcode'],
-                'mcode' => $row['mcode'],
-                'code' => '2021-'.'_____',
-                'date_proceed' => '',
-            ];      
-        }
-
-        return $data;
-    }
-
-    public function getApproverDetails($province,$lgu)
-    {
-        $sql = "SELECT 
-        ui.EMAIL_ADDRESS as email,
-        ai.CMLGOO_NAME as fname,
-        ui.MOBILE_NO as contact_details
-        FROM tbl_admin_info ai
-        LEFT JOIN tbl_userinfo ui on ui.user_id = ai.id
-        WHERE ai.PROVINCE = '$province' AND ai.LGU = '$lgu' and ai.ROLES = 'admin'";
-        $query = mysqli_query($this->conn, $sql);
-        $data = [];
-        
-        while ($row = mysqli_fetch_assoc($query)) {
-            $data = [
-                'email' => $row['email'],
-                'fname' => $row['fname'],
-                'mobile_no' => $row['contact_details']
-            ];   
-        }
-            return $data;
-    }
 
     public function setUserApplicationDate($user, $date)
     {
@@ -356,7 +286,7 @@ class ApplicationManager
 
     public function proceedChecklist($checklist_id, $has_consent, $status, $date_modified)
     {
-        $sql = "UPDATE tbl_app_checklist SET date_proceed = '".$date_modified."', date_modified = '".$date_modified."', has_consent = '".$has_consent."', status = '".$status."' WHERE id = ".$checklist_id."";
+        $sql = "UPDATE tbl_app_checklist SET date_proceed = '".$date_modified."', date_modified = '".$date_modified."', has_consent = '".$has_consent."', for_sending = '1', status = '".$status."' WHERE id = ".$checklist_id."";
         $result = mysqli_query($this->conn, $sql);
 
         return $result;
@@ -640,6 +570,109 @@ class ApplicationManager
             ];
         return $data;
     }
+    }
+    function getMessageInfoStatus($id) {
+        $sql = "SELECT 
+        ai.id as id,
+        ui.GOV_ESTB_NAME as establishment, 
+        ai.CMLGOO_NAME as fname,
+        ui.MOBILE_NO as contact_details,
+        cl.status as status,
+        cl.safety_seal_no as ss_no,
+        cl.control_no as control_no,
+        cl.for_sending as for_sending
+        FROM tbl_admin_info ai
+        LEFT JOIN tbl_userinfo ui on ui.user_id = ai.id
+        LEFT JOIN tbl_province p on p.id = ai.PROVINCE
+        LEFT JOIN tbl_citymun m on m.id = ai.LGU
+        LEFT JOIN tbl_app_checklist cl on ai.id = cl.user_id
+        where cl.user_id = $id and cl.for_sending = 1";
+        $query = mysqli_query($this->conn, $sql);
+        $data = [];
+        while ($row = mysqli_fetch_assoc($query)) {
+            $data[] = [
+                'status' =>$row['status'],
+                'control_no' => $row['control_no'],
+                'safety_seal_no' => $row['ss_no'],
+                'for_sending' => $row['for_sending'],
+                'contact_details' => $row['contact_details']
+            ];
+        return $data;
+    }
+    }
+    public function getApplicantDetails($user)
+    {
+        $sql = "SELECT 
+            ai.id as id,
+            ui.ADDRESS as address,
+            ui.GOV_AGENCY_NAME as agency,
+            ui.GOV_ESTB_NAME as establishment, 
+            ui.GOV_NATURE_NAME as nature,
+            ui.EMAIL_ADDRESS as email,
+            ai.CMLGOO_NAME as fname,
+            p.code as pcode,
+            m.code as mcode,
+            ui.MOBILE_NO as contact_details,
+            cl.id as acid,
+            cl.status as status,
+            cl.safety_seal_no as ss_no
+            FROM tbl_admin_info ai
+            LEFT JOIN tbl_userinfo ui on ui.user_id = ai.id
+            LEFT JOIN tbl_province p on p.id = ai.PROVINCE
+            LEFT JOIN tbl_citymun m on m.id = ai.LGU
+            LEFT JOIN tbl_app_checklist cl on ai.id = cl.user_id
+            WHERE ai.id = $user";
+
+        $query = mysqli_query($this->conn, $sql);
+        // $result = mysqli_fetch_array($query);
+        $data = [];
+        $today = new DateTime();
+        $today = $today->format('F d, Y');
+
+        while ($row = mysqli_fetch_assoc($query)) {
+            $data = [
+                'id' => $row['id'],
+                'acid' => $row['acid'],
+                'date_created' => $today,
+                'address' => $row['address'],
+                'agency' => $row['agency'],
+                'establishment' => $row['establishment'],
+                'nature' => $row['nature'],
+                'fname' => $row['fname'],
+                'contact_details' => $row['contact_details'],
+                'status' => 'Draft',
+                'pcode' => $row['pcode'],
+                'mcode' => $row['mcode'],
+                'code' => '2021-'.'_____',
+                'date_proceed' => '',
+                'status' => $row['status'],
+                'safetyseal_no' => $row['ss_no']
+            ];      
+        }
+
+        return $data;
+    }
+
+    public function getApproverDetails($province,$lgu)
+    {
+        $sql = "SELECT 
+        ui.EMAIL_ADDRESS as email,
+        ai.CMLGOO_NAME as fname,
+        ui.MOBILE_NO as contact_details
+        FROM tbl_admin_info ai
+        LEFT JOIN tbl_userinfo ui on ui.user_id = ai.id
+        WHERE ai.PROVINCE = '$province' AND ai.LGU = '$lgu' and ai.ROLES = 'admin'";
+        $query = mysqli_query($this->conn, $sql);
+        $data = [];
+        
+        while ($row = mysqli_fetch_assoc($query)) {
+            $data = [
+                'email' => $row['email'],
+                'fname' => $row['fname'],
+                'mobile_no' => $row['contact_details']
+            ];   
+        }
+            return $data;
     }
 
 }

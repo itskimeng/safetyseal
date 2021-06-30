@@ -14,7 +14,7 @@
         <input type="hidden" id="cform-checklist_order" name="checklist_order" value=""/>
         <input type="hidden" id="cform-entry_id" name="entry_id" value=""/>
         <input type="hidden" name="control_no" value="<?php echo $userinfo['code']; ?>"/>  
-        <input type="hidden" name="token_id" value="<?php echo $_GET['ssid']; ?>"/>
+        <input type="hidden" name="token_id" value="<?php echo isset($_GET['ssid']) ? $_GET['ssid'] : ''; ?>"/>
         <input type="hidden" name="gcode" value="<?php echo isset($_GET['code']) ? $_GET['code'] : ''; ?>"/>
         <input type="hidden" name="gscope" value="<?php echo isset($_GET['gscope']) ? $_GET['gscope'] : ''; ?>"/>        
 

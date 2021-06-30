@@ -1,68 +1,60 @@
 <div class="modal fade right" id="modall_proceed" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
   <div class="modal-dialog modal-lg modal-dialog-scrollable">
     <div class="modal-content">
-      <div class="modal-header" >
+      <div class="modal-header">
         <h5 class="modal-title" style="color:white;" id="exampleModalLabel"><i class="fa fa-share"></i> Proceed</h5>
         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
       </div>
 
-      <form method="GET" id="send-form">
-        <input type="hidden" name="pass" placeholder="password" value="">
-        <input type="hidden" name="number" value="<?php echo $userinfo['contact_details']; ?>">
-        <textarea style="display:none;" id="data" name="data" placeholder="data"> Notification from DILG IV-A Safety Seal Portal:
-          Hi MARIA MELODY! <?php echo $userinfo['establishments']; ?> applied for Safety Seal Certification with Ctrl No: <?php echo $userinfo['code']; ?>. Kindly login to the portal to proceed with the assessment and issuance of certificate.</textarea>
-        <input type = "hidden" name = "id">
-        <input type = "hidden" name ="submit">
-        <form>
-        </form>
-        <form method="post" enctype="multipart/form-data" action="entity/post_proceed.php">
-          <input type="hidden" name="chklist_id" value="<?php echo $userinfo['acid']; ?>">
-          <input type="hidden" name="token" value="<?php echo !empty($_GET['ssid']) ? $_GET['ssid'] : ''; ?>">
-          <input type="hidden" name="name" value="<?php echo $_SESSION['name']; ?>">
-          <input type="hidden" name="email" value="<?php echo $_SESSION['email']; ?>">
-          <input type="hidden" name="control_no" value="<?php echo $userinfo['code']; ?>">
+   
+      <form method="post" enctype="multipart/form-data" action="entity/post_proceed.php">
+        <input type="hidden" name="chklist_id" value="<?php echo $userinfo['acid']; ?>">
+        <input type="hidden" name="token" value="<?php echo !empty($_GET['ssid']) ? $_GET['ssid'] : ''; ?>">
+        <input type="hidden" name="name" value="<?php echo $_SESSION['name']; ?>">
+        <input type="hidden" name="email" value="<?php echo $_SESSION['email']; ?>">
+        <input type="hidden" name="control_no" value="<?php echo $userinfo['code']; ?>">
 
 
-          <div class="modal-body">
-            <div class="mb-3">
-              <table>
-                <tbody>
-                  <tr>
-                    <td style="text-align:center; width:10%;">
-                      <div class="form-group">
-                        <input class="form-check-input check_consent" type="checkbox" value="" name="consent" style="padding: 12pt;">
+        <div class="modal-body">
+          <div class="mb-3">
+            <table>
+              <tbody>
+                <tr>
+                  <td style="text-align:center; width:10%;">
+                    <div class="form-group">
+                      <input class="form-check-input check_consent" type="checkbox" value="" name="consent" style="padding: 12pt;">
+                    </div>
+                  </td>
+                  <td>
+                    <label>
+                      <small>I hereby certify that the facts stated herein are true and correct of my own personal knowledge and any misinterpresentation subjects me to criminal or administrative liability.</small>
+                    </label>
+                  </td>
+                </tr>
+                <tr>
+                  <td colspan="2">
+                    <div class="col-md-12">
+                      <div class="text-center" style="margin-top: 3%; margin-bottom: -1%; font-size:20pt;">
+                        <p>
+                          <b><?php echo $userinfo['fname']; ?></b>
+                          <small>/ <?php echo $today; ?></small>
+                        </p>
                       </div>
-                    </td>
-                    <td>
-                      <label>
-                        <small>I hereby certify that the facts stated herein are true and correct of my own personal knowledge and any misinterpresentation subjects me to criminal or administrative liability.</small>
-                      </label>
-                    </td>
-                  </tr>
-                  <tr>
-                    <td colspan="2">
-                      <div class="col-md-12">
-                        <div class="text-center" style="margin-top: 3%; margin-bottom: -1%; font-size:20pt;">
-                          <p>
-                            <b><?php echo $userinfo['fname']; ?></b>
-                            <small>/ <?php echo $today; ?></small>
-                          </p>
-                        </div>
-                        <div class="form-outline text-center" style="margin-left: 10%; margin-right: 10%;border-top: 1px solid;">
-                          <b>Name of Person in Charge / Date</b>
-                        </div>
+                      <div class="form-outline text-center" style="margin-left: 10%; margin-right: 10%;border-top: 1px solid;">
+                        <b>Name of Person in Charge / Date</b>
                       </div>
-                    </td>
-                  </tr>
-                </tbody>
-              </table>
-            </div>
+                    </div>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
           </div>
-          <div class="modal-footer">
-            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal"><i class="fa fa-window-close"></i> Close</button>
-            <button type="submit" class="btn btn-success btn-consent" disabled><i class="fa fa-step-forward"></i> Proceed</button>
-          </div>
-        </form>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal"><i class="fa fa-window-close"></i> Close</button>
+          <button type="submit" class="btn btn-success btn-consent" disabled><i class="fa fa-step-forward"></i> Proceed</button>
+        </div>
+      </form>
     </div>
   </div>
 </div>
@@ -82,7 +74,6 @@
 
 <script type="text/javascript">
   $(document).on('click', '.check_consent', function() {
-    sendNotification();
     let tr = $(this).closest('tr');
     let btn_consent = $('.btn-consent');
 
@@ -91,17 +82,5 @@
     } else {
       btn_consent.attr('disabled', true);
     }
-    function sendNotification() {
-      let queryString = $('#send-form').serialize();
-      $.ajax({
-        type: "GET",
-        url: "http://192.168.43.1:8080/send/?" + queryString + "",
-        data: $("#send-form").serialize(),
-        success: function(data) {
-            console.log("Message Sent!");
-        }
-      });
-    }
   });
- 
 </script>

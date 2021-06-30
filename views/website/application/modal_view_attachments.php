@@ -9,7 +9,7 @@
         <input type="hidden" name="checklist_order" value="CL01"/>
         <input type="hidden" id="cform-entry_id" name="entry_id" value=""/>
         <input type="hidden" name="control_no" value="<?php echo $userinfo['code']; ?>"/>  
-        <input type="hidden" name="token_id" value="<?php echo $_GET['ssid']; ?>"/>        
+        <input type="hidden" name="token_id" value="<?php if(isset($_GET['ssid'])){echo $_GET['ssid'];}else{}?>"/>        
 
         <div class="modal-body" id="tbody-view_attchmnt">
             <!-- <div class="mb-3">

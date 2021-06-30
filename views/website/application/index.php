@@ -1,5 +1,7 @@
 <?php require_once 'controller/ApplicationController.php';?>
-<?php require_once 'controller/RegistrationComponentsController.php';?>
+<?php require_once 'controller/RegistrationComponentsController.php';
+
+?>
 
 <div class="registration-image" style="padding-top:3%;">
   <div class="container">
@@ -36,7 +38,7 @@
                 <?php endif ?>
 
                 <!-- Submit button -->
-                <?php if (in_array($userinfo['status'], ['Draft', 'Disapproved', 'Reassess'])): ?>
+                <?php if (in_array($userinfo['status'], ['Draft', 'Disapproved', 'Reassess', 'For Receiving'])): ?>
                   <div class="panel panel-default pt-4">
                     <div class="row">
                       
@@ -340,7 +342,7 @@
     });
 
     $(document).on('click', '.btn-reassess', function(){
-      let path = 'entity/post_reassess.php?ssid=<?php echo $_GET['ssid']; ?>&stt=FA';
+      let path = 'entity/post_reassess.php?ssid=<?php echo isset($_GET['ssid']) ? $_GET['ssid'] : ''; ?>&stt=FA';
 
       let checker1 = checkAllSelected();
       let checker2 = checkUploads();
