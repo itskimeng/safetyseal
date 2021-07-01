@@ -29,8 +29,11 @@ if ($is_new) {
 
 $parent_id = $am->findChecklist($token);
 foreach ($checklists as $key => $id) {
-	$check_val = $reason = '';
+	$check_val = $reason = $other_tool = '';
 	$ulist_id = isset($_POST['ulist_id'][$key]) ? $_POST['ulist_id'][$key] : '';
+	$other_tool = isset($_POST['other_tool'][$key]) ? $_POST['other_tool'][$key] : '';
+	$tracing_tool = isset($_POST['tracing_tool'][$key]) ? $_POST['tracing_tool'][$key] : '';
+
 	if (isset($_POST['chklist_yes'][$key])) {
 		$check_val = 'yes';
 	} elseif (isset($_POST['chklist_no'][$key])) {
@@ -46,7 +49,9 @@ foreach ($checklists as $key => $id) {
 		'user_id' => $userid,
 		'answer' => $check_val,
 		'reason' => $reason,
-		'date_created' => $today->format('Y-m-d H:i:s')
+		'date_created' => $today->format('Y-m-d H:i:s'),
+		'other_tool' => $other_tool,
+		'tracing_tool' => $tracing_tool
 	];
 
 	if ($is_new) {

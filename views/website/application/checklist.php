@@ -33,11 +33,45 @@
         <td>
           <?php echo $list['requirement']; ?>
           <?php if ($key == 0): ?>
+            <div class="wrapper">
+
+              <?php if (in_array($userinfo['status'], ['Draft', 'Disapproved', 'Reassess'])): ?>
+               <input type="radio" class="checklist1_opt" name="tracing_tool[<?php echo $list['clist_id']; ?>]" value='staysafe' id="option-1" <?php echo $list['tracing_tool'] == 'staysafe' ? 'checked' : ''; ?>>
+               <input type="radio" class="checklist2_opt" name="tracing_tool[<?php echo $list['clist_id']; ?>]" value='others' id="option-2" <?php echo $list['tracing_tool'] == 'others' ? 'checked' : ''; ?>>
+                 <label for="option-1" class="option option-1 btn-sm" data-val="staysafe">
+                   <div class="dot"></div>
+                    <span style="padding-left: 2px; font-size:11pt;"> StaySafe.ph</span>
+                    </label>
+                 <label for="option-2" class="option option-2 btn-sm" data-val="others">
+                   <div class="dot"></div>
+                    <span style="padding-left: 2px; font-size:11pt;">Other</span>
+                 </label>
+              <?php else: ?>
+                <?php if ($list['tracing_tool'] == 'staysafe'): ?>
+                  <input type="radio" class="checklist1_opt" name="tracing_tool[<?php echo $list['clist_id']; ?>]" value='staysafe' id="option-1" checked disabled>
+                  <label for="option-1" class="option option-1 btn-sm" data-val="staysafe">
+                    <div class="dot"></div>
+                    <span style="padding-left: 2px; font-size:11pt;"> StaySafe.ph</span>
+                  </label>
+                  
+                <?php endif ?>
+                  <input type="radio" class="checklist2_opt" name="tracing_tool[<?php echo $list['clist_id']; ?>]" value='others' id="option-2" checked disabled>
+                 <label for="option-2" class="option option-2 btn-sm" data-val="others">
+                   <div class="dot"></div>
+                    <span style="padding-left: 2px; font-size:11pt;">Other</span>
+                 </label>
+              <?php endif ?>
+
+
+            </div>
+
+            <div class="<?php echo $list['tracing_tool'] == 'others' ? '' : 'hidden-other_tools'; ?> other-sstools" style="margin-top:5%;">
             <?php if ($list['is_disabled']): ?>
-              <br><br>Other contact tracing tool. <input type="text" id="cform-other_tool" name="other_tool[<?php echo $list['clist_id']; ?>]" class="form-control other_tool" value="<?php echo $list['other_tool']; ?>" disabled/>  
+              Other contact tracing tool. <input type="text" id="cform-other_tool" name="other_tool[<?php echo $list['clist_id']; ?>]" class="form-control other_tool" value="<?php echo $list['other_tool']; ?>" disabled/>  
             <?php else: ?>
-              <br><br>Other contact tracing tool. <input type="text" id="cform-other_tool" name="other_tool[<?php echo $list['clist_id']; ?>]" class="form-control other_tool" value="<?php echo $list['other_tool']; ?>" <?php echo $list['otherTool_disabled'] ? 'disabled' : '' ; ?>/>
+              Other contact tracing tool. <input type="text" id="cform-other_tool" name="other_tool[<?php echo $list['clist_id']; ?>]" class="form-control other_tool" value="<?php echo $list['other_tool']; ?>" <?php echo $list['otherTool_disabled'] ? 'disabled' : '' ; ?>/>
             <?php endif ?>
+            </div>
           <?php endif ?>    
         </td>
         <td>
@@ -52,23 +86,53 @@
             <?php if ($list['otherTool_disabled']): ?>
               <input class="form-check-input chklist_yes" type="checkbox" value="" name="chklist_yes[<?php echo $list['clist_id']; ?>]" data-chkcol="yes" <?php echo $list['answer'] == 'yes' ? 'checked' : ''; ?> <?php echo $list['is_disabled'] ? 'disabled' : ''; ?>>
             <?php else: ?>
-              <input class="form-check-input chklist_yes" type="checkbox" value="" name="chklist_yes[<?php echo $list['clist_id']; ?>]" data-chkcol="yes" <?php echo $list['answer'] == 'yes' ? 'checked' : ''; ?> <?php echo $list['is_disabled'] ? 'disabled' : ''; ?>>
+              <?php if ($list['tracing_tool'] == 'others'): ?>
+                <input class="form-check-input chklist_yes" type="checkbox" value="" name="chklist_yes[<?php echo $list['clist_id']; ?>]" data-chkcol="yes" disabled> 
+              <?php else: ?>
+                <input class="form-check-input chklist_yes" type="checkbox" value="" name="chklist_yes[<?php echo $list['clist_id']; ?>]" data-chkcol="yes" <?php echo $list['answer'] == 'yes' ? 'checked' : ''; ?> <?php echo $list['is_disabled'] ? 'disabled' : ''; ?>>
+              <?php endif ?>
             <?php endif ?>
           </div>
         </td>
         <td class="text-center">
           <div class="form-group">
-            <input class="form-check-input chklist_no" type="checkbox" value="" name="chklist_no[<?php echo $list['clist_id']; ?>]" data-chkcol="no" <?php echo $list['answer'] == 'no' ? 'checked' : ''; ?> <?php echo $list['is_disabled'] ? 'disabled' : ''; ?>>
+            <?php if ($list['otherTool_disabled']): ?>
+              <input class="form-check-input chklist_no" type="checkbox" value="" name="chklist_no[<?php echo $list['clist_id']; ?>]" data-chkcol="no" <?php echo $list['answer'] == 'no' ? 'checked' : ''; ?> <?php echo $list['is_disabled'] ? 'disabled' : ''; ?>>
+            <?php else: ?>
+              <?php if ($list['tracing_tool'] == 'others'): ?>
+                <input class="form-check-input chklist_no" type="checkbox" value="" name="chklist_no[<?php echo $list['clist_id']; ?>]" data-chkcol="no" disabled>
+              <?php else: ?>
+                <input class="form-check-input chklist_no" type="checkbox" value="" name="chklist_no[<?php echo $list['clist_id']; ?>]" data-chkcol="no" <?php echo $list['answer'] == 'no' ? 'checked' : ''; ?> <?php echo $list['is_disabled'] ? 'disabled' : ''; ?>>
+              <?php endif ?>
+            <?php endif ?>
           </div>
         </td>
         <td class="text-center">
           <div class="form-group">
-            <input class="form-check-input chklist_na" type="checkbox" value="" name="chklist_na[<?php echo $list['clist_id']; ?>]" data-chkcol="na" <?php echo $list['answer'] == 'n/a' ? 'checked' : ''; ?> <?php echo $list['is_disabled'] ? 'disabled' : ''; ?>>
+            <?php if ($list['otherTool_disabled']): ?>
+              <input class="form-check-input chklist_na" type="checkbox" value="" name="chklist_na[<?php echo $list['clist_id']; ?>]" data-chkcol="na" <?php echo $list['answer'] == 'n/a' ? 'checked' : ''; ?> <?php echo $list['is_disabled'] ? 'disabled' : ''; ?>>
+            <?php else: ?>
+              <?php if ($list['tracing_tool'] == 'others'): ?>
+                <input class="form-check-input chklist_na" type="checkbox" value="" name="chklist_na[<?php echo $list['clist_id']; ?>]" data-chkcol="na" disabled>
+              <?php else: ?>
+                <input class="form-check-input chklist_na" type="checkbox" value="" name="chklist_na[<?php echo $list['clist_id']; ?>]" data-chkcol="na" <?php echo $list['answer'] == 'n/a' ? 'checked' : ''; ?> <?php echo $list['is_disabled'] ? 'disabled' : ''; ?>>
+              <?php endif ?>
+            <?php endif ?>
+
           </div>
         </td>
         <td class="text-center">
           <div class="form-group">
-            <textarea class="form-control form-check-reason" id="exampleFormControlTextarea1" rows="3" name="chklist_reason[<?php echo $list['clist_id']; ?>]" <?php echo $list['answer'] == 'n/a' ? '' : 'disabled'; ?>><?php echo $list['reason']; ?></textarea>
+            <?php if ($list['otherTool_disabled']): ?>
+              <textarea class="form-control form-check-reason" id="exampleFormControlTextarea1" rows="3" name="chklist_reason[<?php echo $list['clist_id']; ?>]" <?php echo $list['answer'] == 'n/a' ? '' : 'disabled'; ?>><?php echo $list['reason']; ?></textarea>
+            <?php else: ?>
+              <?php if ($list['tracing_tool'] == 'others'): ?>
+                <textarea class="form-control form-check-reason" id="exampleFormControlTextarea1" rows="3" name="chklist_reason[<?php echo $list['clist_id']; ?>]" disabled></textarea>
+              <?php else: ?>
+                <textarea class="form-control form-check-reason" id="exampleFormControlTextarea1" rows="3" name="chklist_reason[<?php echo $list['clist_id']; ?>]" <?php echo $list['answer'] == 'n/a' ? '' : 'disabled'; ?>><?php echo $list['reason']; ?></textarea>
+              <?php endif ?>
+            <?php endif ?>
+
           </div>
         </td> 
         <td class="text-center">
@@ -113,6 +177,90 @@
 
 
 <style type="text/css">
+
+  .hidden-other_tools {
+    visibility: hidden;
+  }
+
+.wrapper {
+    margin-left: -6px;
+    display: inline-flex;
+    /* background: #fff; */
+    /*height: 40%;*/
+    /*width: 85%;*/
+    align-items: center;
+    justify-content: space-evenly;
+    /* border-radius: 5px; */
+    /*padding: 20px 10px;*/
+    /* box-shadow: 5px 5px 30px rgb(0 0 0 / 20%); */
+}
+.wrapper .option {
+    background: #fff;
+    /* height: 100%; */
+    /* width: 100%; */
+    display: flex;
+    align-items: center;
+    justify-content: space-evenly;
+    margin: 0 5px;
+    border-radius: 5px;
+    cursor: pointer;
+    /* padding: 0 8px; */
+    border: 2px solid lightgrey;
+    transition: all 0.3s ease;
+}
+.wrapper .option .dot {
+    height: 15px;
+    width: 15px;
+    background: #d9d9d9;
+    border-radius: 50%;
+    position: relative;
+}
+.wrapper .option .dot::before{
+  position: absolute;
+  content: "";
+  /*top: 4px;*/
+  /*left: 4px;*/
+  width: 15px;
+  height: 15px;
+  background: #fff;
+  border-radius: 50%;
+  opacity: 0;
+  transform: scale(1.5);
+  transition: all 0.3s ease;
+}
+input[type="radio"]{
+  display: none;
+}
+
+/*.checklist1_opt {
+  display: none;
+}*/
+
+.checklist1_opt:checked:checked ~ .option-1,
+.checklist2_opt:checked:checked ~ .option-2{
+  border-color: #0069d9;
+  background: #0069d9;
+  /*border-color: #ea6d6d;*/
+  /*background: #c90000;*/
+}
+.checklist1_opt:checked:checked ~ .option-1 .dot,
+.checklist2_opt:checked:checked ~ .option-2 .dot{
+  background: #fff;
+}
+.checklist1_opt:checked:checked ~ .option-1 .dot::before,
+.checklist2_opt:checked:checked ~ .option-2 .dot::before{
+  opacity: 1;
+  transform: scale(1);
+}
+.wrapper .option span{
+  font-size: 20px;
+  color: #808080;
+}
+.checklist1_opt:checked:checked ~ .option-1 span,
+.checklist2_opt:checked:checked ~ .option-2 span{
+  color: #fff;
+}
+
   thead {
     border-bottom-width: 3px;
   }
