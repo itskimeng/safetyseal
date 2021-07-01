@@ -2,7 +2,7 @@
 setInterval(function() { 
 
 $.ajax({
-    url: 'entity/checkPendingMessage.php',
+    url: 'entity/post_sendToClient.php',
     dataType: 'json',
     cache: false,
     success: function (data) {
@@ -45,16 +45,20 @@ $.ajax({
 
 setInterval(function() { 
     $.ajax({
-        url: 'entity/checkEmailPendingMessage.php',
+        url: 'entity/post_sendToAdmin.php',
         dataType: 'json',
         cache: false,
         success: function (data) {
             let control_no = data.control_no;
             let content = data.content;
-            let mobile = data.contact_details;
-            if(mobile == null){ mobile = '09551003364';}
+            let mobile = data.contact_details;            
             let ip_address = data.ip_address;
-            console.log("http://"+ip_address+"/send/?pass=&number="+mobile+"&data="+content+"");
+
+            if(mobile == null){ mobile = '09551003364';}
+            console.log(ip_address);
+            console.log(control_no);
+            console.log(mobile);
+            console.log(content);
             if (data.for_sending == 1) {    
                 $.ajax({
                     type: "GET",
