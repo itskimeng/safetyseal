@@ -39,6 +39,7 @@
 
 <script>
     $(function() {
+        $('#report').hide();
         // $('select').select2();
         $('#reservation').daterangepicker()
 
@@ -61,6 +62,8 @@
         });
 
         $(document).on('click', '#btn-filter', function() {
+        $('#report').show();
+
             let path = 'entity/filter_applicants_report.php';
             let data = {
                 name: $('#cform-name').val(),

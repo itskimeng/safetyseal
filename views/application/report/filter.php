@@ -141,7 +141,6 @@
               <div class="d-grid gap-2 d-md-block">
 
                 <button class="btn btn-primary btn-md" id="btn-filter" type="button"><i class="fa fa-search"></i> Filter</button>
-              <span class="btn btn-success btn-md pull-right" id="report" ><i class="fa fa-file-excel"></i> Export</span>
 
                 <button class="btn btn-default btn-md" id="btn-reset" type="button"><i class="fa fa-sync-alt"></i> Reset</button>
               </div>

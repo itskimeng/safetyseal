@@ -5,6 +5,9 @@
         <h3 class="card-title"><i class="fa fa-file"></i> Application List</h3>
       
         <div class="card-tools">
+        <span class="btn btn-success btn-md pull-right" id="report" ><i class="fa fa-file-excel"></i> Generate </span>
+        <!-- Example single danger button -->
+
 
           <!-- <a href="admin_application_add.php?appid=new" class="btn btn-block btn-info btn-sm"><i class="fa fa-plus-square"></i> Add New</a> -->
         </div>
