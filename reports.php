@@ -80,6 +80,8 @@ $sheet->getStyle("A1:R1")->applyFromArray(
     )
 );
 
+$border = array('borders' => array('allborders' => array('style' => PHPExcel_Style_Border::BORDER_MEDIUM, 'color' => array( 'rgb' => '6a6d6d'))));
+
 
 //setting width and height
 $sheet->getRowDimension(1)->setRowHeight(100);
@@ -102,30 +104,33 @@ $sheet->getColumnDimension('P')->setWidth(35);
 $sheet->getColumnDimension('Q')->setWidth(35);
 $sheet->getColumnDimension('R')->setWidth(35);
 $sheet->getStyle('A1:R1')->getAlignment()->setWrapText(true); 
+$sheet->getStyle('A1:R1')->applyFromArray($border);
 
 
 //populate data
 
-$selectArea = ' SELECT `ID`, `REGION`, `PROVINCE`, `LGU`, `OFFICE`, `CMLGOO_NAME`, `UNAME`, `PASSWORD`, `VERIFICATION_CODE`, `IS_APPROVED`, `IS_VERIFIED`, `ROLES`, `EMAIL` FROM `tbl_admin_info` WHERE `ID` = "'.$_SESSION['userid'].'" ';
-$execArea = $conn->query($selectArea);
-$area = $execArea->fetch_assoc();
+// $selectArea = ' SELECT `ID`, `REGION`, `PROVINCE`, `LGU`, `OFFICE`, `CMLGOO_NAME`, `UNAME`, `PASSWORD`, `VERIFICATION_CODE`, `IS_APPROVED`, `IS_VERIFIED`, `ROLES`, `EMAIL` FROM `tbl_admin_info` WHERE `ID` = "'.$_SESSION['userid'].'" ';
+// $execArea = $conn->query($selectArea);
+// $area = $execArea->fetch_assoc();
 
-$province = $area['PROVINCE'];
-$lgu = $area['LGU'];
+// $province = $area['PROVINCE'];
+// $lgu = $area['LGU'];
 
-$selectUser = ' SELECT `ID`, `REGION`, `PROVINCE`, `LGU`, `OFFICE`, `CMLGOO_NAME`, `UNAME`, `PASSWORD`, `VERIFICATION_CODE`, `IS_APPROVED`, `IS_VERIFIED`, `ROLES`, `EMAIL` FROM `tbl_admin_info` WHERE `PROVINCE` = "'.$province.'" AND `LGU` = "'.$lgu.'" ';
-$execUser = $conn->query($selectUser);
+// $selectUser = ' SELECT `ID`, `REGION`, `PROVINCE`, `LGU`, `OFFICE`, `CMLGOO_NAME`, `UNAME`, `PASSWORD`, `VERIFICATION_CODE`, `IS_APPROVED`, `IS_VERIFIED`, `ROLES`, `EMAIL` FROM `tbl_admin_info` WHERE `PROVINCE` = "'.$province.'" AND `LGU` = "'.$lgu.'" ';
+// $execUser = $conn->query($selectUser);
 
-$i = 2;
-$x = 1;
-while ($resultUser = $execUser->fetch_assoc()) 
-{
-	$sql = ' SELECT `id`, `control_no`, `user_id`, `agency`, `establishment`, `nature`, `address`, `person`, `contact_details`, `status`, `has_consent`, `date_created`, `date_proceed`, `receiver_id`, `date_received`, `approver_id`, `date_approved`, `safety_seal_no`, `reassessed_by`, `date_reassessed`, `date_modified`, `token`, `application_type` FROM `tbl_app_checklist` WHERE `user_id` = "'.$resultUser['ID'].'" ';
-	$query = $conn->query($sql);
+// $i = 2;
+// $x = 1;
+// while ($resultUser = $execUser->fetch_assoc()) 
+// {
+	// $sql = ' SELECT `id`, `control_no`, `user_id`, `agency`, `establishment`, `nature`, `address`, `person`, `contact_details`, `status`, `has_consent`, `date_created`, `date_proceed`, `receiver_id`, `date_received`, `approver_id`, `date_approved`, `safety_seal_no`, `reassessed_by`, `date_reassessed`, `date_modified`, `token`, `application_type` FROM `tbl_app_checklist` WHERE `user_id` = "'.$resultUser['ID'].'" ';
+	$sql = ' SELECT `id`, `control_no`, `user_id`, `agency`, `establishment`, `nature`, `address`, `person`, `contact_details`, `status`, `has_consent`, `date_created`, `date_proceed`, `receiver_id`, `date_received`, `approver_id`, `date_approved`, `safety_seal_no`, `reassessed_by`, `date_reassessed`, `date_modified`, `token`, `application_type` FROM `tbl_app_checklist` WHERE status = "Approved" ';
+ $result1 = mysqli_query($conn, $sql);
+ $i = 2;
+ $x = 1;
 
-	if ($query->num_rows > 0) 
-	{
-		$row = $query->fetch_assoc();
+while ($row = mysqli_fetch_array($result1)) {
+
 
 		$sheet ->getStyle('A'.$i.':R'.$i)->getFont()->setBold(false)->setSize(14);
 		$sheet ->getCell('A'.$i)->setValue($x);
@@ -138,7 +143,7 @@ while ($resultUser = $execUser->fetch_assoc())
 
 		$sheet ->getCell('H'.$i)->setValue($row['status']);
 
-		$sheet ->getCell('I'.$i)->setValue($row['date_approved']);
+		$sheet ->getCell('I'.$i)->setValue(date('F, d, Y',strtotime($row['date_approved'])));
 		$sheet ->getCell('J'.$i)->setValue('remarks if not approve');
 		$sheet ->getCell('K'.$i)->setValue('1 application, 2 visit');
 		$sheet ->getCell('L'.$i)->setValue('Posted in official website');
@@ -148,28 +153,29 @@ while ($resultUser = $execUser->fetch_assoc())
 		$sheet ->getCell('P'.$i)->setValue('0');
 		$sheet ->getCell('Q'.$i)->setValue('N/A');
 		$sheet ->getCell('R'.$i)->setValue('N/A');
+
+		//set borders
+		$sheet->getStyle('A'.$i.':'.'R'.$i)->applyFromArray($border);
+
 		$i++;
 		$x++;
-
-	}
-
 }
 
 
 //select LGU name for file naming
-$selectLgu = ' SELECT `id`, `province`, `code`, `name`, `date_created` FROM `tbl_citymun` WHERE `province` = "'.$province.'" AND `code` = "'.$lgu.'" ';
-$execLgu = $conn->query($selectLgu);
-$resultLgu = $execLgu->fetch_assoc();
+// $selectLgu = ' SELECT `id`, `province`, `code`, `name`, `date_created` FROM `tbl_citymun` WHERE `province` = "'.$province.'" AND `code` = "'.$lgu.'" ';
+// $execLgu = $conn->query($selectLgu);
+// $resultLgu = $execLgu->fetch_assoc();
 
-//name
-$filename = $resultLgu['name'].'_'.date("F j, Y");
+// //name
+// $filename = $resultLgu['name'].'_'.date("F j, Y");
 
 
 // We'll be outputting an excel file
 header('Content-type: application/vnd.ms-excel');
 
 // It will be called file.xls
-header('Content-Disposition: attachment; filename="'.$filename.'.xls"');
+header('Content-Disposition: attachment; filename="SSCP-Bi-Monthly-Reporting.xls"');
 
 // Write file to the browser
 $writer->save('php://output');

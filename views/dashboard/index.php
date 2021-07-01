@@ -101,11 +101,11 @@ require_once 'controller/DashboardController.php'; ?>
             </div>
         </div>
 
-        <div class="row">
+        <!-- <div class="row">
             <div class="col-lg-12">
                 <a href="reports.php" class="btn btn-primary float-right my-2">Generate Reports <i class="fa fa-print"></i></a>
             </div>
-        </div>
+        </div> -->
 
         <div class="row">
             <div class="col-lg-12">

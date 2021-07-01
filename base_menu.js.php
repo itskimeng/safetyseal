@@ -40,7 +40,7 @@
 <!-- <script src="frontend/bower_components/bootstrap/dist/js/bootstrap.min.js"></script> -->
 <!-- ChartJS -->
 <script src="frontend/bower_components/chart.js/Chart.js"></script>
-<script scr="frontend/js/ajax.js"></script>
+<script src="frontend/js/ajax.js"></script>
 <!-- FastClick -->
 <!-- <script src="frontend/bower_components/fastclick/lib/fastclick.js"></script> -->
 <!-- AdminLTE App -->

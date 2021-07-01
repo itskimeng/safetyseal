@@ -40,7 +40,7 @@
             <thead>
                 <tr>
                     <th width="25%">AGENCY</th>
-                    <th width="25%">SUB-OFFICE/UNIT</th>
+                    <th width="25%">ESTABLISHMENT</th>
                     <th width="40%">ADDRESS</th>
                     <th width="15%">SAFETY SEAL NO</th>
                     <th width="10%">ISSUED ON</th>
@@ -50,57 +50,67 @@
             </thead>
             <tbody>
               <?php 
-              $selectApplication = ' SELECT `id`, `control_no`, `user_id`, `status`, `has_consent`, `date_created`, `date_proceed`, `receiver_id`, `date_received`, `approver_id`, `date_approved`, `safety_seal_no`, `date_modified` FROM `tbl_app_checklist` WHERE status = "Approved" ';
-              $execSelectApplication = $conn->query($selectApplication);
-              while ($resultApplication = $execSelectApplication->fetch_assoc()) 
-              {
-                $selectApplicantDetails = ' SELECT `ID`, `REGION`, `PROVINCE`, `LGU`, `OFFICE`, `CMLGOO_NAME`, `UNAME`, `PASSWORD`, `VERIFICATION_CODE`, `IS_APPROVED`, `IS_VERIFIED`, `ROLES`, `EMAIL` FROM `tbl_admin_info` WHERE `ID` = "'.$resultApplication['user_id'].'" ';
-                $execApplicantDetails = $conn->query($selectApplicantDetails);
-                $resultApplicantDetails = $execApplicantDetails->fetch_assoc();
+              
+        $sql = "SELECT id,agency as GOV_AGENCY_NAME, establishment as GOV_ESTB_NAME, address as ADDRESS, safety_seal_no, date_approved, status FROM `tbl_app_checklist` WHERE status ='Approved'";
+        $result1 = mysqli_query($conn, $sql);
+            while ($row = mysqli_fetch_array($result1)) {
 
 
 
-                $selectAddress = ' SELECT `ID`, `USER_ID`, `ADDRESS`, `POSITION`, `MOBILE_NO`, `EMAIL_ADDRESS`, `GOV_AGENCY_NAME`, `GOV_ESTB_NAME`, `DATE_REGISTERED`, `GOV_NATURE_NAME` FROM `tbl_userinfo` WHERE `USER_ID` = "'.$resultApplication['user_id'].'" ';
-                $execAddress = $conn->query($selectAddress);
-                $resultAddress = $execAddress->fetch_assoc();
+
+
+
+            //   $selectApplication = ' SELECT `id`, `control_no`, `user_id`, `status`, `has_consent`, `date_created`, `date_proceed`, `receiver_id`, `date_received`, `approver_id`, `date_approved`, `safety_seal_no`, `date_modified` FROM `tbl_app_checklist` WHERE status = "Approved" ';
+            //   $execSelectApplication = $conn->query($selectApplication);
+            //   while ($resultApplication = $execSelectApplication->fetch_assoc()) 
+            //   {
+            //     $selectApplicantDetails = ' SELECT `ID`, `REGION`, `PROVINCE`, `LGU`, `OFFICE`, `CMLGOO_NAME`, `UNAME`, `PASSWORD`, `VERIFICATION_CODE`, `IS_APPROVED`, `IS_VERIFIED`, `ROLES`, `EMAIL` FROM `tbl_admin_info` WHERE `ID` = "'.$resultApplication['user_id'].'" ';
+            //     $execApplicantDetails = $conn->query($selectApplicantDetails);
+            //     $resultApplicantDetails = $execApplicantDetails->fetch_assoc();
+
+
+
+            //     $selectAddress = ' SELECT `ID`, `USER_ID`, `ADDRESS`, `POSITION`, `MOBILE_NO`, `EMAIL_ADDRESS`, `GOV_AGENCY_NAME`, `GOV_ESTB_NAME`, `DATE_REGISTERED`, `GOV_NATURE_NAME` FROM `tbl_userinfo` WHERE `USER_ID` = "'.$resultApplication['user_id'].'" ';
+            //     $execAddress = $conn->query($selectAddress);
+            //     $resultAddress = $execAddress->fetch_assoc();
                ?>
-                <tr class="clickable-row" data-href="establishment-profile.php?unique_id=<?php echo $resultApplication['id']; ?>">
+                <tr class="clickable-row" data-href="establishment-profile.php?unique_id=<?php echo $row['id']; ?>">
                         <td class="align-middle">
-                            <a href="establishment-profile.php?unique_id=<?php echo $resultApplication['id']; ?>" target="_blank" class="">
+                            <a href="establishment-profile.php?unique_id=<?php echo $row['id']; ?>" target="_blank" class="">
                                 <div class="font-weight-bold">
-                                   <?php echo $resultAddress['GOV_AGENCY_NAME']; ?>
+                                   <?php echo $row['GOV_AGENCY_NAME']; ?>
                                 </div>
                             </a>
                         </td>
                         <td class="align-middle">
-                            <a href="establishment-profile.php?unique_id=<?php echo $resultApplication['id']; ?>" class="">
+                            <a href="establishment-profile.php?unique_id=<?php echo $row['id']; ?>" class="">
                                 <div class="font-weight-bold">
-                                   <?php echo $resultAddress['GOV_ESTB_NAME']; ?>
+                                   <?php echo $row['GOV_ESTB_NAME']; ?>
                                 </div>
                             </a>
                         </td>
                         <td class="align-middle">
-                             <?php echo $resultAddress['ADDRESS']; ?>
+                             <?php echo $row['ADDRESS']; ?>
                         </td>
                         <td class="align-middle" nowrap="">
-                             <?php echo $resultApplication['safety_seal_no']; ?>
+                             <?php echo $row['safety_seal_no']; ?>
                         </td>
                         <td class="align-middle" nowrap="">
                             <span class="label label-lg label-light-success label-inline font-weight-bold py-4">
                                 <i class="la la-clipboard-check mr-2"></i>
-                             <?php echo date('F d, Y',strtotime($resultApplication['date_approved'])); ?>
+                             <?php echo date('F d, Y',strtotime($row['date_approved'])); ?>
                             </span>
                         </td>
                         <td class="align-middle" nowrap="">
                             <span class="label label-lg label-light-success label-inline font-weight-bold py-4">
                                 <i class="la la-clipboard-check mr-2"></i>
-                             <?php echo date('F d, Y', strtotime("+6 months", strtotime($resultApplication['date_approved']))); ?>
+                             <?php echo date('F d, Y', strtotime("+6 months", strtotime($row['date_approved']))); ?>
                             </span>
                         </td>
                         <td class="align-middle" nowrap="">
                             <span class="label label-lg label-light-success label-inline font-weight-bold py-4">
                                 <i class="la la-clipboard-check mr-2"></i>
-                             <?php if ($resultApplication['status'] == 'Approved') { echo '<span class="text-success">CERTIFIED<span>';} else {echo '<span class="text-danger">'.$resultApplication['status'].'<span>'; } ?>
+                             <?php if ($row['status'] == 'Approved') { echo '<span class="text-success">CERTIFIED<span>';} else {echo '<span class="text-danger">'.$row['status'].'<span>'; } ?>
                             </span>
                         </td>
                     </tr>
