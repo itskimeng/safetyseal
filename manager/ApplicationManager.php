@@ -97,7 +97,7 @@ class ApplicationManager
     public function updateChecklistEntry($data)
     {
         $sql = "UPDATE tbl_app_checklist_entry 
-                SET other_tool = '".$data['other_tool']."', answer = '".$data['answer']."', reason = '".$data['reason']."' WHERE id = ".$data['chklist_id']."";
+                SET tracing_tool = '".$data['tracing_tool']."', other_tool = '".$data['other_tool']."', answer = '".$data['answer']."', reason = '".$data['reason']."' WHERE id = ".$data['chklist_id']."";
 
         $result = mysqli_query($this->conn, $sql);
 
@@ -116,7 +116,8 @@ class ApplicationManager
             a.status as status,
             e.assessment as assessment,
             e.other_tool as other_tool,
-            a.status as status
+            a.status as status,
+            e.tracing_tool as tracing_tool
             FROM tbl_app_checklist_entry e
             LEFT JOIN tbl_app_checklist a on a.id = e.parent_id
             LEFT JOIN tbl_app_certchecklist c on c.id = e.chklist_id
@@ -142,7 +143,8 @@ class ApplicationManager
                 'assessment' => $row['assessment'],
                 'other_tool' => $row['other_tool'],
                 'is_disabled' => $is_disabled,
-                'otherTool_disabled' => empty($row['answer']) ? false : true
+                'otherTool_disabled' => empty($row['answer']) ? false : true,
+                'tracing_tool' => $row['tracing_tool']
             ];    
         }
 
@@ -387,7 +389,7 @@ class ApplicationManager
         FROM tbl_app_checklist ac
         LEFT JOIN tbl_admin_info ai on ai.id = ac.user_id
         LEFT JOIN tbl_userinfo ui on ui.user_id = ai.id
-        WHERE ai.PROVINCE = ".$province." AND ai.LGU = ".$lgu." AND ac.status <> '".$status."'";
+        WHERE ai.PROVINCE = ".$province." AND ai.LGU = ".$lgu." AND ac.application_type = 'Applied' AND ac.status <> '".$status."'";
      
         $query = mysqli_query($this->conn, $sql);
         $data = [];
@@ -439,7 +441,7 @@ class ApplicationManager
         WHERE ai.PROVINCE = ".$province." AND ai.LGU = ".$lgu." AND ac.application_type = 'Encoded'";
      
         $query = mysqli_query($this->conn, $sql2);
-        $data = [];
+        // $data = [];
         
         while ($row = mysqli_fetch_assoc($query)) {
             $color = 'green';
