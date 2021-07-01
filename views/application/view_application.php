@@ -66,8 +66,8 @@
                           <td>
                             <?php echo $list['requirement']; ?>
                             <?php if ($key == 0): ?>
-                                <br><br>Other contact tracing tool. 
-                                <span class="badge badge-info right"><?php echo $list['other_tool']; ?></span>
+                                <br><br>Other contact tracing tool:<br>
+                                <span class="badge badge-info right" style="font-size:10pt;"><?php echo $list['other_tool']; ?></span>
                             <?php endif ?>    
                           </td>
                           <td>

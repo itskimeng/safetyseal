@@ -38,7 +38,7 @@
                 <?php endif ?>
 
                 <!-- Submit button -->
-                <?php if (in_array($userinfo['status'], ['Draft', 'Disapproved', 'Reassess', 'For Receiving'])): ?>
+                <?php if (in_array($userinfo['status'], ['Draft', 'Disapproved', 'Reassess'])): ?>
                   <div class="panel panel-default pt-4">
                     <div class="row">
                       
@@ -296,6 +296,26 @@
         other_tool.prop('disabled', true);
       } else {
         other_tool.prop('disabled', false);
+      }
+    });
+
+    $(document).on('click', '.option', function(){
+      let $this = $(this);
+      let tr = $this.closest('tr');
+      let opts = tr.find('.form-check-input');
+      let other_field = tr.find('.other-sstools');
+      let inp = tr.find('#cform-other_tool');
+        
+      opts.attr('checked', false);
+
+      if ($this.data('val') == 'others') {
+        opts.attr('disabled', true);
+        other_field.removeClass('hidden-other_tools');
+        inp.attr('disabled', false);
+      } else {
+        opts.attr('disabled', false);
+        other_field.addClass('hidden-other_tools');
+        inp.attr('disabled', true);
       }
     });
 
