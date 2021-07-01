@@ -3,10 +3,11 @@
     <div class="card">
       <div class="card-header">
         <h3 class="card-title"><i class="fa fa-file"></i> Application List</h3>
-<!--       
+      
         <div class="card-tools">
-          <a href="admin_application_add.php?appid=new" class="btn btn-block btn-info btn-sm"><i class="fa fa-plus-square"></i> Add New</a>
-        </div> -->
+
+          <!-- <a href="admin_application_add.php?appid=new" class="btn btn-block btn-info btn-sm"><i class="fa fa-plus-square"></i> Add New</a> -->
+        </div>
       </div>
 
       <div class="card-body">
@@ -20,7 +21,6 @@
               <th style="text-align: center; width:15%">LOCATION</th>
               <th style="text-align: center; width:10%">DATE REGISTERED</th>
               <th style="text-align: center;">SAFETY SEAL NO.</th>
-              <th style="text-align: center; width:15%">ACTION</th>
             </tr>
           </thead>
           <tbody id="list_body">
@@ -41,7 +41,7 @@
                 <td><?php echo $applicant['ac_address']; ?></td>
                 <td><?php echo $applicant['date_created']; ?></td>
                 <td><?php echo $applicant['ss_no']; ?></td>
-                <td>
+                <!-- <td>
                   <div class="col-md-12">
                     <?php if ($applicant['app_type'] == 'Encoded'): ?>
                       <a href="admin_application_edit.php?appid=<?php echo $applicant['token']; ?>&code=&scope=" class="btn btn-info btn-block btn-sm" style="margin-bottom: -5%;">
@@ -57,12 +57,14 @@
                       </a>
                     <?php endif ?>
                   </div>
-                </td>
+                </td> -->
               </tr>
+              
             <?php endforeach ?>
             
           </tbody>   
         </table>
+
       </div>
     </div>
   </div>

@@ -55,7 +55,7 @@
           </div>
         </div>
 
-        <div class="row">
+        <!-- <div class="row">
           <div class="col-md-4">
             <div class="form-group">
               <label>Name</label>
@@ -91,16 +91,16 @@
               </select>
             </div>
           </div>
-        </div>
+        </div> -->
 
         <div class="row">
           <div class="col-md-4">
             <div class="form-group">
               <label>Status</label>
-              <select id="cform-status" class="form-control select2bs4 select2-hidden-accessible" style="width: 100%;" data-select2-id="17" tabindex="-1" aria-hidden="true">
+              <select id="cform-status" class="form-control select2bs4 select2-hidden-accessible" style="width: 100%;" data-select2-id="17" tabindex="-1" aria-hidden="true" disabled>
                 <option></option>
                 <?php foreach ($status_opts as $key => $opt): ?>
-                  <option value="<?php echo $opt; ?>"><?php echo $opt; ?></option>
+                  <option value="<?php echo $opt; ?>" <?php if($opt == 'Approved') echo 'selected'; ?> ><?php echo $opt; ?></option>
                 <?php endforeach ?>
               </select>
             </div>
@@ -139,7 +139,10 @@
           <div class="col-md-12">
             <div class="form-group float-right">
               <div class="d-grid gap-2 d-md-block">
+
                 <button class="btn btn-primary btn-md" id="btn-filter" type="button"><i class="fa fa-search"></i> Filter</button>
+              <span class="btn btn-success btn-md pull-right" id="report" ><i class="fa fa-file-excel"></i> Export</span>
+
                 <button class="btn btn-default btn-md" id="btn-reset" type="button"><i class="fa fa-sync-alt"></i> Reset</button>
               </div>
             </div>  

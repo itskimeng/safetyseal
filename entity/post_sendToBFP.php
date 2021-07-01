@@ -10,7 +10,7 @@ include '../application/config/connection.php';
     $result = mysqli_query($conn, $sqlQuery);
 
     if ($row1 = mysqli_fetch_array($result)) {
-        $sql = "SELECT  t.`NAME` as name ,t.`CONTACT_NO` as contact_details FROM `tbl_inspection_team` t where t.PROVINCE_ID = ".$row1['PROVINCE']." AND t.LGU_ID = ".$row1['LGU']." ";
+        $sql = "SELECT  t.`BFP` as name ,t.`BFP_CONTACT_NO` as contact_details FROM `tbl_inspection_team` t where t.PROVINCE_ID = ".$row1['PROVINCE']." AND t.LGU_ID = ".$row1['LGU']." ";
         $result1 = mysqli_query($conn, $sql);
         // if (mysqli_num_rows($result) > 0) {
             while ($row = mysqli_fetch_array($result1)) {
@@ -20,7 +20,7 @@ include '../application/config/connection.php';
                     "control_no" => $row1['control_no'],
                     "est" => $row1['est'],
                     "contact_details" => $row['contact_details'],
-                    "content" => "Notification from DILG IV-A Safety Seal Portal:  Hi  ".$row['name']."!, ".strtoupper($row1['est'])." applied for Safety Seal Certification with CTRL No: ".$row1['control_no'].". Kindly login to the portal to proceed with the assessment and issuance of certificate."
+                    "content" => "Notification from DILG IV-A Safety Seal Portal:: Hi  ".$row['name']."!, ".strtoupper($row1['est'])." applied for Safety Seal Certification with CTRL No: ".$row1['control_no'].". Kindly login to the portal to proceed with the assessment and issuance of certificate."
                 ));
             }
         // }

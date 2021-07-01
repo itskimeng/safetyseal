@@ -5,9 +5,9 @@ date_default_timezone_set('Asia/Manila');
 require '../manager/ApplicationManager.php';
 require '../application/config/connection.php';
 
-$name = $_GET['name'];
-$agency = $_GET['agency'];
-$location = $_GET['location'];
+// $name = $_GET['name'];
+// $agency = $_GET['agency'];
+// $location = $_GET['location'];
 $status = $_GET['status'];
 $app_type = $_GET['app_type'];
 $province = $_GET['province'];
@@ -18,11 +18,11 @@ $date_from = new DateTime($daterange[0]);
 $date_to = new DateTime($daterange[1]);
 
 $data = [
-	'name' => $name,
-	'agency' => $agency,
+	// 'name' => $name,
+	// 'agency' => $agency,
 	'status' => $status,
 	'app_type' => $app_type,
-	'location' => $location,
+	// 'location' => $location,
 	'province' => $province,
 	'lgu' => $lgu,
 	'date_from' => $date_from->format('Y-m-d 00:00:00'),
@@ -63,17 +63,17 @@ function filterApplicants($conn, $options) {
         and ai.PROVINCE = '$province' AND ai.LGU = '$lgu'
         ";
 
-	if (!empty($options['name'])) {
-		$sql.= " AND ai.CMLGOO_NAME = '".$options['name']."'"; 
-	}	
+	// if (!empty($options['name'])) {
+	// 	$sql.= " AND ai.CMLGOO_NAME = '".$options['name']."'"; 
+	// }	
 
-	if (!empty($options['agency'])) {
-		$sql.= " AND ui.GOV_AGENCY_NAME = '".$options['agency']."'"; 
-	}
+	// if (!empty($options['agency'])) {
+	// 	$sql.= " AND ui.GOV_AGENCY_NAME = '".$options['agency']."'"; 
+	// }
 
-	if (!empty($options['location'])) {
-		$sql.= " AND ui.ADDRESS = '".$options['location']."'"; 
-	}	
+	// if (!empty($options['location'])) {
+	// 	$sql.= " AND ui.ADDRESS = '".$options['location']."'"; 
+	// }	
 
 	if (!empty($options['status'])) {
 		$sql.= " AND ac.status = '".$options['status']."'"; 

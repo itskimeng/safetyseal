@@ -124,13 +124,20 @@ $sheet->getStyle('A1:R1')->applyFromArray($border);
 // while ($resultUser = $execUser->fetch_assoc()) 
 // {
 	// $sql = ' SELECT `id`, `control_no`, `user_id`, `agency`, `establishment`, `nature`, `address`, `person`, `contact_details`, `status`, `has_consent`, `date_created`, `date_proceed`, `receiver_id`, `date_received`, `approver_id`, `date_approved`, `safety_seal_no`, `reassessed_by`, `date_reassessed`, `date_modified`, `token`, `application_type` FROM `tbl_app_checklist` WHERE `user_id` = "'.$resultUser['ID'].'" ';
-	$sql = ' SELECT `id`, `control_no`, `user_id`, `agency`, `establishment`, `nature`, `address`, `person`, `contact_details`, `status`, `has_consent`, `date_created`, `date_proceed`, `receiver_id`, `date_received`, `approver_id`, `date_approved`, `safety_seal_no`, `reassessed_by`, `date_reassessed`, `date_modified`, `token`, `application_type` FROM `tbl_app_checklist` WHERE status = "Approved" ';
- $result1 = mysqli_query($conn, $sql);
+	$sql = "SELECT ac.control_no ,ac.establishment, ac.nature, ac.address, ac.person, ac.contact_details, ac.date_approved
+	FROM tbl_app_checklist ac 
+	LEFT JOIN tbl_admin_info ai on ai.id = ac.user_id 
+	LEFT JOIN tbl_userinfo ui on ui.user_id = ai.id 
+	WHERE ai.PROVINCE = ".$_GET['province']." 
+	AND ai.LGU = ".$_GET['lgu']." 
+	AND ac.application_type = 'Applied' AND ac.status <> '".$_GET['date_range']."'";
+	echo $sql;
+	exit();
+	$result1 = mysqli_query($conn, $sql);
  $i = 2;
  $x = 1;
 
 while ($row = mysqli_fetch_array($result1)) {
-
 
 		$sheet ->getStyle('A'.$i.':R'.$i)->getFont()->setBold(false)->setSize(14);
 		$sheet ->getCell('A'.$i)->setValue($x);
@@ -160,6 +167,7 @@ while ($row = mysqli_fetch_array($result1)) {
 		$i++;
 		$x++;
 }
+
 
 
 //select LGU name for file naming

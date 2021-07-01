@@ -285,7 +285,7 @@ class ApplicationManager
 
     public function proceedChecklist($checklist_id, $contact_details, $has_consent, $status, $date_modified)
     {
-        $sql = "UPDATE tbl_app_checklist SET contact_details = '".$contact_details."', date_proceed = '".$date_modified."', date_modified = '".$date_modified."', has_consent = '".$has_consent."', sms_sending_status = '1',email_sending_status = '1', status = '".$status."' WHERE id = ".$checklist_id."";
+        $sql = "UPDATE tbl_app_checklist SET contact_details = '".$contact_details."', date_proceed = '".$date_modified."', date_modified = '".$date_modified."', has_consent = '".$has_consent."', sms_sending_status = '1',email_sending_status = '1',pnp_sending_status = '1',bfp_sending_status = '1', status = '".$status."' WHERE id = ".$checklist_id."";
         $result = mysqli_query($this->conn, $sql);
 
         return $result;
