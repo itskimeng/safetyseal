@@ -61,11 +61,13 @@
     });
 
     $(document).on('click', '#btn-filter', function() {
-      let path = 'entity/filter_applicants.php';
+      let path = 'entity/filter_applicants_report.php';
       let data = {
           name: $('#cform-name').val(),
           agency: $('#cform-agency').val(),
           location: $('#cform-location').val(),
+          province: $('#province').val(),
+          lgu: $('#city_mun').val(),
           status: $('#cform-status').val(),
           daterange: $('#reservation').val(),
           app_type: $('#cform-app_type').val()
