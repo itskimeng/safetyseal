@@ -20,7 +20,7 @@
           <a href="admin_application.php" class="nav-link">Application</a>
         </li>
         <li class="nav-item">
-          <a href="reports.php" class="nav-link">Generate Reports</a>
+          <a href="admin_report_application.php" class="nav-link">Generate Reports</a>
         </li>
 
         <li class="nav-item">

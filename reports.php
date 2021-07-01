@@ -141,18 +141,18 @@ while ($row = mysqli_fetch_array($result1)) {
 		$sheet ->getCell('F'.$i)->setValue($row['person']);
 		$sheet ->getCell('G'.$i)->setValue($row['contact_details']);
 
-		$sheet ->getCell('H'.$i)->setValue($row['status']);
+		$sheet ->getCell('H'.$i)->setValue('1'); //Approved
 
 		$sheet ->getCell('I'.$i)->setValue(date('F, d, Y',strtotime($row['date_approved'])));
-		$sheet ->getCell('J'.$i)->setValue('remarks if not approve');
-		$sheet ->getCell('K'.$i)->setValue('1 application, 2 visit');
-		$sheet ->getCell('L'.$i)->setValue('Posted in official website');
-		$sheet ->getCell('M'.$i)->setValue('Complaints if any');
-		$sheet ->getCell('N'.$i)->setValue('0');
-		$sheet ->getCell('O'.$i)->setValue('0');
-		$sheet ->getCell('P'.$i)->setValue('0');
-		$sheet ->getCell('Q'.$i)->setValue('N/A');
-		$sheet ->getCell('R'.$i)->setValue('N/A');
+		$sheet ->getCell('J'.$i)->setValue('');
+		$sheet ->getCell('K'.$i)->setValue('1');
+		$sheet ->getCell('L'.$i)->setValue('1');
+		$sheet ->getCell('M'.$i)->setValue('');
+		$sheet ->getCell('N'.$i)->setValue('');
+		$sheet ->getCell('O'.$i)->setValue('');
+		$sheet ->getCell('P'.$i)->setValue('');
+		$sheet ->getCell('Q'.$i)->setValue('');
+		$sheet ->getCell('R'.$i)->setValue('');
 
 		//set borders
 		$sheet->getStyle('A'.$i.':'.'R'.$i)->applyFromArray($border);
