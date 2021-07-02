@@ -59,7 +59,7 @@
                   <div class="input-group-btn">
                     <span class="fileUpload btn btn-secondary <?php echo !empty($attachments) ? 'btn-disabled' : ''; ?>" style="right: 4px;">
                       <span class="upl" id="upload">Select single file</span>
-                        <input type="file" name="file" class="upload up" id="up" onchange="readURL(this);" />
+                        <input type="file" name="file" class="upload up" id="up" onchange="readURL(this);" required />
                     </span>
 
                     <div class="btn-group">                        
