@@ -5,6 +5,9 @@ date_default_timezone_set('Asia/Manila');
 require '../manager/ApplicationManager.php';
 require '../application/config/connection.php';
 
+$province = $_SESSION['province'];
+$lgu = $_SESSION['city_mun'];
+
 $name = $_GET['name'];
 $agency = $_GET['agency'];
 $location = $_GET['location'];
@@ -25,13 +28,14 @@ $data = [
 	'date_to' => $date_to->format('Y-m-d 23:59:59')
 ];
 
-$lists = filterApplicants($conn, $data);
+$lists = filterApplicants($conn, $province, $lgu, $data);
 
 echo $lists;
 
-function filterApplicants($conn, $options) {
+function filterApplicants($conn, $province, $lgu, $options) {
 	$date_from = $options['date_from'];
 	$date_to = $options['date_to'];
+	$data = [];
 
 	$sql = "SELECT
 	  	ac.id as id,
@@ -53,7 +57,7 @@ function filterApplicants($conn, $options) {
 		FROM tbl_app_checklist ac
 		LEFT JOIN tbl_userinfo ui on ui.id = ac.user_id
   		LEFT JOIN tbl_admin_info ai on ui.user_id = ai.id
-		WHERE ac.date_created >= '$date_from' AND ac.date_created <= '$date_to'";
+		WHERE ai.PROVINCE = '".$province."' AND ai.LGU = '".$lgu."' AND ac.date_created >= '$date_from' AND ac.date_created <= '$date_to'";
 
 	if (!empty($options['name'])) {
 		$sql.= " AND ai.CMLGOO_NAME = '".$options['name']."'"; 
