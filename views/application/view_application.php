@@ -96,44 +96,40 @@
                           <td>
                             <div class="col-md-12">
                               <div class="form-group">
-                                <textarea 
-                                  class="form-control" 
-                                  rows="3" 
-                                  name="pnp_remarks[<?php echo $list['ulist_id']; ?>]" 
-                                  placeholder="Enter ..."
-                                  style="font-size: 9.5pt;"
-                                  <?php echo $is_readonly ? 'disabled' : ''; ?> 
-                                  value="<?php echo isset($list['pnp_remarks']) ? $list['pnp_remarks'] : ''; ?>"><?php echo isset($list['pnp_remarks']) ? $list['pnp_remarks'] : ''; ?></textarea>
+                                <?php if ($list['nature'] == 'pnp'): ?>
+                                  <textarea 
+                                    class="form-control" 
+                                    rows="3" 
+                                    name="pnp_remarks[<?php echo $list['ulist_id']; ?>]" 
+                                    placeholder="Enter ..."
+                                    style="font-size: 9.5pt;"
+                                    <?php echo $is_readonly ? 'disabled' : ''; ?> 
+                                    value="<?php echo isset($list['pnp_remarks']) ? $list['pnp_remarks'] : ''; ?>"><?php echo isset($list['pnp_remarks']) ? $list['pnp_remarks'] : ''; ?></textarea>
+                                <?php else: ?>
+                                  <?php echo isset($list['pnp_remarks']) ? $list['pnp_remarks'] : ''; ?>
+                                <?php endif ?>
                               </div>
                             </div>
                           </td>
                           <td>
                             <div class="col-md-12">
                               <div class="form-group">
-                                <textarea 
-                                  class="form-control" 
-                                  rows="3" 
-                                  name="bfp_remarks[<?php echo $list['ulist_id']; ?>]" 
-                                  placeholder="Enter ..."
-                                  style="font-size: 9.5pt;"
-                                  <?php echo $is_readonly ? 'disabled' : ''; ?> 
-                                  value="<?php echo isset($list['bfp_remarks']) ? $list['bfp_remarks'] : ''; ?>"><?php echo isset($list['bfp_remarks']) ? $list['bfp_remarks'] : ''; ?></textarea>
+                                <?php if ($list['nature'] == 'pnp'): ?>
+                                  <textarea 
+                                    class="form-control" 
+                                    rows="3" 
+                                    name="bfp_remarks[<?php echo $list['ulist_id']; ?>]" 
+                                    placeholder="Enter ..."
+                                    style="font-size: 9.5pt;"
+                                    <?php echo $is_readonly ? 'disabled' : ''; ?> 
+                                    value="<?php echo isset($list['bfp_remarks']) ? $list['bfp_remarks'] : ''; ?>"><?php echo isset($list['bfp_remarks']) ? $list['bfp_remarks'] : ''; ?></textarea>
+                                <?php else: ?>
+                                  <?php echo isset($list['bfp_remarks']) ? $list['bfp_remarks'] : ''; ?>
+                                <?php endif ?>
+                                
                               </div>
                             </div>
                           </td>
-                          <!-- <td class="text-center">
-                            <label>PNP</label>
-                            <div class="form-group">
-                              <textarea 
-                                class="form-control" 
-                                rows="1" 
-                                name="bfp_remarks[<?php //echo $list['ulist_id']; ?>]" 
-                                placeholder="Enter ..."
-                                <?php //echo $is_readonly ? 'disabled' : ''; ?> 
-                                value="<?php //echo isset($list['bfp_remarks']) ? $list['bfp_remarks'] : ''; ?>"><?php //echo isset($list['bfp_remarks']) ? $list['bfp_remarks'] : ''; ?></textarea>
-                            </div>
-                          </td> -->
-
                           <?php if ($applicant['status'] <> 'For Receiving' AND $applicant['status'] <> 'Draft'): ?>
                           <td class="text-center">
                             <?php if ($is_readonly): ?>

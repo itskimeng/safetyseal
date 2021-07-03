@@ -70,11 +70,13 @@ function getUserChecklistsEntry($conn, $id)
         e.other_tool as other_tool,
         e.assessment as assessment,
         e.pnp_remarks as pnp_remarks,
-        e.bfp_remarks as bfp_remarks
+        e.bfp_remarks as bfp_remarks,
+        ui.GOV_NATURE_NAME as nature
         FROM tbl_app_checklist_entry e
         LEFT JOIN tbl_app_checklist ac on ac.id = e.parent_id
         LEFT JOIN tbl_app_certchecklist c on c.id = e.chklist_id
         LEFT JOIN tbl_admin_info ai on ai.id = ac.user_id
+        LEFT JOIN tbl_userinfo ui on ui.id = ai.id
         WHERE ac.id = $id";
 
     $query = mysqli_query($conn, $sql);
@@ -90,6 +92,14 @@ function getUserChecklistsEntry($conn, $id)
     		$badge = 'danger';
     	}
 
+        if (str_contains($row['nature'], 'BFP')) {
+            $nature = 'bfp';    
+        } elseif (str_contains($row['nature'], 'PNP')) {
+            $nature = 'pnp';    
+        } else {
+            $nature = 'lgoo';    
+        }
+
         $data[] = [
             'clist_id' => $row['clist_id'],
             'requirement' => $row['requirement'],
@@ -101,7 +111,8 @@ function getUserChecklistsEntry($conn, $id)
             'assessment' => $row['assessment'],
             'other_tool' => $row['other_tool'],
             'pnp_remarks' => $row['pnp_remarks'],
-            'bfp_remarks' => $row['bfp_remarks']
+            'bfp_remarks' => $row['bfp_remarks'],
+            'nature' => $row['nature']
         ];    
     }
 

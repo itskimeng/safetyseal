@@ -9,8 +9,7 @@ require_once 'frontend/bower_components/phpti-master/src/ti.php'; ?>
 <?php endblock('title'); ?>
 
 <?php 
-session_start();
-
 startblock('content'); ?>
+  <?php include('layout/macro.php'); ?>
   <?php include('views/application/index.php'); ?>
 <?php endblock(); ?>

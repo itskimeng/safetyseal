@@ -19,6 +19,7 @@
               <th style="text-align: center; width:15%">AGENCY NAME</th>
               <th style="text-align: center; width:15%">LOCATION</th>
               <th style="text-align: center; width:10%">DATE REGISTERED</th>
+              <th style="text-align: center; width:10%">VALIDITY DATE</th>
               <th style="text-align: center;">SAFETY SEAL NO.</th>
               <th style="text-align: center; width:15%">ACTION</th>
             </tr>
@@ -40,6 +41,7 @@
                 <td><?php echo $applicant['agency']; ?></td>
                 <td><?php echo $applicant['ac_address']; ?></td>
                 <td><?php echo $applicant['date_created']; ?></td>
+                <td><?php echo $applicant['validity_date']; ?></td>
                 <td><?php echo $applicant['ss_no']; ?></td>
                 <td>
                   <div class="col-md-12">
