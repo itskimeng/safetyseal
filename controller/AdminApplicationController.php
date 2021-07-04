@@ -41,38 +41,37 @@ if (!$is_adminro) {
 	$applicants = $app->getApplicationLists($province, $citymun, ApplicationManager::STATUS_DRAFT);
 } else {
 	$applicants = $app->getAllApplicationLists();
-	$reports['total_application'] = $app->getTotalApplications('',$timestamp);
-	$reports['total_received'] = $app->getTotalReceivedApplications('',$timestamp);
-	$reports['total_approved'] = $app->getTotalApprovedApplications('',$timestamp);
-	$reports['total_disapproved'] = $app->getTotalDisapprovedApplications('',$timestamp);
+	$reports['total_application'] = $app->showAllApplications('',$timestamp);
+	$reports['total_received'] = $app->showAllApplications('',$timestamp,ApplicationManager::STATUS_RECEIVED);
+	$reports['total_approved'] = $app->showAllApplications('',$timestamp,ApplicationManager::STATUS_APPROVED);
+	$reports['total_disapproved'] = $app->showAllApplications('',$timestamp,ApplicationManager::STATUS_DISAPPROVED);
 
-	$reports['batangas_application'] = $app->getTotalApplications(3,$timestamp);
-	$reports['batangas_received'] = $app->getTotalReceivedApplications(3,$timestamp);
-	$reports['batangas_approved'] = $app->getTotalApprovedApplications(3,$timestamp);
-	$reports['batangas_disapproved'] = $app->getTotalDisapprovedApplications(3,$timestamp);
+	$reports['batangas_application'] = $app->showAllApplications(3,$timestamp);
+	$reports['batangas_received'] = $app->showAllApplications(3,$timestamp,ApplicationManager::STATUS_RECEIVED);
+	$reports['batangas_approved'] = $app->showAllApplications(3,$timestamp,ApplicationManager::STATUS_APPROVED);
+	$reports['batangas_disapproved'] = $app->showAllApplications(3,$timestamp,ApplicationManager::STATUS_DISAPPROVED);
 
-	$reports['cavite_application'] = $app->getTotalApplications(1,$timestamp);
-	$reports['cavite_received'] = $app->getTotalReceivedApplications(1,$timestamp);
-	$reports['cavite_approved'] = $app->getTotalApprovedApplications(1,$timestamp);
-	$reports['cavite_disapproved'] = $app->getTotalDisapprovedApplications(1,$timestamp);
+	$reports['cavite_application'] = $app->showAllApplications(1,$timestamp);
+	$reports['cavite_received'] = $app->showAllApplications(1,$timestamp,ApplicationManager::STATUS_RECEIVED);
+	$reports['cavite_approved'] = $app->showAllApplications(1,$timestamp,ApplicationManager::STATUS_APPROVED);
+	$reports['cavite_disapproved'] = $app->showAllApplications(1,$timestamp,ApplicationManager::STATUS_DISAPPROVED);
 
-	$reports['laguna_application'] = $app->getTotalApplications(2,$timestamp);
-	$reports['laguna_received'] = $app->getTotalReceivedApplications(2,$timestamp);
-	$reports['laguna_approved'] = $app->getTotalApprovedApplications(2,$timestamp);
-	$reports['laguna_disapproved'] = $app->getTotalDisapprovedApplications(2,$timestamp);
+	$reports['laguna_application'] = $app->showAllApplications(2,$timestamp);
+	$reports['laguna_received'] = $app->showAllApplications(2,$timestamp,ApplicationManager::STATUS_RECEIVED);
+	$reports['laguna_approved'] = $app->showAllApplications(2,$timestamp,ApplicationManager::STATUS_APPROVED);
+	$reports['laguna_disapproved'] = $app->showAllApplications(2,$timestamp,ApplicationManager::STATUS_DISAPPROVED);
 
-	$reports['rizal_application'] = $app->getTotalApplications(4,$timestamp);
-	$reports['rizal_received'] = $app->getTotalReceivedApplications(4,$timestamp);
-	$reports['rizal_approved'] = $app->getTotalApprovedApplications(4,$timestamp);
-	$reports['rizal_disapproved'] = $app->getTotalDisapprovedApplications(4,$timestamp);
+	$reports['rizal_application'] = $app->showAllApplications(4,$timestamp);
+	$reports['rizal_received'] = $app->showAllApplications(4,$timestamp,ApplicationManager::STATUS_RECEIVED);
+	$reports['rizal_approved'] = $app->showAllApplications(4,$timestamp,ApplicationManager::STATUS_APPROVED);
+	$reports['rizal_disapproved'] = $app->showAllApplications(4,$timestamp,ApplicationManager::STATUS_DISAPPROVED);
 
-	$reports['huc_application'] = $app->getTotalApplications('huc',$timestamp);
-	$reports['huc_received'] = $app->getTotalReceivedApplications('huc',$timestamp);
-	$reports['huc_approved'] = $app->getTotalApprovedApplications('huc',$timestamp);
-	$reports['huc_disapproved'] = $app->getTotalDisapprovedApplications('huc',$timestamp);
+	$reports['huc_application'] = $app->showAllApplications('huc',$timestamp);
+	$reports['huc_received'] = $app->showAllApplications('huc',$timestamp,ApplicationManager::STATUS_RECEIVED);
+	$reports['huc_approved'] = $app->showAllApplications('huc',$timestamp,ApplicationManager::STATUS_APPROVED);
+	$reports['huc_disapproved'] = $app->showAllApplications('huc',$timestamp,ApplicationManager::STATUS_DISAPPROVED);
 
 }
-
 
 function month_options($today) {
 	$options = [

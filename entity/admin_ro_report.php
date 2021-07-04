@@ -12,17 +12,18 @@ $current_month = $_GET['asof_date'];
 $asof_date = new DateTime($current_month);
 $timestamp = $asof_date->format('Y-m-d H:i:s');
 $asof_datetxt = $asof_date->format('F d, Y h:i A');
-
+$asof_txtonly = $asof_date->format('Ymd-hiA');
+$filename = 'SSC_REPORT_'.$asof_txtonly;
 
 $phpExcel = new PHPExcel;
 
-$phpExcel->getProperties()->setTitle("Certified Establishment Report");
-$phpExcel->getProperties()->setCreator("Safety Seal Administrator");
-$phpExcel->getProperties()->setDescription("List of certified establishment");
+$phpExcel->getProperties()->setTitle("DILG Inspection and Certification Team Accomplishment Report");
+$phpExcel->getProperties()->setCreator("Regional Officer SafetySeal Office");
+$phpExcel->getProperties()->setDescription("Summary of DILG Inspection and Certification Team Accomplishment Report");
 $writer = PHPExcel_IOFactory::createWriter($phpExcel, "Excel2007");
 $sheet = $phpExcel->getActiveSheet();
 
-$sheet->setTitle('Establishment List');
+$sheet->setTitle('Summary');
 
 // Creating spreadsheet header
 $sheet->getStyle('A1:I1')->getFont('Arial Black')->setBold(true);
@@ -323,15 +324,10 @@ $sheet->getStyle('F3')->getAlignment()->setWrapText(true);
 
 $sheet->getStyle('A1:I1')->applyFromArray($border);
 
-
-
-
-
-// while ($row = mysqli_fetch_array($result1)) {
-$reports['total_application'] = $am->getTotalApplications('',$timestamp);
-$reports['total_received'] = $am->getTotalReceivedApplications('',$timestamp);
-$reports['total_approved'] = $am->getTotalApprovedApplications('',$timestamp);
-$reports['total_disapproved'] = $am->getTotalDisapprovedApplications('',$timestamp);
+$reports['total_application'] = $am->showAllApplications('',$timestamp);
+$reports['total_received'] = $am->showAllApplications('',$timestamp,ApplicationManager::STATUS_RECEIVED);
+$reports['total_approved'] = $am->showAllApplications('',$timestamp,ApplicationManager::STATUS_APPROVED);
+$reports['total_disapproved'] = $am->showAllApplications('',$timestamp,ApplicationManager::STATUS_DISAPPROVED);
 
 $sheet->getCell('B5')->setValue($reports['total_application']);
 $sheet->getCell('C5')->setValue($reports['total_approved']);
@@ -342,10 +338,10 @@ $sheet->getCell('G5')->setValue($reports['total_approved']);
 $sheet->getCell('H5')->setValue('0');
 $sheet->getCell('I5')->setValue('');
 
-$reports['batangas_application'] = $am->getTotalApplications(3,$timestamp);
-$reports['batangas_received'] = $am->getTotalReceivedApplications(3,$timestamp);
-$reports['batangas_approved'] = $am->getTotalApprovedApplications(3,$timestamp);
-$reports['batangas_disapproved'] = $am->getTotalDisapprovedApplications(3,$timestamp);
+$reports['batangas_application'] = $am->showAllApplications(3,$timestamp);
+$reports['batangas_received'] = $am->showAllApplications(3,$timestamp,ApplicationManager::STATUS_RECEIVED);
+$reports['batangas_approved'] = $am->showAllApplications(3,$timestamp,ApplicationManager::STATUS_APPROVED);
+$reports['batangas_disapproved'] = $am->showAllApplications(3,$timestamp,ApplicationManager::STATUS_DISAPPROVED);
 
 $sheet->getCell('B6')->setValue($reports['batangas_application']);
 $sheet->getCell('C6')->setValue($reports['batangas_approved']);
@@ -356,10 +352,10 @@ $sheet->getCell('G6')->setValue($reports['batangas_approved']);
 $sheet->getCell('H6')->setValue('0');
 $sheet->getCell('I6')->setValue('');
 
-$reports['cavite_application'] = $am->getTotalApplications(1,$timestamp);
-$reports['cavite_received'] = $am->getTotalReceivedApplications(1,$timestamp);
-$reports['cavite_approved'] = $am->getTotalApprovedApplications(1,$timestamp);
-$reports['cavite_disapproved'] = $am->getTotalDisapprovedApplications(1,$timestamp);
+$reports['cavite_application'] = $am->showAllApplications(1,$timestamp);
+$reports['cavite_received'] = $am->showAllApplications(1,$timestamp,ApplicationManager::STATUS_RECEIVED);
+$reports['cavite_approved'] = $am->showAllApplications(1,$timestamp,ApplicationManager::STATUS_APPROVED);
+$reports['cavite_disapproved'] = $am->showAllApplications(1,$timestamp,ApplicationManager::STATUS_DISAPPROVED);
 
 $sheet->getCell('B7')->setValue($reports['cavite_application']);
 $sheet->getCell('C7')->setValue($reports['cavite_approved']);
@@ -370,10 +366,10 @@ $sheet->getCell('G7')->setValue($reports['cavite_approved']);
 $sheet->getCell('H7')->setValue('0');
 $sheet->getCell('I7')->setValue('');
 
-$reports['laguna_application'] = $am->getTotalApplications(2,$timestamp);
-$reports['laguna_received'] = $am->getTotalReceivedApplications(2,$timestamp);
-$reports['laguna_approved'] = $am->getTotalApprovedApplications(2,$timestamp);
-$reports['laguna_disapproved'] = $am->getTotalDisapprovedApplications(2,$timestamp);
+$reports['laguna_application'] = $am->showAllApplications(2,$timestamp);
+$reports['laguna_received'] = $am->showAllApplications(2,$timestamp,ApplicationManager::STATUS_RECEIVED);
+$reports['laguna_approved'] = $am->showAllApplications(2,$timestamp,ApplicationManager::STATUS_APPROVED);
+$reports['laguna_disapproved'] = $am->showAllApplications(2,$timestamp,ApplicationManager::STATUS_DISAPPROVED);
 
 $sheet->getCell('B8')->setValue($reports['laguna_application']);
 $sheet->getCell('C8')->setValue($reports['laguna_approved']);
@@ -384,10 +380,10 @@ $sheet->getCell('G8')->setValue($reports['laguna_approved']);
 $sheet->getCell('H8')->setValue('0');
 $sheet->getCell('I8')->setValue('');
 
-$reports['rizal_application'] = $am->getTotalApplications(4,$timestamp);
-$reports['rizal_received'] = $am->getTotalReceivedApplications(4,$timestamp);
-$reports['rizal_approved'] = $am->getTotalApprovedApplications(4,$timestamp);
-$reports['rizal_disapproved'] = $am->getTotalDisapprovedApplications(4,$timestamp);
+$reports['rizal_application'] = $am->showAllApplications(4,$timestamp);
+$reports['rizal_received'] = $am->showAllApplications(4,$timestamp,ApplicationManager::STATUS_RECEIVED);
+$reports['rizal_approved'] = $am->showAllApplications(4,$timestamp,ApplicationManager::STATUS_APPROVED);
+$reports['rizal_disapproved'] = $am->showAllApplications(4,$timestamp,ApplicationManager::STATUS_DISAPPROVED);
 
 $sheet->getCell('B9')->setValue($reports['rizal_application']);
 $sheet->getCell('C9')->setValue($reports['rizal_approved']);
@@ -398,10 +394,10 @@ $sheet->getCell('G9')->setValue($reports['rizal_approved']);
 $sheet->getCell('H9')->setValue('0');
 $sheet->getCell('I9')->setValue('');
 
-$reports['huc_application'] = $am->getTotalApplications('huc',$timestamp);
-$reports['huc_received'] = $am->getTotalReceivedApplications('huc',$timestamp);
-$reports['huc_approved'] = $am->getTotalApprovedApplications('huc',$timestamp);
-$reports['huc_disapproved'] = $am->getTotalDisapprovedApplications('huc',$timestamp);
+$reports['huc_application'] = $am->showAllApplications('huc',$timestamp);
+$reports['huc_received'] = $am->showAllApplications('huc',$timestamp,ApplicationManager::STATUS_RECEIVED);
+$reports['huc_approved'] = $am->showAllApplications('huc',$timestamp,ApplicationManager::STATUS_APPROVED);
+$reports['huc_disapproved'] = $am->showAllApplications('huc',$timestamp,ApplicationManager::STATUS_DISAPPROVED);
 
 $sheet->getCell('B10')->setValue($reports['huc_application']);
 $sheet->getCell('C10')->setValue($reports['huc_approved']);
@@ -412,43 +408,11 @@ $sheet->getCell('G10')->setValue($reports['huc_approved']);
 $sheet->getCell('H10')->setValue('0');
 $sheet->getCell('I10')->setValue('');
 
-
-
-
-
-
-// 	$sheet->getCell('C' . $i)->setValue($row['establishment']);
-// 	$sheet->getCell('D' . $i)->setValue($row['nature']);
-// 	$sheet->getCell('E' . $i)->setValue($row['address']);
-// 	$sheet->getCell('F' . $i)->setValue($row['person']);
-// 	$sheet->getCell('G' . $i)->setValue($row['contact_details']);
-
-// 	$sheet->getCell('H' . $i)->setValue('1'); //Approved
-
-// 	$sheet->getCell('I' . $i)->setValue(date('F, d, Y', strtotime($row['date_approved'])));
-// 	$sheet->getCell('J' . $i)->setValue('');
-// 	$sheet->getCell('K' . $i)->setValue('1');
-// 	$sheet->getCell('L' . $i)->setValue('1');
-// 	$sheet->getCell('M' . $i)->setValue('');
-// 	$sheet->getCell('N' . $i)->setValue('');
-// 	$sheet->getCell('O' . $i)->setValue('');
-// 	$sheet->getCell('P' . $i)->setValue('');
-// 	$sheet->getCell('Q' . $i)->setValue('');
-// 	$sheet->getCell('R' . $i)->setValue('');
-
-// 	//set borders
-// 	$sheet->getStyle('A' . $i . ':' . 'R' . $i)->applyFromArray($border);
-
-// 	$i++;
-// 	$x++;
-// }
-
-
 // We'll be outputting an excel file
 header('Content-type: application/vnd.ms-excel');
 
 // It will be called file.xls
-header('Content-Disposition: attachment; filename="Report.xls"');
+header('Content-Disposition: attachment; filename="'.$filename.'.xls"');
 
 // Write file to the browser
 $writer->save('php://output');
