@@ -17,31 +17,33 @@
     </div>
 </div>
 
-<!-- <div class="container">
-<form method="post" enctype="multipart/form-data" action="entity/upload_table.php">
-  <div class="form-group">
-      <div class="custom-file">
-        <input type="file" name="files" multiple class="custom-file-input form-control" id="customFile" required>
-      </div>
-    </div>
-  </div>
-  <button type="submit">Submit</button>
-</form>
-</div> -->
-
 <!-- Main content -->
 <div class="content">
     <div class="container">
-        <?php include 'filter.php'; ?>
-        <?php include 'apps_table.php'; ?>
+        <?php if (!$is_adminro): ?>
+            <?php include 'filter.php'; ?>
+            <?php include 'apps_table.php'; ?>
+        <?php else: ?>
+            <?php include 'filter_admin_ro.php'; ?>
+            <?php include 'apps_table_admin_ro.php'; ?>
+        <?php endif ?>
     </div>
 </div>
+
+<!-- <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script> -->
+<!-- <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.0/moment.min.js"></script> -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/tempusdominus-bootstrap-4/5.39.0/js/tempusdominus-bootstrap-4.min.js" crossorigin="anonymous"></script>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/tempusdominus-bootstrap-4/5.39.0/css/tempusdominus-bootstrap-4.min.css" crossorigin="anonymous" />
 
 <script>
     $(function() {
         $('#report').hide();
         // $('select').select2();
-        $('#reservation').daterangepicker()
+        // $('#reservation').daterangepicker();
+
+
+        //Date and time picker
+        $('#cform-as_of').datetimepicker({ icons: { time: 'far fa-clock' } });
 
         $("#list_table").DataTable({
             // "responsive": true, "lengthChange": false, "autoWidth": false,
@@ -128,6 +130,171 @@
             window.location = 'reports.php?province='+province+'&lgu='+lgu+'&date_range='+daterange;
 
         })
+
+        $(document).on('click', '#btn-generate_adminro', function() {
+            let path = 'entity/filter_applicants_report_admin.php';
+            let path2 = 'entity/admin_ro_report.php';
+
+            let data = {
+                asof_date: $('.datetimepicker-input').val()
+            }; 
+
+            $.get(path, data, function(data, status) {
+                let $data = JSON.parse(data);
+                $('#list_body').empty();
+
+                let total = generateTotalReport($data);
+                $('#list_body').append(total);
+
+                let batangas = generateBatangasReport($data);
+                $('#list_body').append(batangas);
+
+                let cavite = generateCaviteReport($data);
+                $('#list_body').append(cavite);
+
+                let laguna = generateLagunaReport($data);
+                $('#list_body').append(laguna);
+
+                let rizal = generateRizalReport($data);
+                $('#list_body').append(rizal);
+
+                let huc = generateHUCReport($data);
+                $('#list_body').append(huc);
+            });
+
+            $.post(path2, data, function(data, status) {
+                window.location = 'entity/admin_ro_report.php?asof_date='+$('.datetimepicker-input').val();    
+            });
+
+        })
+
+
+        $(document).on('click', '#btn-filter_adminro', function() {
+            let path = 'entity/filter_applicants_report_admin.php';
+            let data = {
+                asof_date: $('.datetimepicker-input').val()
+            };  
+
+            $.get(path, data, function(data, status) {
+                let $data = JSON.parse(data);
+                $('#list_body').empty();
+
+                let total = generateTotalReport($data);
+                $('#list_body').append(total);
+
+                let batangas = generateBatangasReport($data);
+                $('#list_body').append(batangas);
+
+                let cavite = generateCaviteReport($data);
+                $('#list_body').append(cavite);
+
+                let laguna = generateLagunaReport($data);
+                $('#list_body').append(laguna);
+
+                let rizal = generateRizalReport($data);
+                $('#list_body').append(rizal);
+
+                let huc = generateHUCReport($data);
+                $('#list_body').append(huc);
+
+            });  
+        })
+
+        function generateTotalReport($data) {
+            let row = '';
+                row+= '<tr style="background-color: #8ae38a;">';
+                row+= '<td style="text-align: center; vertical-align: middle;"><b>TOTAL</b></td>';
+                row+= '<td style="font-size:20pt; text-align: center; vertical-align: middle;"><b>'+$data['total_application']+'</b></td>';
+                row+= '<td style="font-size:20pt; text-align: center; vertical-align: middle;"><b>'+$data['total_approved']+'</b></td>';
+                row+= '<td style="font-size:20pt; text-align: center; vertical-align: middle;"><b>'+$data['total_disapproved']+'</b></td>';
+                row+= '<td style="font-size:20pt; text-align: center; vertical-align: middle;"><b>'+$data['total_approved']+'</b></td>';
+                row+= '<td style="font-size:20pt; text-align: center; vertical-align: middle;"><b>0</b></td>';
+                row+= '<td style="font-size:20pt; text-align: center; vertical-align: middle;"><b>'+$data['total_approved']+'</b></td>';
+                row+= '<td style="font-size:20pt; text-align: center; vertical-align: middle;"><b>0</b></td>';
+                row+= '</tr>';
+
+            return row;
+        }
+
+        function generateBatangasReport($data) {
+            let row = '';
+                row+= '<tr>';
+                row+= '<td style="text-align: center; vertical-align: middle;"><b>BATANGAS</b></td>';
+                row+= '<td style="font-size:20pt; text-align: center; vertical-align: middle;"><b>'+$data['batangas_application']+'</b></td>';
+                row+= '<td style="font-size:20pt; text-align: center; vertical-align: middle;"><b>'+$data['batangas_approved']+'</b></td>';
+                row+= '<td style="font-size:20pt; text-align: center; vertical-align: middle;"><b>'+$data['batangas_disapproved']+'</b></td>';
+                row+= '<td style="font-size:20pt; text-align: center; vertical-align: middle;"><b>'+$data['batangas_approved']+'</b></td>';
+                row+= '<td style="font-size:20pt; text-align: center; vertical-align: middle;"><b>0</b></td>';
+                row+= '<td style="font-size:20pt; text-align: center; vertical-align: middle;"><b>'+$data['batangas_approved']+'</b></td>';
+                row+= '<td style="font-size:20pt; text-align: center; vertical-align: middle;"><b>0</b></td>';
+                row+= '</tr>';
+
+            return row;
+        }
+
+        function generateCaviteReport($data) {
+            let row = '';
+                row+= '<tr>';
+                row+= '<td style="text-align: center; vertical-align: middle;"><b>CAVITE</b></td>';
+                row+= '<td style="font-size:20pt; text-align: center; vertical-align: middle;"><b>'+$data['cavite_application']+'</b></td>';
+                row+= '<td style="font-size:20pt; text-align: center; vertical-align: middle;"><b>'+$data['cavite_approved']+'</b></td>';
+                row+= '<td style="font-size:20pt; text-align: center; vertical-align: middle;"><b>'+$data['cavite_disapproved']+'</b></td>';
+                row+= '<td style="font-size:20pt; text-align: center; vertical-align: middle;"><b>'+$data['cavite_approved']+'</b></td>';
+                row+= '<td style="font-size:20pt; text-align: center; vertical-align: middle;"><b>0</b></td>';
+                row+= '<td style="font-size:20pt; text-align: center; vertical-align: middle;"><b>'+$data['cavite_approved']+'</b></td>';
+                row+= '<td style="font-size:20pt; text-align: center; vertical-align: middle;"><b>0</b></td>';
+                row+= '</tr>';
+
+            return row;
+        }
+
+        function generateLagunaReport($data) {
+            let row = '';
+                row+= '<tr>';
+                row+= '<td style="text-align: center; vertical-align: middle;"><b>LAGUNA</b></td>';
+                row+= '<td style="font-size:20pt; text-align: center; vertical-align: middle;"><b>'+$data['laguna_application']+'</b></td>';
+                row+= '<td style="font-size:20pt; text-align: center; vertical-align: middle;"><b>'+$data['laguna_approved']+'</b></td>';
+                row+= '<td style="font-size:20pt; text-align: center; vertical-align: middle;"><b>'+$data['laguna_disapproved']+'</b></td>';
+                row+= '<td style="font-size:20pt; text-align: center; vertical-align: middle;"><b>'+$data['laguna_approved']+'</b></td>';
+                row+= '<td style="font-size:20pt; text-align: center; vertical-align: middle;"><b>0</b></td>';
+                row+= '<td style="font-size:20pt; text-align: center; vertical-align: middle;"><b>'+$data['laguna_approved']+'</b></td>';
+                row+= '<td style="font-size:20pt; text-align: center; vertical-align: middle;"><b>0</b></td>';
+                row+= '</tr>';
+
+            return row;
+        }
+
+        function generateRizalReport($data) {
+            let row = '';
+                row+= '<tr>';
+                row+= '<td style="text-align: center; vertical-align: middle;"><b>RIZAL</b></td>';
+                row+= '<td style="font-size:20pt; text-align: center; vertical-align: middle;"><b>'+$data['rizal_application']+'</b></td>';
+                row+= '<td style="font-size:20pt; text-align: center; vertical-align: middle;"><b>'+$data['rizal_approved']+'</b></td>';
+                row+= '<td style="font-size:20pt; text-align: center; vertical-align: middle;"><b>'+$data['rizal_disapproved']+'</b></td>';
+                row+= '<td style="font-size:20pt; text-align: center; vertical-align: middle;"><b>'+$data['rizal_approved']+'</b></td>';
+                row+= '<td style="font-size:20pt; text-align: center; vertical-align: middle;"><b>0</b></td>';
+                row+= '<td style="font-size:20pt; text-align: center; vertical-align: middle;"><b>'+$data['rizal_approved']+'</b></td>';
+                row+= '<td style="font-size:20pt; text-align: center; vertical-align: middle;"><b>0</b></td>';
+                row+= '</tr>';
+
+            return row;
+        }
+
+        function generateHUCReport($data) {
+            let row = '';
+                row+= '<tr>';
+                row+= '<td style="text-align: center; vertical-align: middle;"><b>QUEZON (including Lucena HUC)</b></td>';
+                row+= '<td style="font-size:20pt; text-align: center; vertical-align: middle;"><b>'+$data['huc_application']+'</b></td>';
+                row+= '<td style="font-size:20pt; text-align: center; vertical-align: middle;"><b>'+$data['huc_approved']+'</b></td>';
+                row+= '<td style="font-size:20pt; text-align: center; vertical-align: middle;"><b>'+$data['huc_disapproved']+'</b></td>';
+                row+= '<td style="font-size:20pt; text-align: center; vertical-align: middle;"><b>'+$data['huc_approved']+'</b></td>';
+                row+= '<td style="font-size:20pt; text-align: center; vertical-align: middle;"><b>0</b></td>';
+                row+= '<td style="font-size:20pt; text-align: center; vertical-align: middle;"><b>'+$data['huc_approved']+'</b></td>';
+                row+= '<td style="font-size:20pt; text-align: center; vertical-align: middle;"><b>0</b></td>';
+                row+= '</tr>';
+
+            return row;
+        }
 
     });
 </script>
