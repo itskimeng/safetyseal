@@ -473,6 +473,129 @@ class ApplicationManager
         return $data;
     }
 
+    // reupload
+    public function getAllApplicationLists()
+    {
+        $sql = "SELECT ac.id as id, ai.CMLGOO_NAME as fname, ui.GOV_AGENCY_NAME as agency, ui.ADDRESS as address, DATE_FORMAT(ac.date_created, '%Y-%m-%d') as date_created, DATE_FORMAT(ac.date_approved, '%Y-%m-%d') as date_approved, ui.id as userid, ac.control_no as control_no, ac.safety_seal_no as ss_no, ac.status as status, ac.address as ac_address, ac.application_type as app_type, ac.token as token, tp.name as province
+        FROM tbl_app_checklist ac
+        LEFT JOIN tbl_admin_info ai on ai.id = ac.user_id
+        LEFT JOIN tbl_userinfo ui on ui.user_id = ai.id
+        LEFT JOIN tbl_province tp on tp.id = ai.PROVINCE
+        ORDER BY ai.PROVINCE";
+
+        $query = mysqli_query($this->conn, $sql);
+        $data = [];
+        
+        while ($row = mysqli_fetch_assoc($query)) {
+            $color = 'green';
+            if ($row['status'] == 'For Receiving') {
+                $color = 'primary';
+            } elseif ($row['status'] == 'Received') {
+                $color = 'yellow';
+            } elseif ($row['status'] == 'Disapproved') {
+                $color = 'red';
+            } elseif ($row['status'] == 'Draft') {
+                $color = 'secondary';
+            }
+
+            $data[$row['id']] = [
+                'id' => $row['id'],
+                'userid' => $row['userid'],
+                'fname' => $row['fname'],
+                'agency' => $row['agency'],
+                'address' => $row['address'],
+                'date_created' => $row['date_created'],
+                'date_approved' => !empty($row['date_approved']) ? $row['date_approved'] : '',
+                'control_no' => $row['control_no'],
+                'ss_no' => $row['ss_no'],
+                'status' => $row['status'],
+                'color' => $color,
+                'ac_address' => $row['ac_address'],
+                'app_type' => $row['app_type'],
+                'token' => $row['token'],
+                'validity_date' => '',
+                'province' => $row['province']
+            ];    
+        }
+
+        return $data;
+    }
+
+    public function getTotalApplications($province='',$timestamp)
+    {
+        $sql = "SELECT COUNT(*) as total FROM tbl_app_checklist ac
+            LEFT JOIN tbl_admin_info ai on ai.id = ac.user_id
+            LEFT JOIN tbl_province tp on tp.id = ai.PROVINCE WHERE ac.date_created <= '".$timestamp."'";
+
+        if ($province == 'huc') {
+            $sql.= " AND tp.id = 5 OR tp.id = 8";
+        } elseif (!empty($province)) {
+            $sql.= " AND tp.id = ".$province."";
+        }
+
+        $query = mysqli_query($this->conn, $sql);
+        $row = mysqli_fetch_array($query);
+
+        return $row['total'];
+    }
+
+    public function getTotalReceivedApplications($province='',$timestamp)
+    {
+        $sql = "SELECT COUNT(*) as total FROM tbl_app_checklist ac
+            LEFT JOIN tbl_admin_info ai on ai.id = ac.user_id
+            LEFT JOIN tbl_province tp on tp.id = ai.PROVINCE 
+            WHERE status = 'Received' AND ac.date_approved <= '".$timestamp."'";
+
+        if ($province == 'huc') {
+            $sql.= " AND tp.id = 5 OR tp.id = 8";
+        } elseif (!empty($province)) {
+            $sql .= " AND tp.id = ".$province."";
+        }
+
+        $query = mysqli_query($this->conn, $sql);
+        $row = mysqli_fetch_array($query);
+
+        return $row['total'];
+    }
+
+    public function getTotalApprovedApplications($province='',$timestamp)
+    {
+        $sql = "SELECT COUNT(*) as total FROM tbl_app_checklist ac
+            LEFT JOIN tbl_admin_info ai on ai.id = ac.user_id
+            LEFT JOIN tbl_province tp on tp.id = ai.PROVINCE 
+            WHERE status = 'Approved' AND ac.date_approved <= '".$timestamp."'";
+
+        if ($province == 'huc') {
+            $sql.= " AND tp.id = 5 OR tp.id = 8";
+        } elseif (!empty($province)) {
+            $sql .= " AND tp.id = ".$province."";
+        }
+
+        $query = mysqli_query($this->conn, $sql);
+        $row = mysqli_fetch_array($query);
+
+        return $row['total'];
+    }
+
+    public function getTotalDisapprovedApplications($province='',$timestamp)
+    {
+        $sql = "SELECT COUNT(*) as total FROM tbl_app_checklist ac
+            LEFT JOIN tbl_admin_info ai on ai.id = ac.user_id
+            LEFT JOIN tbl_province tp on tp.id = ai.PROVINCE 
+            WHERE status = 'Disapproved' AND ac.date_approved <= '".$timestamp."'";
+
+        if ($province == 'huc') {
+            $sql.= " AND tp.id = 5 OR tp.id = 8";
+        } elseif (!empty($province)) {
+            $sql .= " AND tp.id = ".$province."";
+        }
+
+        $query = mysqli_query($this->conn, $sql);
+        $row = mysqli_fetch_array($query);
+
+        return $row['total'];
+    }
+
     public function getValidationLists($appid) {
         $sql = "SELECT * FROM tbl_app_checklist_onsitevalidations where chklist_id = $appid";
         $query = mysqli_query($this->conn, $sql);
