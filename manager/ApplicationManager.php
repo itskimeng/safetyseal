@@ -521,73 +521,21 @@ class ApplicationManager
         return $data;
     }
 
-    public function getTotalApplications($province='',$timestamp)
+    public function showAllApplications($province='',$timestamp, $status='')
     {
-        $sql = "SELECT COUNT(*) as total FROM tbl_app_checklist ac
-            LEFT JOIN tbl_admin_info ai on ai.id = ac.user_id
-            LEFT JOIN tbl_province tp on tp.id = ai.PROVINCE WHERE ac.date_created <= '".$timestamp."'";
+        $sql = "SELECT COUNT(*) as total FROM tbl_app_checklist ac 
+                LEFT JOIN tbl_admin_info ai on ai.id = ac.user_id
+                LEFT JOIN tbl_province tp on tp.id = ai.PROVINCE 
+                WHERE ac.date_created <= '".$timestamp."' AND ai.id IS NOT NULL";
+
+        if (!empty($status)) {
+            $sql.= " AND ac.status = '".$status."'";
+        }
 
         if ($province == 'huc') {
             $sql.= " AND tp.id = 5 OR tp.id = 8";
         } elseif (!empty($province)) {
             $sql.= " AND tp.id = ".$province."";
-        }
-
-        $query = mysqli_query($this->conn, $sql);
-        $row = mysqli_fetch_array($query);
-
-        return $row['total'];
-    }
-
-    public function getTotalReceivedApplications($province='',$timestamp)
-    {
-        $sql = "SELECT COUNT(*) as total FROM tbl_app_checklist ac
-            LEFT JOIN tbl_admin_info ai on ai.id = ac.user_id
-            LEFT JOIN tbl_province tp on tp.id = ai.PROVINCE 
-            WHERE status = 'Received' AND ac.date_approved <= '".$timestamp."'";
-
-        if ($province == 'huc') {
-            $sql.= " AND tp.id = 5 OR tp.id = 8";
-        } elseif (!empty($province)) {
-            $sql .= " AND tp.id = ".$province."";
-        }
-
-        $query = mysqli_query($this->conn, $sql);
-        $row = mysqli_fetch_array($query);
-
-        return $row['total'];
-    }
-
-    public function getTotalApprovedApplications($province='',$timestamp)
-    {
-        $sql = "SELECT COUNT(*) as total FROM tbl_app_checklist ac
-            LEFT JOIN tbl_admin_info ai on ai.id = ac.user_id
-            LEFT JOIN tbl_province tp on tp.id = ai.PROVINCE 
-            WHERE status = 'Approved' AND ac.date_approved <= '".$timestamp."'";
-
-        if ($province == 'huc') {
-            $sql.= " AND tp.id = 5 OR tp.id = 8";
-        } elseif (!empty($province)) {
-            $sql .= " AND tp.id = ".$province."";
-        }
-
-        $query = mysqli_query($this->conn, $sql);
-        $row = mysqli_fetch_array($query);
-
-        return $row['total'];
-    }
-
-    public function getTotalDisapprovedApplications($province='',$timestamp)
-    {
-        $sql = "SELECT COUNT(*) as total FROM tbl_app_checklist ac
-            LEFT JOIN tbl_admin_info ai on ai.id = ac.user_id
-            LEFT JOIN tbl_province tp on tp.id = ai.PROVINCE 
-            WHERE status = 'Disapproved' AND ac.date_approved <= '".$timestamp."'";
-
-        if ($province == 'huc') {
-            $sql.= " AND tp.id = 5 OR tp.id = 8";
-        } elseif (!empty($province)) {
-            $sql .= " AND tp.id = ".$province."";
         }
 
         $query = mysqli_query($this->conn, $sql);
