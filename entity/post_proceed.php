@@ -21,16 +21,6 @@ $app->proceedChecklist($checklist_id,$contact_details, $has_consent, Application
 $_SESSION['toastr'] = $app->addFlash('success', 'The application is now being assess.', 'For Approval');
 
 
-
-//Sending E-mail notification
-// $notify = $app->notifyApprover($_SESSION['province'], $_SESSION['city_mun']);
-// $userinfo = $app->getApplicantDetails($userid);
-// $name = $_POST['name'];
-// $establishment =$userinfo['establishment'];
-// $control_no =$_POST['control_no'];
-// $email = $_POST['email'];
-// require 'post_notif.php';
-
 header('location:../wbstapplication.php?ssid='.$token.'');
 
 

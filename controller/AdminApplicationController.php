@@ -39,6 +39,8 @@ $timestamp = date('Y-m-d H:i:s', time());
 
 if (!$is_adminro) {
 	$applicants = $app->getApplicationLists($province, $citymun, ApplicationManager::STATUS_DRAFT);
+	$client_details = $app->getNotifDetailsClients(ApplicationManager::STATUS_APPROVED);
+
 } else {
 	$applicants = $app->getAllApplicationLists();
 	$reports['total_application'] = $app->showAllApplications('',$timestamp);

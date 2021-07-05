@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <link rel="shortcut icon" type="image/png" href="dilg.png">
+    <link rel="shortcut icon" type="image/png" href="frontend/images/logo.png">
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <title>SafetySeal | <?php emptyblock('title'); ?></title>

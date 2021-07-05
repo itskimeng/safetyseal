@@ -55,43 +55,7 @@
           </div>
         </div>
 
-        <!-- <div class="row">
-          <div class="col-md-4">
-            <div class="form-group">
-              <label>Name</label>
-              <select id="cform-name" class="form-control select2bs4 select2-hidden-accessible" style="width: 100%;" data-select2-id="17" tabindex="-1" aria-hidden="true">
-                <option></option>
-                <?php foreach ($applicants as $key => $app): ?>
-                  <option value="<?php echo $app['fname']; ?>"><?php echo $app['fname']; ?></option>
-                <?php endforeach ?>
-              </select>
-            </div>
-          </div>
-
-          <div class="col-md-4">
-            <div class="form-group">
-              <label>Agency</label>
-              <select id="cform-agency" class="form-control select2bs4 select2-hidden-accessible" style="width: 100%;" data-select2-id="17" tabindex="-1" aria-hidden="true">
-                <option></option>
-                <?php foreach ($applicants as $key => $app): ?>
-                  <option value="<?php echo $app['agency']; ?>"><?php echo $app['agency'] ?></option>
-                <?php endforeach ?>
-              </select>
-            </div>
-          </div>
-
-          <div class="col-md-4">
-            <div class="form-group">
-              <label>Location</label>
-              <select id="cform-location" class="form-control select2bs4 select2-hidden-accessible" style="width: 100%;" data-select2-id="17" tabindex="-1" aria-hidden="true">
-                <option></option>
-                <?php foreach ($applicants as $key => $app): ?>
-                  <option value="<?php echo $app['address']; ?>"><?php echo $app['address']; ?></option>
-                <?php endforeach ?>
-              </select>
-            </div>
-          </div>
-        </div> -->
+      
 
         <div class="row">
           <div class="col-md-4">
@@ -163,6 +127,7 @@
 
 <script type="text/javascript">
   $(document).ready(function(){
+    $('#reservation').daterangepicker();
     $(".btn-tool-filter").click(function(){
       $(".card-body-filter").collapse('toggle');
     });
