@@ -46,16 +46,22 @@
                 <td>
                   <div class="col-md-12">
                     <?php if ($applicant['app_type'] == 'Encoded'): ?>
-                      <a href="admin_application_edit.php?appid=<?php echo $applicant['token']; ?>&code=&scope=" class="btn btn-info btn-block btn-sm" style="margin-bottom: -5%;">
+                      <a href="admin_application_edit.php?appid=<?php echo $applicant['token']; ?>&code=&scope=" class="btn btn-info btn-block btn-sm" style="margin-bottom: -2%;">
                         <i class="fa fa-clipboard-list"></i> View
                       </a>
                     <?php elseif (in_array($applicant['status'], ['For Receiving', 'For Reassessment'])): ?>
-                      <a href="entity/post_received.php?appid=<?php echo $applicant['id']; ?>&ussir=<?php echo $applicant['userid']; ?>&status=<?php echo $applicant['status']; ?>" class="btn btn-primary btn-block btn-sm" style="margin-bottom: -5%;">
+                      <a href="entity/post_received.php?appid=<?php echo $applicant['id']; ?>&ussir=<?php echo $applicant['userid']; ?>&status=<?php echo $applicant['status']; ?>" class="btn btn-primary btn-block btn-sm" style="margin-bottom: -2%;">
                         <i class="fa fa-box"></i> Receive
                       </a>
                     <?php else: ?>
-                      <a href="admin_application_view.php?appid=<?php echo $applicant['id']; ?>&ussir=<?php echo $applicant['userid']; ?>" class="btn btn-success btn-block btn-sm" style="margin-bottom: -5%;">
+                      <a href="admin_application_view.php?appid=<?php echo $applicant['id']; ?>&ussir=<?php echo $applicant['userid']; ?>" class="btn btn-success btn-block btn-sm" style="margin-bottom: -2%;">
                         <i class="fa fa-eye"></i> View
+                      </a>
+                    <?php endif ?>
+
+                    <?php if (in_array($applicant['status'], ['Approved'])): ?>
+                      <a href="certificate.php?token=<?php echo $applicant['token']; ?>" class="btn btn-warning btn-block btn-sm" style="margin-bottom: -2%;">
+                        <i class="fa fa-eye"></i> Generate Certificate
                       </a>
                     <?php endif ?>
                   </div>

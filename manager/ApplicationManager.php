@@ -381,6 +381,7 @@ class ApplicationManager
         ui.GOV_AGENCY_NAME as agency,
         ui.ADDRESS as address,
         DATE_FORMAT(ac.date_created, '%Y-%m-%d') as date_created,
+        DATE_FORMAT(ac.date_approved, '%Y-%m-%d H:i:s') as date_approved,
         ui.id as userid,
         ac.control_no as control_no,
         ac.safety_seal_no as ss_no,
@@ -420,7 +421,7 @@ class ApplicationManager
                 'ac_address' => $row['ac_address'],
                 'app_type' => $row['app_type'],
                 'token' => $row['token'],
-                'validity_date' => ''
+                'validity_date' => !empty($row['date_approved']) ? date('F d, Y', strtotime("+6 months", strtotime($row['date_approved']))) : ''
             ];    
         }
 
@@ -431,6 +432,7 @@ class ApplicationManager
         ac.agency as cagency,
         ui.ADDRESS as address,
         DATE_FORMAT(ac.date_created, '%Y-%m-%d') as date_created,
+        DATE_FORMAT(ac.date_approved, '%Y-%m-%d') as date_approved,
         ui.id as userid,
         ac.control_no as control_no,
         ac.safety_seal_no as ss_no,
@@ -470,7 +472,7 @@ class ApplicationManager
                 'ac_address' => $row['ac_address'],
                 'app_type' => $row['app_type'],
                 'token' => $row['token'],
-                'validity_date' => ''
+                'validity_date' => !empty($row['date_approved']) ? date('F d, Y', strtotime("+6 months", strtotime($row['date_approved']))) : ''
             ];    
         }
 

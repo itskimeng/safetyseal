@@ -94,6 +94,7 @@ function getUserChecklists($conn, $id)
         ac.contact_details as contact_details,
         ac.status as status,
         ac.token as token,
+        ac.safety_seal_no as ss_no,
         DATE_FORMAT(ac.date_created, '%m/%d/%Y') as date_created
         FROM tbl_app_checklist ac
         LEFT JOIN tbl_admin_info ai on ai.id = ac.user_id

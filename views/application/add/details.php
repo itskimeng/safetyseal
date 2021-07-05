@@ -27,10 +27,10 @@
               <?php endif ?>
             </div>
             <div class="form-outline mb-2 col-md-5">
-              <?php //if ($applicant['status'] == 'Approved'): ?>
-                <!-- <label class="form-label" for="form1Example1">Safety Seal No.</label><br> -->
-                <!-- <input type="text" id="form1Example1" class="form-control" style="background-color: #008000e6; color: white; font-weight: bold;" value="<?php //echo $applicant['ss_no']; ?>" /> -->
-              <?php //endif ?>
+              <?php if ($applicant['status'] == 'Approved'): ?>
+                <label class="form-label" for="form1Example1">Safety Seal No.</label><br>
+                <input type="text" id="form1Example1" class="form-control" style="background-color: #008000e6; color: white; font-weight: bold;" value="<?php echo $applicant['ss_no']; ?>" />
+              <?php endif ?>
             </div>
             <div class="form-outline mb-2 col-md-3">
                 <div class="form-group">
