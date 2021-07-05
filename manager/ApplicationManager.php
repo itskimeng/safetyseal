@@ -469,7 +469,8 @@ class ApplicationManager
                 'color' => $color,
                 'ac_address' => $row['ac_address'],
                 'app_type' => $row['app_type'],
-                'token' => $row['token']
+                'token' => $row['token'],
+                'validity_date' => ''
             ];    
         }
 

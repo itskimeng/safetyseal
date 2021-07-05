@@ -12,7 +12,7 @@
           <div class="py-1">
             <div class="form-box shadow p-1 mb-5 bg-body rounded box">
 
-              <div class="ribbon blue"><span><?php echo $userinfo['status']; ?></span></div>
+              <div class="ribbon blue"><span><?php echo isset($_GET['create_new']) ? 'Draft' : $userinfo['status']; ?></span></div>
               
               <form method="POST" action="entity/post_application.php" class="bg-white  rounded-5 shadow-5-strong p-5">
                 <span class="label label-lg label-light-success label-inline font-weight-bold py-3">
@@ -38,7 +38,7 @@
                 <?php endif ?>
 
                 <!-- Submit button -->
-                <?php if (in_array($userinfo['status'], ['Draft', 'Disapproved', 'Reassess'])): ?>
+                <?php if (isset($_GET['create_new']) OR in_array($userinfo['status'], ['Draft', 'Disapproved', 'Reassess'])): ?>
                   <div class="panel panel-default pt-4">
                     <div class="row">
                       

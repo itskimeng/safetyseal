@@ -92,9 +92,9 @@ function getUserChecklistsEntry($conn, $id)
     		$badge = 'danger';
     	}
 
-        if (str_contains($row['nature'], 'BFP')) {
+        if (strpos($row['nature'], 'BFP')) {
             $nature = 'bfp';    
-        } elseif (str_contains($row['nature'], 'PNP')) {
+        } elseif (strpos($row['nature'], 'PNP')) {
             $nature = 'pnp';    
         } else {
             $nature = 'lgoo';    

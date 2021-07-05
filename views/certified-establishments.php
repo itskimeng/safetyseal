@@ -51,13 +51,22 @@
             <tbody>
               <?php 
               
-        $sql = "SELECT id,agency as GOV_AGENCY_NAME, establishment as GOV_ESTB_NAME, address as ADDRESS, safety_seal_no, date_approved, status FROM `tbl_app_checklist` WHERE status ='Approved'";
+        $sql = "SELECT id,user_id, agency as GOV_AGENCY_NAME, establishment as GOV_ESTB_NAME, address as ADDRESS, safety_seal_no, date_approved, status FROM `tbl_app_checklist` WHERE status ='Approved'";
         $result1 = mysqli_query($conn, $sql);
             while ($row = mysqli_fetch_array($result1)) {
 
 
-
-
+              if ($row['GOV_AGENCY_NAME'] == '') 
+              {
+                $selectApplicantDetails = ' SELECT `OFFICE` FROM `tbl_admin_info` WHERE `ID` = "'.$row['user_id'].'" ';
+                $execApplicantDetails = $conn->query($selectApplicantDetails);
+                $resultApplicantDetails = $execApplicantDetails->fetch_assoc();
+                $agency = $resultApplicantDetails['OFFICE'];
+              }
+              else
+              {
+                $agency = $row['GOV_AGENCY_NAME'];
+              }
 
 
             //   $selectApplication = ' SELECT `id`, `control_no`, `user_id`, `status`, `has_consent`, `date_created`, `date_proceed`, `receiver_id`, `date_received`, `approver_id`, `date_approved`, `safety_seal_no`, `date_modified` FROM `tbl_app_checklist` WHERE status = "Approved" ';
@@ -78,7 +87,7 @@
                         <td class="align-middle">
                             <a href="establishment-profile.php?unique_id=<?php echo $row['id']; ?>" target="_blank" class="">
                                 <div class="font-weight-bold">
-                                   <?php echo $row['GOV_AGENCY_NAME']; ?>
+                                   <?php echo $agency; ?>
                                 </div>
                             </a>
                         </td>

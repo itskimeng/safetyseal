@@ -2,7 +2,7 @@
 require_once 'application/config/connection.php'; 
 $establishmentId = $_GET['unique_id'];
 
-$selectApplication = ' SELECT `id`, `control_no`, `user_id`, `establishment`, `nature`, `address`, `status`, `has_consent`, `date_created`, `date_proceed`, `receiver_id`, `date_received`, `approver_id`, `date_approved`, `safety_seal_no`, `reassessed_by`, `date_reassessed`, `date_modified`, `token` FROM `tbl_app_checklist` WHERE status = "Approved" AND `id` = "'.$establishmentId.'" ';
+$selectApplication = ' SELECT `id`, `control_no`, `user_id`, agency, `establishment`, `nature`, `address`, person, contact_details, `status`, `has_consent`, `date_created`, `date_proceed`, `receiver_id`, `date_received`, `approver_id`, `date_approved`, `safety_seal_no`, `reassessed_by`, `date_reassessed`, `date_modified`, `token` FROM `tbl_app_checklist` WHERE status = "Approved" AND `id` = "'.$establishmentId.'" ';
 $execSelectApplication = $conn->query($selectApplication);
 $resultApplication = $execSelectApplication->fetch_assoc();
 
@@ -32,6 +32,20 @@ $selectInspection = ' SELECT `ID`, `PROVINCE`, `LGU`, `NAME`, `EMAIL_ADDRESS`, `
 $execInspection = $conn->query($selectInspection);
 $resultInspection = $execInspection->fetch_assoc();
 
+
+
+if ($resultApplication['agency'] == '') 
+{
+  $agency = $resultApplicantDetails['OFFICE'];
+}
+else
+{
+  $agency = $resultApplication['agency'];
+}
+
+
+
+
 ?>
 <img src="frontend/images/banner_calabarzon.png" height="10%" width="100%" alt="">
  <hr>
@@ -54,14 +68,14 @@ $resultInspection = $execInspection->fetch_assoc();
       <div class="row">
         <div class="col-md-1"></div>
         <div class="col-md-5">
-          <h4 class="mt-3"><span class="text-muted">Agency:</span> <?php echo $resultAddress['GOV_AGENCY_NAME']; ?></h4>
-          <h6 class="mt-3"><span class="text-muted">Establishment:</span> <?php echo $resultAddress['GOV_ESTB_NAME']; ?></h6>
+          <h4 class="mt-3"><span class="text-muted">Agency:</span> <?php echo $agency; ?></h4>
+          <h6 class="mt-3"><span class="text-muted">Establishment:</span> <?php echo $resultApplication['establishment']; ?></h6>
           <h6 class="mt-3"><span class="text-muted">Address:</span> <?php echo $resultApplication['address']; ?></h6>
           <br>
-          <h6 class="mt-3"><span class="text-muted">Name of Person In Charge:</span> <?php echo $resultApplicantDetails['CMLGOO_NAME']; ?></h6>
-          <center><span class="text-muted"><?php echo $resultAddress['POSITION']; ?></span></center>
-          <h6 class="mt-3"><span class="text-muted">Contact Number:</span> <?php echo $resultAddress['MOBILE_NO']; ?></h6>
-          <h6 class="mt-3"><span class="text-muted">Email Address:</span> <?php echo $resultAddress['EMAIL_ADDRESS']; ?></h6>
+          <h6 class="mt-3"><span class="text-muted">Name of Person In Charge:</span> <?php echo $resultApplication['person']; ?></h6>
+          <center><span class="text-muted">Person-in-charge</span></center>
+          <h6 class="mt-3"><span class="text-muted">Contact Number:</span> <?php echo $resultApplication['contact_details']; ?></h6>
+          <!-- <h6 class="mt-3"><span class="text-muted">Email Address:</span> <?php echo $resultApplicantDetails['EMAIL']; ?></h6> -->
           <h6 class="mt-3"><span class="text-muted">Operating Hours:</span> 8AM - 5PM</h6>
           <br>
           <h6 class="mt-3"> INSPECTION AND CERTIFICATION TEAMS</h6>
