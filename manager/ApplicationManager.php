@@ -124,6 +124,8 @@ class ApplicationManager
             LEFT JOIN tbl_admin_info ai on ai.id = a.user_id
             WHERE a.token = '".$token."'";
 
+            
+
         $query = mysqli_query($this->conn, $sql);
         $data = [];
 
@@ -417,7 +419,8 @@ class ApplicationManager
                 'color' => $color,
                 'ac_address' => $row['ac_address'],
                 'app_type' => $row['app_type'],
-                'token' => $row['token']
+                'token' => $row['token'],
+                'validity_date' => ''
             ];    
         }
 
@@ -472,7 +475,67 @@ class ApplicationManager
 
         return $data;
     }
+    
+    public function getNotifDetailsClients($status)
+    {
+        $sql = "SELECT 
+        ac.id as id,
+        ai.CMLGOO_NAME as fname,
+        ui.GOV_AGENCY_NAME as agency,
+        ui.ADDRESS as address,
+        DATE_FORMAT(ac.date_created, '%Y-%m-%d') as date_created,
+        ui.id as userid,
+        ac.control_no as control_no,
+        ac.safety_seal_no as ss_no,
+        ac.status as status,
+        ac.address as ac_address,
+        ac.application_type as app_type,
+        ac.token as token,
+        ac.sms_sending_status as sms_sending_status,
+        ac.email_sending_status as email_sending_status,
+        ac.pnp_sending_status as pnp_sending_status,
+        ac.bfp_sending_status as bfp_sending_status
+        FROM tbl_app_checklist ac
+        LEFT JOIN tbl_admin_info ai on ai.id = ac.user_id
+        LEFT JOIN tbl_userinfo ui on ui.user_id = ai.id
+        WHERE  ac.status = '".$status."'";
 
+     
+        $query = mysqli_query($this->conn, $sql);
+        $data = [];
+        
+        while ($row = mysqli_fetch_assoc($query)) {
+            $color = 'green';
+            if ($row['status'] == 'For Receiving') {
+                $color = 'primary';
+            } elseif ($row['status'] == 'Received') {
+                $color = 'yellow';
+            } elseif ($row['status'] == 'Disapproved') {
+                $color = 'red';
+            }
+
+            $data[$row['id']] = [
+                'id' => $row['id'],
+                'userid' => $row['userid'],
+                'fname' => $row['fname'],
+                'agency' => $row['agency'],
+                'address' => $row['address'],
+                'date_created' => $row['date_created'],
+                'control_no' => $row['control_no'],
+                'ss_no' => $row['ss_no'],
+                'status' => $row['status'],
+                'color' => $color,
+                'ac_address' => $row['ac_address'],
+                'app_type' => $row['app_type'],
+                'token' => $row['token'],
+                'sms_sending_status' => $row['sms_sending_status'],
+                'email_sending_status' => $row['email_sending_status'],
+                'pnp_sending_status' => $row['pnp_sending_status'],
+                'bfp_sending_status' => $row['bfp_sending_status']
+            ];    
+        }
+        return $data;
+    }
     // reupload
     public function getAllApplicationLists()
     {
@@ -482,6 +545,7 @@ class ApplicationManager
         LEFT JOIN tbl_userinfo ui on ui.user_id = ai.id
         LEFT JOIN tbl_province tp on tp.id = ai.PROVINCE
         ORDER BY ai.PROVINCE";
+
 
         $query = mysqli_query($this->conn, $sql);
         $data = [];

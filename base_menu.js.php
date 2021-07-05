@@ -32,7 +32,7 @@
 <script src="https://unpkg.com/gijgo@1.9.13/js/gijgo.min.js" type="text/javascript"></script>
 <link href="https://unpkg.com/gijgo@1.9.13/css/gijgo.min.css" rel="stylesheet" type="text/css" />
 
-<script src="frontend/bower_components/dropzone/min/dropzone.min.js"></script>
+<!-- <script src="frontend/bower_components/dropzone/min/dropzone.min.js"></script> -->
 
 <!-- jQuery 3 -->
 <!-- <script src="frontend/bower_components/jquery/dist/jquery.min.js"></script> -->
@@ -40,7 +40,7 @@
 <!-- <script src="frontend/bower_components/bootstrap/dist/js/bootstrap.min.js"></script> -->
 <!-- ChartJS -->
 <script src="frontend/bower_components/chart.js/Chart.js"></script>
-<script src="frontend/js/ajax.js"></script>
+<!-- <script src="frontend/js/ajax.js"></script> -->
 <!-- FastClick -->
 <!-- <script src="frontend/bower_components/fastclick/lib/fastclick.js"></script> -->
 <!-- AdminLTE App -->
