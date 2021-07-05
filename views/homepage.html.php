@@ -74,7 +74,7 @@
                   <center>BJMP City of Cabuyao <i class="fa fa-check"></i></center>
                 </div>
                 <div class="card-body cardRecentEstablishment">
-                      <img src="files/certified/cabuyao.png" alt="" height="250">
+                  <a href="establishment-profile.php?unique_id=172"><img src="files/certified/cabuyao.png" alt="" height="250"></a>
                 </div>
                 <div class="card-footer text-muted">
                   Certified: <b>July 01, 2021</b>
@@ -88,7 +88,7 @@
                   <center>BUREAU OF FIRE PROTECTION CATANAUAN STATION <i class="fa fa-check"></i></center>
                 </div>
                 <div class="card-body cardRecentEstablishment">
-                      <img src="files/certified/catanuan2.jpg" alt="" height="250">
+                  <a href="establishment-profile.php?unique_id=149"><img src="files/certified/catanuan2.jpg" alt="" height="250"></a>
                 </div>
                 <div class="card-footer text-muted">
                   Certified: <b>June 30, 2021</b>
@@ -102,7 +102,7 @@
                   <center>BUREAU OF FIRE PROTECTION - LUCBAN FIRE STATION <i class="fa fa-check"></i></center>
                 </div>
                 <div class="card-body cardRecentEstablishment">
-                      <img src="files/certified/lucban.png" alt="" height="250">
+                  <a href="establishment-profile.php?unique_id=110"><img src="files/certified/lucban.png" alt="" height="250"></a>
                 </div>
                 <div class="card-footer text-muted">
                   Certified: <b>June 28, 2021</b>
