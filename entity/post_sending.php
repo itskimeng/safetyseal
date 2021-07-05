@@ -12,7 +12,7 @@ if($_POST['type'] =='client')
     $query = mysqli_query($conn, $sql);
 
 }
-if($_POST['admin'])
+if($_POST['type'] == 'admin')
 {
     $sql = "UPDATE `tbl_app_checklist` SET `email_sending_status` = '$has_sent', `pnp_sending_status` = '$has_sent', `bfp_sending_status` = '$has_sent' where control_no ='$control_no'";
     $query = mysqli_query($conn, $sql);
