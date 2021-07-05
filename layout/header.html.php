@@ -36,12 +36,11 @@
 
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Poppins:300,400,500,600,700" />
 
-
+<link rel="stylesheet" href="frontend/owl-carousel/dist/assets/owl.carousel.min.css">
+<link rel="stylesheet" href="frontend/owl-carousel/dist/assets/owl.theme.default.min.css">
+<script src="frontend/owl-carousel/dist/owl.carousel.min.js"></script>
   
 <script type="text/javascript" src="https://cdn.datatables.net/1.10.15/js/jquery.dataTables.min.js"></script>
-
-
-    
 
 </head>
 
