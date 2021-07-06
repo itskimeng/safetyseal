@@ -477,6 +477,7 @@ class ApplicationManager
         }
 
         return $data;
+
     }
     
     public function getNotifDetailsClients($status)
