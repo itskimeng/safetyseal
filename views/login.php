@@ -25,7 +25,8 @@ if (isset($_POST['login'])) {
                  $_SESSION['username']  = $user_data['UNAME'];
                  $_SESSION['province']  = $user_data['PROVINCE'];
                  $_SESSION['city_mun']  = $user_data['CITY_MUNICIPALITY'];
-                
+                 $_SESSION['is_clusterhead']  = $user_data['is_clusterhead'];
+                 $_SESSION['clusterhead_id']  = $user_data['clusterhead_id'];
                  $_SESSION['userid']  = $user_data['ID'];
 
                     header("location: ../dashboard.v2.php?username=" . md5($username) . "");
