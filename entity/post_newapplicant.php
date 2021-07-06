@@ -7,8 +7,6 @@ require '../manager/ApplicationManager.php';
 
 $am = new ApplicationManager();
 
-// $token = bin2hex(random_bytes(64));
-
 $userid = $_SESSION['userid'];
 $control_no = $_POST['control_no'];
 $date_registered = $_POST['date_registered'];
@@ -22,9 +20,11 @@ $token = !empty($_POST['token_id']) ? $_POST['token_id'] : bin2hex(random_bytes(
 $today = new DateTime();
 $is_new = $_POST['is_new'];
 $dd = new DateTime($date_registered);
+$lgu = isset($_POST['lgu']) ? $_POST['lgu'] : $_SESSION['city_mun'];
 
 $data = [
 	'userid' => $userid,
+	'lgu' => $lgu,
 	'control_no' => $control_no,
 	'date_registered' => $dd->format('Y-m-d H:i:s'),
 	'agency' => $agency,
@@ -55,23 +55,7 @@ if ($is_new) {
 
 
 function insertDetails($conn, $data) {
-	$sql = "INSERT INTO tbl_app_checklist(
-			control_no, 
-			user_id, 
-			agency,
-			establishment, 
-			nature, 
-			address, 
-			person,
-			contact_details, 
-			status, 
-			has_consent, 
-			date_created, 
-			date_proceed, 
-			receiver_id, 
-			date_received, 
-			token,
-			application_type) VALUES('".$data['control_no']."', ".$data['userid'].", '".$data['agency']."', '".$data['establishment']."', '".$data['nature']."', '".$data['address']."', '".$data['person']."', '".$data['contact_details']."', '".$data['status']."', true, '".$data['date_registered']."', '".$data['date_registered']."', '".$data['userid']."', '".$data['date_registered']."', '".$data['token']."', '".$data['application_type']."')";
+	$sql = "INSERT INTO tbl_app_checklist(control_no, user_id, agency,establishment, nature, address, person,contact_details, status, has_consent, date_created, date_proceed, receiver_id, date_received, token,application_type, lgu) VALUES('".$data['control_no']."', ".$data['userid'].", '".$data['agency']."', '".$data['establishment']."', '".$data['nature']."', '".$data['address']."', '".$data['person']."', '".$data['contact_details']."', '".$data['status']."', true, '".$data['date_registered']."', '".$data['date_registered']."', '".$data['userid']."', '".$data['date_registered']."', '".$data['token']."', '".$data['application_type']."', '".$data['lgu']."')";
 
 	$result = mysqli_query($conn, $sql);
     return $result;
@@ -79,7 +63,7 @@ function insertDetails($conn, $data) {
 
 function updateDetails($conn, $data)
 {
-    $sql = "UPDATE tbl_app_checklist SET control_no = '".$data['control_no']."', agency = '".$data['agency']."', establishment = '".$data['establishment']."', nature = '".$data['nature']."', address = '".$data['address']."', person = '".$data['person']."', contact_details = '".$data['contact_details']."', date_created = '".$data['date_registered']."' WHERE token = '".$data['token']."'";
+    $sql = "UPDATE tbl_app_checklist SET control_no = '".$data['control_no']."', agency = '".$data['agency']."', establishment = '".$data['establishment']."', nature = '".$data['nature']."', address = '".$data['address']."', person = '".$data['person']."', contact_details = '".$data['contact_details']."', date_created = '".$data['date_registered']."', lgu = '".$data['lgu']."' WHERE token = '".$data['token']."'";
     $result = mysqli_query($conn, $sql);
 
     return $result;

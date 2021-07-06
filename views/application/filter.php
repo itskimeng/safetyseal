@@ -41,16 +41,31 @@
           <div class="col-md-4">
             <div class="form-group">
               <label>City/Municipality</label>
-              <select class="form-control select2bs4 select2-hidden-accessible" style="width: 100%;" data-select2-id="17" tabindex="-1" aria-hidden="true" disabled>
-                <option></option>
-                <?php foreach ($citymun_opts as $key => $opts): ?>
-                  <?php if ($opts['code'] == $citymun): ?>
-                    <option value="<?php echo $key; ?>" data-province="<?php echo $opts['province']; ?>" data-code="<?php echo $opts['code']; ?>" selected><?php echo $opts['name']; ?></option>
-                  <?php else: ?>
-                    <option value="<?php echo $key; ?>" data-province="<?php echo $opts['province']; ?>" data-code="<?php echo $opts['code']; ?>"><?php echo $opts['name']; ?></option>
-                  <?php endif ?>
-                <?php endforeach ?>
-              </select>
+
+              <?php if (!$is_clusterhead): ?>
+                <select id="cform-citymun"  class="form-control select2bs4 select2-hidden-accessible" style="width: 100%;" data-select2-id="17" tabindex="-1" name aria-hidden="true" disabled>
+                  <option></option>
+                  <?php foreach ($citymun_opts as $key => $opts): ?>
+                    <?php if ($opts['code'] == $citymun): ?>
+                      <option value="<?php echo $key; ?>" data-province="<?php echo $opts['province']; ?>" data-code="<?php echo $opts['code']; ?>" selected><?php echo $opts['name']; ?></option>
+                    <?php else: ?>
+                      <option value="<?php echo $key; ?>" data-province="<?php echo $opts['province']; ?>" data-code="<?php echo $opts['code']; ?>"><?php echo $opts['name']; ?></option>
+                    <?php endif ?>
+                  <?php endforeach ?>
+                </select>
+              <?php else: ?>
+                <select id="cform-citymun" class="form-control select2bs4 select2-hidden-accessible" style="width: 100%;" data-select2-id="17" tabindex="-1" aria-hidden="true">
+                  <option></option>
+                  <?php foreach ($citymun_opts as $key => $opts): ?>
+                    <?php if ($opts['code'] == $citymun): ?>
+                      <option value="<?php echo $opts['code'] ?>" data-province="<?php echo $opts['province']; ?>" data-code="<?php echo $opts['code']; ?>" selected><?php echo $opts['name']; ?></option>
+                    <?php else: ?>
+                      <option value="<?php echo $opts['code'] ?>" data-province="<?php echo $opts['province']; ?>" data-code="<?php echo $opts['code']; ?>"><?php echo $opts['name']; ?></option>
+                    <?php endif ?>
+                  <?php endforeach ?>
+                </select>
+              <?php endif ?>
+
             </div>
           </div>
         </div>

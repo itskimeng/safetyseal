@@ -19,6 +19,8 @@ class LoginManager
         ai.PROVINCE AS PROVINCE,
         ai.LGU AS CITY_MUNICIPALITY ,
         ai.CMLGOO_NAME as name,
+        ai.is_clusterhead as is_clusterhead,
+        ai.clusterhead_id as clusterhead_id,
         ai.EMAIL as email
         FROM `tbl_admin_info` ai 
         LEFT JOIN tbl_userinfo ui on ai.ID = ui.USER_ID 
@@ -34,7 +36,9 @@ class LoginManager
                 'PROVINCE' => $row['PROVINCE'],
                 'CITY_MUNICIPALITY' => $row['CITY_MUNICIPALITY'],
                 'name' => $row['name'],
-                'email' => $row['email']
+                'email' => $row['email'],
+                'is_clusterhead' => $row['is_clusterhead'],
+                'clusterhead_id' => $row['clusterhead_id']
             ];    
         }
 

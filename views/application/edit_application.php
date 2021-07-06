@@ -165,7 +165,7 @@
     // });
 
     $(document).on('click', '.btn-save_application', function(){
-      let form = {id: "<?php echo $_GET['appid']; ?>"};
+      let form = {id: "<?php echo $_GET['appid']; ?>", citymun: $('#cform-citymun').val()};
       let path = 'entity/post_evaluation2.php';
 
       let $this = $(this);
@@ -188,9 +188,9 @@
 
       $.post(path, form, function(data, key){
         // if (status == 'success') {
-            setTimeout(function(){// wait for 5 secs(2)
-              location.reload(); // then reload the page.(3) 
-            }, 1000);
+            // setTimeout(function(){// wait for 5 secs(2)
+            //   location.reload(); // then reload the page.(3) 
+            // }, 1000);
           // }
       });
     })
