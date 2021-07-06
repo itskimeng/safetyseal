@@ -419,7 +419,7 @@ class ApplicationManager
                 'fname' => $row['fname'],
                 'agency' => $row['agency'],
                 'address' => $row['address'],
-                'date_created' => $row['date_created'],
+                'date_created' => date('F d, Y',strtotime($row['date_created'])),
                 'control_no' => $row['control_no'],
                 'ss_no' => $row['ss_no'],
                 'status' => $row['status'],
