@@ -421,7 +421,8 @@ class ApplicationManager
                 'ac_address' => $row['ac_address'],
                 'app_type' => $row['app_type'],
                 'token' => $row['token'],
-                'validity_date' => !empty($row['date_approved']) ? date('F d, Y', strtotime("+6 months", strtotime($row['date_approved']))) : ''
+                'validity_date' => ($row['status']=='Approved') ? date('F d, Y', strtotime("+6 months", strtotime($row['date_approved']))) : ''
+                // 'validity_date' => !empty($row['date_approved']) ? date('F d, Y', strtotime("+6 months", strtotime($row['date_approved']))) : ''
             ];    
         }
 

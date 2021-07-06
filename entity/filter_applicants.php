@@ -43,6 +43,7 @@ function filterApplicants($conn, $province, $lgu, $options) {
         ui.GOV_AGENCY_NAME as agency,
         ui.ADDRESS as address,
         DATE_FORMAT(ac.date_created, '%Y-%m-%d') as date_created,
+        DATE_FORMAT(ac.date_approved, '%Y-%m-%d') as date_approved,
         ui.id as userid,
         ac.control_no as control_no,
         ac.status as status,
@@ -82,13 +83,17 @@ function filterApplicants($conn, $province, $lgu, $options) {
 	$query = mysqli_query($conn, $sql);
 
     while ($row = mysqli_fetch_assoc($query)) {
-    	$color = 'green';
+        
         if ($row['status'] == 'For Receiving') {
             $color = 'primary';
         } elseif ($row['status'] == 'Received') {
             $color = 'yellow';
         } elseif ($row['status'] == 'Disapproved') {
             $color = 'red';
+        } elseif ($row['status'] == 'Approved') {
+            $color = 'green';
+        }else{ 
+            $color = 'secondary';
         }
         if($row['status'] == 'Approved')
         {
