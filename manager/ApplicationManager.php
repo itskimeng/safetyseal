@@ -407,7 +407,7 @@ class ApplicationManager
                 $color = 'red';
             }
             if($row['status'] =='Approved'){
-                $validity = date('F d, Y', strtotime("+6 months", strtotime($row['date_approved']));
+                $validity = date('F d, Y', strtotime("+6 months", strtotime($row['date_approved'])));
             }else{
                 $validity = '';
             }
