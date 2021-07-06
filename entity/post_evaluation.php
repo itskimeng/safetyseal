@@ -18,13 +18,13 @@ $userid = $_POST['id'];
 $control_no = $_POST['control_no'];
 $defects = isset($_POST['defects']) ? $_POST['defects'] : '';
 $recommendations = isset($_POST['recommendations']) ? $_POST['recommendations'] : '';
-
 $assessments = isset($_POST['assessments']) ? $_POST['assessments'] : '';
 $status = ApplicationManager::STATUS_APPROVED;
+$ssc_no = '';
 
 if (!empty($assessments)) {
 	foreach ($assessments as $key => $assess) {
-		if ($assess == 'failed') {
+		if ($assess == 'failed' OR $assess == 'fail') {
 			$status = ApplicationManager::STATUS_DISAPPROVED;
 			
 		}
@@ -39,7 +39,10 @@ if (empty($notes)) {
 	$app->updateValidationChecklist($checklist_id, $defects, $recommendations, $today->format('Y-m-d H:i:s'));	
 }
 
-$ss_no = $app->generateCode($userid);
+if ($status == 'Approved') {
+	$ssc_no = $app->generateCode($userid);
+}
+
 $app->evaluateChecklist($checklist_id, $status, $ss_no, $today->format('Y-m-d H:i:s'), $userid);
 $_SESSION['toastr'] = $app->addFlash('success', 'The application has been set to '.$status.'.', 'Success');
 
