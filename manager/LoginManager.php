@@ -19,9 +19,11 @@ class LoginManager
         ai.PROVINCE AS PROVINCE,
         ai.LGU AS CITY_MUNICIPALITY ,
         ai.CMLGOO_NAME as name,
-        ai.EMAIL as email
+        ai.EMAIL as email,
+        ui.GOV_NATURE_NAME as nature
         FROM `tbl_admin_info` ai 
-        LEFT JOIN tbl_userinfo ui on ai.ID = ui.USER_ID 
+        LEFT JOIN tbl_userinfo  ui
+         on ai.ID = ui.USER_ID 
         WHERE ai.UNAME = '$username' AND ai.PASSWORD = '$password'";
         $query = mysqli_query($this->conn, $sql);
         $data = [];
@@ -34,7 +36,8 @@ class LoginManager
                 'PROVINCE' => $row['PROVINCE'],
                 'CITY_MUNICIPALITY' => $row['CITY_MUNICIPALITY'],
                 'name' => $row['name'],
-                'email' => $row['email']
+                'email' => $row['email'],
+                'nature' => $row['nature']
             ];    
         }
 
