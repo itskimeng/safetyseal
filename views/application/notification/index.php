@@ -4,7 +4,7 @@
     <div class="container">
         <div class="row mb-2">
             <div class="col-sm-6">
-                <h5 class="m-0"> Generate Report</h5>
+                <h5 class="m-0"> Notification Dashboard</h5>
             </div><!-- /.col -->
             <div class="col-sm-6">
                 <ol class="breadcrumb float-sm-right">
