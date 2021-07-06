@@ -406,6 +406,11 @@ class ApplicationManager
             } elseif ($row['status'] == 'Disapproved') {
                 $color = 'red';
             }
+            if($row['status'] =='Approved'){
+                $validity = date('F d, Y', strtotime("+6 months", strtotime($row['date_approved']));
+            }else{
+                $validity = '';
+            }
 
             $data[$row['id']] = [
                 'id' => $row['id'],
@@ -421,7 +426,7 @@ class ApplicationManager
                 'ac_address' => $row['ac_address'],
                 'app_type' => $row['app_type'],
                 'token' => $row['token'],
-                'validity_date' => ($row['status']=='Approved') ? date('F d, Y', strtotime("+6 months", strtotime($row['date_approved']))) : ''
+                'validity_date' => $validity,
                 // 'validity_date' => !empty($row['date_approved']) ? date('F d, Y', strtotime("+6 months", strtotime($row['date_approved']))) : ''
             ];    
         }
