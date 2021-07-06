@@ -13,11 +13,19 @@ $cm = new ComponentsManager();
 
 $province = $_SESSION['province'];
 $citymun = $_SESSION['city_mun'];
+$is_clusterhead = $_SESSION['is_clusterhead'];
+$clusterhead_id = $_SESSION['clusterhead_id'];
+
+if ($is_clusterhead) {
+    $citymun_opts = getget($conn, $clusterhead_id);
+} else {
+    $citymun_opts = $am->getCityMuns($province);
+}
+
 $is_new = true;
 $government_nature = $cm->getGovtNature();
 
 // $province_opts = $app->getProvinces();
-// $citymun_opts = $app->getCityMuns($province);
 // $applicants = $app->getApplicationLists($province,$citymun,ApplicationManager::STATUS_DRAFT);
 
 $check_allpass = false;
@@ -95,6 +103,7 @@ function getUserChecklists($conn, $id)
         ac.status as status,
         ac.token as token,
         ac.safety_seal_no as ss_no,
+        ac.lgu as lgu,
         DATE_FORMAT(ac.date_created, '%m/%d/%Y') as date_created
         FROM tbl_app_checklist ac
         LEFT JOIN tbl_admin_info ai on ai.id = ac.user_id
@@ -168,6 +177,32 @@ function getUserChecklistsValidations($conn, $id)
             'defects' => utf8_decode($row['defects']),
             'recommendations' => utf8_decode($row['recommendations'])
         ];    
+    }
+
+    return $data;
+}
+
+function getget($conn, $id)
+{
+    $sql = "SELECT * FROM tbl_cluster_head where id = $id"; 
+    $query = mysqli_query($conn, $sql);
+    $result = mysqli_fetch_array($query);
+
+    $rr = json_decode($result['citymun']);
+    $rr = implode(',', $rr);
+
+    $sql2 = "SELECT * FROM tbl_citymun where id IN ($rr)";
+    $result2 = mysqli_query($conn, $sql2);
+
+    $data = [];
+        
+    while ($row = mysqli_fetch_assoc($result2)) {
+        $data[$row['id']] = [
+            'province' => $row['province'],
+            'code' => $row['code'],
+            'name' => $row['name']
+        ];    
+       
     }
 
     return $data;

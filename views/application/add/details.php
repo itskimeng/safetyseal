@@ -15,7 +15,26 @@
       </div>
       <!-- /.card-header -->
       <div class="card-body card-body-details table-responsive p-0 collapse show">
-        
+        <?php if ($is_clusterhead): ?>
+        <div class="col-md-12">
+            <div class="row pl-2 pr-2">
+              <div class="form-group mt-3 mb-2 col-md-4">
+                <label>City/Municipality</label>
+                <select id="cform-citymun" name="lgu" class="form-control select2bs4 select2-hidden-accessible" style="width: 100%;" data-select2-id="17" tabindex="-1" aria-hidden="true" <?php echo $applicant['status'] == 'Approved' ? 'disabled' : ''; ?>>
+                  <option></option>
+                  <?php foreach ($citymun_opts as $key => $opts): ?>
+                    <?php if ($opts['code'] == $applicant['lgu']): ?>
+                      <option value="<?php echo $opts['code'] ?>" data-province="<?php echo $opts['province']; ?>" data-code="<?php echo $opts['code']; ?>" selected><?php echo $opts['name']; ?></option>
+                    <?php else: ?>
+                      <option value="<?php echo $opts['code'] ?>" data-province="<?php echo $opts['province']; ?>" data-code="<?php echo $opts['code']; ?>"><?php echo $opts['name']; ?></option>
+                    <?php endif ?>
+                  <?php endforeach ?>
+                </select>
+              </div>  
+            </div>
+          </div>
+          <?php endif ?>
+
         <div class="col-md-12">
           <div class="row pl-2 pr-2 pt-3">
             <div class="form-outline mb-2 col-md-4">

@@ -4,7 +4,7 @@
   <div class="container">
     <div class="row mb-2">
       <div class="col-sm-6">
-        <h5 class="m-0"> Application</h5>
+        <h5 class="m-0"> Application <small><b><?php echo $is_clusterhead ? '(CLUSTER HEAD)': ''; ?></b></small></h5>
       </div><!-- /.col -->
       <div class="col-sm-6">
         <ol class="breadcrumb float-sm-right">
@@ -63,6 +63,7 @@
     $(document).on('click', '#btn-filter', function() {
       let path = 'entity/filter_applicants.php';
       let data = {
+          citymun: $('#cform-citymun').val(),
           name: $('#cform-name').val(),
           agency: $('#cform-agency').val(),
           location: $('#cform-location').val(),
@@ -103,11 +104,15 @@
           tr+= '<td>'+item['ss_no']+'</td>';
           tr+= '<td>';
           if (item['app_type'] == 'Encoded') {
-            tr+= '<a href="admin_application_edit.php?appid='+item['token']+'&code=&scope=" class="btn btn-primary btn-block btn-sm" style="margin-bottom: -5%;"><i class="fa fa-clipboard-list"></i> View</a>';
+            tr+= '<a href="admin_application_edit.php?appid='+item['token']+'&code=&scope=" class="btn btn-primary btn-block btn-sm" style="margin-bottom: -2%;"><i class="fa fa-clipboard-list"></i> View</a>';
           } else if (item['status'] == 'For Receiving') {
-            tr+= '<a href="admin_application_view.php?appid='+item['id']+'&ussir='+item['userid']+'&status='+item['status']+'" class="btn btn-primary btn-block btn-sm" style="margin-bottom: -5%;"><i class="fa fa-box"></i> Received</a>';
+            tr+= '<a href="admin_application_view.php?appid='+item['id']+'&ussir='+item['userid']+'&status='+item['status']+'" class="btn btn-primary btn-block btn-sm" style="margin-bottom: -2%;"><i class="fa fa-box"></i> Received</a>';
           } else {
-            tr+= '<a href="admin_application_view.php?appid='+item['id']+'&ussir='+item['userid']+'" class="btn btn-primary btn-block btn-sm" style="margin-bottom: -5%;"><i class="fa fa-clipboard-list"></i> View</a>';
+            tr+= '<a href="admin_application_view.php?appid='+item['id']+'&ussir='+item['userid']+'" class="btn btn-primary btn-block btn-sm" style="margin-bottom: -2%;"><i class="fa fa-clipboard-list"></i> View</a>';
+          }
+
+          if (item['status'] == 'Approved') {
+            tr+= '<a href="certificate.php?token='+item['token']+'" class="btn btn-warning btn-block btn-sm" style="margin-bottom: -2%;"><i class="fa fa-eye"></i> Generate Certificate</a>';
           }
           tr+= '</td>';
           tr+= '</tr>';

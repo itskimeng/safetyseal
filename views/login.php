@@ -25,6 +25,11 @@ if (isset($_POST['login'])) {
                  $_SESSION['username']  = $user_data['UNAME'];
                  $_SESSION['province']  = $user_data['PROVINCE'];
                  $_SESSION['city_mun']  = $user_data['CITY_MUNICIPALITY'];
+<<<<<<< HEAD
+                 $_SESSION['is_clusterhead']  = $user_data['is_clusterhead'];
+                 $_SESSION['clusterhead_id']  = $user_data['clusterhead_id'];
+=======
+>>>>>>> 9be7c57dd1ef623a3cbd907b6111604fdd00ff14
                  $_SESSION['userid']  = $user_data['ID'];
                  $_SESSION['nature'] = $user_data['nature'];
 

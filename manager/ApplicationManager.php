@@ -900,4 +900,26 @@ class ApplicationManager
             return $data;
     }
 
+    public function getStatusOptions()
+    {
+        $options  = [
+            self::STATUS_FOR_RECEIVING => self::STATUS_FOR_RECEIVING,
+            self::STATUS_RECEIVED => self::STATUS_RECEIVED,
+            self::STATUS_APPROVED => self::STATUS_APPROVED,
+            self::STATUS_DISAPPROVED => self::STATUS_DISAPPROVED
+        ];
+
+        return $options;
+    }
+
+    public function getAppTypeOptions()
+    {
+        $options = [
+            self::TYPE_APPLIED => self::TYPE_APPLIED,
+            self::TYPE_ENCODED => self::TYPE_ENCODED
+        ];
+
+        return $options;
+    }
+
 }
