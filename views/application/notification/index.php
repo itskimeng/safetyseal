@@ -1,4 +1,5 @@
 <?php require_once 'controller/AdminApplicationController.php'; ?>
+<?php header('Access-Control-Allow-Origin: *'); ?>
 
 <div class="content-header">
     <div class="container">
