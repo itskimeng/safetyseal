@@ -81,7 +81,7 @@ else
           <h6 class="mt-3"> INSPECTION AND CERTIFICATION TEAMS</h6>
           <h6 class="mt-3"><span class="text-muted">DILG:</span> <?php echo $resultInspection['NAME']; ?></h6>
           <h6 class="mt-3"><span class="text-muted">PNP:</span> <?php echo $resultInspection['PNP']; ?></h6>
-          <h6 class="mt-3"><span class="text-muted">BJMP:</span> <?php echo $resultInspection['BFP']; ?></h6>
+          <h6 class="mt-3"><span class="text-muted">BFP:</span> <?php echo $resultInspection['BFP']; ?></h6>
         </div>
         <div class="col-md-6 place">
           <!-- map output -->
