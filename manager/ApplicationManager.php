@@ -381,7 +381,7 @@ class ApplicationManager
         ui.GOV_AGENCY_NAME as agency,
         ui.ADDRESS as address,
         DATE_FORMAT(ac.date_created, '%Y-%m-%d') as date_created,
-        DATE_FORMAT(ac.date_approved, '%Y-%m-%d H:i:s') as date_approved,
+        DATE_FORMAT(ac.date_approved, '%Y-%m-%d') as date_approved,
         ui.id as userid,
         ac.control_no as control_no,
         ac.safety_seal_no as ss_no,
@@ -393,6 +393,7 @@ class ApplicationManager
         LEFT JOIN tbl_admin_info ai on ai.id = ac.user_id
         LEFT JOIN tbl_userinfo ui on ui.user_id = ai.id
         WHERE ai.PROVINCE = ".$province." AND ai.LGU = ".$lgu." AND ac.application_type = 'Applied' AND ac.status <> '".$status."'";
+     
      
         $query = mysqli_query($this->conn, $sql);
         $data = [];
