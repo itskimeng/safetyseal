@@ -5,7 +5,7 @@ include '../application/config/connection.php';
     LEFT JOIN tbl_admin_info ai on cl.user_id = ai.id
     LEFT JOIN tbl_userinfo ui on ai.id = ui.USER_ID
     LEFT JOIN tbl_ipadd_details mc on cl.sms_sending_status = mc.ID
-    where sms_sending_status = 1 and status = 'Approved' ";
+    where status = 'Approved' LIMIT 1 ";
     
     $result = mysqli_query($conn, $sqlQuery);
 
