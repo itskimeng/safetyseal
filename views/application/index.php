@@ -85,6 +85,7 @@
 
       function generateMainTable($data) {
         $.each($data, function(key, item){
+        
           let tr = '<tr>';
           tr+= '<td>'+item['app_type']+'</td>';
           tr+= '<td>';
@@ -98,6 +99,7 @@
           tr+= '<td>'+item['agency']+'</td>';
           tr+= '<td>'+item['address']+'</td>';
           tr+= '<td>'+item['date_created']+'</td>';
+          tr+= '<td>'+item['validity_date']+'</td>';
           tr+= '<td>'+item['ss_no']+'</td>';
           tr+= '<td>';
           if (item['app_type'] == 'Encoded') {

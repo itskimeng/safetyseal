@@ -90,6 +90,10 @@ function filterApplicants($conn, $province, $lgu, $options) {
         } elseif ($row['status'] == 'Disapproved') {
             $color = 'red';
         }
+        if($row['status'] == 'Approved')
+        {
+            $validity_date = date('Y-m-d', strtotime("+6 months", strtotime($row['date_approved'])));
+        }
 
         $data[] = [
             'id' => $row['id'],
@@ -98,6 +102,7 @@ function filterApplicants($conn, $province, $lgu, $options) {
             'agency' => $row['app_type'] == 'Applied' ? $row['agency'] : $row['r_agency'],
             'address' => $row['app_type'] == 'Applied' ? $row['address'] : $row['r_address'],
             'date_created' => $row['date_created'],
+            'validity_date' => $validity_date,
             'control_no' => $row['control_no'],
             'status' => $row['status'],
             'app_type' => $row['app_type'],
