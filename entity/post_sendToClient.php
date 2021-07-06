@@ -5,7 +5,7 @@ include '../application/config/connection.php';
     LEFT JOIN tbl_admin_info ai on cl.user_id = ai.id
        LEFT JOIN tbl_userinfo ui on ai.id = ui.USER_ID
        LEFT JOIN tbl_ipadd_details mc on cl.sms_sending_status = mc.ID
-       WHERE `status` LIKE '%Approved%' ORDER BY `date_approved` DESC LIMIT 1    ";
+       WHERE `status` LIKE '%Approved%' and sms_sending_status = 1 ORDER BY `date_approved` DESC LIMIT 1    ";
     
     $result = mysqli_query($conn, $sqlQuery);
 
@@ -34,3 +34,5 @@ if (mysqli_num_rows($result) > 0) {
         }
     }
 }
+exit();
+?>

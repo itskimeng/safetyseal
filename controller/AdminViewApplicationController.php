@@ -51,6 +51,7 @@ function getUserChecklists($conn, $id)
         LEFT JOIN tbl_admin_info ai on ai.id = ac.user_id
         LEFT JOIN tbl_userinfo ui on ui.user_id = ai.id
         WHERE ac.id = $id";
+    
 
     $query = mysqli_query($conn, $sql);
     $data = mysqli_fetch_array($query);
@@ -78,6 +79,7 @@ function getUserChecklistsEntry($conn, $id)
         LEFT JOIN tbl_admin_info ai on ai.id = ac.user_id
         LEFT JOIN tbl_userinfo ui on ui.id = ai.id
         WHERE ac.id = $id";
+
 
     $query = mysqli_query($conn, $sql);
     $data = [];
@@ -112,7 +114,7 @@ function getUserChecklistsEntry($conn, $id)
             'other_tool' => $row['other_tool'],
             'pnp_remarks' => $row['pnp_remarks'],
             'bfp_remarks' => $row['bfp_remarks'],
-            'nature' => $row['nature']
+            'nature' => $nature
         ];    
     }
 

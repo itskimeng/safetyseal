@@ -165,13 +165,23 @@ function filterApplicants($conn, $province, $lgu, $options) {
 	$query = mysqli_query($conn, $sql);
 
     while ($row = mysqli_fetch_assoc($query)) {
-    	$color = 'green';
+        
         if ($row['status'] == 'For Receiving') {
             $color = 'primary';
         } elseif ($row['status'] == 'Received') {
             $color = 'yellow';
         } elseif ($row['status'] == 'Disapproved') {
             $color = 'red';
+        } elseif ($row['status'] == 'Approved') {
+            $color = 'green';
+        }else{ 
+            $color = 'secondary';
+        }
+        if($row['status'] == 'Approved')
+        {
+            $validity_date = date('F d, Y', strtotime("+6 months", strtotime($row['date_approved'])));
+        }else{
+            $validity_date = '';
         }
 
         $data[$row['id']] = [
@@ -253,7 +263,8 @@ function filterApplicants($conn, $province, $lgu, $options) {
             'fname' => $row['app_type'] == 'Applied' ? $row['fname'] : $row['r_person'],
             'agency' => $row['app_type'] == 'Applied' ? $row['agency'] : $row['r_agency'],
             'address' => $row['app_type'] == 'Applied' ? $row['address'] : $row['r_address'],
-            'date_created' => $row['date_created'],
+            'date_created' => date('F d, Y',strtotime($row['date_created'])),
+            'validity_date' => $validity_date,
             'control_no' => $row['control_no'],
             'status' => $row['status'],
             'app_type' => $row['app_type'],

@@ -1,5 +1,8 @@
 <?php require_once 'controller/AdminViewApplicationController.php'; ?>
 
+
+
+
 <div class="content-header">
   <div class="container">
     <div class="row mb-2">
@@ -228,22 +231,37 @@
                     </form>
                   </div>
                 <?php else : ?>
-                  <div class="<?php echo $is_new ? 'col-md-12' : 'col-md-6'; ?> pull-right">
+                  <?php if (strpos($_SESSION['nature'], 'BFP') !== false) : ?>
+                  <?php $nature = 'BFP';?>
+                  <?php elseif (strpos($_SESSION['nature'], 'PNP') !== false) : ?>
+                  <?php $nature = 'PNP';?>
+                  <?php else : ?>
+                  <?php $nature = 'lgoo';?>
+                  <?php endif; ?>
+                  <div class="<?php echo $is_new ? 'col-md-12' : 'col-md-12'; ?> pull-right">
+                  <?php if($nature == 'BFP' || $nature == 'PNP'):?>
+                    <div class="col-md-12">
                     <button type="submit" class="btn btn-primary btn-block" name="login" style="width: 100%;"><i class="fa fa-pen-alt"></i>
-                      Save as Draft
+                      Save as Draft  
                     </button>
                   </div>
-                  <div class="col-md-6">
+                  <?php else:?>
+                    <div class="col-md-12">
                     <button type="button" class="btn btn-success btn-block btn-proceed" data-toggle="modal" style="width: 100%;"><i class="fa fa-share"></i> Submit</button>
                     </button>
                   </div>
+                  <?php endif;?>
+             
+                
+               
+                 
                 <?php endif ?>
               </div>
             </div>
           </div>
 
     </div>
-
+   
   <?php endif ?>
   <?php if ($applicant['status'] <> 'For Receiving' and $applicant['status'] <> 'Draft') : ?>
     </form>

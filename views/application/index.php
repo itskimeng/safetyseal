@@ -86,8 +86,9 @@
 
       function generateMainTable($data) {
         $.each($data, function(key, item){
+        
           let tr = '<tr>';
-          tr+= '<td>'+item['app_type']+'</td>';
+          tr+= '<td style = "font-weight:bold;">'+item['app_type']+'</td>';
           tr+= '<td>';
           tr+= '<span class="label label-sm bg-'+item['color']+' label-inline font-weight-bold py-3">';
           tr+= '<i class="fa fa-check-circle"></i>'+item['status'];

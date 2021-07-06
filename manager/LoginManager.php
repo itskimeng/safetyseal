@@ -19,11 +19,17 @@ class LoginManager
         ai.PROVINCE AS PROVINCE,
         ai.LGU AS CITY_MUNICIPALITY ,
         ai.CMLGOO_NAME as name,
+<<<<<<< HEAD
         ai.is_clusterhead as is_clusterhead,
         ai.clusterhead_id as clusterhead_id,
         ai.EMAIL as email
+=======
+        ai.EMAIL as email,
+        ui.GOV_NATURE_NAME as nature
+>>>>>>> 9be7c57dd1ef623a3cbd907b6111604fdd00ff14
         FROM `tbl_admin_info` ai 
-        LEFT JOIN tbl_userinfo ui on ai.ID = ui.USER_ID 
+        LEFT JOIN tbl_userinfo  ui
+         on ai.ID = ui.USER_ID 
         WHERE ai.UNAME = '$username' AND ai.PASSWORD = '$password'";
         $query = mysqli_query($this->conn, $sql);
         $data = [];
@@ -37,8 +43,12 @@ class LoginManager
                 'CITY_MUNICIPALITY' => $row['CITY_MUNICIPALITY'],
                 'name' => $row['name'],
                 'email' => $row['email'],
+<<<<<<< HEAD
                 'is_clusterhead' => $row['is_clusterhead'],
                 'clusterhead_id' => $row['clusterhead_id']
+=======
+                'nature' => $row['nature']
+>>>>>>> 9be7c57dd1ef623a3cbd907b6111604fdd00ff14
             ];    
         }
 
