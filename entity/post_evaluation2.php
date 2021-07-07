@@ -9,9 +9,15 @@ $app = new ApplicationManager();
 $today = new DateTime();
 
 $userid = $_SESSION['userid'];
-$token = $_POST['id'];
 $province = $_SESSION['province'];
-$citymun = $_SESSION['city_mun'];
+$is_clusterhead = $_SESSION['is_clusterhead'];
+$token = $_POST['id'];
+
+if ($is_clusterhead) {
+    $citymun = $_POST['citymun'];
+} else {
+    $citymun = $_SESSION['city_mun'];
+}
 
 $checklist_id = findID($conn, $token);
 $status = ApplicationManager::STATUS_APPROVED;
