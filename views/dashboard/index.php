@@ -28,7 +28,7 @@ require_once 'controller/DashboardController.php'; ?>
                 <!-- small box -->
                 <div class="small-box bg-primary">
                     <div class="inner">
-                        <h3><?php echo $count_status['For Receiving']; ?></h3>
+                        <h3><?php echo $total_count['For Receiving']; ?></h3>
                         <p>FOR RECEIVING</p>
                     </div>
                     <div class="icon">
@@ -46,7 +46,7 @@ require_once 'controller/DashboardController.php'; ?>
                 <!-- small box -->
                 <div class="small-box bg-yellow">
                     <div class="inner">
-                        <h3><?php echo $count_status['Received']; ?></h3>
+                        <h3><?php echo $total_count['Received']; ?></h3>
 
                         <p>RECEIVED</p>
                     </div>
@@ -65,7 +65,7 @@ require_once 'controller/DashboardController.php'; ?>
                 <!-- small box -->
                 <div class="small-box bg-green">
                     <div class="inner">
-                        <h3><?php echo $count_status['Approved']; ?></h3>
+                        <h3><?php echo $total_count['Approved']; ?></h3>
 
 
                         <p>APPROVED</p>
@@ -85,7 +85,7 @@ require_once 'controller/DashboardController.php'; ?>
                 <!-- small box -->
                 <div class="small-box" style="background-color: #b71c1c;color:gainsboro">
                     <div class="inner">
-                        <h3><?php echo $count_status['Disapproved']; ?></h3>
+                        <h3><?php echo $total_count['Disapproved']; ?></h3>
 
 
                         <p>DISAPPROVED</p>
