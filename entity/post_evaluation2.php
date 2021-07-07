@@ -11,9 +11,10 @@ $today = new DateTime();
 $userid = $_SESSION['userid'];
 $province = $_SESSION['province'];
 $is_clusterhead = $_SESSION['is_clusterhead'];
+$is_pfp = $_SESSION['is_pfp'];
 $token = $_POST['id'];
 
-if ($is_clusterhead) {
+if ($is_clusterhead OR $is_pfp) {
     $citymun = $_POST['citymun'];
 } else {
     $citymun = $_SESSION['city_mun'];

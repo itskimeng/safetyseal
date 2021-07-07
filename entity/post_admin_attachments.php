@@ -13,13 +13,17 @@ $app = new ApplicationManager();
 $client = getGoogleClient($url);
 
 $token = !empty($_POST['ttid']) ? $_POST['ttid'] : $_SESSION['ss_id'];
-$gcode = $_SESSION['gcode'];
-$gscope = $_SESSION['gscope'];
+if (!empty($_POST['ttid'])) {
+    $_SESSION['ttid'] = $_POST['ttid'];
+}
 
-
+$gcode = isset($_SESSION['gcode']) ? $_SESSION['gcode'] : '';
+$gscope = isset($_SESSION['gsncope']) ? $_SESSION['gsncope'] : '';
 
 if (!empty($_GET['code'])) {
     $_SESSION['accessToken'] = $client->authenticate($_GET['code']);
+    $token = $_SESSION['ttid'];
+    $_SESSION['ttid'] = '';
     $_SESSION['toastr'] = $app->addFlash('success', 'Session has been configured. Please try to reupload the file.', 'Success');
     header('location:../admin_application_edit.php?appid='.$token.'&code='.$gcode.'&scope='.$gscope.'');exit;
 } elseif (!isset($_SESSION['accessToken'])) {
