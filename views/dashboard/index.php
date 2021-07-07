@@ -114,7 +114,7 @@ require_once 'controller/DashboardController.php'; ?>
                     <div class="col-md-4">
                         <div class="card" style="height: 269px;">
                             <div class="card-header" style="background-color: #009688; color:#fff;">
-                                <h3 class="card-title"><img src="frontend/images/logo.png" style="width: 30px;" alt=""> LGU's </h3>
+                                <h3 class="card-title"><img src="frontend/images/logo.png" style="width: 30px;" alt=""> LGUs </h3>
                             </div>
 
                             <div class="card-body" style="overflow:auto;">
