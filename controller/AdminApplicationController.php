@@ -8,8 +8,12 @@ $app = new ApplicationManager();
 
 $province = $_SESSION['province'];
 $citymun = $_SESSION['city_mun'];
+$is_clusterhead = $_SESSION['is_clusterhead'];
+$clusterhead_id = $_SESSION['clusterhead_id'];
+
 $is_adminro = false;
 $today = new DateTime();
+
 if ($province == 0 AND $citymun == 00) {
 	$is_adminro = true;
 }
@@ -17,20 +21,14 @@ if ($province == 0 AND $citymun == 00) {
 $_SESSION['gcode'] = isset($_GET['code']) ? $_GET['code'] : '';
 $_SESSION['gscope'] = isset($_GET['scope']) ? $_GET['scope'] : '';
 
-$status_opts = [
-	ApplicationManager::STATUS_FOR_RECEIVING => ApplicationManager::STATUS_FOR_RECEIVING,
-	ApplicationManager::STATUS_RECEIVED => ApplicationManager::STATUS_RECEIVED,
-	ApplicationManager::STATUS_APPROVED => ApplicationManager::STATUS_APPROVED,
-	ApplicationManager::STATUS_DISAPPROVED => ApplicationManager::STATUS_DISAPPROVED
-];
-
-$apptype_opts = [
-	ApplicationManager::TYPE_APPLIED => ApplicationManager::TYPE_APPLIED,
-	ApplicationManager::TYPE_ENCODED => ApplicationManager::TYPE_ENCODED
-];
-
+$status_opts = $app->getStatusOptions();
+$apptype_opts = $app->getAppTypeOptions();
 $province_opts = $app->getProvinces();
-$citymun_opts = $app->getCityMuns($province);
+if (!$is_clusterhead) {
+	$citymun_opts = $app->getCityMuns($province);
+} else {
+	$citymun_opts = getget($conn, $clusterhead_id);
+}
 $today1 = $today->format('m');
 $current_time = $today->format('m/d/Y h:i:s a');
 $month_options = month_options($today1);
@@ -38,9 +36,12 @@ $month_options = month_options($today1);
 $timestamp = date('Y-m-d H:i:s', time());
 
 if (!$is_adminro) {
-	$applicants = $app->getApplicationLists($province, $citymun, ApplicationManager::STATUS_DRAFT);
+	if (!$is_clusterhead) {
+		$applicants = $app->getApplicationLists($province, $citymun, ApplicationManager::STATUS_DRAFT);
+	} else {
+		$applicants = getApplicationLists($conn, $province, $citymun_opts, ApplicationManager::STATUS_DRAFT, $is_clusterhead);
+	}
 	$client_details = $app->getNotifDetailsClients(ApplicationManager::STATUS_APPROVED);
-
 } else {
 	$applicants = $app->getAllApplicationLists();
 	$reports['total_application'] = $app->showAllApplications('',$timestamp);
@@ -75,6 +76,32 @@ if (!$is_adminro) {
 
 }
 
+function getget($conn, $id)
+{
+	$sql = "SELECT * FROM tbl_cluster_head where id = $id";	
+	$query = mysqli_query($conn, $sql);
+	$result = mysqli_fetch_array($query);
+
+	$rr = json_decode($result['citymun']);
+	$rr = implode(',', $rr);
+
+	$sql2 = "SELECT * FROM tbl_citymun where id IN ($rr)";
+	$result2 = mysqli_query($conn, $sql2);
+
+	$data = [];
+        
+    while ($row = mysqli_fetch_assoc($result2)) {
+        $data[$row['id']] = [
+            'province' => $row['province'],
+            'code' => $row['code'],
+            'name' => $row['name']
+        ];    
+       
+    }
+
+	return $data;
+}
+
 function month_options($today) {
 	$options = [
 		'01' => 'January',
@@ -100,4 +127,128 @@ function month_options($today) {
 	}
 
 	return $dd;
+}
+
+function getApplicationLists($conn, $province, $lgus, $status, $is_clusterhead)
+{
+	$data = [];
+
+	foreach ($lgus as $key => $lgu) {
+		$codes[] = $lgu['code']; 
+	}
+
+	$codes = implode(',', $codes);
+
+	// foreach ($lgus as $key => $lgu) {
+	    $sql = "SELECT 
+	    ac.id as id,
+	    ai.CMLGOO_NAME as fname,
+	    ui.GOV_AGENCY_NAME as agency,
+	    ui.ADDRESS as address,
+	    DATE_FORMAT(ac.date_created, '%Y-%m-%d') as date_created,
+	    DATE_FORMAT(ac.date_approved, '%Y-%m-%d H:i:s') as date_approved,
+	    ui.id as userid,
+	    ac.control_no as control_no,
+	    ac.safety_seal_no as ss_no,
+	    ac.status as status,
+	    ac.address as ac_address,
+	    ac.application_type as app_type,
+	    ac.token as token
+	    FROM tbl_app_checklist ac
+	    LEFT JOIN tbl_admin_info ai on ai.id = ac.user_id
+	    LEFT JOIN tbl_userinfo ui on ui.user_id = ai.id
+	    WHERE ai.PROVINCE = ".$province." AND ai.LGU IN (".$codes.") AND ac.application_type = 'Applied' AND ac.status <> '".$status."'";
+	 
+	    $query = mysqli_query($conn, $sql);
+
+	    
+	    while ($row = mysqli_fetch_assoc($query)) {
+	        $color = 'green';
+	        if ($row['status'] == 'For Receiving') {
+	            $color = 'primary';
+	        } elseif ($row['status'] == 'Received') {
+	            $color = 'yellow';
+	        } elseif ($row['status'] == 'Disapproved') {
+	            $color = 'red';
+	        }
+
+	        $data[$row['id']] = [
+	            'id' => $row['id'],
+	            'userid' => $row['userid'],
+	            'fname' => $row['fname'],
+	            'agency' => $row['agency'],
+	            'address' => $row['address'],
+	            'date_created' => $row['date_created'],
+	            'control_no' => $row['control_no'],
+	            'ss_no' => $row['ss_no'],
+	            'status' => $row['status'],
+	            'color' => $color,
+	            'ac_address' => $row['ac_address'],
+	            'app_type' => $row['app_type'],
+	            'token' => $row['token'],
+	            'validity_date' => !empty($row['date_approved']) ? date('F d, Y', strtotime("+6 months", strtotime($row['date_approved']))) : ''
+	        ];    
+	    }
+
+	    $sql2 = "SELECT 
+	    ac.id as id,
+	    ai.CMLGOO_NAME as fname,
+	    ui.GOV_AGENCY_NAME as pagency,
+	    ac.agency as cagency,
+	    ui.ADDRESS as address,
+	    DATE_FORMAT(ac.date_created, '%Y-%m-%d') as date_created,
+	    DATE_FORMAT(ac.date_approved, '%Y-%m-%d') as date_approved,
+	    ui.id as userid,
+	    ac.control_no as control_no,
+	    ac.safety_seal_no as ss_no,
+	    ac.status as status,
+	    ac.address as ac_address,
+	    ac.application_type as app_type,
+	    ac.token as token
+	    FROM tbl_app_checklist ac
+	    LEFT JOIN tbl_admin_info ai on ai.id = ac.user_id
+	    LEFT JOIN tbl_userinfo ui on ui.user_id = ai.id
+	    WHERE ai.PROVINCE = ".$province." AND ac.application_type = 'Encoded'";
+
+	    if ($is_clusterhead) {
+	    	$sql.= " AND ac.lgu IN (".$codes.")";	
+	    } else {
+	    	$sql.= " AND ai.LGU IN (".$codes.")";
+	    }
+	 
+	    $query = mysqli_query($conn, $sql2);
+	    // $data = [];
+	    
+	    while ($row = mysqli_fetch_assoc($query)) {
+	        $color = 'green';
+	        if ($row['status'] == 'For Receiving') {
+	            $color = 'primary';
+	        } elseif ($row['status'] == 'Received') {
+	            $color = 'yellow';
+	        } elseif ($row['status'] == 'Disapproved') {
+	            $color = 'red';
+	        }
+
+	        $data[$row['id']] = [
+	            'id' => $row['id'],
+	            'userid' => $row['userid'],
+	            'fname' => $row['fname'],
+	            'agency' => !empty($row['cagency']) ? $row['cagency'] : $row['pagency'],
+	            'address' => $row['address'],
+	            'date_created' => $row['date_created'],
+	            'control_no' => $row['control_no'],
+	            'ss_no' => $row['ss_no'],
+	            'status' => $row['status'],
+	            'color' => $color,
+	            'ac_address' => $row['ac_address'],
+	            'app_type' => $row['app_type'],
+	            'token' => $row['token'],
+	            'validity_date' => !empty($row['date_approved']) ? date('F d, Y', strtotime("+6 months", strtotime($row['date_approved']))) : ''
+	        ];    
+	    }
+	// }
+
+
+    return $data;
+
 }
