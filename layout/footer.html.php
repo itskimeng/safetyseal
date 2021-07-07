@@ -3,7 +3,7 @@
 }
 
 .new_footer_area {
-    background: #E3F2FD;
+    background: #fff;
 }
 
 
@@ -186,16 +186,18 @@ h1, h2, h3, h4, h5, h6 {
 </style>
 <footer class="new_footer_area">
             <div class="new_footer_top">
-                <div class="container">
+                <div class="container-fluid">
+                    <div class="container">
                     <div class="row">
-                        <div class="col-lg-4 col-md-6">
+                        <div class="col-lg-5 col-md-6">
                             <div class="f_widget company_widget wow fadeInLeft" data-wow-delay="0.2s" style="visibility: visible; animation-delay: 0.2s; animation-name: fadeInLeft;">
                                 <h3 class="f-title f_600 t_color f_size_18">SAFETY SEAL CERTIFICATION</h3>
-                                <img src="https://safetyseal.ncr.dilg.gov.ph/images/safety_seal_icon.png" alt="">
-                                <p> The Safety Seal Certification is a voluntary certification scheme that affirms that an establishment
-                    is compliant with the minimum public health standards set by the government and uses or integrates
-                    its contact tracing with staysafe.ph.</p>
-                                <!-- <form action="#" class="f_subscribe_two mailchimp" method="post" novalidate="true" _lpchecked="1">
+                                <img style="float: left;" src="https://safetyseal.ncr.dilg.gov.ph/images/safety_seal_icon.png" alt="">
+                                
+                                <div style="text-align:justify;"> <span>The Safety Seal Certification is a voluntary certification scheme that affirms that an establishment
+                                    is compliant with the minimum public health standards set by the government and uses or integrates
+                                    its contact tracing with staysafe.ph.</span></div>
+                                                <!-- <form action="#" class="f_subscribe_two mailchimp" method="post" novalidate="true" _lpchecked="1">
                                     <input type="text" name="EMAIL" class="form-control memail" placeholder="Email">
                                     <button class="btn btn_get btn_get_two" type="submit">Subscribe</button>
                                     <p class="mchimp-errmessage" style="display: none;"></p>
@@ -203,9 +205,9 @@ h1, h2, h3, h4, h5, h6 {
                                 </form> -->
                             </div>
                         </div>
-                        <div class="col-lg-4 col-md-6">
+                        <div class="col-lg-2 col-md-6">
                             <div class="f_widget about-widget pl_70 wow fadeInLeft" data-wow-delay="0.4s" style="visibility: visible; animation-delay: 0.4s; animation-name: fadeInLeft;">
-                                <h3 class="f-title f_600 t_color f_size_18">Download</h3>
+                                <h3 class="f-title f_600 t_color f_size_18">NAVIGATE</h3>
                                 <ul class="list-unstyled f_list">
                                     <li><a href="#">Company</a></li>
                                     <li><a href="#">Android App</a></li>
@@ -217,19 +219,23 @@ h1, h2, h3, h4, h5, h6 {
                             </div>
                         </div>
             
-                        <div class="col-lg-4 col-md-6">
-                            <div class="f_widget social-widget pl_70 wow fadeInLeft" data-wow-delay="0.8s" style="visibility: visible; animation-delay: 0.8s; animation-name: fadeInLeft;">
-                                <h3 class="f-title f_600 t_color f_size_18">Team Solutions</h3>
+                        <div class="col-lg-5 col-md-6" >
+                            <div class="f_widget social-widget pl_80 wow fadeInLeft" data-wow-delay="0.8s" style="visibility: visible; animation-delay: 0.8s; animation-name: fadeInLeft;">
+                                <h3 class="f-title f_600 t_color f_size_18">STAY CONNECTED</h3>
                                 <div class="f_social_icon">
-                                    <img src="frontend/images/logo.png" alt="" style="width: 30px;">
-                                    <img src="frontend/images/logo.png" alt="" style="width: 30px;">
-                                    <img src="frontend/images/logo.png" alt="" style="width: 30px;">
-                                    <img src="frontend/images/logo.png" alt="" style="width: 30px;">
+                                    <img src="frontend/images/calabarzon.png" alt="" style="width: 6rem;">
+                                    <img src="frontend/images/lgrc_logo.png" alt="" style="width: 6rem;">
+                                    <img src="frontend/images/fb.png" alt="" style="width: 5rem;">
+                                    <img src="frontend/images/twitter.png" alt="" style="width: 5rem;">
+                                    <img src="frontend/images/yt.png" alt="" style="width: 5rem;">
+                                    
+                     
                               
                                 </div>
                             </div>
                         </div>
                     </div>
+                </div>
                 </div>
                 <div class="footer_bg">
                     <div class="footer_bg_one"></div>

@@ -21,7 +21,8 @@ class LoginManager
         ai.CMLGOO_NAME as name,
         ai.is_clusterhead as is_clusterhead,
         ai.clusterhead_id as clusterhead_id,
-        ai.EMAIL as email
+        ai.EMAIL as email,
+        ui.GOV_NATURE_NAME as nature
         FROM `tbl_admin_info` ai 
         LEFT JOIN tbl_userinfo  ui
          on ai.ID = ui.USER_ID 
@@ -39,7 +40,8 @@ class LoginManager
                 'name' => $row['name'],
                 'email' => $row['email'],
                 'is_clusterhead' => $row['is_clusterhead'],
-                'clusterhead_id' => $row['clusterhead_id']
+                'clusterhead_id' => $row['clusterhead_id'],
+                'nature' => $row['nature']
             ];    
         }
 

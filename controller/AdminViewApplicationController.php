@@ -10,11 +10,13 @@ $app = new ApplicationManager();
 
 $province = $_SESSION['province'];
 $citymun = $_SESSION['city_mun'];
+$nature = $_SESSION['nature'];
+
 
 $province_opts = $app->getProvinces();
 $citymun_opts = $app->getCityMuns($province);
 $applicants = $app->getApplicationLists($province,$citymun,ApplicationManager::STATUS_DRAFT);
-
+$is_nature = getNature($nature);
 
 $applicant = getUserChecklists($conn, $appid); 
 
@@ -79,6 +81,7 @@ function getUserChecklistsEntry($conn, $id)
         LEFT JOIN tbl_admin_info ai on ai.id = ac.user_id
         LEFT JOIN tbl_userinfo ui on ui.id = ai.id
         WHERE ac.id = $id";
+     
 
 
     $query = mysqli_query($conn, $sql);
@@ -142,3 +145,20 @@ function getUserChecklistsValidations($conn, $id)
 
     return $data;
 }
+
+
+function getNature($nature)
+{
+    
+    if (strpos($nature, 'BFP') !== false){
+        $flag = 'BFP';
+    }elseif (strpos($nature, 'PNP') !== false) {
+        $flag = 'PNP';
+     }else{
+         $flag= 'LGOO';
+     }
+
+      return $nature;
+}
+
+
