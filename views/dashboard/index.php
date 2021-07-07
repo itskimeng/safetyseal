@@ -5,7 +5,8 @@ require_once 'controller/DashboardController.php'; ?>
     <div class="container">
         <div class="row mb-2">
             <div class="col-sm-6">
-                <h5 class="m-0"> SafetySeal Dashboard</h5>
+                <h5 class="m-0"> SafetySeal Dashboard <small><b>(<?php echo $hlbl; ?>)</b></small>
+                </h5>
             </div><!-- /.col -->
             <div class="col-sm-6">
                 <ol class="breadcrumb float-sm-right">

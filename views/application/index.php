@@ -4,14 +4,7 @@
   <div class="container">
     <div class="row mb-2">
       <div class="col-sm-6">
-        <h5 class="m-0"> Application <small>
-          <b>
-            <?php if ($is_clusterhead): ?>
-            (CLUSTER HEAD)
-          <?php elseif ($is_pfp): ?>
-            (PROVINCIAL FOCAL PERSON)
-          <?php endif ?>
-          </b></small>
+        <h5 class="m-0"> Application <small><b>(<?php echo $hlbl; ?>)</b></small>
         </h5>
       </div><!-- /.col -->
       <div class="col-sm-6">
