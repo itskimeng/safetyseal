@@ -446,7 +446,8 @@ class ApplicationManager
         ac.status as status,
         ac.address as ac_address,
         ac.application_type as app_type,
-        ac.token as token
+        ac.token as token,
+        ac.person as person
         FROM tbl_app_checklist ac
         LEFT JOIN tbl_admin_info ai on ai.id = ac.user_id
         LEFT JOIN tbl_userinfo ui on ui.user_id = ai.id
@@ -468,7 +469,59 @@ class ApplicationManager
             $data[$row['id']] = [
                 'id' => $row['id'],
                 'userid' => $row['userid'],
-                'fname' => $row['fname'],
+                'fname' => !empty($row['person']) ? $row['person'] : $row['fname'],
+                'agency' => !empty($row['cagency']) ? $row['cagency'] : $row['pagency'],
+                'address' => $row['address'],
+                'date_created' => $row['date_created'],
+                'control_no' => $row['control_no'],
+                'ss_no' => $row['ss_no'],
+                'status' => $row['status'],
+                'color' => $color,
+                'ac_address' => $row['ac_address'],
+                'app_type' => $row['app_type'],
+                'token' => $row['token'],
+                'validity_date' => !empty($row['date_approved']) ? date('F d, Y', strtotime("+6 months", strtotime($row['date_approved']))) : ''
+            ];    
+        }
+
+        $sql3 = "SELECT 
+        ac.id as id,
+        ai.CMLGOO_NAME as fname,
+        ui.GOV_AGENCY_NAME as pagency,
+        ac.agency as cagency,
+        ui.ADDRESS as address,
+        DATE_FORMAT(ac.date_created, '%Y-%m-%d') as date_created,
+        DATE_FORMAT(ac.date_approved, '%Y-%m-%d') as date_approved,
+        ui.id as userid,
+        ac.control_no as control_no,
+        ac.safety_seal_no as ss_no,
+        ac.status as status,
+        ac.address as ac_address,
+        ac.application_type as app_type,
+        ac.token as token,
+        ac.person as person
+        FROM tbl_app_checklist ac
+        LEFT JOIN tbl_admin_info ai on ai.id = ac.user_id
+        LEFT JOIN tbl_userinfo ui on ui.user_id = ai.id
+        WHERE ai.PROVINCE = ".$province." AND ac.lgu = ".$lgu." AND ac.application_type = 'Encoded'";
+     
+        $query = mysqli_query($this->conn, $sql3);
+        // $data = [];
+        
+        while ($row = mysqli_fetch_assoc($query)) {
+            $color = 'green';
+            if ($row['status'] == 'For Receiving') {
+                $color = 'primary';
+            } elseif ($row['status'] == 'Received') {
+                $color = 'yellow';
+            } elseif ($row['status'] == 'Disapproved') {
+                $color = 'red';
+            }
+
+            $data[$row['id']] = [
+                'id' => $row['id'],
+                'userid' => $row['userid'],
+                'fname' => !empty($row['person']) ? $row['person'] : $row['fname'],
                 'agency' => !empty($row['cagency']) ? $row['cagency'] : $row['pagency'],
                 'address' => $row['address'],
                 'date_created' => $row['date_created'],
