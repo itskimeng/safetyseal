@@ -11,13 +11,14 @@ $citymun = $_SESSION['city_mun'];
 $is_clusterhead = $_SESSION['is_clusterhead'];
 $clusterhead_id = $_SESSION['clusterhead_id'];
 $is_pfp = $_SESSION['is_pfp'];
+$hlbl = ""; 
 
 if ($is_clusterhead) {
-	$hlbl = 'CLUSTERHEAD';
+	$hlbl = '(CLUSTERHEAD)';
 } 
 
 if ($is_pfp) {
-	$hlbl = 'PROVINCIAL FOCAL PERSON';
+	$hlbl = '(PROVINCIAL FOCAL PERSON)';
 } 
 
 $is_adminro = false;
