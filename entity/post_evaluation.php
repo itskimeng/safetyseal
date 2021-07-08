@@ -12,7 +12,6 @@ $userid = $_SESSION['userid'];
 $uname = $_SESSION['username'];
 $checklist_id = $_POST['appid'];
 
-// ==================
 $email = $_POST['email'];
 $userid = $_POST['id'];
 $control_no = $_POST['control_no'];
@@ -43,7 +42,7 @@ if ($status == 'Approved') {
 	$ssc_no = $app->generateCode($userid);
 }
 
-$app->evaluateChecklist($checklist_id, $status, $ss_no, $today->format('Y-m-d H:i:s'), $userid);
+$app->evaluateChecklist($checklist_id, $status, $ssc_no, $today->format('Y-m-d H:i:s'), $userid);
 $_SESSION['toastr'] = $app->addFlash('success', 'The application has been set to '.$status.'.', 'Success');
 
 

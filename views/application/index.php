@@ -84,46 +84,61 @@
           // "buttons": ["copy", "csv", "excel", "pdf", "print", "colvis"]
         }).buttons().container().appendTo('#list_table_wrapper .col-md-6:eq(0)');
       });
+  });
 
-      function generateMainTable($data) {
-        $.each($data, function(key, item){
-        
-          let tr = '<tr>';
-          tr+= '<td style = "font-weight:bold;">'+item['app_type']+'</td>';
-          tr+= '<td>';
-          tr+= '<span class="label label-sm bg-'+item['color']+' label-inline font-weight-bold py-3">';
-          tr+= '<i class="fa fa-check-circle"></i>'+item['status'];
-          tr+= '</span>';
-          tr+= '<br>';
-          tr+= item['control_no'];
-          tr+= '</td>';
-          tr+= '<td>'+item['fname']+'</td>';
-          tr+= '<td>'+item['agency']+'</td>';
-          tr+= '<td>'+item['address']+'</td>';
-          tr+= '<td>'+item['date_created']+'</td>';
-          tr+= '<td>'+item['validity_date']+'</td>';
-          tr+= '<td>'+item['ss_no']+'</td>';
-          tr+= '<td>';
-          if (item['app_type'] == 'Encoded') {
-            tr+= '<a href="admin_application_edit.php?appid='+item['token']+'&code=&scope=" class="btn btn-primary btn-block btn-sm" style="margin-bottom: -2%;"><i class="fa fa-clipboard-list"></i> View</a>';
-          } else if (item['status'] == 'For Receiving') {
-            tr+= '<a href="admin_application_view.php?appid='+item['id']+'&ussir='+item['userid']+'&status='+item['status']+'" class="btn btn-primary btn-block btn-sm" style="margin-bottom: -2%;"><i class="fa fa-box"></i> Received</a>';
-          } else {
-            tr+= '<a href="admin_application_view.php?appid='+item['id']+'&ussir='+item['userid']+'" class="btn btn-primary btn-block btn-sm" style="margin-bottom: -2%;"><i class="fa fa-clipboard-list"></i> View</a>';
-          }
+  function generateMainTable($data) {
+    $.each($data, function(key, item){
+    
+      let tr = '<tr>';
+      tr+= '<td style = "font-weight:bold;">'+item['app_type']+'</td>';
+      tr+= '<td>';
+      tr+= '<span class="label label-sm bg-'+item['color']+' label-inline font-weight-bold py-3">';
+      tr+= '<i class="fa fa-check-circle"></i>'+item['status'];
+      tr+= '</span>';
+      tr+= '<br>';
+      tr+= item['control_no'];
+      tr+= '</td>';
+      tr+= '<td>'+item['fname']+'</td>';
+      tr+= '<td>'+item['agency']+'</td>';
+      tr+= '<td>'+item['address']+'</td>';
+      tr+= '<td>'+item['date_created']+'</td>';
+      tr+= '<td>'+item['validity_date']+'</td>';
+      tr+= '<td>'+item['ss_no']+'</td>';
+      tr+= '<td>';
 
-          if (item['status'] == 'Approved') {
-            tr+= '<a href="certificate.php?token='+item['token']+'" class="btn btn-warning btn-block btn-sm" style="margin-bottom: -2%;"><i class="fa fa-eye"></i> Generate Certificate</a>';
-          }
-          tr+= '</td>';
-          tr+= '</tr>';
-          $('#list_body').append(tr);
-        });
+      if (item['app_type'] == 'Encoded') {
+        // tr+= '<a href="admin_application_edit.php?appid='+item['token']+'&code=&scope=" class="btn btn-primary btn-block btn-sm" style="margin-bottom: -2%;"><i class="fa fa-clipboard-list"></i> View</a>';
+        tr+= '<a href="admin_application_edit.php?appid='+item['token']+'&code=&scope=" class="btn btn-info btn-block btn-sm" style="margin-bottom: -2%;"><i class="fa fa-clipboard-list"></i> View</a>';
+      } else if (item['status'] == 'For Receiving') {
+        // tr+= '<a href="admin_application_view.php?appid='+item['id']+'&ussir='+item['userid']+'&status='+item['status']+'" class="btn btn-primary btn-block btn-sm" style="margin-bottom: -2%;"><i class="fa fa-box"></i> Received</a>';
+        tr+= '<a href="entity/post_received.php?appid='+item['id']+'&ussir='+item['userid']+'&status='+item['status']+'" class="btn btn-primary btn-block btn-sm" style="margin-bottom: -2%;"><i class="fa fa-box"></i> Receive</a>';
 
-        return $data;
+      } else {
+        tr+= '<a href="admin_application_view.php?appid='+item['id']+'&ussir='+item['userid']+'" class="btn btn-primary btn-block btn-sm" style="margin-bottom: -2%;"><i class="fa fa-clipboard-list"></i> View</a>';
       }
-  });
 
 
-  });
+
+
+
+
+
+
+
+
+
+
+
+      if (item['status'] == 'Approved') {
+        tr+= '<a href="certificate.php?token='+item['token']+'" class="btn btn-warning btn-block btn-sm" style="margin-bottom: -2%;"><i class="fa fa-eye"></i> Generate Certificate</a>';
+      }
+      tr+= '</td>';
+      tr+= '</tr>';
+      $('#list_body').append(tr);
+    });
+
+    return $data;
+  }
+
+});
 </script>
