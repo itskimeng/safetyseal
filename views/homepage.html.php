@@ -66,71 +66,79 @@
 
       <div class="row my-5">
         <!-- Set up your HTML -->
-        <div class="owl-carousel">
 
-            <div>
-              <div class="card">
-                <div class="card-header" style="background-color: #480272; color:white; height: 65px;">
-                  <center>Bauan Municipal Building <i class="fa fa-check"></i></center>
-                </div>
-                <div class="card-body cardRecentEstablishment">
-                  <img src="files/certified/bauan.png" alt="" height="250">
-                </div>
-                <div class="card-footer text-muted">
-                  Certified: <b>July 08, 2021</b>
+        <div class="main-content">
+          <div class="owl-carousel owl-theme">
+
+              <div class="item">
+                <div class="card">
+                  <div class="card-header" style="background-color: #480272; color:white; height: 65px;">
+                    <center>Bauan Municipal Building <i class="fa fa-check"></i></center>
+                  </div>
+                  <div class="card-body cardRecentEstablishment">
+                    <img src="files/certified/bauan.png" alt="" height="250">
+                  </div>
+                  <div class="card-footer text-muted">
+                    Certified: <b>July 08, 2021</b>
+                  </div>
                 </div>
               </div>
-            </div>
 
-            <div>
-              <div class="card">
-                <div class="card-header" style="background-color: #480272; color:white; height: 65px;">
-                  <center>BJMP City of Cabuyao <i class="fa fa-check"></i></center>
-                </div>
-                <div class="card-body cardRecentEstablishment">
-                  <!-- <a href="establishment-profile.php?unique_id=172"> -->
-                    <img src="files/certified/cabuyao.png" alt="" height="250">
-                  <!-- </a> -->
-                </div>
-                <div class="card-footer text-muted">
-                  Certified: <b>July 01, 2021</b>
+              <div class="item">
+                <div class="card">
+                  <div class="card-header" style="background-color: #480272; color:white; height: 65px;">
+                    <center>BJMP City of Cabuyao <i class="fa fa-check"></i></center>
+                  </div>
+                  <div class="card-body cardRecentEstablishment">
+                    <!-- <a href="establishment-profile.php?unique_id=172"> -->
+                      <img src="files/certified/cabuyao.png" alt="" height="250">
+                    <!-- </a> -->
+                  </div>
+                  <div class="card-footer text-muted">
+                    Certified: <b>July 01, 2021</b>
+                  </div>
                 </div>
               </div>
-            </div>
 
-            <div>
-              <div class="card">
-                <div class="card-header" style="background-color: #480272; color:white;">
-                  <center>BUREAU OF FIRE PROTECTION CATANAUAN STATION <i class="fa fa-check"></i></center>
-                </div>
-                <div class="card-body cardRecentEstablishment">
-                  <!-- <a href="establishment-profile.php?unique_id=149"> -->
-                    <img src="files/certified/catanuan2.jpg" alt="" height="250">
-                  <!-- </a> -->
-                </div>
-                <div class="card-footer text-muted">
-                  Certified: <b>June 30, 2021</b>
+              <div class="item">
+                <div class="card">
+                  <div class="card-header" style="background-color: #480272; color:white;">
+                    <center>BUREAU OF FIRE PROTECTION CATANAUAN STATION <i class="fa fa-check"></i></center>
+                  </div>
+                  <div class="card-body cardRecentEstablishment">
+                    <!-- <a href="establishment-profile.php?unique_id=149"> -->
+                      <img src="files/certified/catanuan2.jpg" alt="" height="250">
+                    <!-- </a> -->
+                  </div>
+                  <div class="card-footer text-muted">
+                    Certified: <b>June 30, 2021</b>
+                  </div>
                 </div>
               </div>
-            </div>
 
-            <div>
-              <div class="card">
-                <div class="card-header" style="background-color: #480272; color:white;">
-                  <center>BUREAU OF FIRE PROTECTION - LUCBAN FIRE STATION <i class="fa fa-check"></i></center>
-                </div>
-                <div class="card-body cardRecentEstablishment">
-                  <!-- <a href="establishment-profile.php?unique_id=110"> -->
-                    <img src="files/certified/lucban.png" alt="" height="250">
-                  <!-- </a> -->
-                </div>
-                <div class="card-footer text-muted">
-                  Certified: <b>June 28, 2021</b>
+              <div class="item">
+                <div class="card">
+                  <div class="card-header" style="background-color: #480272; color:white;">
+                    <center>BUREAU OF FIRE PROTECTION - LUCBAN FIRE STATION <i class="fa fa-check"></i></center>
+                  </div>
+                  <div class="card-body cardRecentEstablishment">
+                    <!-- <a href="establishment-profile.php?unique_id=110"> -->
+                      <img src="files/certified/lucban.png" alt="" height="250">
+                    <!-- </a> -->
+                  </div>
+                  <div class="card-footer text-muted">
+                    Certified: <b>June 28, 2021</b>
+                  </div>
                 </div>
               </div>
+
             </div>
 
-
+            <div class="owl-theme">
+                <div class="owl-controls">
+                    <div class="custom-nav owl-nav"></div>
+                </div>
+            </div>
         </div>
       </div>
 
