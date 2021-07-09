@@ -22,6 +22,12 @@
         <li class="nav-item">
           <a href="admin_report_application.php" class="nav-link">Generate Reports</a>
         </li>
+        <?php if($_SESSION['username'] == 'dilg4@rictu'):?>
+        <li class="nav-item">
+          <a href="admin_send_notif.php" class="nav-link">Notification</a>
+        </li>
+        <?php endif;?>
+       
 
         <li class="nav-item">
           <a href="views/logout.php" class="nav-link">Logout(<?php echo $_SESSION['username'];?>)</a>
