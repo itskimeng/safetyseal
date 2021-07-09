@@ -25,7 +25,7 @@ setInterval(function () {
         dataType: 'json',
         cache: false,
         success: function (data) {
-            $('#counter').val(data.count);
+            $('#counter').text(data.count);
         }
     });
 
