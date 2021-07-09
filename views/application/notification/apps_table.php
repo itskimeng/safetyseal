@@ -19,7 +19,7 @@
       </div>
 
       <div class="card-body">
-
+      <p style="font-size:50px;color:red;text-align:center;" id="counter"></p>
       </div>
     </div>
   </div>
