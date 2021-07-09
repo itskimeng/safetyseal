@@ -43,7 +43,7 @@
               <label>City/Municipality</label>
 
               <?php if (!$is_clusterhead): ?>
-                <select id="cform-citymun"  class="form-control select2bs4 select2-hidden-accessible" style="width: 100%;" data-select2-id="17" tabindex="-1" name aria-hidden="true" disabled>
+                <select id="cform-citymun"  class="form-control select2bs4 select2-hidden-accessible" style="width: 100%;" data-select2-id="17" tabindex="-1" name aria-hidden="true" <?php echo !$is_pfp ? 'disabled' : '' ?>>
                   <option></option>
                   <?php foreach ($citymun_opts as $key => $opts): ?>
                     <?php if ($opts['code'] == $citymun): ?>

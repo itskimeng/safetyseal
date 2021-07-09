@@ -8,11 +8,12 @@ require '../application/config/connection.php';
 $province = $_SESSION['province'];
 $is_clusterhead = $_SESSION['is_clusterhead'];
 $clusterhead_id = $_SESSION['clusterhead_id'];
+$is_pfp = $_SESSION['is_pfp'];
 
-if (!$is_clusterhead) {
-	$lgu = $_SESSION['city_mun'];
+if ($is_clusterhead OR $is_pfp) {
+    $lgu = $_GET['citymun'];
 } else {
-	$lgu = $_GET['citymun'];
+    $lgu = $_SESSION['city_mun'];
 }
 
 $name = $_GET['name'];

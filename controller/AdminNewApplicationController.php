@@ -13,6 +13,7 @@ $cm = new ComponentsManager();
 
 $province = $_SESSION['province'];
 $citymun = $_SESSION['city_mun'];
+$is_pfp = $_SESSION['is_pfp'];
 $is_clusterhead = $_SESSION['is_clusterhead'];
 $clusterhead_id = $_SESSION['clusterhead_id'];
 

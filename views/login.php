@@ -27,6 +27,7 @@ if (isset($_POST['login'])) {
                  $_SESSION['nature'] = $user_data['nature'];
                  $_SESSION['is_clusterhead']  = $user_data['is_clusterhead'];
                  $_SESSION['clusterhead_id'] = $user_data['clusterhead_id'];
+                 $_SESSION['is_pfp'] = $user_data['is_pfp'];
 
                  header("location: ../dashboard.v2.php?username=" . md5($username) . "");
                } else if ($user_data['ROLES'] == 'user') {

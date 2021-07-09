@@ -15,7 +15,7 @@
 
       <!-- /.card-header -->
       <div class="card-body card-body-details table-responsive p-0 collapse show">
-        <?php if ($is_clusterhead): ?>
+        <?php if ($is_clusterhead OR $is_pfp): ?>
           <div class="col-md-12">
             <div class="row pl-2 pr-2">
               <div class="form-group mb-2 col-md-4">

@@ -172,3 +172,44 @@ div.alert-messages {
   border-radius: 10px;       /* roundness of the scroll thumb */
   border: 1px solid  dimgray;  /* creates padding around scroll thumb */
 }
+
+.main-content {
+    position: relative;
+}
+.owl-theme {
+
+}
+.custom-nav {
+    position: absolute;
+    top: 20%;
+    left: 0;
+    right: 0;
+}
+
+.owl-prev, .owl-next {
+    position: absolute;
+    height: 100px;
+    color: inherit;
+    background: transparent;
+    border: none;
+    z-index: 100;
+
+}
+
+.navCursor {
+    font-size: 3.5rem;
+    color: #afa2a2;
+}
+
+.owl-prev {
+    left: 0;
+}
+
+.owl-next {
+    right: 0;
+}
+
+.owl-theme .owl-nav [class*=owl-] {
+     background: #e9e9e980 !important ; 
+     color: white !important;
+}

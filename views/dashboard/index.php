@@ -5,7 +5,8 @@ require_once 'controller/DashboardController.php'; ?>
     <div class="container">
         <div class="row mb-2">
             <div class="col-sm-6">
-                <h5 class="m-0"> SafetySeal Dashboard</h5>
+                <h5 class="m-0"> SafetySeal Dashboard <small><b><?php echo $hlbl; ?></b></small>
+                </h5>
             </div><!-- /.col -->
             <div class="col-sm-6">
                 <ol class="breadcrumb float-sm-right">
@@ -27,7 +28,7 @@ require_once 'controller/DashboardController.php'; ?>
                 <!-- small box -->
                 <div class="small-box bg-primary">
                     <div class="inner">
-                        <h3><?php echo $count_status['For Receiving']; ?></h3>
+                        <h3><?php echo $total_count['For Receiving']; ?></h3>
                         <p>FOR RECEIVING</p>
                     </div>
                     <div class="icon">
@@ -45,7 +46,7 @@ require_once 'controller/DashboardController.php'; ?>
                 <!-- small box -->
                 <div class="small-box bg-yellow">
                     <div class="inner">
-                        <h3><?php echo $count_status['Received']; ?></h3>
+                        <h3><?php echo $total_count['Received']; ?></h3>
 
                         <p>RECEIVED</p>
                     </div>
@@ -64,7 +65,7 @@ require_once 'controller/DashboardController.php'; ?>
                 <!-- small box -->
                 <div class="small-box bg-green">
                     <div class="inner">
-                        <h3><?php echo $count_status['Approved']; ?></h3>
+                        <h3><?php echo $total_count['Approved']; ?></h3>
 
 
                         <p>APPROVED</p>
@@ -84,7 +85,7 @@ require_once 'controller/DashboardController.php'; ?>
                 <!-- small box -->
                 <div class="small-box" style="background-color: #b71c1c;color:gainsboro">
                     <div class="inner">
-                        <h3><?php echo $count_status['Disapproved']; ?></h3>
+                        <h3><?php echo $total_count['Disapproved']; ?></h3>
 
 
                         <p>DISAPPROVED</p>
@@ -113,7 +114,7 @@ require_once 'controller/DashboardController.php'; ?>
                     <div class="col-md-4">
                         <div class="card" style="height: 269px;">
                             <div class="card-header" style="background-color: #009688; color:#fff;">
-                                <h3 class="card-title"><img src="frontend/images/logo.png" style="width: 30px;" alt=""> LGU's </h3>
+                                <h3 class="card-title"><img src="frontend/images/logo.png" style="width: 30px;" alt=""> LGUs </h3>
                             </div>
 
                             <div class="card-body" style="overflow:auto;">

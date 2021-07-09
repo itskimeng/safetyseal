@@ -21,6 +21,7 @@ class LoginManager
         ai.CMLGOO_NAME as name,
         ai.is_clusterhead as is_clusterhead,
         ai.clusterhead_id as clusterhead_id,
+        ai.is_pfp as is_pfp,
         ai.EMAIL as email,
         ui.GOV_NATURE_NAME as nature
         FROM `tbl_admin_info` ai 
@@ -41,6 +42,7 @@ class LoginManager
                 'email' => $row['email'],
                 'is_clusterhead' => $row['is_clusterhead'],
                 'clusterhead_id' => $row['clusterhead_id'],
+                'is_pfp' => $row['is_pfp'],
                 'nature' => $row['nature']
             ];    
         }

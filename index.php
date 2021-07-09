@@ -13,11 +13,18 @@
     <script>
 		$(document).ready(function(){
 			$(".owl-carousel").owlCarousel({
+				stagePadding: 50,
 				loop:true,
 				margin:20,
 			    autoplay:true,
 			    autoplayTimeout:3000,
 			    autoplayHoverPause:true,
+			    nav: true,
+			    navText: [
+			        '<i class="fa fa-angle-left navCursor" aria-hidden="true"></i>',
+			        '<i class="fa fa-angle-right navCursor" aria-hidden="true"></i>'
+			    ],
+			    navContainer: '.main-content .custom-nav',
 				responsive:{
 					0:{
 						items:1,
