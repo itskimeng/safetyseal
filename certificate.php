@@ -63,6 +63,6 @@ $pdf->SetXY(126,275);
 $pdf->Cell(1,1,': '.date('F d, Y', strtotime("+6 months", strtotime($resultApplication['date_approved']))));
 
 
-$pdf->Output();
-
+// $pdf->Output();
+$pdf->Output('D',$resultApplication['safety_seal_no'].'.pdf');
  ?>
