@@ -36,7 +36,7 @@
                         
                           <div class="fileUpload btn-group" style="right:3px;">
                             <a href="<?php echo $attachments['location']; ?>" class="btn btn-warning cancel">
-                              <i class="fas fa-times-circle"></i><span> View</span>
+                              <i class="fas fa-folder-open"></i><span> View</span>
                             </a>
                           </div>                    
                         </div>
@@ -69,7 +69,7 @@
             </form>
               <?php if (isset($attachments['location'])): ?>
                       <a href="<?php echo $attachments['location']; ?>" class="btn btn-warning cancel">
-                        <i class="fas fa-times-circle"></i><span> View</span>
+                        <i class="fas fa-folder-open"></i><span> View</span>
                       </a>
                       <form method="POST" enctype="multipart/form-data" action="entity/delete_encoded_attachments.php">
                         <input type="hidden" name="ttid" value="<?php echo $_GET['appid']; ?>">
