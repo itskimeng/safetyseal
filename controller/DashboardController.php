@@ -2,15 +2,24 @@
 
 require 'application/config/connection.php';
 require 'manager/DashboardManager.php';
+require 'manager/ApplicationManager.php';
+
 
 $app = new DashboardManager();
+$am = new ApplicationManager();
+
 
 $province = $_SESSION['province'];
 $citymun = $_SESSION['city_mun'];
 $is_clusterhead = $_SESSION['is_clusterhead'];
 $clusterhead_id = $_SESSION['clusterhead_id'];
 $is_pfp = $_SESSION['is_pfp'];
+$is_rofp = (($province == 0) && ($citymun == 00));
 $hlbl = ""; 
+
+if ($is_rofp) {
+    $hlbl = '(REGIONAL OFFICE FOCAL PERSON)';
+}
 
 if ($is_clusterhead) {
 	$hlbl = '(CLUSTERHEAD)';
@@ -21,7 +30,25 @@ if ($is_pfp) {
 } 
 
 
-if ($is_pfp) {
+
+if ($is_rofp) {
+    $citymun_opts = $app->getCityMuns($province);
+    $province_opts = $am->getProvinces();
+    $est_safety_seal = getEstablishmentSSCRO($conn);
+
+    $lgu = [];
+
+    $count_status = countStatusRO($conn, $province_opts);
+
+    $total_count['For Receiving'] = $count_status['For Receiving'];
+    $total_count['Received'] = $count_status['Received'];
+    $total_count['Approved'] = $count_status['Approved'];
+    $total_count['Disapproved'] = $count_status['Disapproved'];
+
+    $receiving = getdataForReceivedRO($conn, $province_opts);
+    $approved = getdataApprovedRO1($conn, $province_opts);
+
+} elseif ($is_pfp) {
 	$citymun_opts = $app->getCityMuns($province);
 	$lgu = $app->getCityMuns($province);
 	$est_safety_seal = getEstablishmentSSC($conn, $province, $citymun);
@@ -41,11 +68,12 @@ if ($is_pfp) {
 	$approved = getdataApproved($conn,$province,$citymun);
 } elseif ($is_clusterhead) {
 	$citymun_opts = getget($conn, $clusterhead_id);
-	$lgu = $app->getCityMuns($province);
+	// $lgu = $app->getCityMuns($province);
+    $lgu = $citymun_opts;
 
-	$count_status = cc1($conn, $province, $citymun_opts);
-	$count_status2 = cc2($conn, $province, $citymun_opts);
-	$count_status3 = cc3($conn, $province, $citymun_opts);
+	$count_status = getApprovedEncodedAC($conn, $province, $citymun_opts);
+	$count_status2 = getApprovedAppliedAI($conn, $province, $citymun_opts);
+	$count_status3 = getApprovedEncodedAI($conn, $province, $citymun_opts);
 
 	$total_count['For Receiving'] = $count_status['For Receiving'] + $count_status2['For Receiving'] + $count_status3['For Receiving'];
 	$total_count['Received'] = $count_status['Received'] + $count_status2['Received'] + $count_status3['Received'];
@@ -69,6 +97,7 @@ if ($is_pfp) {
         $approved[$key] = $appr + $approved2[$key] + $approved3[$key];
     }
 
+
 } else {
 	$total_count = $app->countStatus($province, $citymun);
 	$lgu = $app->getCityMuns($province);
@@ -80,15 +109,62 @@ if ($is_pfp) {
 
 
 
+function getCityMuns($conn, $province)
+{
+    $sql = "SELECT id, province, code, name FROM tbl_citymun where province  = $province";
+    
+    $query = mysqli_query($conn, $sql);
+    $data = [];
+    
+    while ($row = mysqli_fetch_assoc($query)) {
+        $data[$row['id']] = [
+            'province' => $row['province'],
+            'code' => $row['code'],
+            'name' => $row['name']
+        ];    
+       
+    }
+
+    return $data;
+}
+
+function countStatusRO($conn, $province_opts)
+{
+    $val = ['For Receiving', 'Received', 'Approved', 'Disapproved'];
+    $citymun_opts = [];
+
+    $data1 = array();
+    foreach ($val as $cc => $stat) {
+        $total = 0;
+        foreach ($province_opts as $key => $province) {
+            // $sql = "SELECT count(*) as 'status' FROM `tbl_app_checklist` WHERE status = '$stat' ";
+            $sql = "SELECT 
+                    count(*) as count
+                    FROM tbl_app_checklist ac
+                    LEFT JOIN tbl_admin_info ai on ai.id = ac.user_id
+                    LEFT JOIN tbl_province p on p.id = ai.PROVINCE
+                    WHERE p.id = '$key' AND ac.status = '$stat'";   
+
+            $query = mysqli_query($conn, $sql);
+            $row = mysqli_fetch_assoc($query);
+            $total+= $row['count'];
+        }
+
+        $data1[$stat] = $total;
+    }
+
+    return $data1;
+}
+
 function countStatus($conn, $province, $lgus)
 {
     $val = ['For Receiving', 'Received', 'Approved', 'Disapproved'];
 
     foreach ($lgus as $key => $lgu) {
-		$codes[] = $lgu['code']; 
-	}
+        $codes[] = $lgu['code']; 
+    }
 
-	$codes = implode(',', $codes);
+    $codes = implode(',', $codes);
 
     $data1 = array();
     foreach ($val as $key => $stat) {
@@ -114,10 +190,10 @@ function countStatus2($conn, $province, $lgus)
     $val = ['For Receiving', 'Received', 'Approved', 'Disapproved'];
 
     foreach ($lgus as $key => $lgu) {
-		$codes[] = $lgu['code']; 
-	}
+        $codes[] = $lgu['code']; 
+    }
 
-	$codes = implode(',', $codes);
+    $codes = implode(',', $codes);
 
     $data1 = array();
     foreach ($val as $key => $stat) {
@@ -143,10 +219,10 @@ function countStatus3($conn, $province, $lgus)
     $val = ['For Receiving', 'Received', 'Approved', 'Disapproved'];
 
     foreach ($lgus as $key => $lgu) {
-		$codes[] = $lgu['code']; 
-	}
+        $codes[] = $lgu['code']; 
+    }
 
-	$codes = implode(',', $codes);
+    $codes = implode(',', $codes);
 
     $data1 = array();
     foreach ($val as $key => $stat) {
@@ -165,6 +241,29 @@ function countStatus3($conn, $province, $lgus)
     }
 
     return $data1;
+}
+
+function getEstablishmentSSCRO($conn)
+{
+    $sql = "SELECT chkl.id as id, chkl.establishment as est, ui.GOV_ESTB_NAME as est2, chkl.safety_seal_no as 'ss_no' 
+        FROM `tbl_app_checklist` chkl 
+        LEFT JOIN tbl_admin_info ai on chkl.user_id = ai.id
+        LEFT JOIN tbl_userinfo ui on ui.USER_ID = ai.id
+        LEFT JOIN tbl_province pro on ai.PROVINCE = pro.id 
+        WHERE chkl.status='Approved'";
+
+    $query = mysqli_query($conn, $sql);
+    $data = [];
+    if (mysqli_num_rows($query) > 0) {
+        while ($row = mysqli_fetch_assoc($query)) {
+            $data[$row['id']] = [
+                'est' => !empty($row['est']) ? $row['est'] : $row['est2'],
+                'ss_no' => !empty($row['ss_no']) ? $row['ss_no'] : 'NO SSC'
+            ];
+        }
+    }
+
+    return $data;
 }
 
 function getEstablishmentSSC($conn, $province, $lgu)
@@ -208,6 +307,42 @@ function getdataForReceived($conn, $province,$lgu)
     return $data;
 }
 
+function getdataForReceivedRO($conn, $province_opts)
+{
+    $months =  [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12];
+    $muns = [];
+    foreach ($province_opts as $key => $province) {
+        $muns[$key] = getCityMuns($conn, $key);
+    }
+    
+    for ($i = 1; $i < count($months); $i++) {
+        $total = 0;
+        foreach ($province_opts as $key => $province) {
+            $ss = [];
+            foreach ($muns[$key] as $k => $mun){
+                $ss[] = $mun['code'];
+            }
+            
+            if (count($ss) >  0) {
+                $ss = implode(',', $ss);
+                $sql = "SELECT pro.name as 'PROVINCE' , checklist.status, count(*) as 'count', checklist.date_created FROM `tbl_app_checklist` checklist
+                LEFT JOIN tbl_admin_info ai on checklist.user_id = ai.ID
+                LEFT JOIN tbl_province pro on ai.PROVINCE = pro.id 
+                WHERE  ai.PROVINCE= '$key' and MONTH(checklist.date_created) = $i and checklist.status='For Receiving'";
+
+
+                $query = mysqli_query($conn, $sql);
+                $row = mysqli_fetch_assoc($query);
+                $total += $row['count'];
+            }
+
+        }
+        $data[$months[$i]] = $total;
+    }
+
+    return $data;
+}
+
 function getdataForReceived1($conn, $province,$lgus)
 {
     $months =  [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12];
@@ -227,6 +362,42 @@ function getdataForReceived1($conn, $province,$lgus)
         $query = mysqli_query($conn, $sql);
         $result = $row = mysqli_fetch_assoc($query);
         $data[$months[$i]] = $row['count'];
+    }
+
+    return $data;
+}
+
+function getdataForReceivedRO2($conn, $province_opts)
+{
+    $months =  [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12];
+    $muns = [];
+    foreach ($province_opts as $key => $province) {
+        $muns[$key] = getCityMuns($conn, $key);
+    }
+    
+    for ($i = 1; $i < count($months); $i++) {
+        $total = 0;
+        foreach ($province_opts as $key => $province) {
+            $ss = [];
+            foreach ($muns[$key] as $k => $mun){
+                $ss[] = $mun['code'];
+            }
+            
+            if (count($ss) >  0) {
+                $ss = implode(',', $ss);
+                $sql = "SELECT pro.name as 'PROVINCE' , checklist.status, count(*) as 'count', checklist.date_created FROM `tbl_app_checklist` checklist
+                    LEFT JOIN tbl_admin_info ai on checklist.user_id = ai.ID
+                    LEFT JOIN tbl_province pro on ai.PROVINCE = pro.id 
+                    WHERE  ai.PROVINCE= '$key' and ai.LGU IN (".$ss.") and MONTH(checklist.date_created) = $i and checklist.status='For Receiving' and checklist.application_type = 'Encoded'";
+
+
+                $query = mysqli_query($conn, $sql);
+                $row = mysqli_fetch_assoc($query);
+                $total += $row['count'];
+            }
+
+        }
+        $data[$months[$i]] = $total;
     }
 
     return $data;
@@ -280,6 +451,42 @@ function getdataForReceived3($conn, $province,$lgus)
     return $data;
 }
 
+function getdataForReceivedRO3($conn, $province_opts)
+{
+    $months =  [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12];
+    $muns = [];
+    foreach ($province_opts as $key => $province) {
+        $muns[$key] = getCityMuns($conn, $key);
+    }
+    
+    for ($i = 1; $i < count($months); $i++) {
+        $total = 0;
+        foreach ($province_opts as $key => $province) {
+            $ss = [];
+            foreach ($muns[$key] as $k => $mun){
+                $ss[] = $mun['code'];
+            }
+            
+            if (count($ss) >  0) {
+                $ss = implode(',', $ss);
+                $sql = "SELECT pro.name as 'PROVINCE' , checklist.status, count(*) as 'count', checklist.date_created FROM `tbl_app_checklist` checklist
+                    LEFT JOIN tbl_admin_info ai on checklist.user_id = ai.ID
+                    LEFT JOIN tbl_province pro on ai.PROVINCE = pro.id 
+                    WHERE  ai.PROVINCE= '$key' AND checklist.lgu IN (".$ss.") AND MONTH(checklist.date_created) = $i and checklist.status='For Receiving' and checklist.application_type = 'Encoded'";
+
+
+                $query = mysqli_query($conn, $sql);
+                $row = mysqli_fetch_assoc($query);
+                $total += $row['count'];
+            }
+
+        }
+        $data[$months[$i]] = $total;
+    }
+
+    return $data;
+}
+
 function getdataApproved($conn, $province,$lgu)
 {
 
@@ -297,73 +504,254 @@ function getdataApproved($conn, $province,$lgu)
     return $data;
 }
 
+// function getdataApproved1($conn, $province,$lgus)
+// {
+
+//     $months =  [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12];
+//     foreach ($lgus as $key => $lgu) {
+// 		$codes[] = $lgu['code']; 
+// 	}
+
+// 	$codes = implode(',', $codes);
+
+//     for ($i = 1; $i < count($months); $i++) {
+//         $sql = "SELECT pro.name as 'PROVINCE' , checklist.status, count(*) as 'count', checklist.date_created FROM `tbl_app_checklist` checklist
+//         LEFT JOIN tbl_admin_info ai on checklist.user_id = ai.ID
+//         LEFT JOIN tbl_province pro on ai.PROVINCE = pro.id 
+//         WHERE  ai.PROVINCE= '$province' AND ai.LGU IN (".$codes.") and MONTH(checklist.date_created) = $i and checklist.status='Approved' and checklist.application_type = 'Applied'";
+
+//         $query = mysqli_query($conn, $sql);
+//         $row = mysqli_fetch_assoc($query);
+//         $data[$months[$i]] = $row['count'];
+//     }
+
+//     return $data;
+// }
+
 function getdataApproved1($conn, $province,$lgus)
 {
-
     $months =  [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12];
     foreach ($lgus as $key => $lgu) {
-		$codes[] = $lgu['code']; 
-	}
+        $codes[] = $lgu['code']; 
+    }
 
-	$codes = implode(',', $codes);
+    $codes = implode(',', $codes);
 
     for ($i = 1; $i < count($months); $i++) {
         $sql = "SELECT pro.name as 'PROVINCE' , checklist.status, count(*) as 'count', checklist.date_created FROM `tbl_app_checklist` checklist
         LEFT JOIN tbl_admin_info ai on checklist.user_id = ai.ID
         LEFT JOIN tbl_province pro on ai.PROVINCE = pro.id 
         WHERE  ai.PROVINCE= '$province' and ai.LGU IN (".$codes.") and MONTH(checklist.date_created) = $i and checklist.status='Approved' and checklist.application_type = 'Applied'";
-        // ai.PROVINCE= '$province' and 
+
+        //  ai.PROVINCE= '$province' and 
         $query = mysqli_query($conn, $sql);
-        $row = mysqli_fetch_assoc($query);
+        $result = $row = mysqli_fetch_assoc($query);
         $data[$months[$i]] = $row['count'];
     }
+
+    return $data;
+}
+
+function getdataApprovedRO1($conn, $province_opts)
+{
+    $months =  [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12];
+    $muns = [];
+    foreach ($province_opts as $key => $province) {
+        $muns[$key] = getCityMuns($conn, $key);
+    }
+
+    for ($i = 1; $i < count($months); $i++) {
+        $total = 0;
+        foreach ($province_opts as $key => $province) {
+            $ss = [];
+            foreach ($muns[$key] as $k => $mun){
+                $ss[] = $mun['code'];
+            }
+            
+            if (count($ss) >  0) {
+                $ss = implode(',', $ss);
+                $sql = "SELECT pro.name as 'PROVINCE' , checklist.status, count(*) as 'count', checklist.date_created FROM `tbl_app_checklist` checklist
+                LEFT JOIN tbl_admin_info ai on checklist.user_id = ai.ID
+                LEFT JOIN tbl_province pro on ai.PROVINCE = pro.id 
+                WHERE  ai.PROVINCE= '$key' and MONTH(checklist.date_created) = $i and checklist.status='Approved'";
+
+                $query = mysqli_query($conn, $sql);
+                $row = mysqli_fetch_assoc($query);
+                $total += $row['count'];
+            }
+        }
+        $data[$months[$i]] = $total;
+    }
+
     return $data;
 }
 
 function getdataApproved2($conn, $province,$lgus)
 {
-
     $months =  [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12];
     foreach ($lgus as $key => $lgu) {
-		$codes[] = $lgu['code']; 
-	}
+        $codes[] = $lgu['code']; 
+    }
 
-	$codes = implode(',', $codes);
+    $codes = implode(',', $codes);
 
     for ($i = 1; $i < count($months); $i++) {
         $sql = "SELECT pro.name as 'PROVINCE' , checklist.status, count(*) as 'count', checklist.date_created FROM `tbl_app_checklist` checklist
         LEFT JOIN tbl_admin_info ai on checklist.user_id = ai.ID
         LEFT JOIN tbl_province pro on ai.PROVINCE = pro.id 
         WHERE  ai.PROVINCE= '$province' and ai.LGU IN (".$codes.") and MONTH(checklist.date_created) = $i and checklist.status='Approved' and checklist.application_type = 'Encoded'";
-        // ai.PROVINCE= '$province' and 
+
+        //  ai.PROVINCE= '$province' and 
         $query = mysqli_query($conn, $sql);
-        $row = mysqli_fetch_assoc($query);
+        $result = $row = mysqli_fetch_assoc($query);
         $data[$months[$i]] = $row['count'];
     }
+
+    return $data;
+}
+
+function getdataApprovedRO2($conn, $province_opts)
+{
+    $months =  [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12];
+    $muns = [];
+    foreach ($province_opts as $key => $province) {
+        $muns[$key] = getCityMuns($conn, $key);
+    }
+
+    for ($i = 1; $i < count($months); $i++) {
+        $total = 0;
+        foreach ($province_opts as $key => $province) {
+            $ss = [];
+            foreach ($muns[$key] as $k => $mun){
+                $ss[] = $mun['code'];
+            }
+            
+            if (count($ss) >  0) {
+                $ss = implode(',', $ss);
+
+                $sql = "SELECT pro.name as 'PROVINCE' , checklist.status, count(*) as 'count', checklist.date_created FROM `tbl_app_checklist` checklist
+                    LEFT JOIN tbl_admin_info ai on checklist.user_id = ai.ID
+                    LEFT JOIN tbl_province pro on ai.PROVINCE = pro.id 
+                    WHERE  ai.PROVINCE= '$key' and MONTH(checklist.date_created) = $i and checklist.status='Approved' and checklist.application_type = 'Encoded'";
+
+                $query = mysqli_query($conn, $sql);
+                $row = mysqli_fetch_assoc($query);
+                $total += $row['count'];
+            }
+        }
+        $data[$months[$i]] = $total;
+    }
+
     return $data;
 }
 
 function getdataApproved3($conn, $province,$lgus)
 {
     $months =  [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12];
-	foreach ($lgus as $key => $lgu) {
-		$codes[] = $lgu['code']; 
-	}
+    foreach ($lgus as $key => $lgu) {
+        $codes[] = $lgu['code']; 
+    }
 
-	$codes = implode(',', $codes);
+    $codes = implode(',', $codes);
 
     for ($i = 1; $i < count($months); $i++) {
         $sql = "SELECT pro.name as 'PROVINCE' , checklist.status, count(*) as 'count', checklist.date_created FROM `tbl_app_checklist` checklist
         LEFT JOIN tbl_admin_info ai on checklist.user_id = ai.ID
         LEFT JOIN tbl_province pro on ai.PROVINCE = pro.id 
         WHERE  ai.PROVINCE= '$province' and checklist.lgu IN (".$codes.") and MONTH(checklist.date_created) = $i and checklist.status='Approved' and checklist.application_type = 'Encoded'";
-        // ai.PROVINCE= '$province' and 
+
+        //  ai.PROVINCE= '$province' and 
         $query = mysqli_query($conn, $sql);
-        $row = mysqli_fetch_assoc($query);
+        $result = $row = mysqli_fetch_assoc($query);
         $data[$months[$i]] = $row['count'];
     }
+
     return $data;
 }
+
+function getdataApprovedRO3($conn, $province_opts)
+{
+    $months =  [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12];
+    $muns = [];
+    foreach ($province_opts as $key => $province) {
+        $muns[$key] = getCityMuns($conn, $key);
+    }
+
+    for ($i = 1; $i < count($months); $i++) {
+        $total = 0;
+        foreach ($province_opts as $key => $province) {
+            $ss = [];
+            foreach ($muns[$key] as $k => $mun){
+                $ss[] = $mun['code'];
+            }
+            
+            if (count($ss) >  0) {
+                $ss = implode(',', $ss);
+
+                $sql = "SELECT pro.name as 'PROVINCE' , checklist.status, count(*) as 'count', checklist.date_created FROM `tbl_app_checklist` checklist
+                    LEFT JOIN tbl_admin_info ai on checklist.user_id = ai.ID
+                    LEFT JOIN tbl_province pro on ai.PROVINCE = pro.id 
+                    WHERE  ai.PROVINCE= '$key' and MONTH(checklist.date_created) = $i and checklist.status='Approved' and checklist.application_type = 'Encoded'";
+
+                //  ai.PROVINCE= '$province' and 
+                $query = mysqli_query($conn, $sql);
+                $row = mysqli_fetch_assoc($query);
+                $total += $row['count'];
+            }
+        }
+        $data[$months[$i]] = $total;
+    }
+
+    return $data;
+}
+
+// function getdataApproved2($conn, $province,$lgus)
+// {
+
+//     $months =  [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12];
+//     foreach ($lgus as $key => $lgu) {
+// 		$codes[] = $lgu['code']; 
+// 	}
+
+// 	$codes = implode(',', $codes);
+
+//     for ($i = 1; $i < count($months); $i++) {
+//         $sql = "SELECT pro.name as 'PROVINCE' , checklist.status, count(*) as 'count', checklist.date_created FROM `tbl_app_checklist` checklist
+//         LEFT JOIN tbl_admin_info ai on checklist.user_id = ai.ID
+//         LEFT JOIN tbl_province pro on ai.PROVINCE = pro.id 
+//         WHERE  ai.PROVINCE= '$province' and ai.LGU IN (".$codes.") and MONTH(checklist.date_created) = $i and checklist.status='Approved' and checklist.application_type = 'Encoded'";
+//         // ai.PROVINCE= '$province' and 
+//         $query = mysqli_query($conn, $sql);
+//         $row = mysqli_fetch_assoc($query);
+//         $data[$months[$i]] = $row['count'];
+//     }
+
+//     return $data;
+// }
+
+// function getdataApproved3($conn, $province,$lgus)
+// {
+//     $months =  [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12];
+// 	foreach ($lgus as $key => $lgu) {
+// 		$codes[] = $lgu['code']; 
+// 	}
+
+// 	$codes = implode(',', $codes);
+
+//     for ($i = 1; $i < count($months); $i++) {
+//         $sql = "SELECT pro.name as 'PROVINCE' , checklist.status, count(*) as 'count', checklist.date_created FROM `tbl_app_checklist` checklist
+//         LEFT JOIN tbl_admin_info ai on checklist.user_id = ai.ID
+//         LEFT JOIN tbl_province pro on ai.PROVINCE = pro.id 
+//         WHERE  ai.PROVINCE= '$province' and checklist.lgu IN (".$codes.") and MONTH(checklist.date_created) = 6 and checklist.status='Approved' and checklist.application_type = 'Encoded'";
+
+//         // ai.PROVINCE= '$province' and 
+//         $query = mysqli_query($conn, $sql);
+//         $row = mysqli_fetch_assoc($query);
+//         $data[$months[$i]] = $row['count'];
+//     }
+
+//     return $data;
+// }
 
 function getget($conn, $id)
 {
@@ -391,7 +779,7 @@ function getget($conn, $id)
 	return $data;
 }
 
-function cc1($conn, $province, $lgus)
+function getApprovedEncodedAC($conn, $province, $lgus)
 {
 	$data = [];
 	$val = ['For Receiving', 'Received', 'Approved', 'Disapproved'];
@@ -406,7 +794,7 @@ function cc1($conn, $province, $lgus)
 	            LEFT JOIN tbl_admin_info ai on ai.id = ac.user_id
 	            LEFT JOIN tbl_province p on p.id = ai.PROVINCE
 	            LEFT JOIN tbl_citymun cm on cm.id = ai.LGU
-	            WHERE p.id = '$province' AND ac.lgu IN (".$codes.") AND ac.application_type = 'Encoded' AND status = '$status' ";
+	            WHERE p.id = '$province' AND ac.lgu IN (".$codes.") AND ac.application_type = 'Encoded' AND status = '".$status."' ";
 
 	    $query = mysqli_query($conn, $sql2);
 		$row = mysqli_fetch_assoc($query);
@@ -416,7 +804,7 @@ function cc1($conn, $province, $lgus)
 	return $data;
 }
 
-function cc2($conn, $province, $lgus)
+function getApprovedAppliedAI($conn, $province, $lgus)
 {
 	$data = [];
 	$val = ['For Receiving', 'Received', 'Approved', 'Disapproved'];
@@ -441,13 +829,13 @@ function cc2($conn, $province, $lgus)
 	return $data;
 }
 
-function cc3($conn, $province, $lgus)
+function getApprovedEncodedAI($conn, $province, $lgus)
 {
 	$data = [];
 	$val = ['For Receiving', 'Received', 'Approved', 'Disapproved'];
 	foreach ($lgus as $key => $lgu) {
 		$codes[] = $lgu['code']; 
-	}
+	} 
 
 	$codes = implode(',', $codes);
 	foreach ($val as $key => $status) {
@@ -456,7 +844,7 @@ function cc3($conn, $province, $lgus)
                 LEFT JOIN tbl_admin_info ai on ai.id = ac.user_id
                 LEFT JOIN tbl_province p on p.id = ai.PROVINCE
                 LEFT JOIN tbl_citymun cm on cm.id = ai.LGU
-                WHERE p.id = '$province' AND ai.LGU IN (".$codes.") AND ac.application_type = 'Encoded' AND status = '$status' ";
+                WHERE p.id = '$province' AND ai.LGU IN (".$codes.") AND ac.application_type = 'Encoded' AND status = 'Approved' ";
 
         $query = mysqli_query($conn, $sql2);
 		$row = mysqli_fetch_assoc($query);
@@ -464,4 +852,155 @@ function cc3($conn, $province, $lgus)
 	}
 
 	return $data;
+}
+
+
+function countApprovedApplied($conn, $province, $lgus) 
+{
+    $data = [];
+    $val = ['For Receiving', 'Received', 'Approved', 'Disapproved'];
+    foreach ($lgus as $key => $lgu) {
+        $codes[] = $lgu['code']; 
+    }
+
+    $codes = implode(',', $codes);
+
+    foreach ($val as $key => $status) {
+        $sql = "SELECT count(*) as count
+            FROM tbl_app_checklist ac
+            LEFT JOIN tbl_admin_info ai on ai.id = ac.user_id
+            LEFT JOIN tbl_userinfo ui on ui.user_id = ai.id
+            WHERE ai.PROVINCE = ".$province." AND ai.LGU IN (".$codes.") AND ac.application_type = 'Applied' AND ac.status = '".$status."'";
+        $query = mysqli_query($conn, $sql);
+        $row = mysqli_fetch_assoc($query);
+        $data[$status] = $row['count'];
+    }
+
+    return $data;
+}
+
+
+
+function getApplicationLists($conn, $province, $lgus, $status, $is_clusterhead)
+{
+    $data = [];
+
+    foreach ($lgus as $key => $lgu) {
+        $codes[] = $lgu['code']; 
+    }
+
+    $codes = implode(',', $codes);
+
+    // foreach ($lgus as $key => $lgu) {
+        $sql = "SELECT 
+        ac.id as id,
+        ai.CMLGOO_NAME as fname,
+        ui.GOV_AGENCY_NAME as agency,
+        ui.ADDRESS as address,
+        DATE_FORMAT(ac.date_created, '%Y-%m-%d') as date_created,
+        DATE_FORMAT(ac.date_approved, '%Y-%m-%d H:i:s') as date_approved,
+        ui.id as userid,
+        ac.control_no as control_no,
+        ac.safety_seal_no as ss_no,
+        ac.status as status,
+        ac.address as ac_address,
+        ac.application_type as app_type,
+        ac.token as token
+        FROM tbl_app_checklist ac
+        LEFT JOIN tbl_admin_info ai on ai.id = ac.user_id
+        LEFT JOIN tbl_userinfo ui on ui.user_id = ai.id
+        WHERE ai.PROVINCE = ".$province." AND ai.LGU IN (".$codes.") AND ac.application_type = 'Applied' AND ac.status <> '".$status."'";
+     
+        $query = mysqli_query($conn, $sql);
+
+        
+        while ($row = mysqli_fetch_assoc($query)) {
+            $color = 'green';
+            if ($row['status'] == 'For Receiving') {
+                $color = 'primary';
+            } elseif ($row['status'] == 'Received') {
+                $color = 'yellow';
+            } elseif ($row['status'] == 'Disapproved') {
+                $color = 'red';
+            }
+
+            $data[$row['id']] = [
+                'id' => $row['id'],
+                'userid' => $row['userid'],
+                'fname' => $row['fname'],
+                'agency' => $row['agency'],
+                'address' => $row['address'],
+                'date_created' => $row['date_created'],
+                'control_no' => $row['control_no'],
+                'ss_no' => $row['ss_no'],
+                'status' => $row['status'],
+                'color' => $color,
+                'ac_address' => $row['ac_address'],
+                'app_type' => $row['app_type'],
+                'token' => $row['token'],
+                'validity_date' => !empty($row['date_approved']) ? date('F d, Y', strtotime("+6 months", strtotime($row['date_approved']))) : ''
+            ];    
+        }
+
+        $sql2 = "SELECT 
+        ac.id as id,
+        ai.CMLGOO_NAME as fname,
+        ui.GOV_AGENCY_NAME as pagency,
+        ac.agency as cagency,
+        ui.ADDRESS as address,
+        DATE_FORMAT(ac.date_created, '%Y-%m-%d') as date_created,
+        DATE_FORMAT(ac.date_approved, '%Y-%m-%d') as date_approved,
+        ui.id as userid,
+        ac.control_no as control_no,
+        ac.safety_seal_no as ss_no,
+        ac.status as status,
+        ac.address as ac_address,
+        ac.application_type as app_type,
+        ac.token as token
+        FROM tbl_app_checklist ac
+        LEFT JOIN tbl_admin_info ai on ai.id = ac.user_id
+        LEFT JOIN tbl_userinfo ui on ui.user_id = ai.id
+        WHERE ai.PROVINCE = ".$province." AND ac.application_type = 'Encoded'";
+
+        if ($is_clusterhead) {
+            $sql.= " AND ac.lgu IN (".$codes.")";   
+        } else {
+            $sql.= " AND ai.LGU IN (".$codes.")";
+        }
+     
+        $query = mysqli_query($conn, $sql2);
+        // $data = [];
+        
+        while ($row = mysqli_fetch_assoc($query)) {
+            $color = 'green';
+            if ($row['status'] == 'For Receiving') {
+                $color = 'primary';
+            } elseif ($row['status'] == 'Received') {
+                $color = 'yellow';
+            } elseif ($row['status'] == 'Disapproved') {
+                $color = 'red';
+            }
+
+            $data[$row['id']] = [
+                'id' => $row['id'],
+                'userid' => $row['userid'],
+                'fname' => $row['fname'],
+                'agency' => !empty($row['cagency']) ? $row['cagency'] : $row['pagency'],
+                'address' => $row['address'],
+                'date_created' => $row['date_created'],
+                'control_no' => $row['control_no'],
+                'ss_no' => $row['ss_no'],
+                'status' => $row['status'],
+                'color' => $color,
+                'ac_address' => $row['ac_address'],
+                'app_type' => $row['app_type'],
+                'token' => $row['token'],
+                'validity_date' => !empty($row['date_approved']) ? date('F d, Y', strtotime("+6 months", strtotime($row['date_approved']))) : ''
+            ];    
+        }
+    // }
+
+
+    return $data;
+
 }

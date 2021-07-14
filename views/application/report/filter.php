@@ -25,7 +25,7 @@
           <div class="col-md-4">
             <div class="form-group">
               <label>Province</label>
-              <select class="form-control select2bs4 select2-hidden-accessible" id="province" style="width: 100%;" data-select2-id="17" tabindex="-1" aria-hidden="true" >
+              <select class="form-control select2bs4 select2-hidden-accessible" id="province" style="width: 100%;" data-select2-id="17" tabindex="-1" aria-hidden="true" disabled>
                 <option></option>
                 <?php foreach ($province_opts as $key => $opts): ?>
                   <?php if ($key == $province): ?>
@@ -42,7 +42,7 @@
             <div class="form-group">
               <label>City/Municipality</label>
               <select class="form-control select2bs4 select2-hidden-accessible" id="city_mun" style="width: 100%;" data-select2-id="17" tabindex="-1" aria-hidden="true" >
-              <option></option>
+                <option value="all" data-code="all" selected>All</option>
                 <?php foreach ($citymun_opts as $key => $opts): ?>
                   <?php if ($opts['code'] == $citymun): ?>
                     <option value="<?php echo $key; ?>" data-province="<?php echo $opts['code']; ?>" data-code="<?php echo $opts['code']; ?>" selected><?php echo $opts['name']; ?></option>
@@ -105,7 +105,7 @@
               <div class="d-grid gap-2 d-md-block">
 
                 <button class="btn btn-primary btn-md" id="btn-filter" type="button"><i class="fa fa-search"></i> Filter</button>
-
+                <button class="btn btn-success btn-md" id="report" type="button"><i class="fa fa-file-excel"></i> Generate</button>
                 <button class="btn btn-default btn-md" id="btn-reset" type="button"><i class="fa fa-sync-alt"></i> Reset</button>
               </div>
             </div>  
