@@ -35,7 +35,7 @@ require_once 'controller/DashboardController.php'; ?>
                         <img src="frontend/images/dash_received.png" style="width:100px;margin-top:-100px;margin-right:10px;" align="right" alt="">
 
                     </div>
-                    <a href="#" class="small-box-footer">
+                    <a href="#" class="small-box-footer"><i class="fas fa-plus"></i> View More
                         &nbsp;
                     </a>
                 </div>
@@ -54,7 +54,11 @@ require_once 'controller/DashboardController.php'; ?>
                         <img src="frontend/images/dash_receiving.png" style="width:100px;margin-top:-100px;margin-right:10px;" align="right" alt="">
 
                     </div>
-                    <a href="#" class="small-box-footer">
+                    <?php if ($is_rofp): ?>
+                        <a href="#" class="small-box-footer"><i class="fas fa-plus"></i> View More
+                    <?php else: ?>
+                        <a href="#" class="small-box-footer">
+                    <?php endif ?>
                         &nbsp;
 
                     </a>
@@ -74,7 +78,11 @@ require_once 'controller/DashboardController.php'; ?>
                         <img src="frontend/images/dash_approved.png" style="width:100px;margin-top:-100px;margin-right:10px;" align="right" alt="">
 
                     </div>
-                    <a href="#" class="small-box-footer">
+                    <?php if ($is_rofp): ?>
+                        <a href="#" class="small-box-footer"><i class="fas fa-plus"></i> View More
+                    <?php else: ?>
+                        <a href="#" class="small-box-footer">
+                    <?php endif ?>
                         &nbsp;
 
                     </a>
@@ -94,7 +102,11 @@ require_once 'controller/DashboardController.php'; ?>
                         <img src="frontend/images/dash_disapproved.png" style="width:100px;margin-top:-100px;margin-right:10px;" align="right" alt="">
 
                     </div>
-                    <a href="#" class="small-box-footer">
+                    <?php if ($is_rofp): ?>
+                        <a href="#" class="small-box-footer"><i class="fas fa-plus"></i> View More
+                    <?php else: ?>
+                        <a href="#" class="small-box-footer">
+                    <?php endif ?>
                         &nbsp;
 
                     </a>
