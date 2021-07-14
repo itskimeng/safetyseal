@@ -1,7 +1,11 @@
 <?php
 session_start();
 $url_array = explode('?', 'https://'.$_SERVER ['HTTP_HOST'].$_SERVER['REQUEST_URI']);
+$url_array2 = explode('?', 'http://'.$_SERVER ['HTTP_HOST']);
+
 $url = $url_array[0];
+$url2 = $url_array2[0];
+
 
 require '../manager/ApplicationManager.php';
 require '../application/config/connection.php';
@@ -25,7 +29,10 @@ if (!empty($_GET['code'])) {
     $token = $_SESSION['ttid'];
     $_SESSION['ttid'] = '';
     $_SESSION['toastr'] = $app->addFlash('success', 'Session has been configured. Please try to reupload the file.', 'Success');
-    header('location:../admin_application_edit.php?appid='.$token.'&code='.$gcode.'&scope='.$gscope.'');exit;
+    
+    $url2 = $url2."/safetyseal/admin_application_edit.php?appid=".$token."&code=".$gcode."&scope=".$gscope."";
+
+    header('location: '.$url2);exit;
 } elseif (!isset($_SESSION['accessToken'])) {
     $client->authenticate();
 }
@@ -64,10 +71,15 @@ header('location:../admin_application_edit.php?appid='.$token.'&code='.$gcode.'&
 function getGoogleClient($url)
 {
     $client = new Google_Client();    
-    $client->setClientId('312607959862-4po30giaf5ft6gk4e214nadae33dp8rl.apps.googleusercontent.com');
-    $client->setClientSecret('i0aX5UG17jovoF2aPgqfoGvS');
+    // .v1
+    // $client->setClientId('312607959862-4po30giaf5ft6gk4e214nadae33dp8rl.apps.googleusercontent.com');
+    // $client->setClientSecret('i0aX5UG17jovoF2aPgqfoGvS');
+    // $client->setScopes(array('https://www.googleapis.com/auth/drive.file', 'https://www.googleapis.com/auth/drive.appdata'));
+    // .v2
+    $client->setClientId('652005841335-l518ghdsao3b9f3g6cqb9slqv3li9r35.apps.googleusercontent.com');
+    $client->setClientSecret('jbHNwSs2aIqFoG6zv4D6LQPP');
     $client->setRedirectUri($url);
-    $client->setScopes(array('https://www.googleapis.com/auth/drive'));
+    $client->setScopes(array('https://www.googleapis.com/auth/drive.file', 'https://www.googleapis.com/auth/drive.appdata'));
 
     return $client;
 }
