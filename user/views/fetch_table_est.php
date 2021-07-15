@@ -39,7 +39,7 @@ foreach ($user_est as $key => $data) {
             </span>
         </td>
         <td nowrap="">
-            <?php if ($data['ac_status'] == 'Disapproved'){ ?>
+            <?php if ($data['ac_status'] == 'Disapproved' OR $data['ac_status'] == 'Returned'){ ?>
                 <div class="col-md-12 mb-1">
                   <a href="../entity/post_reassess.php?ssid=<?php echo $data['token']; ?>&stt=Reassess" type="button" class="btn btn-danger btn-block btn-sm" style="width: 100%;"><i class="fa fa-redo" aria-hidden="true"></i> Reassess
                   </a>

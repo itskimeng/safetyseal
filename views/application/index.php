@@ -38,6 +38,8 @@
   </div>
 </div>
 
+<?php include 'modal_returned.php';?>
+
 <script>
   $(function () {
     // $('select').select2();
@@ -57,8 +59,30 @@
     //   "responsive": true,
     // });
 
+    <?php
+    // toastr output & session reset
+    // session_start();
+    if (isset($_SESSION['toastr'])) {
+      echo 'tata.' . $_SESSION['toastr']['type'] . '("' . $_SESSION['toastr']['title'] . '", "' . $_SESSION['toastr']['message'] . '", {
+          duration: 5000
+        })';
+      unset($_SESSION['toastr']);
+    }
+    ?>
+
     $(document).on('click', '#btn-reset', function() {
       location.reload(); 
+    });
+
+    $(document).on('click', '.btn-return_application', function(){
+      let tr = $(this).closest('tr');
+      let vv = $(this);
+      let id = tr.find('#cform-ac_id');
+      let $modal = $("#modal_return_remarks");
+      let form_id = $modal.find('#rtn-chklist_id');
+    
+      form_id.val(id.val());
+      $modal.modal('show');
     });
 
     $(document).on('click', '#btn-filter', function() {

@@ -12,8 +12,9 @@ class ApplicationManager
     const STATUS_RECEIVED           = "Received";
     const STATUS_FOR_REASSESSMENT   = "For Reassessment";
     const STATUS_REASSESS           = "Reassess";
-    const TYPE_APPLIED           = "Applied";
-    const TYPE_ENCODED           = "Encoded";
+    const STATUS_RETURNED           = "Returned";
+    const TYPE_APPLIED              = "Applied";
+    const TYPE_ENCODED              = "Encoded";
     
 
     function __construct() 
@@ -301,9 +302,9 @@ class ApplicationManager
         return $result;
     }
 
-    public function receiveChecklist($checklist_id, $status, $date_modified, $receiver)
+    public function receiveChecklist($checklist_id, $status, $date_modified, $receiver, $remarks='')
     {
-        $sql = "UPDATE tbl_app_checklist SET date_received = '".$date_modified."', date_modified = '".$date_modified."', receiver_id = ".$receiver.", status = '".$status."' WHERE id = ".$checklist_id."";
+        $sql = "UPDATE tbl_app_checklist SET date_received = '".$date_modified."', date_modified = '".$date_modified."', receiver_id = ".$receiver.", status = '".$status."', undoer = '".$receiver."', remarks = '".$remarks."' WHERE id = ".$checklist_id."";
         $result = mysqli_query($this->conn, $sql);
 
         return $result;
@@ -392,8 +393,7 @@ class ApplicationManager
         FROM tbl_app_checklist ac
         LEFT JOIN tbl_admin_info ai on ai.id = ac.user_id
         LEFT JOIN tbl_userinfo ui on ui.user_id = ai.id
-        WHERE ai.PROVINCE = ".$province." AND ai.LGU = ".$lgu." AND ac.application_type = 'Applied' AND ac.status <> '".$status."'";
-     
+        WHERE ai.PROVINCE = ".$province." AND ai.LGU = ".$lgu." AND ac.application_type = 'Applied' AND ac.status <> '".$status."' AND ac.status <> 'Returned'";
      
         $query = mysqli_query($this->conn, $sql);
         $data = [];
