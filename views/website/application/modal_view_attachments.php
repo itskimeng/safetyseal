@@ -16,7 +16,9 @@
         </div>
         <div class="modal-footer">
           <button type="button" class="btn btn-secondary" data-bs-dismiss="modal"><i class="fa fa-window-close"></i> Close</button>
-          <button type="submit" class="btn btn-danger"><i class="fa fa-trash"></i> Remove Selected</button>
+          <?php if (!in_array($userinfo['status'], ['For Receiving', 'Approved', 'Disapproved'])): ?>
+            <button type="submit" class="btn btn-danger"><i class="fa fa-trash"></i> Remove Selected</button>
+          <?php endif ?>
         </div>
       </form>
     </div>
