@@ -108,7 +108,7 @@ class DashboardManager
 
         $sql = "SELECT chkl.id as id, chkl.establishment as 'est', chkl.safety_seal_no as 'ss_no' FROM `tbl_app_checklist` chkl 
         LEFT JOIN tbl_admin_info ai on chkl.user_id = ai.id
-        LEFT JOIN tbl_province pro on ai.PROVINCE = pro.id where ai.PROVINCE = '$province' and ai.LGU = '$lgu'  and status='Approved'";
+        LEFT JOIN tbl_province pro on ai.PROVINCE = pro.id where ai.PROVINCE = '$province' and ai.LGU = '$lgu'  and status='Approved'"; 
 
         $query = mysqli_query($this->conn, $sql);
         $data = [];

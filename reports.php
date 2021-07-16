@@ -2,8 +2,21 @@
 session_start();
 date_default_timezone_set('Asia/Manila');
 
-require 'phpexcel/Classes/PHPExcel.php';
+require 'library/PHPExcel-1.8/Classes/PHPExcel.php';
 require 'application/config/connection.php';
+
+$province = $_SESSION['province'];
+$lgu = $_GET['lgu'];
+$date_range = $_GET['date_range'];
+$app_type = $_GET['app_type'];
+
+$daterange = explode('-', $date_range);
+$date_from = new DateTime($daterange[0]);
+$date_to = new DateTime($daterange[1]);
+$from = $date_from->format('Y-m-d 00:00:00');
+$to = $date_to->format('Y-m-d 23:59:59');
+
+$results = fetchData($conn, ['province'=>$province, 'lgu'=>$lgu, 'from'=>$from, 'to'=>$to]);
 
 
 $phpExcel = new PHPExcel;
@@ -42,7 +55,6 @@ $sheet->getCell('P1')->setValue('NO. OF ESTABLISHMENTS DENIED/REFERRRED TO OTHER
 $sheet->getCell('Q1')->setValue('Action Taken');
 $sheet->getCell('R1')->setValue('Remarks');
 
-
 $sheet->getStyle('A1:M1')->applyFromArray(
 	array(
 		'fill' => array(
@@ -51,7 +63,6 @@ $sheet->getStyle('A1:M1')->applyFromArray(
 		)
 	)
 );
-
 
 $sheet->getStyle('N1:P1')->applyFromArray(
 	array(
@@ -126,46 +137,36 @@ $sheet->getStyle('A1:R1')->applyFromArray($border);
 // while ($resultUser = $execUser->fetch_assoc()) 
 // {
 // $sql = ' SELECT `id`, `control_no`, `user_id`, `agency`, `establishment`, `nature`, `address`, `person`, `contact_details`, `status`, `has_consent`, `date_created`, `date_proceed`, `receiver_id`, `date_received`, `approver_id`, `date_approved`, `safety_seal_no`, `reassessed_by`, `date_reassessed`, `date_modified`, `token`, `application_type` FROM `tbl_app_checklist` WHERE `user_id` = "'.$resultUser['ID'].'" ';
-$daterange = explode('-', $_GET['date_range']);
 
-$date_from = new DateTime($daterange[0]);
-$date_to = new DateTime($daterange[1]);
 
-$data = [
-	'date_from' => $date_from->format('Y-m-d 00:00:00'),
-	'date_to' => $date_to->format('Y-m-d 23:59:59')
-];
-$from = $data['date_from'];
-$to = $data['date_to'];
+// $sql = "SELECT tbl_app_checklist.`id`, `control_no`, `user_id`, `agency`, `establishment`, `nature`, `address`, `person`, `contact_details`, `status`, `has_consent`, `date_created`, `date_proceed`, `receiver_id`, `date_received`, `approver_id`, `date_approved`, `safety_seal_no`, `reassessed_by`, `date_reassessed`, `date_modified`, `token`, `application_type` FROM `tbl_app_checklist` 
+// 	left join tbl_admin_info ai on tbl_app_checklist.user_id = ai.ID
+// 	where ai.PROVINCE = 5 and
+// 	ai.LGU = '18' and 
+// 	tbl_app_checklist.status =  'Approved' and
+// 	tbl_app_checklist.date_approved >= '" . $from . "' AND 
+// 	tbl_app_checklist.date_approved <= '" . $to . "'
 
-$sql = "SELECT tbl_app_checklist.`id`, `control_no`, `user_id`, `agency`, `establishment`, `nature`, `address`, `person`, `contact_details`, `status`, `has_consent`, `date_created`, `date_proceed`, `receiver_id`, `date_received`, `approver_id`, `date_approved`, `safety_seal_no`, `reassessed_by`, `date_reassessed`, `date_modified`, `token`, `application_type` FROM `tbl_app_checklist` 
-	left join tbl_admin_info ai on tbl_app_checklist.user_id = ai.ID
-	where ai.PROVINCE = 5 and
-	ai.LGU = '18' and 
-	tbl_app_checklist.status =  'Approved' and
-	tbl_app_checklist.date_approved >= '" . $from . "' AND 
-	tbl_app_checklist.date_approved <= '" . $to . "'
+// 	";
 
-	";
-
-$result1 = mysqli_query($conn, $sql);
+// $result1 = mysqli_query($conn, $sql);
 $i = 2;
 $x = 1;
 
-while ($row = mysqli_fetch_array($result1)) {
+foreach ($results as $key => $result) {
 
 	$sheet->getStyle('A' . $i . ':R' . $i)->getFont()->setBold(false)->setSize(14);
-	$sheet->getCell('A' . $i)->setValue($x);
-	$sheet->getCell('B' . $i)->setValue($row['control_no']);
-	$sheet->getCell('C' . $i)->setValue($row['establishment']);
-	$sheet->getCell('D' . $i)->setValue($row['nature']);
-	$sheet->getCell('E' . $i)->setValue($row['address']);
-	$sheet->getCell('F' . $i)->setValue($row['person']);
-	$sheet->getCell('G' . $i)->setValue($row['contact_details']);
+	$sheet->getCell('A' . $i)->setValue(''.$x.'');
+	$sheet->getCell('B' . $i)->setValue($result['control_no']);
+	$sheet->getCell('C' . $i)->setValue($result['establishment']);
+	$sheet->getCell('D' . $i)->setValue($result['nature']);
+	$sheet->getCell('E' . $i)->setValue($result['address']);
+	$sheet->getCell('F' . $i)->setValue($result['person']);
+	$sheet->getCell('G' . $i)->setValue($result['contact_details']);
 
 	$sheet->getCell('H' . $i)->setValue('1'); //Approved
 
-	$sheet->getCell('I' . $i)->setValue(date('F, d, Y', strtotime($row['date_approved'])));
+	$sheet->getCell('I' . $i)->setValue($result['date_approved']);
 	$sheet->getCell('J' . $i)->setValue('');
 	$sheet->getCell('K' . $i)->setValue('1');
 	$sheet->getCell('L' . $i)->setValue('1');
@@ -194,6 +195,8 @@ while ($row = mysqli_fetch_array($result1)) {
 // $filename = $resultLgu['name'].'_'.date("F j, Y");
 
 
+$filename = "SSCP-Bi-Monthly-Reporting-".$result1
+
 // We'll be outputting an excel file
 header('Content-type: application/vnd.ms-excel');
 
@@ -202,3 +205,70 @@ header('Content-Disposition: attachment; filename="SSCP-Bi-Monthly-Reporting.xls
 
 // Write file to the browser
 $writer->save('php://output');
+
+
+function fetchData($conn, $data) 
+{
+	$result = [];
+	$sql1 = $sql2 = '';
+	$bsql = "SELECT 
+		ai.CMLGOO_NAME as fname, 
+		ui.GOV_AGENCY_NAME as fagency, 
+		ui.ADDRESS as faddress,	
+		ac.id as id, 
+		ac.control_no as control_no, 
+		ai.CMLGOO_NAME as cmlgoo_name, 
+		ac.agency as agency, 
+		ac.establishment as establishment, 
+		ac.nature as nature, 
+		ac.address as address, 
+		ac.person as person,  
+		ac.contact_details as contact_details, 
+		ac.status as status, 
+		DATE_FORMAT(ac.date_approved, '%Y-%m-%d') as date_approved,
+		ac.safety_seal_no as ssc_no, 
+		ac.application_type as app_type 
+		FROM tbl_app_checklist ac 
+		LEFT JOIN tbl_admin_info ai on ac.user_id = ai.ID
+		LEFT JOIN tbl_userinfo ui on ui.user_id = ai.id
+		LEFT JOIN tbl_province p on p.id = ai.PROVINCE
+		WHERE ai.PROVINCE = ".$data['province']." AND ac.status = 'Approved' AND ac.date_approved >= '".$data['from']."' AND ac.date_approved <= '".$data['to']."'";
+	
+	if ($data['lgu'] != 'all') {
+		$sql1.= " AND ai.LGU = ".$data['lgu']."";
+	}
+
+	$result1 = mysqli_query($conn, $bsql.$sql1);
+	while ($row = mysqli_fetch_array($result1)) {
+		$date = new DateTime($row['date_approved']);
+
+		$result[$row['id']] = [
+			'control_no' 		=> $row['control_no'],
+			'establishment' 	=> $row['establishment'],
+			'nature'	 		=> $row['nature'],
+			'address' 			=> !empty($row['address']) ? $row['address'] : $row['faddress'],
+			'person' 			=> !empty($row['person']) ? $row['person'] : $row['fname'],
+			'contact_details' 	=> $row['contact_details'],
+			'date_approved' 	=> $date->format('F d, Y'),
+		];
+	}
+
+	if ($data['lgu'] != 'all') {
+		$sql2.= " AND ac.lgu = ".$data['lgu']."";
+	
+		$result1 = mysqli_query($conn, $bsql.$sql2);
+		while ($row = mysqli_fetch_array($result1)) {
+			$result[$row['id']] = [
+				'control_no' 		=> $row['control_no'],
+				'establishment' 	=> $row['establishment'],
+				'nature'	 		=> $row['nature'],
+				'address' 			=> $row['address'],
+				'person' 			=> !empty($row['person']) ? $row['person'] : $row['fname'],
+				'contact_details' 	=> $row['contact_details'],
+				'date_approved' 	=> $row['date_approved']
+			];
+		}
+	}
+
+	return $result;
+}

@@ -12,8 +12,9 @@ class ApplicationManager
     const STATUS_RECEIVED           = "Received";
     const STATUS_FOR_REASSESSMENT   = "For Reassessment";
     const STATUS_REASSESS           = "Reassess";
-    const TYPE_APPLIED           = "Applied";
-    const TYPE_ENCODED           = "Encoded";
+    const STATUS_RETURNED           = "Returned";
+    const TYPE_APPLIED              = "Applied";
+    const TYPE_ENCODED              = "Encoded";
     
 
     function __construct() 
@@ -301,9 +302,9 @@ class ApplicationManager
         return $result;
     }
 
-    public function receiveChecklist($checklist_id, $status, $date_modified, $receiver)
+    public function receiveChecklist($checklist_id, $status, $date_modified, $receiver, $remarks='')
     {
-        $sql = "UPDATE tbl_app_checklist SET date_received = '".$date_modified."', date_modified = '".$date_modified."', receiver_id = ".$receiver.", status = '".$status."' WHERE id = ".$checklist_id."";
+        $sql = "UPDATE tbl_app_checklist SET date_received = '".$date_modified."', date_modified = '".$date_modified."', receiver_id = ".$receiver.", status = '".$status."', undoer = '".$receiver."', remarks = '".$remarks."' WHERE id = ".$checklist_id."";
         $result = mysqli_query($this->conn, $sql);
 
         return $result;
@@ -392,8 +393,7 @@ class ApplicationManager
         FROM tbl_app_checklist ac
         LEFT JOIN tbl_admin_info ai on ai.id = ac.user_id
         LEFT JOIN tbl_userinfo ui on ui.user_id = ai.id
-        WHERE ai.PROVINCE = ".$province." AND ai.LGU = ".$lgu." AND ac.application_type = 'Applied' AND ac.status <> '".$status."'";
-     
+        WHERE ai.PROVINCE = ".$province." AND ai.LGU = ".$lgu." AND ac.application_type = 'Applied' AND ac.status <> '".$status."' AND ac.status <> 'Returned'";
      
         $query = mysqli_query($this->conn, $sql);
         $data = [];
@@ -465,6 +465,11 @@ class ApplicationManager
             } elseif ($row['status'] == 'Disapproved') {
                 $color = 'red';
             }
+            if ($row['status'] =='Approved'){
+                $validity = date('F d, Y', strtotime("+6 months", strtotime($row['date_approved'])));
+            }else{
+                $validity = '';
+            }
 
             $data[$row['id']] = [
                 'id' => $row['id'],
@@ -472,7 +477,7 @@ class ApplicationManager
                 'fname' => !empty($row['person']) ? $row['person'] : $row['fname'],
                 'agency' => !empty($row['cagency']) ? $row['cagency'] : $row['pagency'],
                 'address' => $row['address'],
-                'date_created' => $row['date_created'],
+                'date_created' => date('F d, Y',strtotime($row['date_created'])),
                 'control_no' => $row['control_no'],
                 'ss_no' => $row['ss_no'],
                 'status' => $row['status'],
@@ -480,7 +485,7 @@ class ApplicationManager
                 'ac_address' => $row['ac_address'],
                 'app_type' => $row['app_type'],
                 'token' => $row['token'],
-                'validity_date' => !empty($row['date_approved']) ? date('F d, Y', strtotime("+6 months", strtotime($row['date_approved']))) : ''
+                'validity_date' => $validity
             ];    
         }
 

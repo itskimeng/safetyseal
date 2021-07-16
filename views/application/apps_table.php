@@ -28,6 +28,7 @@
             <?php foreach ($applicants as $key => $applicant): ?>
               <tr>
                 <td>
+                  <input type="hidden" name="ac_id" id="cform-ac_id" value="<?php echo $applicant['id']; ?>">
                   <?php echo $applicant['app_type']; ?>
                 </td>
                 <td>
@@ -53,6 +54,10 @@
                       <a href="entity/post_received.php?appid=<?php echo $applicant['id']; ?>&ussir=<?php echo $applicant['userid']; ?>&status=<?php echo $applicant['status']; ?>" class="btn btn-primary btn-block btn-sm" style="margin-bottom: -2%;">
                         <i class="fa fa-box"></i> Receive
                       </a>
+
+                      <button type="button" id="btn-return_application" class="btn btn-danger btn-block btn-sm btn-return_application" style="margin-bottom: -2%;">
+                        <i class="fa fa-undo"></i> Return
+                      </button>
                     <?php else: ?>
                       <a href="admin_application_view.php?appid=<?php echo $applicant['id']; ?>&ussir=<?php echo $applicant['userid']; ?>" class="btn btn-success btn-block btn-sm" style="margin-bottom: -2%;">
                         <i class="fa fa-eye"></i> View

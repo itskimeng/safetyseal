@@ -102,12 +102,12 @@
 
               <div class="item">
                 <div class="card">
-                  <div class="card-header" style="background-color: #480272; color:white;">
-                    <center>BUREAU OF FIRE PROTECTION CATANAUAN STATION <i class="fa fa-check"></i></center>
+                  <div class="card-header" style="background-color: #480272; color:white; height: 65px;">
+                    <center>BFP Calamba City Station <i class="fa fa-check"></i></center>
                   </div>
                   <div class="card-body cardRecentEstablishment">
-                    <!-- <a href="establishment-profile.php?unique_id=149"> -->
-                      <img src="files/certified/catanuan2.jpg" alt="" height="250">
+                    <!-- <a href="establishment-profile.php?unique_id=110"> -->
+                      <img src="files/certified/BFP Calamba City Station.jpg" alt="" height="250">
                     <!-- </a> -->
                   </div>
                   <div class="card-footer text-muted">
@@ -118,16 +118,16 @@
 
               <div class="item">
                 <div class="card">
-                  <div class="card-header" style="background-color: #480272; color:white;">
-                    <center>BUREAU OF FIRE PROTECTION - LUCBAN FIRE STATION <i class="fa fa-check"></i></center>
+                  <div class="card-header" style="background-color: #480272; color:white; height: 65px;">
+                    <center>BFP Laguna Provincial Satellite Office <i class="fa fa-check"></i></center>
                   </div>
                   <div class="card-body cardRecentEstablishment">
                     <!-- <a href="establishment-profile.php?unique_id=110"> -->
-                      <img src="files/certified/lucban.png" alt="" height="250">
+                      <img src="files/certified/BFP Laguna Provincial Satellite Office.jpg" alt="" height="250">
                     <!-- </a> -->
                   </div>
                   <div class="card-footer text-muted">
-                    Certified: <b>June 28, 2021</b>
+                    Certified: <b>June 30, 2021</b>
                   </div>
                 </div>
               </div>

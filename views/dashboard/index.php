@@ -35,7 +35,7 @@ require_once 'controller/DashboardController.php'; ?>
                         <img src="frontend/images/dash_received.png" style="width:100px;margin-top:-100px;margin-right:10px;" align="right" alt="">
 
                     </div>
-                    <a href="#" class="small-box-footer">
+                    <a href="#" class="small-box-footer"><i class="fas fa-plus"></i> View More
                         &nbsp;
                     </a>
                 </div>
@@ -54,7 +54,11 @@ require_once 'controller/DashboardController.php'; ?>
                         <img src="frontend/images/dash_receiving.png" style="width:100px;margin-top:-100px;margin-right:10px;" align="right" alt="">
 
                     </div>
-                    <a href="#" class="small-box-footer">
+                    <?php if ($is_rofp): ?>
+                        <a href="#" class="small-box-footer"><i class="fas fa-plus"></i> View More
+                    <?php else: ?>
+                        <a href="#" class="small-box-footer">
+                    <?php endif ?>
                         &nbsp;
 
                     </a>
@@ -74,7 +78,11 @@ require_once 'controller/DashboardController.php'; ?>
                         <img src="frontend/images/dash_approved.png" style="width:100px;margin-top:-100px;margin-right:10px;" align="right" alt="">
 
                     </div>
-                    <a href="#" class="small-box-footer">
+                    <?php if ($is_rofp): ?>
+                        <a href="#" class="small-box-footer"><i class="fas fa-plus"></i> View More
+                    <?php else: ?>
+                        <a href="#" class="small-box-footer">
+                    <?php endif ?>
                         &nbsp;
 
                     </a>
@@ -94,7 +102,11 @@ require_once 'controller/DashboardController.php'; ?>
                         <img src="frontend/images/dash_disapproved.png" style="width:100px;margin-top:-100px;margin-right:10px;" align="right" alt="">
 
                     </div>
-                    <a href="#" class="small-box-footer">
+                    <?php if ($is_rofp): ?>
+                        <a href="#" class="small-box-footer"><i class="fas fa-plus"></i> View More
+                    <?php else: ?>
+                        <a href="#" class="small-box-footer">
+                    <?php endif ?>
                         &nbsp;
 
                     </a>
@@ -135,9 +147,9 @@ require_once 'controller/DashboardController.php'; ?>
                             <div class="card-body" style="overflow:auto;">
                                 <ul class="list-group list-group-flush">
                                 <?php if(!empty($est_safety_seal)): ?>
-                                <?php foreach ($est_safety_seal as $key => $establishments) : ?>
-                                        <?php echo '<li class="list-group-item">' . $establishments['est'] . ' <span style="float: right; position:relative; top:5px;" class="badge badge-primary pull-right">'.$establishments['ss_no'].'</span> </li>'; ?>
-                                <?php endforeach; ?>
+                                    <?php foreach ($est_safety_seal as $key => $establishments) : ?>
+                                        <?php echo '<li class="list-group-item"><b style="font-size:10pt;">' . $establishments['est'] . '</b> <span style="float: right; position:relative; top:5px;" class="badge badge-primary pull-right">'.$establishments['ss_no'].'</span> </li>'; ?>
+                                    <?php endforeach; ?>
                                 <?php else:?>
                                 <?php echo '<li class="list-group-item">There are no establishments with safety seal certificate</li>'; ?>
                                 <?php endif;?>
@@ -160,7 +172,7 @@ require_once 'controller/DashboardController.php'; ?>
 
                                     <div class="box-body bg-ligth">
                                         <div class="chart">
-                                            <canvas id="barChart" style="height:230px"></canvas>
+                                            <canvas id="barChart" style="height:230px; padding:5px;"></canvas>
                                         </div>
                                     </div>
                                     <!-- /.box-body -->
