@@ -14,9 +14,7 @@ include '../application/config/connection.php';
                     "ip_address" => $row['IP_ADDRESS']
                 ));
             }
-        // }
 
-    // }
 
 
 

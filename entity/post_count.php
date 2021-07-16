@@ -5,7 +5,7 @@ include '../application/config/connection.php';
         LEFT JOIN tbl_admin_info ai on cl.user_id = ai.id 
         LEFT JOIN tbl_userinfo ui on ai.id = ui.USER_ID 
         LEFT JOIN tbl_ipadd_details mc on cl.sms_sending_status = mc.ID 
-        WHERE sms_sending_status = 1 and sms_sending_status != '' and status = 'Approved' ORDER BY `date_approved` DESC";
+        WHERE sms_sending_status = 1  and status = 'Approved' and safety_seal_no != '' ORDER BY `date_approved` DESC";
     $result = mysqli_query($conn, $sqlQuery);
 
     while ($row = mysqli_fetch_array($result)) {
