@@ -17,7 +17,7 @@
         <div class="modal-footer">
           <button type="button" class="btn btn-secondary" data-bs-dismiss="modal"><i class="fa fa-window-close"></i> Close</button>
           <?php if (!in_array($userinfo['status'], ['For Receiving', 'Approved', 'Disapproved'])): ?>
-            <button type="submit" class="btn btn-danger"><i class="fa fa-trash"></i> Remove Selected</button>
+            <button type="submit" class="btn btn-danger btn-delete_attachments" disabled><i class="fa fa-trash"></i> Remove Selected</button>
           <?php endif ?>
         </div>
       </form>
@@ -56,4 +56,47 @@
       .next(".custom-file-label")
       .html(filenames.join(","));
   });
+
+  // $(document).on('click', '.btn-delete_attachments', function(){
+  //   let path = 'entity/delete_attachments.php';
+  //   let data = $('#form-delete_attachments').serialize();
+  //   let xbox = $('.up-attachment');
+  //   let is_valid = false;
+  //   $.each(xbox, function(key, item){
+  //     if ($(this).is(':checked')) {
+  //       is_valid = true;
+  //     }
+  //   });
+
+  //   // let checker1 = checkAllSelected();
+  //   //   let checker2 = checkUploads();
+  //     if (is_valid) {
+  //       $.post(path, data, function(data, status){
+  //         // if (status == 'success') {
+  //         //   setTimeout(function(){// wait for 5 secs(2)
+  //         //     location.reload(); // then reload the page.(3) 
+  //         //   }, 1000);
+  //         // }
+  //       });
+  //     }
+  // });
+
+  $(document).on('change', '.up-attachment', function(){
+    let xbox = $('.up-attachment');
+    let is_valid = false;
+    
+    $.each(xbox, function(key, item){
+      if ($(this).is(':checked')) {
+        is_valid = true;
+      }
+    });
+
+    if (is_valid) {
+      $('.btn-delete_attachments').attr('disabled', false);  
+    } else {
+      $('.btn-delete_attachments').attr('disabled', true);  
+    }
+  });
+
+  
 </script>

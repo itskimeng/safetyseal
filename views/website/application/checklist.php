@@ -53,13 +53,14 @@
                     <div class="dot"></div>
                     <span style="padding-left: 2px; font-size:11pt;"> StaySafe.ph</span>
                   </label>
-                  
                 <?php endif ?>
+                <?php if ($list['tracing_tool'] == 'others'): ?>
                   <input type="radio" class="checklist2_opt" name="tracing_tool[<?php echo $list['clist_id']; ?>]" value='others' id="option-2" checked disabled>
                  <label for="option-2" class="option option-2 btn-sm" data-val="others">
                    <div class="dot"></div>
                     <span style="padding-left: 2px; font-size:11pt;">Other</span>
                  </label>
+                <?php endif ?>
               <?php endif ?>
 
 
@@ -67,7 +68,8 @@
 
             <div class="<?php echo $list['tracing_tool'] == 'others' ? '' : 'hidden-other_tools'; ?> other-sstools" style="margin-top:5%;">
             <?php if ($list['is_disabled']): ?>
-              Other contact tracing tool. <input type="text" id="cform-other_tool" name="other_tool[<?php echo $list['clist_id']; ?>]" class="form-control other_tool" value="<?php echo $list['other_tool']; ?>" disabled/>  
+              Other contact tracing tool. <br> <b><u><?php echo $list['other_tool']; ?></u></b>
+              <!-- Other contact tracing tool. <input type="text" id="cform-other_tool" name="other_tool[<?php //echo $list['clist_id']; ?>]" class="form-control other_tool" value="<?php //echo $list['other_tool']; ?>" disabled/>   -->
             <?php else: ?>
               Other contact tracing tool. <input type="text" id="cform-other_tool" name="other_tool[<?php echo $list['clist_id']; ?>]" class="form-control other_tool" value="<?php echo $list['other_tool']; ?>" <?php echo $list['otherTool_disabled'] ? 'disabled' : '' ; ?>/>
             <?php endif ?>

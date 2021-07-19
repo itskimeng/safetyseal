@@ -299,6 +299,23 @@
       }
     });
 
+    $(document).on('click', '.btn-add_attachments', function(){
+      let $this = $(this);
+      let $attachment = $('#customFile');
+
+      if ($attachment.val() != "") {
+        $this.html('<i class="fa fa-circle-notch fa-spin"></i> Uploading...');
+      }
+      // $this.attr('disabled', true);
+
+      let btn_close = $("#modal_evaluation .btn-secondary");
+      btn_close.css('display', 'none');
+      $("#modal_attachments").modal({
+        backdrop: 'static',
+        keyboard: false
+      });
+    });
+
     $(document).on('click', '.option', function(){
       let $this = $(this);
       let tr = $this.closest('tr');
@@ -418,18 +435,24 @@
       let asmnt = tr.find('.form-check-input');
       let other_tool = tr.find('.other_tool');
 
-      if (asmnt.is(':checked') || other_tool.val() != '') {
+      if (other_tool.val() != undefined) {
+        if (asmnt.is(':checked') || other_tool.val() != '') {
+          $counter++;
+        }
+      } else if (asmnt.is(':checked')) {
         $counter++;
       }
+
+      // if (asmnt.is(':checked') || other_tool.val() != undefined && other_tool.val() != '') {
+      // }
     });
+
+    console.log($counter);
 
     if ($counter < 14) {
       tata.warn('Warning', 'All items in the checklist must be assess.');
       checker = false;
     }
-    //  else {
-    //   $('#modal_attachments').modal('show');
-    // }
 
     return checker;
   }
@@ -480,7 +503,7 @@
       tr+= '<div class="checkers" style="padding-left: 1rem;">';
       tr+= '<div class="form-group">';
       tr+= '<input type="hidden" name="att_id['+item['caid']+']" value="'+item['file_id']+'">';
-      tr+= '<input class="form-check-input chklist_na" name="chklists['+item['caid']+']" type="checkbox" value="">';
+      tr+= '<input class="form-check-input chklist_na up-attachment" name="chklists['+item['caid']+']" type="checkbox" value="">';
       tr+= '</div>';
       tr+= '</div>';
       tr+= '<div class="pic-holder" style="padding-top: 5%;height: 12rem;">';
