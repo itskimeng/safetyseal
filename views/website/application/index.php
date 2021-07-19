@@ -386,6 +386,9 @@
       if (checker1 && checker2) {
         $.get(path, function(data, status){
           if (status == 'success') {
+
+            tata.success('Success', 'Successfully submitted.');
+
             setTimeout(function(){// wait for 5 secs(2)
               location.reload(); // then reload the page.(3) 
             }, 1000);

@@ -51,13 +51,17 @@
                         <i class="fa fa-clipboard-list"></i> View
                       </a>
                     <?php elseif (in_array($applicant['status'], ['For Receiving', 'For Reassessment'])): ?>
-                      <a href="entity/post_received.php?appid=<?php echo $applicant['id']; ?>&ussir=<?php echo $applicant['userid']; ?>&status=<?php echo $applicant['status']; ?>" class="btn btn-primary btn-block btn-sm" style="margin-bottom: -2%;">
+                      <!-- <a href="entity/post_received.php?appid=<?php echo $applicant['id']; ?>&ussir=<?php echo $applicant['userid']; ?>&status=<?php echo $applicant['status']; ?>" class="btn btn-primary btn-block btn-sm" style="margin-bottom: -2%;">
                         <i class="fa fa-box"></i> Receive
+                      </a> -->
+
+                      <a href="admin_application_open.php?appid=<?php echo $applicant['id']; ?>&ussir=<?php echo $applicant['userid']; ?>" class="btn btn-secondary btn-block btn-sm" style="margin-bottom: -2%;">
+                        <i class="fa fa-folder-open"></i> Open
                       </a>
 
-                      <button type="button" id="btn-return_application" class="btn btn-danger btn-block btn-sm btn-return_application" style="margin-bottom: -2%;">
+                      <!-- <button type="button" id="btn-return_application" class="btn btn-danger btn-block btn-sm btn-return_application" style="margin-bottom: -2%;">
                         <i class="fa fa-undo"></i> Return
-                      </button>
+                      </button> -->
                     <?php else: ?>
                       <a href="admin_application_view.php?appid=<?php echo $applicant['id']; ?>&ussir=<?php echo $applicant['userid']; ?>" class="btn btn-success btn-block btn-sm" style="margin-bottom: -2%;">
                         <i class="fa fa-eye"></i> View

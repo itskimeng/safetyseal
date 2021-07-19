@@ -38,8 +38,6 @@
   </div>
 </div>
 
-<?php include 'modal_returned.php';?>
-
 <script>
   $(function () {
     // $('select').select2();
@@ -72,17 +70,6 @@
 
     $(document).on('click', '#btn-reset', function() {
       location.reload(); 
-    });
-
-    $(document).on('click', '.btn-return_application', function(){
-      let tr = $(this).closest('tr');
-      let vv = $(this);
-      let id = tr.find('#cform-ac_id');
-      let $modal = $("#modal_return_remarks");
-      let form_id = $modal.find('#rtn-chklist_id');
-    
-      form_id.val(id.val());
-      $modal.modal('show');
     });
 
     $(document).on('click', '#btn-filter', function() {
