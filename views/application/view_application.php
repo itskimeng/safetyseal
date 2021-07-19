@@ -51,7 +51,9 @@
                     <th width="13%">REMARKS FROM PNP</th>
                     <th width="13%">REMARKS FROM BFP</th>
                     <?php if ($applicant['status'] <> 'For Receiving' and $applicant['status'] <> 'Draft') : ?>
-                      <th>ASSESSMENT</th>
+                      <?php //if ($useraccess['nature'] != 'PNP' AND $useraccess['position'] != 'PNP' AND $useraccess['nature'] != 'BFP' AND $useraccess['position'] != 'BFP'): ?>
+                          <th>ASSESSMENT</th>
+                        <?php //endif ?>
                     <?php endif ?>
                   </tr>
                 </thead>
@@ -96,7 +98,7 @@
                       <td>
                         <div class="col-md-12">
                           <div class="form-group">
-                            <?php if ($list['nature'] == 'pnp') : ?>
+                            <?php if ($useraccess['nature'] == 'PNP' OR $useraccess['position'] == 'PNP') : ?>
                               <textarea class="form-control" rows="3" name="pnp_remarks[<?php echo $list['ulist_id']; ?>]" placeholder="Enter ..." style="font-size: 9.5pt;" <?php echo $is_readonly ? 'disabled' : ''; ?> value="<?php echo isset($list['pnp_remarks']) ? $list['pnp_remarks'] : ''; ?>"><?php echo isset($list['pnp_remarks']) ? $list['pnp_remarks'] : ''; ?></textarea>
                             <?php else : ?>
                               <?php echo isset($list['pnp_remarks']) ? $list['pnp_remarks'] : ''; ?>
@@ -107,7 +109,7 @@
                       <td>
                         <div class="col-md-12">
                           <div class="form-group">
-                            <?php if ($list['nature'] == 'pnp') : ?>
+                            <?php if ($useraccess['nature'] == 'BFP' OR $useraccess['position'] == 'BFP') : ?>
                               <textarea class="form-control" rows="3" name="bfp_remarks[<?php echo $list['ulist_id']; ?>]" placeholder="Enter ..." style="font-size: 9.5pt;" <?php echo $is_readonly ? 'disabled' : ''; ?> value="<?php echo isset($list['bfp_remarks']) ? $list['bfp_remarks'] : ''; ?>"><?php echo isset($list['bfp_remarks']) ? $list['bfp_remarks'] : ''; ?></textarea>
                             <?php else : ?>
                               <?php echo isset($list['bfp_remarks']) ? $list['bfp_remarks'] : ''; ?>
@@ -117,6 +119,9 @@
                         </div>
                       </td>
                       <?php if ($applicant['status'] <> 'For Receiving' and $applicant['status'] <> 'Draft') : ?>
+                        <?php //if ($useraccess['nature'] != 'PNP' AND $useraccess['position'] != 'PNP' AND $useraccess['nature'] != 'BFP' AND $useraccess['position'] != 'BFP'): ?>
+                          
+                        
                         <td class="text-center">
                           <?php if ($is_readonly) : ?>
                             <div class="btn-group btn-group-toggle" data-toggle="buttons">
@@ -130,6 +135,15 @@
                                 </label>
                               <?php endif ?>
                             </div>
+
+                          <?php elseif ($useraccess['nature'] == 'PNP' OR $useraccess['position'] == 'PNP' OR $useraccess['nature'] == 'BFP' OR $useraccess['position'] == 'BFP') : ?>
+
+                            <?php if ($list['assessment'] == 'pass') : ?>
+                              <span class="right badge badge-success" style="font-size:12pt;">Passed</span>
+                            <?php elseif ($list['assessment'] == 'fail') : ?>
+                              <span class="right badge badge-danger" style="font-size:12pt;">Failed</span>
+                            <?php endif ?>
+                            
                           <?php else : ?>
                             <div class="btn-group btn-group-toggle" data-toggle="buttons">
 
@@ -140,20 +154,23 @@
                               <label class="assessments btn bg-danger btn-sm bg-danger_btn fail <?php echo $list['assessment'] == 'failed' ? 'active' : ''; ?>" style="background-color: #bd21308c; font-size: 9.5pt;">
                                 <input type="radio" name="assessments[<?php echo $list['ulist_id']; ?>]" value="fail" id="option_b2" autocomplete="off" <?php echo $list['assessment'] == 'fail' ? 'checked' : ''; ?>><i class="fa fa-times"></i> <?php echo $list['assessment'] == 'fail' ? 'Failed' : 'Fail'; ?>
                               </label>
+                            <?php //endif ?>
+                            </div>
+                            <!-- <?php //else : ?>
+                              <div class="btn-group btn-group-toggle" data-toggle="buttons">
+                                <label class="assessments btn bg-success btn-sm bg-success_btn <?php //echo $list['assessment'] == 'pass' ? 'active' : ''; ?>" style="background-color: #00800099">
+                                  <input type="radio" name="assessments[<?php //echo $list['ulist_id']; ?>]" value="pass" id="option_b1" autocomplete="off" <?php //echo $list['assessment'] == 'pass' ? 'checked' : ''; ?>><i class="fa fa-check"></i> Pass
+                                </label>
+                                <label class="assessments btn bg-danger btn-sm bg-danger_btn <?php //echo $list['assessment'] == 'failed' ? 'active' : ''; ?>" style="background-color: #bd21308c">
+                                  <input type="radio" name="assessments[<?php //echo $list['ulist_id']; ?>]" value="failed" id="option_b2" autocomplete="off" <?php //echo $list['assessment'] == 'failed' ? 'checked' : ''; ?>><i class="fa fa-times"></i> Failed
+                                </label>
+                              </div> -->
                             <?php endif ?>
-                            </div>
-                          <?php else : ?>
-                            <div class="btn-group btn-group-toggle" data-toggle="buttons">
-                              <label class="assessments btn bg-success btn-sm bg-success_btn <?php echo $list['assessment'] == 'pass' ? 'active' : ''; ?>" style="background-color: #00800099">
-                                <input type="radio" name="assessments[<?php echo $list['ulist_id']; ?>]" value="pass" id="option_b1" autocomplete="off" <?php echo $list['assessment'] == 'pass' ? 'checked' : ''; ?>><i class="fa fa-check"></i> Pass
-                              </label>
-                              <label class="assessments btn bg-danger btn-sm bg-danger_btn <?php echo $list['assessment'] == 'failed' ? 'active' : ''; ?>" style="background-color: #bd21308c">
-                                <input type="radio" name="assessments[<?php echo $list['ulist_id']; ?>]" value="failed" id="option_b2" autocomplete="off" <?php echo $list['assessment'] == 'failed' ? 'checked' : ''; ?>><i class="fa fa-times"></i> Failed
-                              </label>
-                            </div>
-                          <?php endif ?>
 
                         </td>
+                        <?php //endif ?>
+                      <?php endif ?>
+
                     </tr>
                   <?php endforeach; ?>
                 </tbody>
@@ -164,41 +181,45 @@
         </div>
 
         <?php if ($applicant['status'] <> 'For Receiving' and $applicant['status'] <> 'Draft') : ?>
-          <div class="col-lg-12 col-md-6 col-sm-3">
-            <div class="card card-default">
-              <div class="card-header">
-                <h3 class="card-title"><i class="fa fa-search" aria-hidden="true"></i> <b>FOR ONSITE VALIDATION/ INSPECTION</b></h3>
+          <?php if ($useraccess['nature'] != 'PNP' AND $useraccess['position'] != 'PNP' AND $useraccess['nature'] != 'BFP' AND $useraccess['position'] != 'BFP'): ?>
+            <div class="col-lg-12 col-md-6 col-sm-3">
+              <div class="card card-default">
+                <div class="card-header">
+                  <h3 class="card-title"><i class="fa fa-search" aria-hidden="true"></i> <b>FOR ONSITE VALIDATION/ INSPECTION</b></h3>
 
-                <div class="card-tools">
-                  <button type="button" class="btn btn-tool btn-tool-onsite" data-card-widget="collapse">
-                    <i class="fas fa-minus"></i>
-                  </button>
-                </div>
-              </div>
-              <!-- /.card-header -->
-              <div class="card-body card-body-onsite collapse show">
-                <div class="row">
-                  <div class="col-md-12">
-                    <div class="form-group">
-                      <label>Defects/Defeciencies noted during inspection:</label>
-                      <textarea class="form-control" rows="3" name="defects" placeholder="Enter ..." <?php echo $is_readonly ? 'disabled' : ''; ?> value="<?php echo isset($app_notes['defects']) ? $app_notes['defects'] : ''; ?>"><?php echo isset($app_notes['defects']) ? $app_notes['defects'] : ''; ?></textarea>
-                    </div>
+                  <div class="card-tools">
+                    <button type="button" class="btn btn-tool btn-tool-onsite" data-card-widget="collapse">
+                      <i class="fas fa-minus"></i>
+                    </button>
                   </div>
                 </div>
-                <div class="row">
-                  <div class="col-md-12" style="margin-bottom:-1%;">
-                    <div class="form-group">
-                      <label>Recommendations</label>
-                      <textarea class="form-control" name="recommendations" rows="3" placeholder="Enter ..." <?php echo $is_readonly ? 'disabled' : ''; ?> value="<?php echo isset($app_notes['recommendations']) ? $app_notes['recommendations'] : ''; ?>"><?php echo isset($app_notes['recommendations']) ? $app_notes['recommendations'] : ''; ?></textarea>
+                <!-- /.card-header -->
+                <div class="card-body card-body-onsite collapse show">
+                  <div class="row">
+                    <div class="col-md-12">
+                      <div class="form-group">
+                        <label>Defects/Defeciencies noted during inspection:</label>
+                        <textarea class="form-control" rows="3" name="defects" placeholder="Enter ..." <?php echo $is_readonly ? 'disabled' : ''; ?> value="<?php echo isset($app_notes['defects']) ? $app_notes['defects'] : ''; ?>"><?php echo isset($app_notes['defects']) ? $app_notes['defects'] : ''; ?></textarea>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="row">
+                    <div class="col-md-12" style="margin-bottom:-1%;">
+                      <div class="form-group">
+                        <label>Recommendations</label>
+                        <textarea class="form-control" name="recommendations" rows="3" placeholder="Enter ..." <?php echo $is_readonly ? 'disabled' : ''; ?> value="<?php echo isset($app_notes['recommendations']) ? $app_notes['recommendations'] : ''; ?>"><?php echo isset($app_notes['recommendations']) ? $app_notes['recommendations'] : ''; ?></textarea>
+                      </div>
                     </div>
                   </div>
                 </div>
               </div>
             </div>
-          </div>
+          <?php endif ?>
         <?php endif ?>
 
         <?php if ($applicant['status'] <> 'Approved' and $applicant['status'] <> 'Disapproved') : ?>
+          <div class="row">
+            
           <div class="col-lg-12 col-md-6 col-sm-3">
             <!-- <div class="card"> -->
 
@@ -247,6 +268,8 @@
               </div>
 
             </div>
+          </div>
+
 
           <?php endif ?>
           <?php if ($applicant['status'] <> 'For Receiving' and $applicant['status'] <> 'Draft') : ?>

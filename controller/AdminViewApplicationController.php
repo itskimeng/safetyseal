@@ -11,13 +11,14 @@ $app = new ApplicationManager();
 $province = $_SESSION['province'];
 $citymun = $_SESSION['city_mun'];
 $nature = $_SESSION['nature'];
-
+$userid = $_SESSION['userid'];
 
 $province_opts = $app->getProvinces();
 $citymun_opts = $app->getCityMuns($province);
 $applicants = $app->getApplicationLists($province,$citymun,ApplicationManager::STATUS_DRAFT);
 $is_nature = getNature($nature);
 
+$useraccess = getUserAccess($conn, $userid); 
 $applicant = getUserChecklists($conn, $appid); 
 
 $is_readonly = false;
@@ -28,9 +29,35 @@ $applicants_data = getUserChecklistsEntry($conn, $appid);
 $appchecklists_attchmnt = $app->getUserChecklistsAttachments($applicant['ssid']);
 $app_notes = getUserChecklistsValidations($conn, $appid);
 
+function getUserAccess($conn, $id)
+{
+    $sql = "SELECT
+        ai.id as id, 
+        ui.GOV_AGENCY_NAME as agency,
+        ui.GOV_ESTB_NAME as establishment,
+        ui.GOV_NATURE_NAME as nature,
+        ui.ADDRESS as address,
+        ai.CMLGOO_NAME as fname,
+        ai.EMAIL as email,
+        ai.id as user_id,
+        ui.ADDRESS as address,
+        ui.MOBILE_NO as contact_details,
+        ui.POSITION as position
+        FROM tbl_admin_info ai
+        LEFT JOIN tbl_userinfo ui on ui.user_id = ai.id
+        WHERE ai.id = $id";
+    
+
+    $query = mysqli_query($conn, $sql);
+    $data = mysqli_fetch_array($query);
+
+    return $data;
+}
+
 function getUserChecklists($conn, $id)
 {
-    $sql = "SELECT 
+    $sql = "SELECT
+        ai.id as id, 
        	ui.GOV_AGENCY_NAME as agency,
        	ui.GOV_ESTB_NAME as establishment,
        	ui.GOV_NATURE_NAME as nature,
@@ -48,6 +75,7 @@ function getUserChecklists($conn, $id)
         ac.nature as ac_nature,
         ac.address as ac_address,
         ac.token as ssid,
+        ui.POSITION as position,
        	DATE_FORMAT(ac.date_created, '%M %d, %Y') as date_created
         FROM tbl_app_checklist ac
         LEFT JOIN tbl_admin_info ai on ai.id = ac.user_id
@@ -74,7 +102,8 @@ function getUserChecklistsEntry($conn, $id)
         e.assessment as assessment,
         e.pnp_remarks as pnp_remarks,
         e.bfp_remarks as bfp_remarks,
-        ui.GOV_NATURE_NAME as nature
+        ui.GOV_NATURE_NAME as nature,
+        ui.POSITION as position
         FROM tbl_app_checklist_entry e
         LEFT JOIN tbl_app_checklist ac on ac.id = e.parent_id
         LEFT JOIN tbl_app_certchecklist c on c.id = e.chklist_id
@@ -117,7 +146,8 @@ function getUserChecklistsEntry($conn, $id)
             'other_tool' => $row['other_tool'],
             'pnp_remarks' => $row['pnp_remarks'],
             'bfp_remarks' => $row['bfp_remarks'],
-            'nature' => $nature
+            'nature' => $nature,
+            'position' => $row['position']
         ];    
     }
 
