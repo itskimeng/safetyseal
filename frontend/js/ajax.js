@@ -62,9 +62,9 @@ setInterval(function () {
                             type: "POST",
                             url: "entity/post_sending.php",
                             data: {
-                                type: 'client',
-                                cn: control_no,
-                                has_sent: '0',// successfully sent!
+                                client: 'client',
+                                cn_client: control_no,
+                                has_sent_client: '0',// successfully sent!
                             },
                             success: function (data) {
                                 console.log('SMS Notification: status(success!)');
@@ -109,9 +109,9 @@ setInterval(function () {
                                     type: "POST",
                                     url: "entity/post_sending.php",
                                     data: {
-                                        type:'admin',
-                                        cn:control_no,
-                                        has_sent: '0',// successfully sent!
+                                        admin:'admin',
+                                        cn_admin:control_no,
+                                        has_sent_admin: '0',// successfully sent!
                                     },
                                     success: function (data) {
                                         console.log('SMS Notification: status(success!)');

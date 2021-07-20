@@ -6,7 +6,7 @@ include '../application/config/connection.php';
         LEFT JOIN tbl_userinfo ui on ai.id = ui.USER_ID 
         LEFT JOIN tbl_ipadd_details mc 
         on cl.email_sending_status = mc.ID 
-        where email_sending_status = 1 ";
+        where `email_sending_status` = '1' AND `date_approved` IS NOT NULL";
     $result = mysqli_query($conn, $sqlQuery);
 
     if ($row1 = mysqli_fetch_array($result)) {
