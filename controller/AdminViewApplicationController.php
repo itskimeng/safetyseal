@@ -21,6 +21,14 @@ $is_nature = getNature($nature);
 $useraccess = getUserAccess($conn, $userid); 
 $applicant = getUserChecklists($conn, $appid); 
 
+if (strstr($_SERVER['REQUEST_URI'], '/admin_application_open.php')) {
+    if ($applicant['status'] == 'Received') {
+        header('location:admin_application_view.php?appid='.$_GET['appid'].'&ussir='.$_GET['ussir'].'');
+    } elseif ($applicant['status'] == 'Returned') {
+        header('location:../admin_application.php');
+    }
+}
+
 $is_readonly = false;
 if ($applicant['status'] == 'Approved' OR $applicant['status'] == 'Disapproved') {
     $is_readonly = true;
