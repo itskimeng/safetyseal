@@ -664,10 +664,10 @@ class ApplicationManager
 
     public function showAllApplications($province='',$timestamp, $status='')
     {
-        $sql = "SELECT COUNT(*) as total FROM tbl_app_checklist ac 
+        $sql = "SELECT COUNT(*) as total, ac.control_no, ac.status FROM tbl_app_checklist ac 
                 LEFT JOIN tbl_admin_info ai on ai.id = ac.user_id
                 LEFT JOIN tbl_province tp on tp.id = ai.PROVINCE 
-                WHERE ac.date_created <= '".$timestamp."' AND ai.id IS NOT NULL";
+                WHERE ac.date_created <= '".$timestamp."' AND ai.id IS NOT NULL AND tp.id IS NOT NULL";
 
         if (!empty($status)) {
             $sql.= " AND ac.status = '".$status."'";
