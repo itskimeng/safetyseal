@@ -16,9 +16,11 @@
         <li class="nav-item">
           <a href="dashboard.v2.php" class="nav-link">Dashboard</a>
         </li>
+        <?php if ($_SESSION['province'] != 0 AND $_SESSION['city_mun'] != 00): ?>
         <li class="nav-item">
           <a href="admin_application.php" class="nav-link">Application</a>
         </li>
+        <?php endif ?>
         <li class="nav-item">
           <a href="admin_report_application.php" class="nav-link">Generate Reports</a>
         </li>
