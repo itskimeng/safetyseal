@@ -22,29 +22,34 @@
 <div class="content">
   <div class="container">
 
+    <?php if ($useraccess['nature'] == 'PNP' OR $useraccess['position'] == 'PNP' OR $useraccess['nature'] == 'BFP' OR $useraccess['position'] == 'BFP'): ?>
+      <div class="callout callout-warning">
+        <h5>Reminder!</h5>
+        <p>Assessment for the PNP and BFP Inspection Team will start once <b>CMLGOO</b> has <b>RECEIVED</b> the application.</p>
+      </div>
+    <?php endif ?>
+
+    <?php if ($useraccess['nature'] != 'PNP' AND $useraccess['position'] != 'PNP' AND $useraccess['nature'] != 'BFP' AND $useraccess['position'] != 'BFP'): ?>
     <div class="row mb-3">
       <div class="col-md-6 col-sm-3">
         <div class="row">
-          <div class="col-md-2">
-            <button type="button" id="btn-return_modal" class="btn btn-danger btn-block btn-sm btn-return_modal" style="margin-bottom: -2%;">
-              <i class="fa fa-undo-alt"></i> Return
-            </button>
-          </div> 
+            <div class="col-md-2">
+              <button type="button" id="btn-return_modal" class="btn btn-danger btn-block btn-sm btn-return_modal" style="margin-bottom: -2%;">
+                <i class="fa fa-undo-alt"></i> Return
+              </button>
+            </div> 
 
-          <div class="col-md-2">
-            <!-- <a href="#" class="btn btn-info btn-block btn-sm" style="margin-bottom: -2%;"> -->
-              <!-- <i class="fa fa-box"></i> Receive -->
-            <!-- </a> -->
-            <a href="entity/post_received.php?appid=<?php echo $_GET['appid']; ?>&ussir=<?php echo $_GET['appid']; ?>&status=For Receiving" class="btn btn-primary btn-block btn-sm" style="margin-bottom: -2%;">
-              <i class="fa fa-box"></i> Receive
-            </a>
-          </div>  
+            <div class="col-md-2">
+              <a href="entity/post_received.php?appid=<?php echo $_GET['appid']; ?>&ussir=<?php echo $_GET['appid']; ?>&status=For Receiving" class="btn btn-primary btn-block btn-sm" style="margin-bottom: -2%;">
+                <i class="fa fa-box"></i> Receive
+              </a>
+            </div>  
           
         </div>
 
       </div>  
     </div>
-
+  <?php endif ?>
 
     <?php include 'form/applicant_details.php'; ?>
 
@@ -193,17 +198,14 @@
             <div class="panel panel-default">
               <div class="row">
                 <?php if (in_array($applicant['status'], ['For Receiving', 'Draft', 'For Reassessment'])) : ?>
+                  <?php if ($useraccess['nature'] != 'PNP' AND $useraccess['position'] != 'PNP' AND $useraccess['nature'] != 'BFP' AND $useraccess['position'] != 'BFP'): ?>
                   <div class="col-md-12">
-                    <!-- <form action="entity/post_received.php" method="POST"> -->
-                      <!-- <input type="hidden" name="appid" value="<?php echo $applicant['appid']; ?>"> -->
-                      <!-- <button type="submit" class="btn btn-primary btn-block" name="login" style="width: 100%;"><i class="fa fa-box"></i> -->
-                        <!-- Receive -->
-                      <!-- </button> -->
-                    <!-- </form> -->
+                    
                     <a href="entity/post_received.php?appid=<?php echo $_GET['appid']; ?>&ussir=<?php echo $_GET['appid']; ?>&status=For Receiving" class="btn btn-primary btn-block btn-sm" style="margin-bottom: -2%;">
                       <i class="fa fa-box"></i> Receive
                     </a>
                   </div>
+                <?php endif ?>
                 <?php else : ?>
 
                   <div class="<?php echo $is_new ? 'col-md-12' : 'col-md-12'; ?> pull-right">
