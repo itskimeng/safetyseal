@@ -11,7 +11,12 @@ $citymun = $_SESSION['city_mun'];
 $is_clusterhead = $_SESSION['is_clusterhead'];
 $clusterhead_id = $_SESSION['clusterhead_id'];
 $is_pfp = $_SESSION['is_pfp'];
+$is_rofp = (($province == 0) && ($citymun == 00));
 $hlbl = ""; 
+
+if ($is_rofp) {
+    $hlbl = '(REGIONAL OFFICE FOCAL PERSON)';
+}
 
 if ($is_clusterhead) {
 	$hlbl = '(CLUSTERHEAD)';
@@ -156,7 +161,7 @@ function getApplicationLists($conn, $province, $lgus, $status, $is_clusterhead)
 
 	$codes = implode(',', $codes);
 
-	$bsql = "SELECT ac.id as id,ai.CMLGOO_NAME as fname,ui.GOV_AGENCY_NAME as agency,ui.ADDRESS as address,DATE_FORMAT(ac.date_created, '%Y-%m-%d') as date_created,DATE_FORMAT(ac.date_approved, '%Y-%m-%d H:i:s') as date_approved,ui.id as userid,ac.control_no as control_no,ac.safety_seal_no as ss_no,ac.status as status,ac.address as ac_address,ac.application_type as app_type,ac.token as token
+	$bsql = "SELECT ac.id as id,ai.CMLGOO_NAME as fname,ui.GOV_AGENCY_NAME as pagency, ac.agency as cagency, ui.ADDRESS as address,DATE_FORMAT(ac.date_created, '%Y-%m-%d') as date_created,DATE_FORMAT(ac.date_approved, '%Y-%m-%d H:i:s') as date_approved,ui.id as userid,ac.control_no as control_no,ac.safety_seal_no as ss_no,ac.status as status,ac.address as ac_address,ac.application_type as app_type,ac.token as token
 	    FROM tbl_app_checklist ac
 	    LEFT JOIN tbl_admin_info ai on ai.id = ac.user_id
 	    LEFT JOIN tbl_userinfo ui on ui.user_id = ai.id";
@@ -179,7 +184,7 @@ function getApplicationLists($conn, $province, $lgus, $status, $is_clusterhead)
             'id' => $row['id'],
             'userid' => $row['userid'],
             'fname' => $row['fname'],
-            'agency' => $row['agency'],
+            'agency' => $row['pagency'],
             'address' => $row['address'],
             'date_created' => $row['date_created'],
             'control_no' => $row['control_no'],
@@ -300,17 +305,11 @@ function getPFPApplicationLists($conn, $province, $status)
 {
 	$data = [];
 
-	// foreach ($lgus as $key => $lgu) {
-	// 	$codes[] = $lgu['code']; 
-	// }
-
-	// $codes = implode(',', $codes);
-
-	// foreach ($lgus as $key => $lgu) {
-	    $sql = "SELECT 
+    $sql = "SELECT 
 	    ac.id as id,
 	    ai.CMLGOO_NAME as fname,
-	    ui.GOV_AGENCY_NAME as agency,
+	    ui.GOV_AGENCY_NAME as pagency,
+	    ac.agency as cagency,
 	    ui.ADDRESS as address,
 	    DATE_FORMAT(ac.date_created, '%Y-%m-%d') as date_created,
 	    DATE_FORMAT(ac.date_approved, '%Y-%m-%d H:i:s') as date_approved,
@@ -324,10 +323,11 @@ function getPFPApplicationLists($conn, $province, $status)
 	    ac.token as token
 	    FROM tbl_app_checklist ac
 	    LEFT JOIN tbl_admin_info ai on ai.id = ac.user_id
-	    LEFT JOIN tbl_userinfo ui on ui.user_id = ai.id
-	    WHERE ai.PROVINCE = ".$province." AND ac.application_type = 'Applied' AND ac.status = 'Approved'";
+	    LEFT JOIN tbl_userinfo ui on ui.user_id = ai.id";
+
+	$sql1 = " WHERE ai.PROVINCE = ".$province." AND ac.application_type = 'Applied' AND ac.status <> '$status'";
 	 
-	    $query = mysqli_query($conn, $sql);
+	    $query = mysqli_query($conn, $sql.$sql1);
 
 	    
 	    while ($row = mysqli_fetch_assoc($query)) {
@@ -344,7 +344,7 @@ function getPFPApplicationLists($conn, $province, $status)
 	            'id' => $row['id'],
 	            'userid' => $row['userid'],
 	            'fname' => !empty($row['person']) ? $row['person'] : $row['fname'],
-	            'agency' => $row['agency'],
+	            'agency' => $row['pagency'],
 	            'address' => $row['address'],
 	            'date_created' => $row['date_created'],
 	            'control_no' => $row['control_no'],
@@ -358,28 +358,30 @@ function getPFPApplicationLists($conn, $province, $status)
 	        ];    
 	    }
 
-	    $sql2 = "SELECT 
-	    ac.id as id,
-	    ai.CMLGOO_NAME as fname,
-	    ui.GOV_AGENCY_NAME as pagency,
-	    ac.agency as cagency,
-	    ui.ADDRESS as address,
-	    DATE_FORMAT(ac.date_created, '%Y-%m-%d') as date_created,
-	    DATE_FORMAT(ac.date_approved, '%Y-%m-%d') as date_approved,
-	    ui.id as userid,
-	    ac.control_no as control_no,
-	    ac.safety_seal_no as ss_no,
-	    ac.status as status,
-	    ac.address as ac_address,
-	    ac.application_type as app_type,
-	    ac.person as person,
-	    ac.token as token
-	    FROM tbl_app_checklist ac
-	    LEFT JOIN tbl_admin_info ai on ai.id = ac.user_id
-	    LEFT JOIN tbl_userinfo ui on ui.user_id = ai.id
-	    WHERE ai.PROVINCE = ".$province." AND ac.application_type = 'Encoded' AND ac.status = 'Approved'";
+	    // $sql2 = "SELECT 
+	    // ac.id as id,
+	    // ai.CMLGOO_NAME as fname,
+	    // ui.GOV_AGENCY_NAME as pagency,
+	    // ac.agency as cagency,
+	    // ui.ADDRESS as address,
+	    // DATE_FORMAT(ac.date_created, '%Y-%m-%d') as date_created,
+	    // DATE_FORMAT(ac.date_approved, '%Y-%m-%d') as date_approved,
+	    // ui.id as userid,
+	    // ac.control_no as control_no,
+	    // ac.safety_seal_no as ss_no,
+	    // ac.status as status,
+	    // ac.address as ac_address,
+	    // ac.application_type as app_type,
+	    // ac.person as person,
+	    // ac.token as token
+	    // FROM tbl_app_checklist ac
+	    // LEFT JOIN tbl_admin_info ai on ai.id = ac.user_id
+	    // LEFT JOIN tbl_userinfo ui on ui.user_id = ai.id
+	    // WHERE ai.PROVINCE = ".$province." AND ac.application_type = 'Encoded' AND ac.status = 'Approved'";
+
+	    $sql2 = " WHERE ai.PROVINCE = ".$province." AND ac.application_type = 'Encoded'";
 	 
-	    $query = mysqli_query($conn, $sql2);
+	    $query = mysqli_query($conn, $sql.$sql2);
 	    // $data = [];
 	    
 	    while ($row = mysqli_fetch_assoc($query)) {
