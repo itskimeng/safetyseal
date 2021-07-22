@@ -195,7 +195,7 @@ foreach ($results as $key => $result) {
 // $filename = $resultLgu['name'].'_'.date("F j, Y");
 
 
-$filename = "SSCP-Bi-Monthly-Reporting-".$result1
+// $filename = "SSCP-Bi-Monthly-Reporting";
 
 // We'll be outputting an excel file
 header('Content-type: application/vnd.ms-excel');
