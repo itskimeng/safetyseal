@@ -30,11 +30,12 @@ if ($is_pfp) {
 } 
 
 
-
 if ($is_rofp) {
     $citymun_opts = $app->getCityMuns($province);
     $province_opts = $am->getProvinces();
     $est_safety_seal = getEstablishmentSSCRO($conn);
+    $asof_date = new DateTime();
+    $timestamp = $asof_date->format('Y-m-d H:i:s');
 
     $lgu = [];
 
@@ -48,6 +49,11 @@ if ($is_rofp) {
     $receiving = getdataForReceivedRO($conn, $province_opts);
     $approved = getdataApprovedRO1($conn, $province_opts);
 
+    $reports['cavite'] = $am->showAllApplications(1,$timestamp,ApplicationManager::STATUS_APPROVED);
+    $reports['laguna'] = $am->showAllApplications(2,$timestamp,ApplicationManager::STATUS_APPROVED);
+    $reports['batangas'] = $am->showAllApplications(3,$timestamp,ApplicationManager::STATUS_APPROVED);
+    $reports['rizal'] = $am->showAllApplications(4,$timestamp,ApplicationManager::STATUS_APPROVED);
+    $reports['quezon'] = $am->showAllApplications('huc',$timestamp,ApplicationManager::STATUS_APPROVED);
 } elseif ($is_pfp) {
 	$citymun_opts = $app->getCityMuns($province);
 	$lgu = $app->getCityMuns($province);
@@ -250,7 +256,7 @@ function getEstablishmentSSCRO($conn)
         LEFT JOIN tbl_admin_info ai on chkl.user_id = ai.id
         LEFT JOIN tbl_userinfo ui on ui.USER_ID = ai.id
         LEFT JOIN tbl_province pro on ai.PROVINCE = pro.id 
-        WHERE chkl.status='Approved'";
+        WHERE chkl.status='Approved' ORDER BY pro.id";
 
     $query = mysqli_query($conn, $sql);
     $data = [];
