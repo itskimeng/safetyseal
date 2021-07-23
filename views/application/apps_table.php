@@ -63,7 +63,7 @@
                         <i class="fa fa-box"></i> Receive
                       </a> -->
 
-                      <a href="admin_application_open.php?appid=<?php echo $applicant['id']; ?>&ussir=<?php echo $applicant['userid']; ?>" class="btn btn-secondary btn-block btn-sm" style="margin-bottom: -2%;" title="View Checklist">
+                      <a href="admin_application_open.php?appid=<?php echo $applicant['id']; ?>&ussir=<?php echo $applicant['userid']; ?>" class="btn btn-info btn-block btn-sm" style="margin-bottom: -2%;" title="View Checklist">
                         <i class="fa fa-folder-open"></i> View
                       </a>
 

@@ -33,8 +33,11 @@
                 </div>
 
                 <?php if (!$is_new): ?>
-                  <!-- checklist -->
                   <?php include 'checklist.php'; ?>
+                <?php endif ?>
+
+                <?php if (in_array($userinfo['status'], ['Returned', 'Disapproved', 'Reassess'])): ?>
+                  <?php include 'comments.php'; ?>
                 <?php endif ?>
 
                 <!-- Submit button -->

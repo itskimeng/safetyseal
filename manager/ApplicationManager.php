@@ -237,12 +237,15 @@ class ApplicationManager
             ac.control_no as control_no,
             ac.establishment as establishment2,
             ac.nature as nature,
-            ac.address as address
+            ac.address as address,
+            aco.defects as defects,
+            aco.recommendations as recommendations
             FROM tbl_app_checklist ac
             LEFT JOIN tbl_admin_info ai on ai.id = ac.user_id
             LEFT JOIN tbl_userinfo ui on ui.user_id = ai.id
             LEFT JOIN tbl_province p on p.id = ai.PROVINCE
             LEFT JOIN tbl_citymun m on m.id = ai.LGU
+            LEFT JOIN tbl_app_checklist_onsitevalidations aco on aco.chklist_id = ac.id
             WHERE ac.token = '".$token."'";
         
         $query = mysqli_query($this->conn, $sql);
@@ -269,6 +272,8 @@ class ApplicationManager
                 'status' => !empty($row['status']) ? $row['status'] : 'Draft',
                 'pcode' => $row['pcode'],
                 'mcode' => $row['mcode'],
+                'defects' => $row['defects'],
+                'recommendations' => $row['recommendations'],
                 'code' => !empty($row['control_no']) ? $row['control_no'] : '2021-'.'_____',
                 'date_proceed' => $row['date_proceed']
             ];      
@@ -427,7 +432,7 @@ class ApplicationManager
                 'fname' => $row['fname'],
                 'agency' => $row['agency'],
                 'address' => $row['address'],
-                'date_created' => date('F d, Y',strtotime($row['date_created'])),
+                'date_created' => date('F d, Y', strtotime($row['date_created'])),
                 'control_no' => $row['control_no'],
                 'ss_no' => $row['ss_no'],
                 'status' => $row['status'],
@@ -485,7 +490,7 @@ class ApplicationManager
                 'fname' => !empty($row['person']) ? $row['person'] : $row['fname'],
                 'agency' => !empty($row['cagency']) ? $row['cagency'] : $row['pagency'],
                 'address' => $row['address'],
-                'date_created' => date('F d, Y',strtotime($row['date_created'])),
+                'date_created' => date('F d, Y', strtotime($row['date_created'])),
                 'control_no' => $row['control_no'],
                 'ss_no' => $row['ss_no'],
                 'status' => $row['status'],
@@ -537,7 +542,7 @@ class ApplicationManager
                 'fname' => !empty($row['person']) ? $row['person'] : $row['fname'],
                 'agency' => !empty($row['cagency']) ? $row['cagency'] : $row['pagency'],
                 'address' => $row['address'],
-                'date_created' => $row['date_created'],
+                'date_created' => date('F d, Y', strtotime($row['date_created'])),
                 'control_no' => $row['control_no'],
                 'ss_no' => $row['ss_no'],
                 'status' => $row['status'],
