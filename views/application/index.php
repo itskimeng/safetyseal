@@ -58,8 +58,6 @@
     // });
 
     <?php
-    // toastr output & session reset
-    // session_start();
     if (isset($_SESSION['toastr'])) {
       echo 'tata.' . $_SESSION['toastr']['type'] . '("' . $_SESSION['toastr']['title'] . '", "' . $_SESSION['toastr']['message'] . '", {
           duration: 5000
@@ -118,30 +116,22 @@
       tr+= '<td>';
 
       if (item['app_type'] == 'Encoded') {
-        // tr+= '<a href="admin_application_edit.php?appid='+item['token']+'&code=&scope=" class="btn btn-primary btn-block btn-sm" style="margin-bottom: -2%;"><i class="fa fa-clipboard-list"></i> View</a>';
         tr+= '<a href="admin_application_edit.php?appid='+item['token']+'&code=&scope=" class="btn btn-info btn-block btn-sm" style="margin-bottom: -2%;"><i class="fa fa-clipboard-list"></i> View</a>';
+
+        if (item['status'] == 'Draft') {
+          tr+= '<a href="entity/delete_admin_application.php?appid='+item['token']+'" class="btn btn-danger btn-block btn-sm" style="margin-bottom: -2%;"><i class="fa fa-trash"></i> Remove</a>';
+        }
+
       } else if (item['status'] == 'For Receiving') {
-        // tr+= '<a href="admin_application_view.php?appid='+item['id']+'&ussir='+item['userid']+'&status='+item['status']+'" class="btn btn-primary btn-block btn-sm" style="margin-bottom: -2%;"><i class="fa fa-box"></i> Received</a>';
         tr+= '<a href="entity/post_received.php?appid='+item['id']+'&ussir='+item['userid']+'&status='+item['status']+'" class="btn btn-primary btn-block btn-sm" style="margin-bottom: -2%;"><i class="fa fa-box"></i> Receive</a>';
 
+        tr+= '<a href="admin_application_open.php?appid='+item['id']+'&ussir='+item['userid']+'" class="btn btn-primary btn-block btn-sm" style="margin-bottom: -2%;"><i class="fa fa-box"></i> Receive</a>';
       } else {
-        tr+= '<a href="admin_application_view.php?appid='+item['id']+'&ussir='+item['userid']+'" class="btn btn-primary btn-block btn-sm" style="margin-bottom: -2%;"><i class="fa fa-clipboard-list"></i> View</a>';
+        tr+= '<a href="admin_application_view.php?appid='+item['id']+'&ussir='+item['userid']+'" class="btn btn-info btn-block btn-sm" style="margin-bottom: -2%;"><i class="fa fa-clipboard-list"></i> View</a>';
       }
 
-
-
-
-
-
-
-
-
-
-
-
-
       if (item['status'] == 'Approved') {
-        tr+= '<a href="certificate.php?token='+item['token']+'" class="btn btn-warning btn-block btn-sm" style="margin-bottom: -2%;"><i class="fa fa-eye"></i> Generate Certificate</a>';
+        tr+= '<a href="certificate.php?token='+item['token']+'" class="btn btn-warning btn-block btn-sm" style="margin-bottom: -2%;"><i class="fa fa-print"></i> Generate Certificate</a>';
       }
       tr+= '</td>';
       tr+= '</tr>';

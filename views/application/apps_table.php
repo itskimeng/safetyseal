@@ -47,12 +47,12 @@
                 <td>
                   <div class="col-md-12">
                     <?php if ($applicant['app_type'] == 'Encoded'): ?>
-                      <a href="admin_application_edit.php?appid=<?php echo $applicant['token']; ?>&code=&scope=" class="btn btn-info btn-block btn-sm" style="margin-bottom: -2%;">
+                      <a href="admin_application_edit.php?appid=<?php echo $applicant['token']; ?>&code=&scope=" class="btn btn-info btn-block btn-sm" style="margin-bottom: -2%;" title="View Checklist">
                         <i class="fa fa-clipboard-list"></i> View
                       </a>
 
                       <?php if (in_array($applicant['status'], ['Draft'])): ?>
-                        <a href="entity/delete_admin_application.php?token=<?php echo $applicant['token']; ?>" class="btn btn-danger btn-block btn-sm" style="margin-bottom: -2%;">
+                        <a href="entity/delete_admin_application.php?token=<?php echo $applicant['token']; ?>" class="btn btn-danger btn-block btn-sm" style="margin-bottom: -2%;" title="Remove Application">
                           <i class="fa fa-trash"></i> Remove
                         </a>
                       <?php endif ?>
@@ -63,19 +63,19 @@
                         <i class="fa fa-box"></i> Receive
                       </a> -->
 
-                      <a href="admin_application_open.php?appid=<?php echo $applicant['id']; ?>&ussir=<?php echo $applicant['userid']; ?>" class="btn btn-secondary btn-block btn-sm" style="margin-bottom: -2%;">
-                        <i class="fa fa-folder-open"></i> Open
+                      <a href="admin_application_open.php?appid=<?php echo $applicant['id']; ?>&ussir=<?php echo $applicant['userid']; ?>" class="btn btn-secondary btn-block btn-sm" style="margin-bottom: -2%;" title="View Checklist">
+                        <i class="fa fa-folder-open"></i> View
                       </a>
 
                     <?php else: ?>
-                      <a href="admin_application_view.php?appid=<?php echo $applicant['id']; ?>&ussir=<?php echo $applicant['userid']; ?>" class="btn btn-success btn-block btn-sm" style="margin-bottom: -2%;">
-                        <i class="fa fa-eye"></i> View
+                      <a href="admin_application_view.php?appid=<?php echo $applicant['id']; ?>&ussir=<?php echo $applicant['userid']; ?>" class="btn btn-info btn-block btn-sm" style="margin-bottom: -2%;" title="View Checklist">
+                        <i class="fa fa-clipboard-list"></i> View
                       </a>
                     <?php endif ?>
 
                     <?php if (in_array($applicant['status'], ['Approved'])): ?>
-                      <a href="certificate.php?token=<?php echo $applicant['token']; ?>" class="btn btn-warning btn-block btn-sm" style="margin-bottom: -2%;">
-                        <i class="fa fa-eye"></i> Generate Certificate
+                      <a href="certificate.php?token=<?php echo $applicant['token']; ?>" class="btn btn-warning btn-block btn-sm" style="margin-bottom: -2%;" title="Generate Certificate">
+                        <i class="fa fa-print"></i> Generate
                       </a>
                     <?php endif ?>
                   </div>
