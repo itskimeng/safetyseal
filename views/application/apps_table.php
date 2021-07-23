@@ -50,6 +50,14 @@
                       <a href="admin_application_edit.php?appid=<?php echo $applicant['token']; ?>&code=&scope=" class="btn btn-info btn-block btn-sm" style="margin-bottom: -2%;">
                         <i class="fa fa-clipboard-list"></i> View
                       </a>
+
+                      <?php if (in_array($applicant['status'], ['Draft'])): ?>
+                        <a href="entity/delete_admin_application.php?token=<?php echo $applicant['token']; ?>" class="btn btn-danger btn-block btn-sm" style="margin-bottom: -2%;">
+                          <i class="fa fa-trash"></i> Remove
+                        </a>
+                      <?php endif ?>
+
+
                     <?php elseif (in_array($applicant['status'], ['For Receiving', 'For Reassessment'])): ?>
                       <!-- <a href="entity/post_received.php?appid=<?php echo $applicant['id']; ?>&ussir=<?php echo $applicant['userid']; ?>&status=<?php echo $applicant['status']; ?>" class="btn btn-primary btn-block btn-sm" style="margin-bottom: -2%;">
                         <i class="fa fa-box"></i> Receive
@@ -59,9 +67,6 @@
                         <i class="fa fa-folder-open"></i> Open
                       </a>
 
-                      <!-- <button type="button" id="btn-return_application" class="btn btn-danger btn-block btn-sm btn-return_application" style="margin-bottom: -2%;">
-                        <i class="fa fa-undo"></i> Return
-                      </button> -->
                     <?php else: ?>
                       <a href="admin_application_view.php?appid=<?php echo $applicant['id']; ?>&ussir=<?php echo $applicant['userid']; ?>" class="btn btn-success btn-block btn-sm" style="margin-bottom: -2%;">
                         <i class="fa fa-eye"></i> View

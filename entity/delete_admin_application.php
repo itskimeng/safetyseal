@@ -10,14 +10,15 @@ $today = new DateTime();
 
 $userid = $_SESSION['userid'];
 $uname = $_SESSION['username'];
+$gcode = $_SESSION['gcode'];
+$gscope = $_SESSION['gscope'];
 
-$token = $_GET['ssid'];
+$token = $_GET['token'];
 $control_no = deleteApplication($conn, $token);
 
 $_SESSION['toastr'] = $app->addFlash('error', 'Application <b>'.$control_no.'</b> has been successfully deleted.', 'Remove');
 
-
-header('location:../user/users_establishments.php');
+header('location:../admin_application.php');
 
 function deleteApplication($conn, $id) 
 {
@@ -26,21 +27,8 @@ function deleteApplication($conn, $id)
     $result1 = mysqli_fetch_assoc($query);
 
     $control_no = $result1['control_no'];
-
-    $sql = "SELECT id FROM tbl_app_checklist_entry WHERE parent_id = '".$result1['id']."'";
-	$query = mysqli_query($conn, $sql);
-    $rows = mysqli_fetch_assoc($query);
-	$res = [];
-	while ($row = mysqli_fetch_assoc($query)) {
-        $res[] = $row['id'];
-    }
     
-    $ss = implode(', ', $res);
-
-    $sql = "DELETE FROM tbl_app_checklist_attachments WHERE entry_id IN (".$ss.")";
-	$result = mysqli_query($conn, $sql);
-
-	$sql = "DELETE FROM tbl_app_checklist_entry WHERE parent_id = '".$result1['id']."'";
+    $sql = "DELETE FROM tbl_app_checklist_encoded_attachments WHERE parent_id = '".$result1['id']."'";
 	$result = mysqli_query($conn, $sql);
 
 	$sql = "DELETE FROM tbl_app_checklist WHERE token = '".$id."'";

@@ -22,6 +22,21 @@
 <div class="content">
   <div class="container">
     <!-- <form method="POST" action="entity/post_newapplicant.php"> -->
+
+      <div class="row mb-3">
+        <div class="col-md-6 col-sm-3">
+          <div class="row">
+              <div class="col-md-2">
+                <a href="entity/delete_admin_application.php?token=<?php echo $_GET['appid']; ?>" class="btn btn-danger btn-block btn-sm" style="margin-bottom: -2%;">
+                  <i class="fa fa-trash"></i> Remove
+                </a>
+              </div>  
+          </div>
+
+        </div>  
+      </div>
+
+
       <input type="hidden" name="is_new" value="<?php echo $is_new; ?>">
       <?php include 'add/details.php'; ?>
 
