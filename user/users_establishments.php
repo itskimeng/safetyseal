@@ -108,4 +108,15 @@
             details: true
         }
     });
+
+    <?php
+    // toastr output & session reset
+    // session_start();
+    if (isset($_SESSION['toastr'])) {
+      echo 'tata.' . $_SESSION['toastr']['type'] . '("' . $_SESSION['toastr']['title'] . '", "' . $_SESSION['toastr']['message'] . '", {
+          duration: 5000
+        })';
+      unset($_SESSION['toastr']);
+    }
+    ?>
 </script>
