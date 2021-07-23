@@ -61,10 +61,13 @@ foreach ($user_est as $key => $data) {
                     <a href="../wbstapplication.php?ssid=<?php echo $data['token']; ?>&code=<?php echo $gcode; ?>&scope=<?php echo $gscope; ?>" type="button" class="btn btn-primary btn-block btn-sm" style="width: 100%;"><i class="fa fa-eye"></i> Edit</a>
                 </div>
 
-                <div class="col-md-12 mb-1">
-                  <a href="../entity/delete_application.php?ssid=<?php echo $data['token']; ?>" type="button" class="btn btn-danger btn-block btn-sm" style="width: 100%;"><i class="fas fa-trash"></i> Remove
-                  </a>
-                </div>
+                <?php if (in_array($data['ac_status'], ['Reassess', 'Draft'])){ ?>
+                    <div class="col-md-12 mb-1">
+                      <a href="../entity/delete_application.php?ssid=<?php echo $data['token']; ?>" type="button" class="btn btn-danger btn-block btn-sm" style="width: 100%;"><i class="fas fa-trash"></i> Remove
+                      </a>
+                    </div>
+                <?php } ?>
+
             <?php } ?>
 
             <?php if ($data['ac_status'] != 'Draft'): ?>
