@@ -45,6 +45,11 @@ foreach ($user_est as $key => $data) {
                   </a>
                 </div>
 
+                <div class="col-md-12 mb-1">
+                  <a href="../entity/delete_application.php?ssid=<?php echo $data['token']; ?>" type="button" class="btn btn-danger btn-block btn-sm" style="width: 100%;"><i class="fas fa-trash"></i> Remove
+                  </a>
+                </div>
+
             <?php } else if ($data['ac_status'] == 'Approved') { ?>
                 <div class="col-md-12 mb-1">
                   <a href="../certificate.php?token=<?php echo $data['token']; ?>" target="_blank" type="button" class="btn btn-warning btn-block btn-sm" style="width: 100%;"><i class="fa fa-certificate"></i> View Certificate
