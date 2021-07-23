@@ -12,18 +12,20 @@ $userid = $_SESSION['userid'];
 $uname = $_SESSION['username'];
 
 $token = $_GET['ssid'];
-deleteApplication($conn, $token);
+$control_no = deleteApplication($conn, $token);
 
-$_SESSION['toastr'] = $app->addFlash('error', 'Application has been successfully deleted.', 'Remove');
+$_SESSION['toastr'] = $app->addFlash('error', 'Application '.$control_no.' has been successfully deleted.', 'Remove');
 
 
 header('location:../user/users_establishments.php');
 
 function deleteApplication($conn, $id) 
 {
-	$sql = "SELECT id FROM tbl_app_checklist WHERE token = '".$id."'";
+	$sql = "SELECT id, control_no FROM tbl_app_checklist WHERE token = '".$id."'";
 	$query = mysqli_query($conn, $sql);
     $result1 = mysqli_fetch_assoc($query);
+
+    $control_no = $result1['control_no'];
 
     $sql = "SELECT id FROM tbl_app_checklist_entry WHERE parent_id = '".$result1['id']."'";
 	$query = mysqli_query($conn, $sql);
@@ -44,5 +46,5 @@ function deleteApplication($conn, $id)
 	$sql = "DELETE FROM tbl_app_checklist WHERE token = '".$id."'";
 	$query = mysqli_query($conn, $sql);
 
-	return 0;
+	return $control_no;
 }
