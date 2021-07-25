@@ -119,130 +119,113 @@ require_once 'controller/DashboardController.php'; ?>
                 <a href="reports.php" class="btn btn-primary float-right my-2">Generate Reports <i class="fa fa-print"></i></a>
             </div>
         </div> -->
-        <?php if ($is_rofp): ?>
-            <?php include 'rofp_dashboard.php'; ?>        
-        <?php else: ?>
-            <div class="row">
-                <div class="col-lg-12">
-                    <div class="row">
-                        <div class="col-md-4">
-                            <div class="card" style="height: 269px;">
-                                <div class="card-header" style="background-color: #009688; color:#fff;">
-                                    <h3 class="card-title"><img src="frontend/images/logo.png" style="width: 30px;" alt=""> LGUs </h3>
-                                </div>
 
-                                <div class="card-body" style="overflow:auto;">
-                                    <ul class="list-group list-group-flush">
-                                        <?php foreach ($lgu as $key => $municipalities) : ?>
-                                            <?php echo '<li class="list-group-item">' . $municipalities['name'] . ' </li>'; ?>
-                                            <!-- <span style="float: right; position:relative; top:5px;" class="badge badge-primary pull-right">Primary</span> -->
-                                        <?php endforeach; ?>
-
-                                    </ul>
-                                </div>
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="row">
+                    <div class="col-md-4">
+                        <div class="card" style="height: 269px;">
+                            <div class="card-header" style="background-color: #009688; color:#fff;">
+                                <h3 class="card-title"><img src="frontend/images/logo.png" style="width: 30px;" alt=""> LGUs </h3>
                             </div>
-                            <div class="card" style="height: 269px;">
-                                <div class="card-header" style="background-color: #009688; color:#fff;">
-                                    <h3 class="card-title"><img src="frontend/images/logo.png" style="width: 30px;" alt=""> ESTABLISHMENTS WITH SAFETY SEAL CERTIFICATE</h3>
-                                </div>
 
-                                <div class="card-body" style="overflow:auto;">
-                                    <ul class="list-group list-group-flush">
-                                    <?php if(!empty($est_safety_seal)): ?>
-                                        <?php foreach ($est_safety_seal as $key => $establishments) : ?>
-                                            <?php echo '<li class="list-group-item"><b style="font-size:10pt;">' . $establishments['est'] . '</b> <span style="float: right; position:relative; top:5px;" class="badge badge-primary pull-right">'.$establishments['ss_no'].'</span> </li>'; ?>
-                                        <?php endforeach; ?>
-                                    <?php else:?>
-                                    <?php echo '<li class="list-group-item">There are no establishments with safety seal certificate</li>'; ?>
-                                    <?php endif;?>
-                                    </ul>
-                                </div>
+                            <div class="card-body" style="overflow:auto;">
+                                <ul class="list-group list-group-flush">
+                                    <?php foreach ($lgu as $key => $municipalities) : ?>
+                                        <?php echo '<li class="list-group-item">' . $municipalities['name'] . ' </li>'; ?>
+                                        <!-- <span style="float: right; position:relative; top:5px;" class="badge badge-primary pull-right">Primary</span> -->
+                                    <?php endforeach; ?>
+
+                                </ul>
                             </div>
                         </div>
+                        <div class="card" style="height: 269px;">
+                            <div class="card-header" style="background-color: #009688; color:#fff;">
+                                <h3 class="card-title"><img src="frontend/images/logo.png" style="width: 30px;" alt=""> ESTABLISHMENTS WITH SAFETY SEAL CERTIFICATE</h3>
+                            </div>
 
-                        <div class="col-md-8" style="border-radius:5px">
-                            <div class=" card box box-success">
-                                <div class="card-header" style="background-color: #009688; color:#fff;">
-                                    LEGEND: <span class="pull-right badge bg-green">APPROVED</span>
-                                    <span class="pull-right badge bg-blue">FOR RECEIVING </span>
-
-                                </div>
-                                <div class="box-header with-border">
-
-                                    <!-- BAR CHART -->
-                                    <div class="box box-success">
-
-                                        <div class="box-body bg-ligth">
-                                            <div class="chart">
-                                                <canvas id="barChart" style="height:230px; padding:5px;"></canvas>
-                                            </div>
-                                        </div>
-                                        <!-- /.box-body -->
-                                    </div>
-
-                                    <!-- /.box -->
-
-                                </div>
-                                <!-- /.col (RIGHT) -->
+                            <div class="card-body" style="overflow:auto;">
+                                <ul class="list-group list-group-flush">
+                                <?php if(!empty($est_safety_seal)): ?>
+                                    <?php foreach ($est_safety_seal as $key => $establishments) : ?>
+                                        <?php echo '<li class="list-group-item"><b style="font-size:10pt;">' . $establishments['est'] . '</b> <span style="float: right; position:relative; top:5px;" class="badge badge-primary pull-right">'.$establishments['ss_no'].'</span> </li>'; ?>
+                                    <?php endforeach; ?>
+                                <?php else:?>
+                                <?php echo '<li class="list-group-item">There are no establishments with safety seal certificate</li>'; ?>
+                                <?php endif;?>
+                                </ul>
                             </div>
                         </div>
                     </div>
 
+                    <div class="col-md-8" style="border-radius:5px">
+                        <div class=" card box box-success">
+                            <div class="card-header" style="background-color: #009688; color:#fff;">
+                                LEGEND: <span class="pull-right badge bg-green">APPROVED</span>
+                                <span class="pull-right badge bg-blue">FOR RECEIVING </span>
+
+                            </div>
+                            <div class="box-header with-border">
+
+                                <!-- BAR CHART -->
+                                <div class="box box-success">
+
+                                    <div class="box-body bg-ligth">
+                                        <div class="chart">
+                                            <canvas id="barChart" style="height:230px; padding:5px;"></canvas>
+                                        </div>
+                                    </div>
+                                    <!-- /.box-body -->
+                                </div>
+
+                                <!-- /.box -->
+
+                            </div>
+                            <!-- /.col (RIGHT) -->
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+        <!-- <div class="row">
+            <div class="col-lg-4">
+                <div class="card" style="height: 269px;">
+                    <div class="card-header" style="background-color: #009688; color:#fff;">
+                        <h3 class="card-title"><img src="frontend/images/logo.png" style="width: 30px;" alt=""> LGU's </h3>
+                    </div>
+
+                    <div class="card-body">
+                    </div>
                 </div>
             </div>
-        <?php endif ?>
+            <div class="col-lg-4">
+                <div class="card" style="height: 269px;">
+                    <div class="card-header" style="background-color: #009688; color:#fff;">
+                        <h3 class="card-title"><img src="frontend/images/logo.png" style="width: 30px;" alt=""> LGU's </h3>
+                    </div>
 
+                    <div class="card-body">
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-4">
+                <div class="card" style="height: 269px;">
+                    <div class="card-header" style="background-color: #009688; color:#fff;">
+                        <h3 class="card-title"><img src="frontend/images/logo.png" style="width: 30px;" alt=""> LGU's </h3>
+                    </div>
 
-        <style type="text/css">
-            /*.calabarzon-map {
-                transition: all .2s ease-in-out;
-            }
+                    <div class="card-body">
+                    </div>
+                </div>
+            </div>
+        </div> -->
 
-            .calabarzon-map:hover {
-                transform: scale(1.1);
-            }*/
-
-            .bg-yellow2 {
-                background-color: #ebf820!important;
-            }
-
-            .bg-yellow2:hover {
-                background-color: #d7e31a!important;
-            }
-
-            .bg-red2 {
-                background-color: #c20e41!important;
-            }
-
-            .bg-red2:hover {
-                background-color: #a40d37!important;
-            }
-
-            .bg-blue2 {
-                background-color: #1345a0!important;
-            }
-
-            .bg-blue2:hover {
-                background-color: #0c3683!important;
-            }
-
-            .bg-green2 {
-                background-color: #13a016!important;
-            }
-
-            .bg-green2:hover {
-                background-color: #108712!important;
-            }
-
-        </style>
 
         <script>
             $(function() {
                 $('#table1').DataTable();
 
-                $(document).on('click', '.quezon-province', function(){
-
-                });
 
                 var areaChartData = {
                     labels: ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'],

@@ -32,8 +32,8 @@ if ($is_pfp) {
 
 if ($is_rofp) {
     $citymun_opts = $app->getCityMuns($province);
-    $province_opts = $am->getProvinces();
-    $est_safety_seal = getEstablishmentSSCRO($conn);
+    $province_opts = getProvinces($conn);
+    $est_safety_seal = getEstablishmentSSCRO($conn, 4);
     $asof_date = new DateTime();
     $timestamp = $asof_date->format('Y-m-d H:i:s');
 
@@ -55,7 +55,7 @@ if ($is_rofp) {
     $reports['rizal'] = $am->showAllApplications(4,$timestamp,ApplicationManager::STATUS_APPROVED);
     $reports['quezon'] = $am->showAllApplications('huc',$timestamp,ApplicationManager::STATUS_APPROVED);
 
-    $cavite_muns = getProvinceCityMuns($conn, 1);
+    $rizal_muns = getProvinceCityMuns($conn, 4);
 
 } elseif ($is_pfp) {
 	$citymun_opts = $app->getCityMuns($province);
@@ -115,6 +115,23 @@ if ($is_rofp) {
 	$receiving = $app->getdataForReceived($province,$citymun);
 	$approved = $app->getdataApproved($province,$citymun);
 }
+
+function getProvinces($conn)
+    {
+        $sql = "SELECT id, code, name FROM tbl_province WHERE id = 4";
+        
+        $query = mysqli_query($conn, $sql);
+        $data = [];
+        
+        while ($row = mysqli_fetch_assoc($query)) {
+            $data[$row['id']] = [
+                'code' => $row['code'],
+                'name' => $row['name']
+            ];    
+        }
+
+        return $data;
+    }
 
 function getProvinceCityMuns($conn, $province)
     {
@@ -289,14 +306,14 @@ function countStatus3($conn, $province, $lgus)
     return $data1;
 }
 
-function getEstablishmentSSCRO($conn)
+function getEstablishmentSSCRO($conn, $province)
 {
     $sql = "SELECT chkl.id as id, chkl.establishment as est, ui.GOV_ESTB_NAME as est2, chkl.safety_seal_no as 'ss_no' 
         FROM `tbl_app_checklist` chkl 
         LEFT JOIN tbl_admin_info ai on chkl.user_id = ai.id
         LEFT JOIN tbl_userinfo ui on ui.USER_ID = ai.id
         LEFT JOIN tbl_province pro on ai.PROVINCE = pro.id 
-        WHERE chkl.status='Approved' ORDER BY pro.id";
+        WHERE ai.PROVINCE = $province AND chkl.status='Approved' ORDER BY pro.id, chkl.safety_seal_no";
 
     $query = mysqli_query($conn, $sql);
     $data = [];

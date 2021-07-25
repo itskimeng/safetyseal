@@ -1,11 +1,11 @@
 <?php
-require_once 'controller/DashboardController.php'; ?>
+require_once 'controller/LagunaDashboardController.php'; ?>
 
 <div class="content-header">
     <div class="container">
         <div class="row mb-2">
             <div class="col-sm-6">
-                <h5 class="m-0"> SafetySeal Dashboard <small><b><?php echo $hlbl; ?></b></small>
+                <h5 class="m-0"> SafetySeal Dashboard <small><b><?php echo $hlbl; ?> - LAGUNA</b></small>
                 </h5>
             </div><!-- /.col -->
             <div class="col-sm-6">
@@ -120,7 +120,11 @@ require_once 'controller/DashboardController.php'; ?>
             </div>
         </div> -->
         <?php if ($is_rofp): ?>
-            <?php include 'rofp_dashboard.php'; ?>        
+            <?php if (isset($_GET['province']) AND $_GET['province'] == 'laguna'): ?>
+                <?php include 'laguna_dashboard.php'; ?>        
+            <?php else: ?>
+                <?php include 'rofp_dashboard.php'; ?>        
+            <?php endif ?>
         <?php else: ?>
             <div class="row">
                 <div class="col-lg-12">
