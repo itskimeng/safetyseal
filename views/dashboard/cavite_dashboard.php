@@ -134,7 +134,7 @@
                         </ul>
                     </div>
                 </div>
-                <div class="card" style="height: 269px;">
+                <div class="card" style="height: 277px;">
                     <div class="card-header" style="background-color: #009688; color:#fff;">
                         <h5 class="card-title" style="font-size: 12pt;"><img src="frontend/images/logo.png" style="width: 30px;" alt=""> ESTABLISHMENTS WITH SAFETY SEAL CERTIFICATE</h5>
                     </div>

@@ -32,7 +32,7 @@ require_once 'controller/LagunaDashboardController.php'; ?>
                         <p>FOR RECEIVING</p>
                     </div>
                     <div class="icon">
-                        <img src="frontend/images/dash_received.png" style="width:100px;margin-top:-100px;margin-right:10px;" align="right" alt="">
+                        <img class="zoom" src="frontend/images/dash_received.png" style="width:100px;margin-top:-100px;margin-right:10px;" align="right" alt="">
 
                     </div>
                     <a href="#" class="small-box-footer"><i class="fas fa-plus"></i> View More
@@ -51,7 +51,7 @@ require_once 'controller/LagunaDashboardController.php'; ?>
                         <p>RECEIVED</p>
                     </div>
                     <div class="icon">
-                        <img src="frontend/images/dash_receiving.png" style="width:100px;margin-top:-100px;margin-right:10px;" align="right" alt="">
+                        <img class="zoom" src="frontend/images/dash_receiving.png" style="width:100px;margin-top:-100px;margin-right:10px;" align="right" alt="">
 
                     </div>
                     <?php if ($is_rofp): ?>
@@ -75,7 +75,7 @@ require_once 'controller/LagunaDashboardController.php'; ?>
                         <p>APPROVED</p>
                     </div>
                     <div class="icon">
-                        <img src="frontend/images/dash_approved.png" style="width:100px;margin-top:-100px;margin-right:10px;" align="right" alt="">
+                        <img class="zoom" src="frontend/images/dash_approved.png" style="width:100px;margin-top:-100px;margin-right:10px;" align="right" alt="">
 
                     </div>
                     <?php if ($is_rofp): ?>
@@ -99,7 +99,7 @@ require_once 'controller/LagunaDashboardController.php'; ?>
                         <p>DISAPPROVED</p>
                     </div>
                     <div class="icon">
-                        <img src="frontend/images/dash_disapproved.png" style="width:100px;margin-top:-100px;margin-right:10px;" align="right" alt="">
+                        <img class="zoom" src="frontend/images/dash_disapproved.png" style="width:100px;margin-top:-100px;margin-right:10px;" align="right" alt="">
 
                     </div>
                     <?php if ($is_rofp): ?>
@@ -196,49 +196,7 @@ require_once 'controller/LagunaDashboardController.php'; ?>
             </div>
         <?php endif ?>
 
-
-        <style type="text/css">
-            /*.calabarzon-map {
-                transition: all .2s ease-in-out;
-            }
-
-            .calabarzon-map:hover {
-                transform: scale(1.1);
-            }*/
-
-            .bg-yellow2 {
-                background-color: #ebf820!important;
-            }
-
-            .bg-yellow2:hover {
-                background-color: #d7e31a!important;
-            }
-
-            .bg-red2 {
-                background-color: #c20e41!important;
-            }
-
-            .bg-red2:hover {
-                background-color: #a40d37!important;
-            }
-
-            .bg-blue2 {
-                background-color: #1345a0!important;
-            }
-
-            .bg-blue2:hover {
-                background-color: #0c3683!important;
-            }
-
-            .bg-green2 {
-                background-color: #13a016!important;
-            }
-
-            .bg-green2:hover {
-                background-color: #108712!important;
-            }
-
-        </style>
+        <?php include 'custom_style.css'; ?>
 
         <script>
             $(function() {
