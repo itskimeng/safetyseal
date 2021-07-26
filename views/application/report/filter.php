@@ -45,9 +45,9 @@
                 <option value="all" data-code="all" selected>All</option>
                 <?php foreach ($citymun_opts as $key => $opts): ?>
                   <?php if ($opts['code'] == $citymun): ?>
-                    <option value="<?php echo $key; ?>" data-province="<?php echo $opts['code']; ?>" data-code="<?php echo $opts['code']; ?>" selected><?php echo $opts['name']; ?></option>
+                    <option value="<?php echo $opts['code']; ?>" data-province="<?php echo $opts['code']; ?>" data-code="<?php echo $opts['code']; ?>" selected><?php echo $opts['name']; ?></option>
                   <?php else: ?>
-                    <option value="<?php echo $key; ?>" data-province="<?php echo $opts['code']; ?>" data-code="<?php echo $opts['code']; ?>"><?php echo $opts['name']; ?></option>
+                    <option value="<?php echo $opts['code']; ?>" data-province="<?php echo $opts['code']; ?>" data-code="<?php echo $opts['code']; ?>"><?php echo $opts['name']; ?></option>
                   <?php endif ?>
                 <?php endforeach ?>
               </select>
