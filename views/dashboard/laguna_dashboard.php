@@ -118,37 +118,32 @@
     <div class="col-lg-12">
         <div class="row">
             <div class="col-md-4">
-                <div class="card" style="height: 269px;">
-                    <div class="card-header" style="background-color: #009688; color:#fff;">
-                        <h3 class="card-title"><img src="frontend/images/logo.png" style="width: 30px;" alt=""> LGUs </h3>
-                    </div>
-
-                    <div class="card-body" style="overflow:auto;">
-                        <div style="text-align:center;"><b>Not yet Available</b></div>
-                        <ul class="list-group list-group-flush">
-                            <?php foreach ($lgu as $key => $municipalities) : ?>
-                                <?php echo '<li class="list-group-item">' . $municipalities['name'] . ' </li>'; ?>
-                                <!-- <span style="float: right; position:relative; top:5px;" class="badge badge-primary pull-right">Primary</span> -->
-                            <?php endforeach; ?>
-
-                        </ul>
-                    </div>
-                </div>
-                <div class="card" style="height: 277px;">
+                <div class="card" style="height: 562px;">
                     <div class="card-header" style="background-color: #009688; color:#fff;">
                         <h3 class="card-title" style="font-size: 12pt;"><img src="frontend/images/logo.png" style="width: 30px;" alt=""> ESTABLISHMENTS WITH SAFETY SEAL CERTIFICATE</h3>
                     </div>
 
                     <div class="card-body" style="overflow:auto;">
-                        <ul class="list-group list-group-flush">
-                        <?php if(!empty($est_safety_seal)): ?>
-                            <?php foreach ($est_safety_seal as $key => $establishments) : ?>
-                                <?php echo '<li class="list-group-item"><b style="font-size:10pt;">' . $establishments['est'] . '</b> <span style="float: right; position:relative; top:5px;" class="badge badge-primary pull-right">'.$establishments['ss_no'].'</span> </li>'; ?>
-                            <?php endforeach; ?>
-                        <?php else:?>
-                        <?php echo '<li class="list-group-item">There are no establishments with safety seal certificate</li>'; ?>
-                        <?php endif;?>
-                        </ul>
+                        <div class="col-sm-12">
+                            <?php if(!empty($est_safety_seal)): ?>
+                                <?php foreach ($est_safety_seal as $key => $establishments) : ?>
+                                    <div class="row" style="border-radius: 5px; border: solid 1px #ff1515; margin-bottom: 3px;">
+                                        <div class="col-sm-7">
+                                            <b style="font-size:10pt;"><?php echo $establishments['est']; ?></b>
+                                        </div>
+                                        <div class="col-sm-5">
+                                            <span style="float: right; position:relative; top:5px;" class="badge badge-primary pull-right"><?php echo $establishments['ss_no']; ?></span>
+                                        </div>
+                                    </div>
+                                <?php endforeach; ?>
+                            <?php else:?>
+                                <div class="row">
+                                    <div class="col-md-12">
+                                        <b>There are no establishments with safety seal certificate</b>  
+                                    </div>
+                                </div>
+                            <?php endif;?>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -162,13 +157,13 @@
 
                         <!-- BAR CHART -->
                         <div class="box box-success">
-                            <div style="padding-left:5px; padding-top:15px;">
+                            <div style="padding-left:10px; padding-top:15px;">
                                 LEGEND: <span class="pull-right badge bg-green">APPROVED</span>
                                 <span class="pull-right badge bg-blue">FOR RECEIVING </span>
                             </div>
                             <div class="box-body bg-ligth" style="height: 466px;">
                                 <div class="chart" style="padding-top: 20px;">
-                                    <canvas id="barChart" style="height:230px; padding:5px;"></canvas>
+                                    <canvas id="barChart" style="height:230px; padding:10px;"></canvas>
                                 </div>
                             </div>
                             <!-- /.box-body -->

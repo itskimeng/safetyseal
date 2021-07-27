@@ -44,7 +44,7 @@
                                         <div class="col-md-4">
                                             <div style="background-color: #e8e8e8; padding: 15px;">
                                                 
-                                                <a href="dashboard.v2.php?username=<?php echo $_GET['username']; ?>&province=cavite" class="info-box mb-1 bg-warning cavite-province">
+                                                <a href="dashboard.v2.php?username=<?php echo $_GET['username']; ?>&province=cavite" class="info-box mb-1 bg-warning cavite-province" >
                                                   <span class="info-box-icon"><i class="fas fa-map-marker-alt"></i></i></span>
 
                                                   <div class="info-box-content">
@@ -116,37 +116,32 @@
     <div class="col-lg-12">
         <div class="row">
             <div class="col-md-4">
-                <div class="card" style="height: 269px;">
+                <div class="card" style="height: 562px;">
                     <div class="card-header" style="background-color: #009688; color:#fff;">
-                        <h3 class="card-title"><img src="frontend/images/logo.png" style="width: 30px;" alt=""> LGUs </h3>
+                        <h3 class="card-title" style="font-size: 12pt;"><img src="frontend/images/logo.png" style="width: 30px;" alt=""> ESTABLISHMENTS WITH SAFETY SEAL CERTIFICATE</h3>
                     </div>
 
                     <div class="card-body" style="overflow:auto;">
-                        <div style="text-align:center;"><b>Not yet Available</b></div>
-                        <ul class="list-group list-group-flush">
-                            <?php foreach ($lgu as $key => $municipalities) : ?>
-                                <?php echo '<li class="list-group-item">' . $municipalities['name'] . ' </li>'; ?>
-                                <!-- <span style="float: right; position:relative; top:5px;" class="badge badge-primary pull-right">Primary</span> -->
-                            <?php endforeach; ?>
-
-                        </ul>
-                    </div>
-                </div>
-                <div class="card" style="height: 269px;">
-                    <div class="card-header" style="background-color: #009688; color:#fff;">
-                        <h3 class="card-title" style="font-size:12pt;"><img src="frontend/images/logo.png" style="width: 30px;" alt=""> ESTABLISHMENTS WITH SAFETY SEAL CERTIFICATE</h3>
-                    </div>
-
-                    <div class="card-body" style="overflow:auto;">
-                        <ul class="list-group list-group-flush">
-                        <?php if(!empty($est_safety_seal)): ?>
-                            <?php foreach ($est_safety_seal as $key => $establishments) : ?>
-                                <?php echo '<li class="list-group-item"><b style="font-size:10pt;">' . $establishments['est'] . '</b> <span style="float: right; position:relative; top:5px;" class="badge badge-primary pull-right">'.$establishments['ss_no'].'</span> </li>'; ?>
-                            <?php endforeach; ?>
-                        <?php else:?>
-                        <?php echo '<li class="list-group-item">There are no establishments with safety seal certificate</li>'; ?>
-                        <?php endif;?>
-                        </ul>
+                        <div class="col-sm-12">
+                            <?php if(!empty($est_safety_seal)): ?>
+                                <?php foreach ($est_safety_seal as $key => $establishments) : ?>
+                                    <div class="row" style="border-radius: 5px; border: solid 1px #ced109; margin-bottom: 3px;">
+                                        <div class="col-sm-7">
+                                            <b style="font-size:10pt;"><?php echo $establishments['est']; ?></b>
+                                        </div>
+                                        <div class="col-sm-5">
+                                            <span style="float: right; position:relative; top:5px;" class="badge badge-primary pull-right"><?php echo $establishments['ss_no']; ?></span>
+                                        </div>
+                                    </div>
+                                <?php endforeach; ?>
+                            <?php else:?>
+                                <div class="row">
+                                    <div class="col-md-12">
+                                        <b>There are no establishments with safety seal certificate</b>  
+                                    </div>
+                                </div>
+                            <?php endif;?>
+                        </div>
                     </div>
                 </div>
             </div>

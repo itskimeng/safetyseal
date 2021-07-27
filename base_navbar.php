@@ -14,7 +14,11 @@
       <ul class="navbar-nav">
      
         <li class="nav-item">
-          <a href="dashboard.v2.php?username=<?php echo $_GET['username']; ?>" class="nav-link">Dashboard</a>
+          <?php if (isset($_GET['username'])): ?>
+            <a href="dashboard.v2.php?username=<?php echo $_GET['username']; ?>" class="nav-link">Dashboard</a>
+          <?php else: ?>
+            <a href="dashboard.v2.php?username=<?php echo $_SESSION['username']; ?>" class="nav-link">Dashboard</a>
+          <?php endif ?>
         </li>
         <?php if ($_SESSION['province'] != 0 AND $_SESSION['city_mun'] != 00): ?>
         <li class="nav-item">
