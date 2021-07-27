@@ -48,7 +48,7 @@
                                         <div class="col-md-4">
                                             <div style="background-color: #e8e8e8; padding: 15px;">
                                                 
-                                                <a type="button" class="info-box mb-1 bg-warning cavite-province">
+                                                <a type="button" class="info-box mb-1 bg-warning cavite-province zoom">
                                                   <span class="info-box-icon"><i class="fas fa-map-marker-alt"></i></i></span>
 
                                                   <div class="info-box-content">
@@ -57,7 +57,7 @@
                                                   </div>
                                                 </a>
 
-                                                <a href="dashboard.v2.php?username=<?php echo $_GET['username']; ?>&province=laguna" class="info-box mb-1 bg-red2 laguna-province" style="color:white;">
+                                                <a href="dashboard.v2.php?username=<?php echo $_GET['username']; ?>&province=laguna" class="info-box mb-1 bg-red2 laguna-province zoom" style="color:white;">
                                                   <span class="info-box-icon"><i class="fas fa-map-marker-alt"></i></i></span>
 
                                                   <div class="info-box-content" style="color:white;">
@@ -66,7 +66,7 @@
                                                   </div>
                                                 </a>
 
-                                                <a href="dashboard.v2.php?username=<?php echo $_GET['username']; ?>&province=batangas" class="info-box mb-1 bg-blue2 batangas-province" style="color:white;">
+                                                <a href="dashboard.v2.php?username=<?php echo $_GET['username']; ?>&province=batangas" class="info-box mb-1 bg-blue2 batangas-province zoom" style="color:white;">
                                                   <span class="info-box-icon"><i class="fas fa-map-marker-alt"></i></i></span>
 
                                                   <div class="info-box-content" style="color:white;">
@@ -75,7 +75,7 @@
                                                   </div>
                                                 </a>
 
-                                                <a href="dashboard.v2.php?username=<?php echo $_GET['username']; ?>&province=rizal" class="info-box mb-1 bg-yellow2 rizal-province" style="color:black;">
+                                                <a href="dashboard.v2.php?username=<?php echo $_GET['username']; ?>&province=rizal" class="info-box mb-1 bg-yellow2 rizal-province zoom" style="color:black;">
                                                   <span class="info-box-icon"><i class="fas fa-map-marker-alt"></i></i></span>
 
                                                   <div class="info-box-content" style="color:black;">
@@ -84,7 +84,7 @@
                                                   </div>
                                                 </a>  
 
-                                                <a href="dashboard.v2.php?username=<?php echo $_GET['username']; ?>&province=quezon" class="info-box mb-1 bg-green2" style="color:white;">
+                                                <a href="dashboard.v2.php?username=<?php echo $_GET['username']; ?>&province=quezon" class="info-box mb-1 bg-green2 zoom" style="color:white;">
                                                   <span class="info-box-icon"><i class="fas fa-map-marker-alt"></i></i></span>
 
                                                   <div class="info-box-content quezon-province" style="color:white;">

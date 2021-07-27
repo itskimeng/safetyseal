@@ -26,7 +26,7 @@ require_once 'controller/LagunaDashboardController.php'; ?>
 
             <div class="col-lg-3 col-xs-6">
                 <!-- small box -->
-                <div class="small-box bg-primary">
+                <div class="small-box bg-primary zoom">
                     <div class="inner">
                         <h3><?php echo $total_count['For Receiving']; ?></h3>
                         <p>FOR RECEIVING</p>
@@ -44,7 +44,7 @@ require_once 'controller/LagunaDashboardController.php'; ?>
             <!-- small box -->
             <div class="col-lg-3 col-xs-6">
                 <!-- small box -->
-                <div class="small-box bg-yellow">
+                <div class="small-box bg-yellow zoom">
                     <div class="inner">
                         <h3><?php echo $total_count['Received']; ?></h3>
 
@@ -67,7 +67,7 @@ require_once 'controller/LagunaDashboardController.php'; ?>
 
             <div class="col-lg-3 col-xs-6">
                 <!-- small box -->
-                <div class="small-box bg-green">
+                <div class="small-box bg-green zoom">
                     <div class="inner">
                         <h3><?php echo $total_count['Approved']; ?></h3>
 
@@ -91,7 +91,7 @@ require_once 'controller/LagunaDashboardController.php'; ?>
 
             <div class="col-lg-3 col-xs-6">
                 <!-- small box -->
-                <div class="small-box" style="background-color: #b71c1c;color:gainsboro">
+                <div class="small-box zoom" style="background-color: #b71c1c;color:gainsboro">
                     <div class="inner">
                         <h3><?php echo $total_count['Disapproved']; ?></h3>
 
