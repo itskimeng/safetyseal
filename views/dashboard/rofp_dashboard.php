@@ -155,13 +155,13 @@
 
                         <!-- BAR CHART -->
                         <div class="box box-success">
-                            <div style="padding-left:5px; padding-top:15px;">
+                            <div style="padding-left:10px; padding-top:15px;">
                                 LEGEND: <span class="pull-right badge bg-green">APPROVED</span>
                                 <span class="pull-right badge bg-blue">FOR RECEIVING </span>
                             </div>
                             <div class="box-body bg-ligth" style="height: 466px;">
                                 <div class="chart" style="padding-top: 20px;">
-                                    <canvas id="barChart" style="height:230px; padding:5px;"></canvas>
+                                    <canvas id="barChart" style="height:230px; padding:10px;"></canvas>
                                 </div>
                             </div>
                             <!-- /.box-body -->
