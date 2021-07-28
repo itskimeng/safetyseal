@@ -126,6 +126,11 @@
                     <div class="card-body" style="overflow:auto;">
                         <div class="col-sm-12">
                             <?php if(!empty($est_safety_seal)): ?>
+                                <div class="row" style="text-align: right; margin-bottom: 3px;">
+                                    <div class="col-md-12">
+                                        <a href="entity/ssc_establishment_print.php?province=quezon"><i class="fa fa-print"></i> Print</a>
+                                    </div>
+                                </div>
                                 <?php foreach ($est_safety_seal as $key => $establishments) : ?>
                                     <div class="row" style="border-radius: 5px; border: solid 1px #ced109; margin-bottom: 3px;">
                                         <div class="col-sm-7">
