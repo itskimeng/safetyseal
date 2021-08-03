@@ -5,7 +5,9 @@
         <h3 class="card-title"><i class="fa fa-file"></i> Application List</h3>
       
         <div class="card-tools">
-          <a href="admin_application_add.php?appid=new" class="btn btn-block btn-info btn-sm"><i class="fa fa-plus-square"></i> Add New</a>
+          <?php if (!in_array($_SESSION['position'], ['BFP', 'PNP'])): ?>
+            <a href="admin_application_add.php?appid=new" class="btn btn-block btn-info btn-sm"><i class="fa fa-plus-square"></i> Add New</a>
+          <?php endif ?>
         </div>
       </div>
 
