@@ -4,7 +4,6 @@ require 'application/config/connection.php';
 require 'manager/DashboardManager.php';
 require 'manager/ApplicationManager.php';
 
-
 $app = new DashboardManager();
 $am = new ApplicationManager();
 
@@ -71,7 +70,7 @@ if ($is_rofp) {
 	$total_count['For Receiving'] = $count_status['For Receiving'];
 	$total_count['Received'] = $count_status['Received'];
 	$total_count['Approved'] = $count_status['Approved'];
-	$total_count['Disapproved'] = $count_status['Disapproved'];
+	$total_count['Disapproved'] = $count_status['Disapproved'] + $count_status['Returned'];
 	
 	$receiving = getdataForReceived($conn,$province,$citymun);
 	$approved = getdataApproved($conn,$province,$citymun);
@@ -204,7 +203,7 @@ function countStatusRO($conn, $province_opts)
 
 function countStatus($conn, $province, $lgus)
 {
-    $val = ['For Receiving', 'Received', 'Approved', 'Disapproved'];
+    $val = ['For Receiving', 'Received', 'Approved', 'Disapproved', 'Returned', 'Reassess'];
 
     foreach ($lgus as $key => $lgu) {
         $codes[] = $lgu['code']; 
@@ -218,10 +217,10 @@ function countStatus($conn, $province, $lgus)
         $sql = "SELECT 
                 count(*) as count
                 FROM tbl_app_checklist ac
-                LEFT JOIN tbl_admin_info ai on ai.id = ac.user_id
-                LEFT JOIN tbl_province p on p.id = ai.PROVINCE
-                LEFT JOIN tbl_citymun cm on cm.id = ai.LGU
-                WHERE p.id = '$province' AND status = '$stat' ";
+                JOIN tbl_admin_info ai on ai.id = ac.user_id
+                JOIN tbl_province p on p.id = ai.PROVINCE
+                JOIN tbl_citymun cm on cm.province = ai.PROVINCE AND cm.code = ai.LGU
+                WHERE p.id = '$province' AND status = '$stat' AND ai.id IS NOT NULL AND p.id IS NOT NULL";
 
         $query = mysqli_query($conn, $sql);
         $result = $row = mysqli_fetch_assoc($query);

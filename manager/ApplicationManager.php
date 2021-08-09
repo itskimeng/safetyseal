@@ -669,19 +669,22 @@ class ApplicationManager
 
     public function showAllApplications($province='',$timestamp, $status='')
     {
-        $sql = "SELECT COUNT(*) as total, ac.control_no, ac.status FROM tbl_app_checklist ac 
-                LEFT JOIN tbl_admin_info ai on ai.id = ac.user_id
-                LEFT JOIN tbl_province tp on tp.id = ai.PROVINCE 
+        $sql = "SELECT count(*) as total FROM tbl_app_checklist ac 
+                JOIN tbl_admin_info ai on ai.id = ac.user_id
+                JOIN tbl_province tp on tp.id = ai.PROVINCE 
+                JOIN tbl_citymun cm on cm.province = ai.PROVINCE AND cm.code = ai.LGU
                 WHERE ac.date_created <= '".$timestamp."' AND ai.id IS NOT NULL AND tp.id IS NOT NULL";
 
         if (!empty($status)) {
             $sql.= " AND ac.status = '".$status."'";
+        } else {
+            $sql.= " AND ac.status IN ('Received', 'Approved')";
         }
 
         if ($province == 'huc') {
-            $sql.= " AND tp.id = 5 OR tp.id = 8";
+            $sql.= " AND tp.id IN (5, 8)";
         } elseif (!empty($province)) {
-            $sql.= " AND tp.id = ".$province."";
+            $sql.= " AND tp.id = $province";
         }
 
         $query = mysqli_query($this->conn, $sql);

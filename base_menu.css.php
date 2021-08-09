@@ -17,9 +17,9 @@
 <link rel="stylesheet" href="frontend/bower_components/datatables-responsive/css/responsive.bootstrap4.min.css">
 <link rel="stylesheet" href="frontend/bower_components/datatables-buttons/css/buttons.bootstrap4.min.css">
 <style>
-@media (min-width: 1200px) {
+@media (min-width: 1300px) {
     .container{
-        max-width: 1500px;
+        max-width: 1300px;
     }
 }
 

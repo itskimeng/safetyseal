@@ -107,15 +107,6 @@
                 tr += '<td>' + item['address'] + '</td>';
                 tr += '<td>' + item['date_created'] + '</td>';
                 tr += '<td>' + item['ss_no'] + '</td>';
-                // tr += '<td>';
-                // if (item['app_type'] == 'Encoded') {
-                //     tr += '<a href="admin_application_edit.php?appid=' + item['token'] + '&code=&scope=" class="btn btn-primary btn-block btn-sm" style="margin-bottom: -5%;"><i class="fa fa-clipboard-list"></i> View</a>';
-                // } else if (item['status'] == 'For Receiving') {
-                //     tr += '<a href="admin_application_view.php?appid=' + item['id'] + '&ussir=' + item['userid'] + '&status=' + item['status'] + '" class="btn btn-primary btn-block btn-sm" style="margin-bottom: -5%;"><i class="fa fa-box"></i> Received</a>';
-                // } else {
-                //     tr += '<a href="admin_application_view.php?appid=' + item['id'] + '&ussir=' + item['userid'] + '" class="btn btn-primary btn-block btn-sm" style="margin-bottom: -5%;"><i class="fa fa-clipboard-list"></i> View</a>';
-                // }
-                // tr += '</td>';
                 tr += '</tr>';
                 $('#list_body').append(tr);
             });
@@ -232,10 +223,10 @@
                 row+= '<td style="font-size:20pt; text-align: center; vertical-align: middle;"><b>'+$data['total_application']+'</b></td>';
                 row+= '<td style="font-size:20pt; text-align: center; vertical-align: middle;"><b>'+$data['total_approved']+'</b></td>';
                 row+= '<td style="font-size:20pt; text-align: center; vertical-align: middle;"><b>'+$data['total_disapproved']+'</b></td>';
-                row+= '<td style="font-size:20pt; text-align: center; vertical-align: middle;"><b>'+$data['total_approved']+'</b></td>';
-                row+= '<td style="font-size:20pt; text-align: center; vertical-align: middle;"><b>0</b></td>';
-                row+= '<td style="font-size:20pt; text-align: center; vertical-align: middle;"><b>'+$data['total_approved']+'</b></td>';
-                row+= '<td style="font-size:20pt; text-align: center; vertical-align: middle;"><b>0</b></td>';
+                // row+= '<td style="font-size:20pt; text-align: center; vertical-align: middle;"><b>'+$data['total_approved']+'</b></td>';
+                // row+= '<td style="font-size:20pt; text-align: center; vertical-align: middle;"><b>0</b></td>';
+                // row+= '<td style="font-size:20pt; text-align: center; vertical-align: middle;"><b>'+$data['total_approved']+'</b></td>';
+                // row+= '<td style="font-size:20pt; text-align: center; vertical-align: middle;"><b>0</b></td>';
                 row+= '</tr>';
 
             return row;
@@ -248,10 +239,10 @@
                 row+= '<td style="font-size:20pt; text-align: center; vertical-align: middle;"><b>'+$data['batangas_application']+'</b></td>';
                 row+= '<td style="font-size:20pt; text-align: center; vertical-align: middle;"><b>'+$data['batangas_approved']+'</b></td>';
                 row+= '<td style="font-size:20pt; text-align: center; vertical-align: middle;"><b>'+$data['batangas_disapproved']+'</b></td>';
-                row+= '<td style="font-size:20pt; text-align: center; vertical-align: middle;"><b>'+$data['batangas_approved']+'</b></td>';
-                row+= '<td style="font-size:20pt; text-align: center; vertical-align: middle;"><b>0</b></td>';
-                row+= '<td style="font-size:20pt; text-align: center; vertical-align: middle;"><b>'+$data['batangas_approved']+'</b></td>';
-                row+= '<td style="font-size:20pt; text-align: center; vertical-align: middle;"><b>0</b></td>';
+                // row+= '<td style="font-size:20pt; text-align: center; vertical-align: middle;"><b>'+$data['batangas_approved']+'</b></td>';
+                // row+= '<td style="font-size:20pt; text-align: center; vertical-align: middle;"><b>0</b></td>';
+                // row+= '<td style="font-size:20pt; text-align: center; vertical-align: middle;"><b>'+$data['batangas_approved']+'</b></td>';
+                // row+= '<td style="font-size:20pt; text-align: center; vertical-align: middle;"><b>0</b></td>';
                 row+= '</tr>';
 
             return row;
@@ -264,10 +255,10 @@
                 row+= '<td style="font-size:20pt; text-align: center; vertical-align: middle;"><b>'+$data['cavite_application']+'</b></td>';
                 row+= '<td style="font-size:20pt; text-align: center; vertical-align: middle;"><b>'+$data['cavite_approved']+'</b></td>';
                 row+= '<td style="font-size:20pt; text-align: center; vertical-align: middle;"><b>'+$data['cavite_disapproved']+'</b></td>';
-                row+= '<td style="font-size:20pt; text-align: center; vertical-align: middle;"><b>'+$data['cavite_approved']+'</b></td>';
-                row+= '<td style="font-size:20pt; text-align: center; vertical-align: middle;"><b>0</b></td>';
-                row+= '<td style="font-size:20pt; text-align: center; vertical-align: middle;"><b>'+$data['cavite_approved']+'</b></td>';
-                row+= '<td style="font-size:20pt; text-align: center; vertical-align: middle;"><b>0</b></td>';
+                // row+= '<td style="font-size:20pt; text-align: center; vertical-align: middle;"><b>'+$data['cavite_approved']+'</b></td>';
+                // row+= '<td style="font-size:20pt; text-align: center; vertical-align: middle;"><b>0</b></td>';
+                // row+= '<td style="font-size:20pt; text-align: center; vertical-align: middle;"><b>'+$data['cavite_approved']+'</b></td>';
+                // row+= '<td style="font-size:20pt; text-align: center; vertical-align: middle;"><b>0</b></td>';
                 row+= '</tr>';
 
             return row;
@@ -280,10 +271,10 @@
                 row+= '<td style="font-size:20pt; text-align: center; vertical-align: middle;"><b>'+$data['laguna_application']+'</b></td>';
                 row+= '<td style="font-size:20pt; text-align: center; vertical-align: middle;"><b>'+$data['laguna_approved']+'</b></td>';
                 row+= '<td style="font-size:20pt; text-align: center; vertical-align: middle;"><b>'+$data['laguna_disapproved']+'</b></td>';
-                row+= '<td style="font-size:20pt; text-align: center; vertical-align: middle;"><b>'+$data['laguna_approved']+'</b></td>';
-                row+= '<td style="font-size:20pt; text-align: center; vertical-align: middle;"><b>0</b></td>';
-                row+= '<td style="font-size:20pt; text-align: center; vertical-align: middle;"><b>'+$data['laguna_approved']+'</b></td>';
-                row+= '<td style="font-size:20pt; text-align: center; vertical-align: middle;"><b>0</b></td>';
+                // row+= '<td style="font-size:20pt; text-align: center; vertical-align: middle;"><b>'+$data['laguna_approved']+'</b></td>';
+                // row+= '<td style="font-size:20pt; text-align: center; vertical-align: middle;"><b>0</b></td>';
+                // row+= '<td style="font-size:20pt; text-align: center; vertical-align: middle;"><b>'+$data['laguna_approved']+'</b></td>';
+                // row+= '<td style="font-size:20pt; text-align: center; vertical-align: middle;"><b>0</b></td>';
                 row+= '</tr>';
 
             return row;
@@ -296,10 +287,10 @@
                 row+= '<td style="font-size:20pt; text-align: center; vertical-align: middle;"><b>'+$data['rizal_application']+'</b></td>';
                 row+= '<td style="font-size:20pt; text-align: center; vertical-align: middle;"><b>'+$data['rizal_approved']+'</b></td>';
                 row+= '<td style="font-size:20pt; text-align: center; vertical-align: middle;"><b>'+$data['rizal_disapproved']+'</b></td>';
-                row+= '<td style="font-size:20pt; text-align: center; vertical-align: middle;"><b>'+$data['rizal_approved']+'</b></td>';
-                row+= '<td style="font-size:20pt; text-align: center; vertical-align: middle;"><b>0</b></td>';
-                row+= '<td style="font-size:20pt; text-align: center; vertical-align: middle;"><b>'+$data['rizal_approved']+'</b></td>';
-                row+= '<td style="font-size:20pt; text-align: center; vertical-align: middle;"><b>0</b></td>';
+                // row+= '<td style="font-size:20pt; text-align: center; vertical-align: middle;"><b>'+$data['rizal_approved']+'</b></td>';
+                // row+= '<td style="font-size:20pt; text-align: center; vertical-align: middle;"><b>0</b></td>';
+                // row+= '<td style="font-size:20pt; text-align: center; vertical-align: middle;"><b>'+$data['rizal_approved']+'</b></td>';
+                // row+= '<td style="font-size:20pt; text-align: center; vertical-align: middle;"><b>0</b></td>';
                 row+= '</tr>';
 
             return row;
@@ -312,10 +303,10 @@
                 row+= '<td style="font-size:20pt; text-align: center; vertical-align: middle;"><b>'+$data['huc_application']+'</b></td>';
                 row+= '<td style="font-size:20pt; text-align: center; vertical-align: middle;"><b>'+$data['huc_approved']+'</b></td>';
                 row+= '<td style="font-size:20pt; text-align: center; vertical-align: middle;"><b>'+$data['huc_disapproved']+'</b></td>';
-                row+= '<td style="font-size:20pt; text-align: center; vertical-align: middle;"><b>'+$data['huc_approved']+'</b></td>';
-                row+= '<td style="font-size:20pt; text-align: center; vertical-align: middle;"><b>0</b></td>';
-                row+= '<td style="font-size:20pt; text-align: center; vertical-align: middle;"><b>'+$data['huc_approved']+'</b></td>';
-                row+= '<td style="font-size:20pt; text-align: center; vertical-align: middle;"><b>0</b></td>';
+                // row+= '<td style="font-size:20pt; text-align: center; vertical-align: middle;"><b>'+$data['huc_approved']+'</b></td>';
+                // row+= '<td style="font-size:20pt; text-align: center; vertical-align: middle;"><b>0</b></td>';
+                // row+= '<td style="font-size:20pt; text-align: center; vertical-align: middle;"><b>'+$data['huc_approved']+'</b></td>';
+                // row+= '<td style="font-size:20pt; text-align: center; vertical-align: middle;"><b>0</b></td>';
                 row+= '</tr>';
 
             return row;

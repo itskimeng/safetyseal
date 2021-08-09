@@ -29,7 +29,7 @@ require_once 'controller/DashboardController.php'; ?>
                 <div class="small-box bg-primary zoom">
                     <div class="inner">
                         <h3><?php echo $total_count['For Receiving']; ?></h3>
-                        <p>FOR RECEIVING</p>
+                        <p>DRAFT APPLICATION</p>
                     </div>
                     <div class="icon">
                         <img class="zoom" src="frontend/images/dash_received.png" style="width:100px;margin-top:-100px;margin-right:10px;" align="right" alt="">
@@ -48,7 +48,7 @@ require_once 'controller/DashboardController.php'; ?>
                     <div class="inner">
                         <h3><?php echo $total_count['Received']; ?></h3>
 
-                        <p>RECEIVED</p>
+                        <p>PENDING APPLICATION</p>
                     </div>
                     <div class="icon">
                         <img class="zoom" src="frontend/images/dash_receiving.png" style="width:100px;margin-top:-100px;margin-right:10px;" align="right" alt="">
@@ -197,8 +197,9 @@ require_once 'controller/DashboardController.php'; ?>
             $(function() {
                 $('#table1').DataTable();
 
-                $(document).on('click', '.quezon-province', function(){
-
+                $('#cavite-province').on('hover', function(){
+                    console.log('qwerty');
+                    $('.quezon-zoom').addClass('zoom2');
                 });
 
                 var areaChartData = {
@@ -206,7 +207,7 @@ require_once 'controller/DashboardController.php'; ?>
 
                     datasets: [{
                             labels: 'Applicants',
-                            fillColor: '#1976D2',
+                            fillColor: '#d2a719',
                             strokeColor: 'rgba(210, 214, 222, 1)',
                             pointColor: 'rgba(210, 214, 222, 1)',
                             pointStrokeColor: '#c1c7d1',
