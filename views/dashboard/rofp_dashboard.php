@@ -157,7 +157,7 @@
                         <div class="box box-success">
                             <div style="padding-left:10px; padding-top:15px;">
                                 LEGEND: <span class="pull-right badge bg-green">APPROVED</span>
-                                <span class="pull-right badge bg-blue">FOR RECEIVING </span>
+                                <span class="pull-right badge bg-yellow">PENDING APPLICATION</span>
                             </div>
                             <div class="box-body bg-ligth" style="height: 466px;">
                                 <div class="chart" style="padding-top: 20px;">

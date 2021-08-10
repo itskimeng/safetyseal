@@ -7,7 +7,6 @@ require 'manager/ApplicationManager.php';
 $app = new DashboardManager();
 $am = new ApplicationManager();
 
-
 $province = $_SESSION['province'];
 $citymun = $_SESSION['city_mun'];
 $is_clusterhead = $_SESSION['is_clusterhead'];
@@ -53,19 +52,16 @@ if ($is_rofp) {
     $reports['batangas'] = $am->showAllApplications(3,$timestamp,ApplicationManager::STATUS_APPROVED);
     $reports['rizal'] = $am->showAllApplications(4,$timestamp,ApplicationManager::STATUS_APPROVED);
     $reports['quezon'] = $am->showAllApplications('huc',$timestamp,ApplicationManager::STATUS_APPROVED);
-
-    $cavite_muns = getProvinceCityMuns($conn, 1);
-
 } elseif ($is_pfp) {
 	$citymun_opts = $app->getCityMuns($province);
 	$lgu = $app->getCityMuns($province);
 	$est_safety_seal = getEstablishmentSSC($conn, $province, $citymun);
+    $asof_date = new DateTime();
+    $timestamp = $asof_date->format('Y-m-d H:i:s');
 
 	$count_status = countStatus($conn, $province, $citymun_opts);
 	$count_status2 = countStatus2($conn, $province, $citymun_opts);
 	$count_status3 = countStatus3($conn, $province, $citymun_opts);
-
-	// $approved = $app->getdataApproved($province, $citymun);
 
 	$total_count['For Receiving'] = $count_status['For Receiving'];
 	$total_count['Received'] = $count_status['Received'];
@@ -74,6 +70,28 @@ if ($is_rofp) {
 	
 	$receiving = getdataForReceived($conn,$province,$citymun);
 	$approved = getdataApproved($conn,$province,$citymun);
+
+    $reports['cavite'] = $am->showAllApplications(1,$timestamp,ApplicationManager::STATUS_APPROVED);
+    $reports['laguna'] = $am->showAllApplications(2,$timestamp,ApplicationManager::STATUS_APPROVED);
+    $reports['batangas'] = $am->showAllApplications(3,$timestamp,ApplicationManager::STATUS_APPROVED);
+    $reports['rizal'] = $am->showAllApplications(4,$timestamp,ApplicationManager::STATUS_APPROVED);
+    $reports['quezon'] = $am->showAllApplications('huc',$timestamp,ApplicationManager::STATUS_APPROVED);
+
+    if ($province == 1) {
+       $cavite_muns = getProvinceCityMuns($conn, 1);
+    } elseif ($province == 2) {
+       $laguna_muns = getProvinceCityMuns($conn, 2);
+    } elseif ($province == 3) {
+       $batangas_muns = getProvinceCityMuns($conn, 3);
+    } elseif ($province == 4) {
+       $rizal_muns = getProvinceCityMuns($conn, 4);
+    } else {
+        $quezon_muns = getProvinceCityMuns($conn, 5);
+        $quezon_muns2 = getProvinceCityMuns($conn, 8);
+
+        array_push($quezon_muns, $quezon_muns2[142]);
+    }
+
 } elseif ($is_clusterhead) {
 	$citymun_opts = getget($conn, $clusterhead_id);
 	// $lgu = $app->getCityMuns($province);
@@ -342,9 +360,8 @@ function getdataForReceived($conn, $province,$lgu)
         $sql = "SELECT pro.name as 'PROVINCE' , checklist.status, count(*) as 'count', checklist.date_created FROM `tbl_app_checklist` checklist
         LEFT JOIN tbl_admin_info ai on checklist.user_id = ai.ID
         LEFT JOIN tbl_province pro on ai.PROVINCE = pro.id 
-        WHERE  ai.PROVINCE= '$province' and MONTH(checklist.date_created) = $i and checklist.status='For Receiving'";
+        WHERE  ai.PROVINCE= '$province' AND MONTH(checklist.date_created) = $i AND checklist.status='Received' AND ai.id IS NOT NULL AND pro.id IS NOT NULL";
 
-        //  ai.PROVINCE= '$province' and 
         $query = mysqli_query($conn, $sql);
         $result = $row = mysqli_fetch_assoc($query);
         $data[$months[$i]] = $row['count'];

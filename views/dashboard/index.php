@@ -118,7 +118,19 @@ require_once 'controller/DashboardController.php'; ?>
             </div>
         </div> -->
         <?php if ($is_rofp): ?>
-            <?php include 'rofp_dashboard.php'; ?>        
+            <?php include 'rofp_dashboard.php'; ?> 
+        <?php elseif ($is_pfp): ?>
+            <?php if ($province == 1): ?>
+                <?php include 'cavite_dashboard.php'; ?>
+            <?php elseif ($province == 2): ?>  
+                <?php include 'laguna_dashboard.php'; ?>
+            <?php elseif ($province == 3): ?>  
+                <?php include 'batangas_dashboard.php'; ?>
+            <?php elseif ($province == 4): ?>  
+                <?php include 'rizal_dashboard.php'; ?>
+            <?php elseif ($province == 5 OR $province == 8): ?>  
+                <?php include 'quezon_dashboard.php'; ?>
+            <?php endif ?>
         <?php else: ?>
             <div class="row">
                 <div class="col-lg-12">
