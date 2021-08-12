@@ -46,7 +46,7 @@ if ($is_rofp) {
     $total_count['For Receiving'] = $count_status['For Receiving'] + $count_status2['For Receiving'];
     $total_count['Received'] = $count_status['Received'] + $count_status2['Received'];
     $total_count['Approved'] = $count_status['Approved'] + $count_status2['Approved'];
-    $total_count['Disapproved'] = $count_status['Disapproved'] + $count_status2['Approved'];
+    $total_count['Disapproved'] = $count_status['Disapproved'] + $count_status2['Disapproved'];
 
     $receiving = getdataForReceivedRO($conn, $province_opts);
     $receiving2 = getdataForReceivedRO23($conn, $province_opts);
@@ -212,23 +212,25 @@ function getCityMuns($conn, $province)
 function countStatusRO($conn, $province_opts)
 {
     $val = ['For Receiving', 'Received', 'Approved', 'Disapproved'];
+    
     $citymun_opts = [];
 
     $data1 = array();
     foreach ($val as $cc => $stat) {
         $total = 0;
         foreach ($province_opts as $key => $province) {
-            // $sql = "SELECT 
-            //         count(*) as count
-            //         FROM tbl_app_checklist ac
-            //         LEFT JOIN tbl_admin_info ai on ai.id = ac.user_id
-            //         LEFT JOIN tbl_province p on p.id = ai.PROVINCE
-            //         WHERE p.id = 5 AND ac.status = '$stat' AND ai.id IS NOT NULL AND p.id IS NOT NULL";
-
-            $sql = "SELECT count(*) as count FROM tbl_app_checklist ac 
-                LEFT JOIN tbl_admin_info ai on ai.id = ac.user_id
-                LEFT JOIN tbl_province p on p.id = ai.PROVINCE
-                WHERE p.id = $key AND ac.status = '$stat'";    
+            // $sql = "SELECT count(*) as 'status' FROM `tbl_app_checklist` WHERE status = '$stat' ";
+            $sql = "SELECT 
+                    count(*) as count
+                    FROM tbl_app_checklist ac
+                    JOIN tbl_admin_info ai on ai.id = ac.user_id
+                    JOIN tbl_province p on p.id = ai.PROVINCE
+                    JOIN tbl_citymun cm on cm.province = ai.PROVINCE AND cm.code = ai.LGU";
+            if ($stat == 'Disapproved') {
+                $sql .= " WHERE p.id = '$key' AND ac.status IN ('Disapproved', 'Returned', 'Reassess', 'For Reassessment') AND ai.id IS NOT NULL AND p.id IS NOT NULL";
+            } else {
+                $sql .= " WHERE p.id = '$key' AND ac.status = '$stat' AND ai.id IS NOT NULL AND p.id IS NOT NULL";
+            }
 
             $query = mysqli_query($conn, $sql);
             $row = mysqli_fetch_assoc($query);
@@ -255,8 +257,13 @@ function countStatusRO2($conn, $province_opts)
                     count(*) as count
                     FROM tbl_app_checklist ac
                     LEFT JOIN tbl_admin_info ai on ai.id = ac.user_id
-                    LEFT JOIN tbl_province p on p.id = ai.PROVINCE
-                    WHERE p.id = $key AND ac.status = '$stat'";   
+                    LEFT JOIN tbl_province p on p.id = ai.PROVINCE";
+                    // WHERE p.id = $key AND ac.status = '$stat'"; 
+            if ($stat == 'Disapproved') {
+                $sql .= " WHERE p.id = '$key' AND ac.status IN ('Disapproved', 'Returned', 'Reassess', 'For Reassessment') AND ai.id IS NOT NULL AND p.id IS NOT NULL";
+            } else {
+                $sql .= " WHERE p.id = '$key' AND ac.status = '$stat' AND ai.id IS NOT NULL AND p.id IS NOT NULL";
+            }  
 
             $query = mysqli_query($conn, $sql);
             $row = mysqli_fetch_assoc($query);

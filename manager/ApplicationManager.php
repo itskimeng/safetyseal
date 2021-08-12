@@ -676,8 +676,6 @@ class ApplicationManager
                 WHERE ac.date_created <= '".$timestamp."' AND ai.id IS NOT NULL AND tp.id IS NOT NULL";
 
         if (!empty($status)) {
-            // if ($status == 'Reassess') {
-                // $sql.= " AND ac.status IN ('Reassess', 'For Reassessment')";
             if ($status == 'Disapproved') {
                 $sql.= " AND ac.status IN ('Reassess', 'Disapproved', 'Returned', 'For Reassessment')";
 

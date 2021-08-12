@@ -194,6 +194,7 @@ function getCityMuns($conn, $province)
 function countStatusRO($conn, $province_opts)
 {
     $val = ['For Receiving', 'Received', 'Approved', 'Disapproved'];
+    
     $citymun_opts = [];
 
     $data1 = array();
@@ -204,9 +205,14 @@ function countStatusRO($conn, $province_opts)
             $sql = "SELECT 
                     count(*) as count
                     FROM tbl_app_checklist ac
-                    LEFT JOIN tbl_admin_info ai on ai.id = ac.user_id
-                    LEFT JOIN tbl_province p on p.id = ai.PROVINCE
-                    WHERE p.id = '$key' AND ac.status = '$stat'";   
+                    JOIN tbl_admin_info ai on ai.id = ac.user_id
+                    JOIN tbl_province p on p.id = ai.PROVINCE
+                    JOIN tbl_citymun cm on cm.province = ai.PROVINCE AND cm.code = ai.LGU";
+            if ($stat == 'Disapproved') {
+                $sql .= " WHERE p.id = '$key' AND ac.status IN ('Disapproved', 'Returned', 'Reassess', 'For Reassessment') AND ai.id IS NOT NULL AND p.id IS NOT NULL";
+            } else {
+                $sql .= " WHERE p.id = '$key' AND ac.status = '$stat' AND ai.id IS NOT NULL AND p.id IS NOT NULL";
+            }
 
             $query = mysqli_query($conn, $sql);
             $row = mysqli_fetch_assoc($query);
