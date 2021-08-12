@@ -1007,11 +1007,13 @@ class ApplicationManager
         JOIN tbl_userinfo ui on ui.user_id = ai.id
         JOIN tbl_province pr on pr.id = ai.PROVINCE
         JOIN tbl_citymun cm on cm.province = ai.PROVINCE AND cm.code = ai.LGU
-        WHERE ai.id IS NOT NULL ORDER BY pr.id, cm.id, ai.id";
+        WHERE ai.id IS NOT NULL";
 
         if (!empty($province)) {
             $sql .= " AND ai.PROVINCE = '$province'";
         }
+
+        $sql .= " ORDER BY pr.id, cm.id, ai.id";
 
         $query = mysqli_query($this->conn, $sql);
         $data = [];
