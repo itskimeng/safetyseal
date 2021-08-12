@@ -676,9 +676,16 @@ class ApplicationManager
                 WHERE ac.date_created <= '".$timestamp."' AND ai.id IS NOT NULL AND tp.id IS NOT NULL";
 
         if (!empty($status)) {
-            $sql.= " AND ac.status = '".$status."'";
+            // if ($status == 'Reassess') {
+                // $sql.= " AND ac.status IN ('Reassess', 'For Reassessment')";
+            if ($status == 'Disapproved') {
+                $sql.= " AND ac.status IN ('Reassess', 'Disapproved', 'Returned', 'For Reassessment')";
+
+            } else {
+                $sql.= " AND ac.status = '".$status."'";
+            }
         } else {
-            $sql.= " AND ac.status IN ('Received', 'Approved')";
+            $sql.= " AND ac.status IN ('Received', 'Approved', 'Returned', 'For Reassessment', 'Reassess', 'Disapproved')";
         }
 
         if ($province == 'huc') {

@@ -50,12 +50,12 @@
       <form id="form-filter">
       <div class="card-body card-body-filter collapse show">
         <div class="row">
-          <?php echo group_select('Region', 'region', 'region', ['Region IV-A Calabarzon'=>'Region IV-A Calabarzon'], 'Region IV-A Calabarzon', 1, 4, ['readonly'=>true, 'disabled'=>true]); ?>
-          <?php //echo group_select('As of Date', 'as_of', 'as_of', $month_options, $today, 1, 4); ?>
-          <?php echo group_datetime('As of Date', 'as_of', 'as_of', $current_time, 1, 4); ?>
+          <?php echo group_select('Region', 'region', 'region', ['Region IV-A Calabarzon'=>'Region IV-A Calabarzon'], 'Region IV-A Calabarzon', 1, 3, ['readonly'=>true, 'disabled'=>true]); ?>
+          <?php //echo group_select('Province', 'province', 'province', [1=>'Cavite', 2=>'Laguna', 3=>'Batangas', 4=>'Rizal', 5=>'Quezon'], '', 1, 3, []); ?>
+          <?php echo group_datetime('As of Date', 'as_of', 'as_of', $current_time, 1, 3); ?>
 
-          <div class="col-md-4">
-            <div class="form-group float-right" style="margin-top: 7%;">
+          <div class="col-md-6">
+            <div class="form-group float-right" style="margin-top: 5%;">
               <div class="d-grid gap-2 d-md-block">
                 <button class="btn btn-primary btn-md" id="btn-filter_adminro" type="button"><i class="fa fa-search"></i> Filter</button>
                 <button class="btn btn-success btn-md" id="btn-generate_adminro" type="button"><i class="fa fa-print"></i> Generate</button>
