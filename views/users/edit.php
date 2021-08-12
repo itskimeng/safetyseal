@@ -213,7 +213,7 @@
           <div class="card card-info">
             <div class="card-footer text-right">
               <div class="btn-group">
-                <button type="button" class="btn btn-block btn-secondary"><i class="fa fa-arrow-left" aria-hidden="true"></i> Cancel</button>
+                <a href="uac.php" class="btn btn-block btn-secondary"><i class="fa fa-arrow-left" aria-hidden="true"></i> Cancel</a>
               </div>
 
               <div class="btn-group">
