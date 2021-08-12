@@ -40,6 +40,8 @@
 <!-- <script src="frontend/bower_components/bootstrap/dist/js/bootstrap.min.js"></script> -->
 <!-- ChartJS -->
 <script src="frontend/bower_components/chart.js/Chart.js"></script>
+<!-- Bootstrap Switch -->
+<script src="frontend/bower_components/bootstrap-switch/bootstrap-switch.min.js"></script>
 <!-- <script src="frontend/js/ajax.js"></script> -->
 <!-- FastClick -->
 <!-- <script src="frontend/bower_components/fastclick/lib/fastclick.js"></script> -->
