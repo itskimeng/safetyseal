@@ -1025,7 +1025,7 @@ class ApplicationManager
                 'province_id' => $row['province_id'],
                 'province' => $row['province'],
                 'lgu' => $row['lgu'],
-                'status' => $row['is_verified'] ? 'active' : 'inactive'
+                'status' => $row['is_verified'] ? 'Active' : 'Inactive'
             ];   
         }
         

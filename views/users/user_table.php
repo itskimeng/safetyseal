@@ -38,7 +38,7 @@
                 <td><?php echo $user['province']; ?></td>
                 <td><?php echo $user['lgu']; ?></td>
                 <td><?php echo $user['email']; ?></td>
-                <td><?php echo $user['status']; ?></td>
+                <td class="text-center" style="font-size:15pt;"><span class="badge badge-<?php echo $user['status'] == 'Active' ? 'success' : 'danger'; ?>"><?php echo $user['status']; ?></span></td>
                 <td>
                   <a href="uac_edit.php?id=<?php echo $id; ?>" class="btn btn-info btn-block btn-sm" style="margin-bottom: -2%;" title="View Checklist">
                         <i class="fa fa-clipboard-list"></i> Edit
