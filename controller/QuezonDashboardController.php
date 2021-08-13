@@ -491,7 +491,7 @@ function getdataForReceivedRO($conn, $province_opts)
                 $sql = "SELECT pro.name as 'PROVINCE' , checklist.status, count(*) as 'count', checklist.date_created FROM `tbl_app_checklist` checklist
                 LEFT JOIN tbl_admin_info ai on checklist.user_id = ai.ID
                 LEFT JOIN tbl_province pro on ai.PROVINCE = pro.id 
-                WHERE  ai.PROVINCE= 5 and MONTH(checklist.date_created) = $i and checklist.status='For Receiving'";
+                WHERE  ai.PROVINCE= 5 and MONTH(checklist.date_created) = $i and checklist.status='Received'";
 
 
                 $query = mysqli_query($conn, $sql);
@@ -527,7 +527,7 @@ function getdataForReceivedRO23($conn, $province_opts)
                 $sql = "SELECT pro.name as 'PROVINCE' , checklist.status, count(*) as 'count', checklist.date_created FROM `tbl_app_checklist` checklist
                 LEFT JOIN tbl_admin_info ai on checklist.user_id = ai.ID
                 LEFT JOIN tbl_province pro on ai.PROVINCE = pro.id 
-                WHERE  ai.PROVINCE= 8 and MONTH(checklist.date_created) = $i and checklist.status='For Receiving'";
+                WHERE  ai.PROVINCE= 8 and MONTH(checklist.date_created) = $i and checklist.status='Received'";
 
 
                 $query = mysqli_query($conn, $sql);
