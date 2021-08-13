@@ -18,7 +18,8 @@ $user = $am->getUserData($id);
 $province_opts = $am->getProvinces();
 $lgu_opts = $am->getCityMuns($user['province_id']);
 $govnature_opts = $cm->getGovtNature();
-$lgu_opts2 = $am->getCityMuns2();
+// $lgu_opts2 = $am->getCityMuns2();
+$lgu_opts2 = convertToString($am->getCityMuns2());
 $role_opts = ['admin', 'user'];
 
 if ($is_rofp) {
@@ -32,3 +33,7 @@ if ($is_clusterhead) {
 if ($is_pfp) {
     $hlbl = '(PROVINCIAL FOCAL PERSON)';
 } 
+
+function convertToString ($data) {
+    return json_encode(array_map(function($x) { return json_encode($x); }, $data));
+}

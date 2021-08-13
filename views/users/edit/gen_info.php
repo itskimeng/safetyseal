@@ -14,9 +14,9 @@
             <option></option>
             <?php foreach ($role_opts as $key => $opts): ?>
               <?php if ($opts == $user['role']): ?>
-                <option value="<?php echo $opts; ?>" data-code="<?php echo $opts; ?>" selected><?php echo $opts; ?></option>
+                <option value="<?php echo $opts; ?>" data-code="<?php echo $opts; ?>" selected><b><?php echo $opts; ?></b></option>
               <?php else: ?>
-                <option value="<?php echo $opts; ?>" data-code="<?php echo $opts; ?>"><?php echo $opts; ?></option>  
+                <option value="<?php echo $opts; ?>" data-code="<?php echo $opts; ?>"><b><?php echo $opts; ?></b></option>  
               <?php endif ?>
             <?php endforeach ?>
           </select>
@@ -51,6 +51,8 @@
         <label class="form-control2" for="exampleInputEmail1">Province</label>
       </div>
       <div class="col-sm-8 text-secondary">
+
+        <input type="hidden" name="citymun_opts" id="citymun_opts" value="<?php echo $lgu_opts2; ?>">
         <div class="form-group">
           <select class="form-control select2bs4 select2-hidden-accessible" id="province" name="province" style="width: 100%;" data-select2-id="17" tabindex="-1" aria-hidden="true">
             <option></option>

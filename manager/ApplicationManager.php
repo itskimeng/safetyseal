@@ -404,7 +404,7 @@ class ApplicationManager
            
         }
 
-        return json_encode($data);
+        return $data;
     }
 
     public function getApplicationLists($province, $lgu, $status)

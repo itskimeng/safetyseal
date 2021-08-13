@@ -65,25 +65,23 @@
       $('#lgu').empty();
       let id = $(this).val();
 
-      let opts = <?php echo $lgu_opts2; ?>;
-      $('#lgu').append($('<option>').val('').text(''));
-      $.each(opts[id], function(key, item){
-        $('#lgu').append($('<option>').val(item.code).text(item.name));
-      });
+      let path = 'entity/getLGUs.php?id='+id;
+
+      let dd = getLGUs(path);
     })
 
-    function postTask(path, data) {
-      $.post(path, data,
-        function(data, status){
-          if (status == 'success') {
-            setTimeout(function(){// wait for 5 secs(2)
-              location.reload(); // then reload the page.(3) 
-            }, 1000);
-          }
+    function getLGUs(path) {
+      $.get(path, function(data, status){
+          let dd = JSON.parse(data);
+          $('#lgu').append($('<option>').val('').text(''));
+          $.each(dd, function(key, item){
+            $('#lgu').append($('<option>').val(item.code).text(item.name));
+
+          });
         }
       );
-
-      return data;
+      
+      return $data;
     }
 
 
