@@ -81,7 +81,7 @@
         }
       );
       
-      return $data;
+      return 0;
     }
 
 
