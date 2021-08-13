@@ -112,11 +112,6 @@ require_once 'controller/DashboardController.php'; ?>
             </div>
         </div>
 
-        <!-- <div class="row">
-            <div class="col-lg-12">
-                <a href="reports.php" class="btn btn-primary float-right my-2">Generate Reports <i class="fa fa-print"></i></a>
-            </div>
-        </div> -->
         <?php if ($is_rofp): ?>
             <?php include 'rofp_dashboard.php'; ?> 
         <?php elseif ($is_pfp): ?>

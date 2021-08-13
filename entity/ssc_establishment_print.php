@@ -84,6 +84,8 @@ function checkID($id) {
 		case 'quezon':
 			$dd = 5;
 			break;	
+		default:
+			$dd = '*';
 	}
 
 	return $dd;
@@ -143,8 +145,13 @@ function getEstablishmentSSCRO($conn, $province)
         LEFT JOIN tbl_admin_info ai on chkl.user_id = ai.id
         LEFT JOIN tbl_userinfo ui on ui.USER_ID = ai.id
         LEFT JOIN tbl_province pro on ai.PROVINCE = pro.id 
-        LEFT JOIN tbl_citymun cm on cm.PROVINCE = ai.PROVINCE AND cm.code = ai.LGU 
-        WHERE ai.PROVINCE = $province AND chkl.status='Approved' ORDER BY pro.id, chkl.safety_seal_no";
+        LEFT JOIN tbl_citymun cm on cm.PROVINCE = ai.PROVINCE AND cm.code = ai.LGU";
+
+    if ($province != '*') {
+    	$sql .= " WHERE ai.PROVINCE = $province AND chkl.status='Approved' ORDER BY pro.id, chkl.safety_seal_no";
+    } else {
+    	$sql .= " WHERE chkl.status='Approved' ORDER BY pro.id, chkl.safety_seal_no";
+    }
 
     $query = mysqli_query($conn, $sql);
     $data = [];
