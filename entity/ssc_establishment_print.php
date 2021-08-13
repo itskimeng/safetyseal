@@ -112,6 +112,7 @@ function generateDetails($data)
 	$html = '<table class="table table-bordered" border="1" cellspacing="1" cellpadding="5" style="font-size:10.5pt;">';
 	
 	$html.= '<tr>';
+	$html.= '<td style="text-align:center;"><b>PROVINCE</b></td>';
 	$html.= '<td style="text-align:center;"><b>LGU</b></td>';
 	$html.= '<td style="text-align:center;"><b>ESTABLISHMENT</b></td>';
 	$html.= '<td style="text-align:center;"><b>SSC NO.</b></td>';
@@ -120,6 +121,9 @@ function generateDetails($data)
 
 	foreach ($data as $key => $dd) {
 		$html.= '<tr>';
+		$html.= '<td>';
+		$html.= $dd['province'];
+		$html.= '</td>';
 		$html.= '<td>';
 		$html.= $dd['lgu'];
 		$html.= '</td>';
@@ -141,7 +145,7 @@ function generateDetails($data)
 
 function getEstablishmentSSCRO($conn, $province)
 {
-    $sql = "SELECT chkl.id as id, cm.name as lgu, chkl.establishment as est, ui.GOV_ESTB_NAME as est2, chkl.address as address, chkl.safety_seal_no as 'ss_no' 
+    $sql = "SELECT chkl.id as id, cm.name as lgu, pro.name as province, chkl.establishment as est, ui.GOV_ESTB_NAME as est2, chkl.address as address, chkl.safety_seal_no as 'ss_no' 
         FROM `tbl_app_checklist` chkl 
         LEFT JOIN tbl_admin_info ai on chkl.user_id = ai.id
         LEFT JOIN tbl_userinfo ui on ui.USER_ID = ai.id
@@ -162,13 +166,14 @@ function getEstablishmentSSCRO($conn, $province)
                 'est' => !empty($row['est']) ? $row['est'] : $row['est2'],
                 'ss_no' => !empty($row['ss_no']) ? $row['ss_no'] : 'NO SSC',
                 'address' => $row['address'],
-                'lgu' => $row['lgu']
+                'lgu' => $row['lgu'],
+                'province' => strtoupper($row['province'])
             ];
         }
     }
 
     if ($province == 5) {
-	    $sql = "SELECT chkl.id as id, cm.name as lgu, chkl.establishment as est, ui.GOV_ESTB_NAME as est2, chkl.address as address, chkl.safety_seal_no as 'ss_no' 
+	    $sql = "SELECT chkl.id as id, cm.name as lgu, pro.name as province, chkl.establishment as est, ui.GOV_ESTB_NAME as est2, chkl.address as address, chkl.safety_seal_no as 'ss_no' 
 	        FROM `tbl_app_checklist` chkl 
 	        LEFT JOIN tbl_admin_info ai on chkl.user_id = ai.id
 	        LEFT JOIN tbl_userinfo ui on ui.USER_ID = ai.id
@@ -184,7 +189,8 @@ function getEstablishmentSSCRO($conn, $province)
 	                'est' => !empty($row['est']) ? $row['est'] : $row['est2'],
 	                'ss_no' => !empty($row['ss_no']) ? $row['ss_no'] : 'NO SSC',
 	                'address' => $row['address'],
-	                'lgu' => $row['lgu']
+	                'lgu' => $row['lgu'],
+	                'province' => strtoupper($row['province'])
 	            ];
 	        }
 	    }
