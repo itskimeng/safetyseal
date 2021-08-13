@@ -370,6 +370,7 @@ class ApplicationManager
 
     public function getCityMuns($province)
     {
+        mysqli_set_charset($this->conn, "utf8");
         $sql = "SELECT id, province, code, name FROM tbl_citymun where province  = $province";
         
         $query = mysqli_query($this->conn, $sql);
