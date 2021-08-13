@@ -13,7 +13,7 @@
 <div class="content">
   <div class="container">
 
-    <form action="entity/post_user_acct.php?id=<?php echo $_GET['id']; ?>" method="post">
+    <form action="entity/post_user_acct.php?id=<?php echo $_GET['id']; ?>" enctype="multipart/form-data" method="post">
       <div class="row">
         <div class="col-md-4">
           <?php include 'edit/profile.php'; ?>
@@ -58,6 +58,27 @@
       }
     ?> 
 
+    var readURL = function(input) {
+        if (input.files && input.files[0]) {
+            var reader = new FileReader();
+
+            reader.onload = function (e) {
+                $('.profile-pic').attr('src', e.target.result);
+            }
+    
+            reader.readAsDataURL(input.files[0]);
+        }
+    }
+    
+
+    $(".file-upload").on('change', function(){
+        readURL(this);
+    });
+    
+    $(".upload-button").on('click', function() {
+       $(".file-upload").click();
+    });
+
     $("[name='user_status']").bootstrapSwitch();
 
     $(document).on('change', '#province', function(){
@@ -83,6 +104,8 @@
       
       return 0;
     }
+
+    
 
 
 

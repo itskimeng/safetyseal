@@ -22,7 +22,6 @@ if ($is_pfp) {
     $users = $am->getAllUsers();
 }
 
-
 if ($is_rofp) {
     $hlbl = '(REGIONAL OFFICE FOCAL PERSON)';
 }

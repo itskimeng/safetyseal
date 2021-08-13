@@ -7,21 +7,6 @@ require '../manager/ApplicationManager.php';
 
 $am = new ApplicationManager();
 
-// $id = $_GET['id'];
-// $fullname = $_POST['fullname'];
-// $position = $_POST['position'];
-// $province = $_POST['province'];
-// $lgu = $_POST['lgu'];
-// $address = $_POST['address'];
-// $mobile_no = $_POST['mobile_no'];
-// $email = $_POST['email'];
-// $gov_agency = $_POST['gov_agency'];
-// $sub_office = $_POST['sub_office'];
-// $gov_nature = $_POST['gov_nature'];
-// $username = $_POST['username'];
-// $password = $_POST['password'];
-// $confirm_pw = $_POST['confirm_pw'];
-
 $params = getParams($_POST);
 
 try {
@@ -29,10 +14,17 @@ try {
 		pwMatchChecker($params['pw1'], $params['pw2']);
 	}	
 
+	$filename = $_FILES["file"]["name"];
+    $tempname = $_FILES["file"]["tmp_name"];  
+
+	$folder = "../_images/profile/" . $filename;
+
 	$am->postUserAccount($params);
+	$am->postUserProfile($filename, $params['id']); 
+	move_uploaded_file($tempname, $folder);
+
 	$_SESSION['toastr'] = $am->addFlash('success', 'User has been updated successfully!', 'Success');
 } catch (Exception $e) {
-	// echo 'Message: ' .$e->getMessage();
 	$_SESSION['toastr'] = $am->addFlash('error', $e->getMessage(), 'Error');
 }
 

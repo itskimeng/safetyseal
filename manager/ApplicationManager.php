@@ -1024,7 +1024,8 @@ class ApplicationManager
 
     public function getAllUsers($province='', $lgu='', $roles='')
     {
-        $sql = "SELECT ai.id as userid, ai.CMLGOO_NAME as name, pr.name as province, pr.id as province_id, cm.name as lgu, ai.EMAIL as email, ai.roles as role, ai.IS_VERIFIED as is_verified, ai.IS_APPROVED as is_approved FROM tbl_admin_info ai
+        $sql = "SELECT ai.id as userid, ai.CMLGOO_NAME as name, pr.name as province, pr.id as province_id, cm.name as lgu, ai.EMAIL as email, ai.roles as role, ai.IS_VERIFIED as is_verified, ai.IS_APPROVED as is_approved, ai.UNAME as username, ai.profile
+        FROM tbl_admin_info ai
         JOIN tbl_userinfo ui on ui.user_id = ai.id
         JOIN tbl_province pr on pr.id = ai.PROVINCE
         JOIN tbl_citymun cm on cm.province = ai.PROVINCE AND cm.code = ai.LGU
@@ -1042,11 +1043,13 @@ class ApplicationManager
         while ($row = mysqli_fetch_assoc($query)) {
             $data[$row['userid']] = [
                 'name' => $row['name'],
+                'username' => $row['username'],
                 'email' => $row['email'],
                 'province_id' => $row['province_id'],
                 'province' => $row['province'],
                 'lgu' => $row['lgu'],
-                'status' => $row['is_verified'] ? 'Active' : 'Inactive'
+                'status' => $row['is_verified'] ? 'Active' : 'Inactive',
+                'profile' => !empty($row['profile']) ? '_images/profile/'.$row['profile'] : '_images/logo.png'
             ];   
         }
         
@@ -1074,7 +1077,8 @@ class ApplicationManager
             ui.GOV_ESTB_NAME as establishment, 
             ui.GOV_NATURE_NAME as gov_nature, 
             ai.UNAME as username,
-            ai.ROLES as role  
+            ai.ROLES as role,
+            ai.profile as profile  
             FROM tbl_admin_info ai
         JOIN tbl_userinfo ui on ui.user_id = ai.id
         JOIN tbl_province pr on pr.id = ai.PROVINCE
@@ -1108,6 +1112,15 @@ class ApplicationManager
         }
 
         return $data;
+    }
+
+    public function postUserProfile($filepath, $id) 
+    {
+        $sql = "UPDATE tbl_admin_info SET profile = '".$filepath."' WHERE id = '".$id."'";
+
+        $query = mysqli_query($this->conn, $sql);
+
+        return 0;
     }
 
 }

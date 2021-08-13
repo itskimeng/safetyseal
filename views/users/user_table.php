@@ -14,6 +14,7 @@
               <th hidden style="text-align: center;">ID</th>
               <!-- <th></th> -->
               <th style="text-align: center; width:30%;">NAME</th>
+              <th style="text-align: center; width:12%;">USERNAME</th>
               <th style="text-align: center; width:15%;">PROVINCE</th>
               <th style="text-align: center; width:20%;">CITY/MUNICIPALITY</th>
               <th style="text-align: center; width:17%">EMAIL</th>
@@ -31,10 +32,11 @@
                     <div class="row">
                       <div class="span4">
                         
-                        <p style="clear:both"><img style="float:left" src="https://bootdey.com/img/Content/avatar/avatar1.png" width="32" height="32" class="rounded-circle my-n1"/> &nbsp;&nbsp;<?php echo $user['name']; ?></p>
+                        <p style="clear:both"><img style="float:left" src="<?php echo $user['profile']; ?>" width="32" height="32" class="rounded-circle my-n1"/> &nbsp;&nbsp;<?php echo $user['name']; ?></p>
                       </div>
                     </div>
                   </div></td>
+                <td><?php echo $user['username']; ?></td>
                 <td><?php echo $user['province']; ?></td>
                 <td><?php echo $user['lgu']; ?></td>
                 <td><?php echo $user['email']; ?></td>

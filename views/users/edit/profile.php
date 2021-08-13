@@ -3,8 +3,32 @@
     <h3 class="card-title"><i class="fa fa-user" aria-hidden="true"></i> Profile</h3>
   </div>
   <div class="card-body">
+    
     <div class="d-flex flex-column align-items-center text-center">
-      <img src="https://bootdey.com/img/Content/avatar/avatar7.png" alt="Admin" class="rounded-circle" width="150">
+
+      <div class="circle">
+       <!-- User Profile Image -->
+       <div>
+        <?php if (!empty($user['profile'])): ?>
+          <img class="profile-pic" src="_images/profile/<?php echo $user['profile']; ?>" style="height: 100% !important;
+    width: 100% !important;
+    object-fit: cover;">
+        <?php else: ?>
+            <img class="profile-pic" 
+            src="_images/logo.png" style="height: 100% !important; width: 100% !important; object-fit: cover;">
+
+        <?php endif ?>
+       </div>
+
+       <!-- Default Image -->
+       <!-- <i class="fa fa-user fa-5x"></i> -->
+     </div>
+     <div class="p-image">
+       <i class="fa fa-camera upload-button"></i>
+        <input class="file-upload" type="file" name="file" accept="image/*"/>
+     </div>
+
+      <!-- <img src="https://bootdey.com/img/Content/avatar/avatar7.png" alt="Admin" class="rounded-circle" width="150"> -->
       <div class="mt-3">
         <h4><b><?php echo $user['name']; ?></b></h4>
         <p class="text-secondary mb-1"><?php echo $user['position']; ?></p>
