@@ -1099,9 +1099,9 @@ class ApplicationManager
         $query = mysqli_query($this->conn, $sql);
 
         if (!empty($data['pw1'])) {
-            $hashed_pw = password_hash($data['pw1'], PASSWORD_DEFAULT);
+            // $hashed_pw = password_hash($data['pw1'], PASSWORD_DEFAULT);
 
-            $sql = "UPDATE tbl_admin_info SET PASSWORD = '".$hashed_pw."' WHERE id = '".$data['id']."'";
+            $sql = "UPDATE tbl_admin_info SET PASSWORD = '".$data['pw1']."' WHERE id = '".$data['id']."'";
 
             $query = mysqli_query($this->conn, $sql); 
         }

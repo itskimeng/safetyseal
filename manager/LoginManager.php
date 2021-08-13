@@ -28,11 +28,11 @@ class LoginManager
         ai.PASSWORD as password
         FROM `tbl_admin_info` ai 
         LEFT JOIN tbl_userinfo ui on ai.ID = ui.USER_ID 
-        WHERE ai.UNAME = '$username'";
+        WHERE ai.UNAME = '$username' AND ai.PASSWORD = '$password'";
         $query = mysqli_query($this->conn, $sql);
         $data = [];
         while ($row = mysqli_fetch_assoc($query)) {
-            if(password_verify($password, $row['password'])) {
+            // if(password_verify($password, $row['password'])) {
                 $data[] = [
                     'ID' => $row['ID'],
                     'UNAME' => $row['UNAME'],
@@ -48,7 +48,7 @@ class LoginManager
                     'nature' => $row['nature'],
                     'position' => $row['position']
                 ];    
-            }
+            // }
         }
 
 
