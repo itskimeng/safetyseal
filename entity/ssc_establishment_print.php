@@ -6,6 +6,9 @@ require '../tcpdfv02/tcpdf.php';
 require '../manager/ApplicationManager.php';
 require '../application/config/connection.php';
 
+
+mysqli_set_charset($conn, "utf8");
+
 $province = strtoupper($_GET['province']);
 
 $checker_id = checkID($_GET['province']);
