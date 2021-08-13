@@ -32,7 +32,7 @@ try {
 	$am->postUserAccount($params);
 	$_SESSION['toastr'] = $am->addFlash('success', 'User has been updated successfully!', 'Success');
 } catch (Exception $e) {
-	echo 'Message: ' .$e->getMessage();
+	// echo 'Message: ' .$e->getMessage();
 	$_SESSION['toastr'] = $am->addFlash('error', $e->getMessage(), 'Error');
 }
 
