@@ -21,6 +21,7 @@ $pdf = new TCPDF(PDF_PAGE_ORIENTATION, PDF_UNIT, PDF_PAGE_FORMAT, true, 'UTF-8',
 $pdf->setPageOrientation('L');
 $pdf->SetCreator('DILG RICTU');
 $pdf->SetAuthor('DILG RICTU');
+$pdf->SetTitle('ESTABLISHMENTS WITH SAFETYSEAL CERTIFICATES');
 $pdf->SetKeywords('TCPDF, PDF, todo');
 
 // set default header data
@@ -64,7 +65,7 @@ $html = generateDetails($data);
 $pdf->writeHTML($html, true, false, true, false, '');
 
 $pdf->lastPage();
-$pdf->Output('cavite_report.pdf', 'I');
+$pdf->Output('ssc_report.pdf', 'I');
 
 function checkID($id) {
 	$dd = '';
