@@ -168,8 +168,9 @@ require_once 'controller/DashboardController.php'; ?>
                         <div class="col-md-8" style="border-radius:5px">
                             <div class=" card box box-success">
                                 <div class="card-header" style="background-color: #009688; color:#fff;">
-                                    LEGEND: <span class="pull-right badge bg-green">APPROVED</span>
-                                    <span class="pull-right badge bg-blue">FOR RECEIVING </span>
+                                    LEGEND: 
+                                    <span class="pull-right badge bg-yellow">PENDING APPLICATION</span>
+                                    <span class="pull-right badge bg-green">APPROVED</span>
 
                                 </div>
                                 <div class="box-header with-border">
