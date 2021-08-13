@@ -387,6 +387,26 @@ class ApplicationManager
         return $data;
     }
 
+    public function getCityMuns2()
+    {
+        $sql = "SELECT id, province, code, name FROM tbl_citymun";
+        
+        $query = mysqli_query($this->conn, $sql);
+        $data = [];
+        
+        while ($row = mysqli_fetch_assoc($query)) {
+            $data[$row['province']][$row['id']] = [
+                'province' => $row['province'],
+                'id' => $row['id'],
+                'code' => $row['code'],
+                'name' => $row['name']
+            ];    
+           
+        }
+
+        return json_encode($data);
+    }
+
     public function getApplicationLists($province, $lgu, $status)
     {
         $sql = "SELECT 
@@ -1034,7 +1054,27 @@ class ApplicationManager
 
     public function getUserData($id)
     {
-        $sql = "SELECT ai.id as userid, ai.CMLGOO_NAME as name, pr.id as province, pr.id as province_id, cm.name as lgu, ai.EMAIL as email, ai.roles as role, ai.IS_VERIFIED as is_verified, ai.IS_APPROVED as is_approved, ui.POSITION as position, ui.ADDRESS as address, ui.MOBILE_NO as mobile_no, ui.GOV_AGENCY_NAME as gov_agency, ai.OFFICE as sub_office, ui.GOV_ESTB_NAME as establishment, ai.UNAME as username FROM tbl_admin_info ai
+        $sql = "SELECT 
+            ai.id as userid, 
+            ai.CMLGOO_NAME as name, 
+            pr.id as province, 
+            pr.id as province_id, 
+            cm.name as lgu,
+            cm.id as lgu_id,  
+            ai.EMAIL as email, 
+            ai.roles as role, 
+            ai.IS_VERIFIED as is_verified, 
+            ai.IS_APPROVED as is_approved, 
+            ui.POSITION as position, 
+            ui.ADDRESS as address, 
+            ui.MOBILE_NO as mobile_no, 
+            ui.GOV_AGENCY_NAME as gov_agency, 
+            ai.OFFICE as sub_office, 
+            ui.GOV_ESTB_NAME as establishment, 
+            ui.GOV_NATURE_NAME as gov_nature, 
+            ai.UNAME as username,
+            ai.ROLES as role  
+            FROM tbl_admin_info ai
         JOIN tbl_userinfo ui on ui.user_id = ai.id
         JOIN tbl_province pr on pr.id = ai.PROVINCE
         JOIN tbl_citymun cm on cm.province = ai.PROVINCE AND cm.code = ai.LGU
@@ -1045,18 +1085,28 @@ class ApplicationManager
 
         $result = mysqli_fetch_assoc($query);
         
-        // while ($row = mysqli_fetch_assoc($query)) {
-        //     $data[$row['userid']] = [
-        //         'name' => $row['name'],
-        //         'email' => $row['email'],
-        //         'province_id' => $row['province_id'],
-        //         'province' => $row['province'],
-        //         'lgu' => $row['lgu'],
-        //         'status' => $row['is_verified'] ? 'active' : 'inactive'
-        //     ];   
-        // }
-        
         return $result;
+    }
+
+    public function postUserAccount($data) 
+    {
+        $sql = "UPDATE tbl_admin_info SET CMLGOO_NAME = '".$data['fullname']."', EMAIL = '".$data['email']."', OFFICE = '".$data['sub_office']."', IS_VERIFIED = '".$data['status']."', PROVINCE = '".$data['province']."', LGU = '".$data['lgu']."', ROLES = '".$data['role']."' WHERE id = '".$data['id']."'";
+
+        $query = mysqli_query($this->conn, $sql);
+
+        $sql = "UPDATE tbl_userinfo SET ADDRESS = '".$data['address']."', POSITION = '".$data['position']."', MOBILE_NO = '".$data['mobile_no']."', EMAIL_ADDRESS = '".$data['email']."', GOV_AGENCY_NAME = '".$data['gov_agency']."', GOV_NATURE_NAME = '".$data['gov_nature']."' WHERE id = '".$data['id']."'";
+
+        $query = mysqli_query($this->conn, $sql);
+
+        if (!empty($data['pw1'])) {
+            $hashed_pw = password_hash($data['pw1'], PASSWORD_DEFAULT);
+
+            $sql = "UPDATE tbl_admin_info SET PASSWORD = '".$hashed_pw."' WHERE id = '".$data['id']."'";
+
+            $query = mysqli_query($this->conn, $sql); 
+        }
+
+        return $data;
     }
 
 }

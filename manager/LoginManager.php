@@ -24,29 +24,31 @@ class LoginManager
         ai.is_pfp as is_pfp,
         ai.EMAIL as email,
         ui.GOV_NATURE_NAME as nature,
-        ui.POSITION as position
+        ui.POSITION as position,
+        ai.PASSWORD as password
         FROM `tbl_admin_info` ai 
-        LEFT JOIN tbl_userinfo  ui
-         on ai.ID = ui.USER_ID 
-        WHERE ai.UNAME = '$username' AND ai.PASSWORD = '$password'";
+        LEFT JOIN tbl_userinfo ui on ai.ID = ui.USER_ID 
+        WHERE ai.UNAME = '$username'";
         $query = mysqli_query($this->conn, $sql);
         $data = [];
         while ($row = mysqli_fetch_assoc($query)) {
-            $data[] = [
-                'ID' => $row['ID'],
-                'UNAME' => $row['UNAME'],
-                'IS_VERIFIED' => $row['IS_VERIFIED'],
-                'ROLES' => $row['ROLES'],
-                'PROVINCE' => $row['PROVINCE'],
-                'CITY_MUNICIPALITY' => $row['CITY_MUNICIPALITY'],
-                'name' => $row['name'],
-                'email' => $row['email'],
-                'is_clusterhead' => $row['is_clusterhead'],
-                'clusterhead_id' => $row['clusterhead_id'],
-                'is_pfp' => $row['is_pfp'],
-                'nature' => $row['nature'],
-                'position' => $row['position']
-            ];    
+            if(password_verify($password, $row['password'])) {
+                $data[] = [
+                    'ID' => $row['ID'],
+                    'UNAME' => $row['UNAME'],
+                    'IS_VERIFIED' => $row['IS_VERIFIED'],
+                    'ROLES' => $row['ROLES'],
+                    'PROVINCE' => $row['PROVINCE'],
+                    'CITY_MUNICIPALITY' => $row['CITY_MUNICIPALITY'],
+                    'name' => $row['name'],
+                    'email' => $row['email'],
+                    'is_clusterhead' => $row['is_clusterhead'],
+                    'clusterhead_id' => $row['clusterhead_id'],
+                    'is_pfp' => $row['is_pfp'],
+                    'nature' => $row['nature'],
+                    'position' => $row['position']
+                ];    
+            }
         }
 
 
