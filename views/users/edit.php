@@ -15,6 +15,14 @@
 
     <form action="entity/post_user_acct.php?id=<?php echo $_GET['id']; ?>" enctype="multipart/form-data" method="post">
       <div class="row">
+        <div class="col-md-12">
+          <div class="callout callout-warning">
+            <p><i class="fa fa-asterisk" aria-hidden="true"></i> To activate/deactivate an account, just toggle the switch button <input type="checkbox" name="user_status" checked disabled></p>
+
+          </div>
+        </div>
+      </div>
+      <div class="row">
         <div class="col-md-4">
           <?php include 'edit/profile.php'; ?>
         </div>
