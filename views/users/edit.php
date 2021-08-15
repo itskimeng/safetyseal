@@ -17,7 +17,6 @@
       <div class="row">
         <div class="col-md-4">
           <?php include 'edit/profile.php'; ?>
-          <?php include 'edit/acct_credentials.php'; ?>
         </div>
 
         <div class="col-md-8">

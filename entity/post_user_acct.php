@@ -4,7 +4,7 @@ date_default_timezone_set('Asia/Manila');
 
 require '../application/config/connection.php';
 require '../manager/ApplicationManager.php';	
-
+	
 $am = new ApplicationManager();
 
 $params = getParams($_POST);
@@ -20,8 +20,10 @@ try {
 	$folder = "../_images/profile/" . $filename;
 
 	$am->postUserAccount($params);
-	$am->postUserProfile($filename, $params['id']); 
-	move_uploaded_file($tempname, $folder);
+	if (!empty($filename)) {
+		$am->postUserProfile($filename, $params['id']); 
+		move_uploaded_file($tempname, $folder);
+	}
 
 	$_SESSION['toastr'] = $am->addFlash('success', 'User has been updated successfully!', 'Success');
 } catch (Exception $e) {

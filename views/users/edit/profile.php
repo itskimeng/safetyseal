@@ -28,13 +28,17 @@
         <input class="file-upload" type="file" name="file" accept="image/*"/>
      </div>
 
-      <!-- <img src="https://bootdey.com/img/Content/avatar/avatar7.png" alt="Admin" class="rounded-circle" width="150"> -->
       <div class="mt-3">
         <h4><b><?php echo $user['name']; ?></b></h4>
         <p class="text-secondary mb-1"><?php echo $user['position']; ?></p>
         <p class="text-muted font-size-sm"><small><?php echo $user['address']; ?></small></p>
         <input type="checkbox" name="user_status" <?php echo $user['is_verified'] ? 'checked' : ''; ?>>
       </div>
+
+      <div class="mt-3">
+        <?php include 'acct_credentials.php'; ?>
+      </div>
+        
     </div>
   </div>
 </div>
