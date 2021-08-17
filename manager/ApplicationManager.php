@@ -239,7 +239,9 @@ class ApplicationManager
             ac.nature as nature,
             ac.address as address,
             aco.defects as defects,
-            aco.recommendations as recommendations
+            aco.recommendations as recommendations,
+            ac.remarks as remarks,
+            ac.token as token
             FROM tbl_app_checklist ac
             LEFT JOIN tbl_admin_info ai on ai.id = ac.user_id
             LEFT JOIN tbl_userinfo ui on ui.user_id = ai.id
@@ -275,7 +277,9 @@ class ApplicationManager
                 'defects' => $row['defects'],
                 'recommendations' => $row['recommendations'],
                 'code' => !empty($row['control_no']) ? $row['control_no'] : '2021-'.'_____',
-                'date_proceed' => $row['date_proceed']
+                'date_proceed' => $row['date_proceed'],
+                'remarks' => $row['remarks'],
+                'token' => $row['token']
             ];      
         }
 

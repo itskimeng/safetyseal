@@ -15,10 +15,17 @@
               <div class="ribbon blue"><span><?php echo isset($_GET['create_new']) ? 'Draft' : $userinfo['status']; ?></span></div>
               
               <form method="POST" action="entity/post_application.php" class="bg-white  rounded-5 shadow-5-strong p-5">
+
                 <span class="label label-lg label-light-success label-inline font-weight-bold py-3">
-                    <a href="user/users_establishments.php" class="btn btn-secondary btn-md">
-                        <i class="fa fa-arrow-circle-left"></i> Close
+                  <a href="user/users_establishments.php" class="btn btn-secondary btn-sm">
+                      <i class="fa fa-arrow-circle-left"></i> Close
+                  </a>
+                  <?php if ($userinfo['status'] == 'Returned'): ?>
+                    <a href="entity/post_reassess.php?ssid=<?php echo $_GET['ssid']; ?>&stt=Reassess" class="btn btn-warning btn-sm"><i class="fa fa-redo" aria-hidden="true"></i> Reassess
                     </a>
+                    <a href="entity/delete_application.php?ssid=<?php echo $_GET['ssid']; ?>" class="btn btn-danger btn-sm"><i class="fas fa-trash"></i> Remove
+                    </a>
+                  <?php endif ?>
                 </span>
                 <hr>
                 <input type="hidden" name="is_new" value="<?php echo $is_new; ?>">
@@ -26,6 +33,13 @@
                 <input type="hidden" name="mobile_no" value="<?php echo $userinfo['contact_details'];?>">
                 <input type="hidden" name="province" value="<?php echo $_SESSION['province'];?>">
                 <input type="hidden" name="city_mun" value="<?php echo $_SESSION['city_mun'];?>">
+
+                <!-- user return details -->
+                <?php if ($userinfo['status'] == 'Returned'): ?>
+                  <div class="col-md-12 mt-3">
+                    <?php include 'user_return_details.php'; ?>
+                  </div>
+                <?php endif ?>
 
                 <!-- user details -->
                 <div class="col-md-12 mt-3">
@@ -36,7 +50,7 @@
                   <?php include 'checklist.php'; ?>
                 <?php endif ?>
 
-                <?php if (in_array($userinfo['status'], ['Returned', 'Disapproved', 'Reassess'])): ?>
+                <?php if (in_array($userinfo['status'], ['Returned', 'Disapproved'])): ?>
                   <?php include 'comments.php'; ?>
                 <?php endif ?>
 
