@@ -16,7 +16,7 @@ $is_pfp = $_SESSION['is_pfp'];
 $is_rofp = (($province == 0) && ($citymun == 00));
 $hlbl = ""; 
 
-if ($is_pfp) {
+if ($is_pfp OR $is_clusterhead) {
     $users = $am->getAllUsers($province);
 } else {
     $users = $am->getAllUsers();

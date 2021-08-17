@@ -29,7 +29,7 @@
           <a href="admin_report_application.php" class="nav-link">Generate Reports</a>
         </li>
 
-        <?php if ($_SESSION['is_pfp'] > 0 OR $_SESSION['province'] == 0 AND $_SESSION['city_mun'] == 00): ?>
+        <?php if ($_SESSION['is_clusterhead'] > 0 OR $_SESSION['is_pfp'] > 0 OR $_SESSION['province'] == 0 AND $_SESSION['city_mun'] == 00): ?>
           <li class="nav-item">
             <a href="uac.php" class="nav-link">User Accounts</a>
           </li>
