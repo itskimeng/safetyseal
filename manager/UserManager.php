@@ -24,7 +24,8 @@ class UserManager
         ac.nature as ac_nature,
         ac.address as ac_address,
         ac.status as ac_status,
-        DATE_FORMAT(ac.date_created, '%Y-%m-%d') as date_created 
+        DATE_FORMAT(ac.date_created, '%Y-%m-%d') as date_created,
+        ai.UNAME as username
         FROM tbl_app_checklist ac
         LEFT JOIN tbl_admin_info ai on ai.id = ac.user_id
         LEFT JOIN tbl_userinfo u on ai.ID = u.USER_ID
@@ -47,6 +48,7 @@ class UserManager
                 'ac_nature' => $row['ac_nature'],
                 'ac_address' => $row['ac_address'],
                 'ac_status' => $row['ac_status'],
+                'username' => $row['username']
             ];    
         }
 
@@ -56,8 +58,28 @@ class UserManager
 
     public function getUserInfo($userid)
     {
-        $sql = "SELECT ai.id as id, ai.CMLGOO_NAME as name, user.GOV_AGENCY_NAME as agency, user.POSITION as position, user.ADDRESS as address, user.MOBILE_NO as phone_no, user.EMAIL_ADDRESS  as emailaddress FROM `tbl_admin_info` ai
-        LEFT JOIN tbl_userinfo user on ai.id = user.USER_ID  LEFT JOIN tbl_app_checklist chkl on ai.id = chkl.user_id WHERE ai.ID = '$userid'";
+        $sql = "SELECT 
+            ai.id as id, 
+            ai.CMLGOO_NAME as name, 
+            user.GOV_AGENCY_NAME as agency, 
+            user.POSITION as position, 
+            user.ADDRESS as address, 
+            user.MOBILE_NO as phone_no, 
+            user.EMAIL_ADDRESS  as emailaddress,
+            ai.UNAME as username,
+            user.GOV_NATURE_NAME as nature,
+            ai.OFFICE as sub_office,
+            p.name as province,
+            p.id as province_id,
+            cm.name as lgu,
+            ai.UNAME as username,
+            cm.code as lgu_code
+            FROM `tbl_admin_info` ai
+            LEFT JOIN tbl_userinfo user on ai.id = user.USER_ID  
+            LEFT JOIN tbl_app_checklist chkl on ai.id = chkl.user_id 
+            LEFT JOIN tbl_province p on p.id = ai.PROVINCE
+            LEFT JOIN tbl_citymun cm on cm.code = ai.LGU AND cm.PROVINCE = ai.PROVINCE 
+            WHERE ai.ID = '$userid'";
 
         $query = mysqli_query($this->conn, $sql);
         $data = [];
@@ -65,14 +87,22 @@ class UserManager
 
         while ($row = mysqli_fetch_assoc($query)) {
             $data = [
+                'id' => $row['id'],
                 'name' => $row['name'],
                 'position' => $row['position'],
-                'address' => $row['address'],
+                'address' => !empty($row['address']) ? $row['address'] : 'Not Available',
                 'phone_no' => $row['phone_no'],
                 'emailladdress' => $row['emailaddress'],
                 'agency' => $row['agency'],
-                'est'=>$rowCount
-                
+                'est'=>$rowCount,
+                'username' => $row['username'],
+                'nature' => $row['nature'],
+                'sub_office' => $row['sub_office'],
+                'province' => $row['province'],
+                'province_id' => $row['province_id'],
+                'lgu' => $row['lgu'],
+                'lgu_code' => $row['lgu_code'],
+                'username' => $row['username']
             ];    
         }
         return $data;

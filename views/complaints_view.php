@@ -35,6 +35,7 @@
         <table class="table table-hover mb-0 border-bottom" id="complaintsTable">
             <thead>
                 <tr>
+                    <th hidden></th>
                     <th width="10%">PROVINCE</th>
                     <th width="10%">CITY / MUNICIPALITY</th>
                     <th width="10%">ICT COMPLAINT HOTLINE</th>
@@ -47,7 +48,7 @@
             <tbody>
 
               <?php 
-              $sqlSelectData = ' SELECT `ID`, `PROVINCE`, `LGU`, `NAME`, `EMAIL_ADDRESS`, `CONTACT_NO`, `PNP`, `BFP`, `ICT_HOTLINE`, `EMAIL_ADDRESS_COMPLAINTS` FROM `tbl_inspection_team` ORDER BY `PROVINCE` ASC ';
+              $sqlSelectData = ' SELECT `ID`, `PROVINCE`, `PROVINCE_ID`, `LGU`, `NAME`, `EMAIL_ADDRESS`, `CONTACT_NO`, `PNP`, `BFP`, `ICT_HOTLINE`, `EMAIL_ADDRESS_COMPLAINTS` FROM `tbl_inspection_team` ORDER BY `PROVINCE` ASC ';
               $executeSelectData = $conn->query($sqlSelectData);
               while ($resultData = $executeSelectData->fetch_assoc()) 
               {
@@ -57,6 +58,9 @@
 
                 
                 <tr>
+                    <td hidden>
+                        <?php echo $resultData['PROVINCE_ID']; ?>
+                    </td>
                     <td class="align-middle">
                       <div class="font-weight-bold">
                         <?php echo $resultData['PROVINCE']; ?>

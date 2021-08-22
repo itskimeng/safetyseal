@@ -8,6 +8,7 @@
       <div class="form-outline mb-2 col-md-4">
         <label class="form-label" for="form1Example1">Control No.:</label><br>
         <input type="text" id="form1Example1" class="form-control" value="<?php echo $userinfo['code']; ?>" placeholder="" disabled/>
+        <input type="hidden" name="application_id" id="application_id" value="<?php echo $userinfo['acid']; ?>">
       </div>
       <div class="form-outline mb-2 col-md-4">
       </div>

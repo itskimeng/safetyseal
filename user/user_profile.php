@@ -13,166 +13,207 @@
             </header>
             <img src="../frontend/images/banner_calabarzon.png" height="10%" width="100%" alt="">
 
-            <div class="container">
-                <div class="col-md-12">
-                    <div class="">
-
-
-                        <!-- Main content -->
-                        <section class="content">
-
-                            <div class="row">
-
-                                <div class="col-md-3">
-
-                                    <!-- Profile Image -->
-                                    <div class="card shadow ">
-                                        <div class="card-header" style="background-color: #009688; color:#fff;">
-                                        </div>
-                                        <div class="card-body">
-                                            <center><img style="width:100px;" src="../frontend/images/user.png" alt="User profile picture"></center>
-
-                                            <h3 class="profile-username text-center"><?php echo $_SESSION['username']; ?></h3>
-
-
-                                            <ul class="list-group list-group-unbordered">
-                                                <li class="list-group-item">
-                                                    <a href="users_establishments.php" style="color:#000;text-decoration:none;">
-                                                    <b><i class="fa fa-home"></i> My Establishments</b>
-                                                    <span class="badge bg-primary" style="margin-left:20%;">
-
-                                                    <?php if($user_info['est'] == 1){echo '0';}else{echo $user_info['est'];} ?>
-                                                   
-                                                    </span>
-                                                    </a>
-                                                </li>
-
-                                            </ul>
-
-
-                                        </div>
-                                        <!-- /.box-body -->
+                <div class="row mt-2">
+                    <form action="../entity/post_user_acct2.php?id=<?php echo $user_info['id']; ?>" enctype="multipart/form-data" method="post">
+                    <div class="col-md-12">
+                        <div class="card mb-3" style="min-height: 96%;">
+                            <div class="card-body">
+                                <div class="row mb-3">
+                                    <div class="col-md-4">
+                                        Name
                                     </div>
-                                    <!-- /.box -->
-
-                                    <!-- About Me Box -->
-                                    <br>
-                                    <div class="card shadow">
-                                        <div class="card-header" style="background-color: #009688; color:#fff;">
-                                        </div>
-                                        <div class="box-header with-border">
-                                            <h3 class="box-title">About Me</h3>
-                                        </div>
-                                        <!-- /.box-header -->
-                                        <div class="box-body">
-                                        <strong><i class="fa fa-building margin-r-5"></i> Government Agency</strong>
-                                            <p class="text-muted">
-                                                <?php echo $user_info['agency']; ?>
-                                            </p>
-                                            <hr>
-                                            <strong><i class="fa fa-book margin-r-5"></i> Position</strong>
-                                            <p class="text-muted">
-                                                <?php echo $user_info['position']; ?>
-                                            </p>
-                                            <hr>
-                                            <strong><i class="fa fa-map-marker margin-r-5"></i> Address</strong>
-
-                                            <p class="text-muted"><?php echo $user_info['address']; ?></p>
-
-
-                                        </div>
-                                        <!-- /.box-body -->
+                                    <div class="col-md-8">
+                                        <input type="text" name="fullname" class="form-control" id="exampleInputEmail1" placeholder="Enter Fullname" value="<?php echo $user_info['name']; ?>">
                                     </div>
-                                    <!-- /.box -->
                                 </div>
-                                <!-- /.col -->
-                                <div class="col-md-9">
-                                    <div class="card shadow ">
-                                        <div class="card-header" style="background-color: #009688; color:#fff;">
-                                        </div>
-                                        <div class="card-body">
-                                            <ul class="nav nav-tabs" id="myTab" role="tablist">
-                                                <li class="nav-item" role="presentation">
-                                                    <button class="nav-link active" id="home-tab" data-bs-toggle="tab" data-bs-target="#home" type="button" role="tab" aria-controls="home" aria-selected="true">Home</button>
-                                                </li>
-                                                <!-- <li class="nav-item" role="presentation">
-                                                    <button class="nav-link" id="profile-tab" data-bs-toggle="tab" data-bs-target="#profile" type="button" role="tab" aria-controls="profile" aria-selected="false">Profile</button>
-                                                </li>
-                                                <li class="nav-item" role="presentation">
-                                                    <button class="nav-link" id="contact-tab" data-bs-toggle="tab" data-bs-target="#contact" type="button" role="tab" aria-controls="contact" aria-selected="false">Contact</button>
-                                                </li> -->
-                                            </ul>
-                                            <div class="tab-content" id="myTabContent">
-                                                <div class="tab-pane fade show active" id="home" role="tabpanel" aria-labelledby="home-tab">
-
-                                                    <div class="row">
-                                                        <div class="col-md-12">
-                                                            <!-- AREA CHART -->
-                                                            <div class="box box-primary">
-                                                                <div class="box-header with-border">
-                                                                    <h3 class="box-title">No. of Approved Establishments per Month</h3>
-
-                                                                    
-                                                                </div>
-                                                                <div class="box-body">
-                                                                    <div class="chart">
-                                                                        <canvas id="areaChart" style="height:250px"></canvas>
-                                                                    </div>
-                                                                </div>
-                                                                <!-- /.box-body -->
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                                <!-- <div class="tab-pane fade" id="profile" role="tabpanel" aria-labelledby="profile-tab">...</div>
-                                                <div class="tab-pane fade" id="contact" role="tabpanel" aria-labelledby="contact-tab">...</div> -->
-                                            </div>
-
-                                            <!-- /.box -->
-                                        </div>
-                                        <!-- <ul class="nav nav-tabs" id="myTab" role="tablist">
-                                        <li class="nav-item" role="presentation">
-                                            <button class="nav-link active" id="home-tab" data-bs-toggle="tab" data-bs-target="#home" type="button" role="tab" aria-controls="home" aria-selected="true">Home</button>
-                                        </li>
-                                        <li class="nav-item" role="presentation">
-                                            <button class="nav-link" id="profile-tab" data-bs-toggle="tab" data-bs-target="#profile" type="button" role="tab" aria-controls="profile" aria-selected="false">Profile</button>
-                                        </li>
-                                        <li class="nav-item" role="presentation">
-                                            <button class="nav-link" id="contact-tab" data-bs-toggle="tab" data-bs-target="#contact" type="button" role="tab" aria-controls="contact" aria-selected="false">Contact</button>
-                                        </li>
-                                    </ul>
-                                    <div class="tab-content" id="myTabContent">
-                                        <div class="tab-pane fade show active" id="home" role="tabpanel" aria-labelledby="home-tab">...</div>
-                                        <div class="tab-pane fade" id="profile" role="tabpanel" aria-labelledby="profile-tab">...</div>
-                                        <div class="tab-pane fade" id="contact" role="tabpanel" aria-labelledby="contact-tab">...</div>
-                                    </div> -->
+                                <div class="row mb-3">
+                                    <div class="col-md-4">
+                                        Position
                                     </div>
-                                    <!-- /.nav-tabs-custom -->
+                                    <div class="col-md-8">
+                                        <input type="text" name="position" class="form-control" id="exampleInputEmail1" placeholder="Enter Position" value="<?php echo $user_info['position']; ?>">
+                                    </div>
                                 </div>
-                                <!-- /.col -->
+                                <div class="row mb-3">
+                                    <div class="col-md-4">
+                                        Contact Number
+                                    </div>
+                                    <div class="col-md-8">
+                                        <input type="text" name="mobile_no" class="form-control" id="exampleInputEmail1" placeholder="Enter Contact Number" value="<?php echo $user_info['phone_no']; ?>">
+                                    </div>
+                                </div>
+                                <div class="row mb-3">
+                                    <div class="col-md-4">
+                                        Email Address
+                                    </div>
+                                    <div class="col-md-8">
+                                        <input type="text" name="email" class="form-control" id="exampleInputEmail1" placeholder="Enter Email Address" value="<?php echo $user_info['emailladdress']; ?>">
+                                    </div>
+                                </div>
+                                <div class="row mb-3">
+                                    <div class="col-md-4">
+                                        Name of Government Agency/Office
+                                    </div>
+                                    <div class="col-md-8">
+                                        <input type="text" name="gov_agency" class="form-control" id="exampleInputEmail1" placeholder="Enter Name of Government Agency/Office" value="<?php echo $user_info['agency']; ?>">
+                                    </div>
+                                </div>
+                                <div class="row mb-3">
+                                    <div class="col-md-4">
+                                        Name of Sub-office/Unit
+                                    </div>
+                                    <div class="col-md-8">
+                                        <input type="text" name="sub_office" class="form-control" id="exampleInputEmail1" placeholder="Enter Name of Sub-office/Unit" value="<?php echo $user_info['sub_office']; ?>">
+                                    </div>
+                                </div>
+                                <div class="row mb-3">
+                                    <div class="col-md-4">
+                                        Nature of Government Establishments
+                                    </div>
+                                    <div class="col-md-8">
+                                        <select class="form-control select2bs4 select2-hidden-accessible" name="gov_nature" id="nature" tabindex="-1" aria-hidden="true" required>
+                                                <option value ="" selected></option>
+                                                <?php foreach ($government_nature as $key => $nature):?>
+                                                    <?php if ($nature == $user_info['nature']): ?>
+                                                        <option value="<?php echo $nature;?>" selected><?php echo $nature;?></option>
+                                                    <?php else: ?>
+                                                        <option value="<?php echo $nature;?>"><?php echo $nature;?></option>
+                                                    <?php endif ?>
+                                                <?php endforeach;?>
+                                            </select>
+                                    </div>
+                                </div>
+                                <div class="row mb-3">
+                                    <div class="col-md-4">
+                                        Address
+                                    </div>
+                                    <div class="col-md-8">
+                                        <input type="text" name="address" class="form-control" id="exampleInputEmail1" placeholder="Enter Address" value="<?php echo $user_info['address']; ?>">
+                                    </div>
+                                </div>
+                                <div class="row mb-3">
+                                    <div class="col-md-4">
+                                        Province
+                                    </div>
+                                    <div class="col-md-8">
+                                        <div class="form-group">
+                                            <select class="form-control select2bs4 select2-hidden-accessible" name="province" id="province" tabindex="-1" aria-hidden="true" required>
+                                                <option value ="" selected></option>
+                                                <?php foreach ($province_opts as $key => $province):?>
+                                                    <?php if ($key == $user_info['province_id']): ?>
+                                                        <option value="<?php echo $key;?>" selected><?php echo $province['name'];?></option>
+                                                    <?php else: ?>
+                                                        <option value="<?php echo $key;?>"><?php echo $province['name'];?></option>
+                                                    <?php endif ?>
+                                                <?php endforeach;?>
+                                            </select>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row mb-3">
+                                    <div class="col-md-4">
+                                        City/Municipality
+                                    </div>
+                                    <div class="col-md-8">
+                                        <div class="form-group">
+                                            <select class="form-control select2bs4 select2-hidden-accessible" name="lgu" id="lgu" tabindex="-1" aria-hidden="true" required>
+                                                <option value ="" selected></option>
+                                                <?php foreach ($lgu_opts as $key => $lgu):?>
+                                                    <?php if ($lgu['code'] == $user_info['lgu_code']): ?>
+                                                        <option value="<?php echo $lgu['code'];?>" selected><?php echo $lgu['name'];?></option>
+                                                    <?php else: ?>
+                                                        <option value="<?php echo $lgu['code'];?>"><?php echo $lgu['name'];?></option>
+                                                    <?php endif ?>
+                                                <?php endforeach;?>
+                                            </select>
+                                        </div>
+                                    </div>
+                                </div>
+                                
                             </div>
-                            <!-- /.row -->
-
-                        </section>
-                        <!-- /.content -->
+                            <div class="card-footer">
+                                <div class="row mb-3">
+                                    <div class="col-md-4">
+                                        Username
+                                    </div>
+                                    <div class="col-md-8">
+                                        <input type="text" name="username" class="form-control" id="exampleInputEmail1" placeholder="Enter Username" value="<?php echo $user_info['username']; ?>">
+                                    </div>
+                                </div>
+                                <div class="row mb-3">
+                                    <div class="col-md-4">
+                                        Password
+                                    </div>
+                                    <div class="col-md-8">
+                                        <input type="password" name="password" class="form-control" id="exampleInputEmail1" placeholder="Enter Password" value="">
+                                    </div>
+                                </div>
+                                <div class="row mb-3">
+                                    <div class="col-md-4">
+                                        Confirm Password
+                                    </div>
+                                    <div class="col-md-8">
+                                        <input type="password" name="confirm_pw" class="form-control" id="exampleInputEmail1" placeholder="Confirm Password" value="">
+                                    </div>
+                                </div>
+                                <!-- <div class="row mb-3"> -->
+                                    <!-- <div> -->
+                                        <button class="btn btn-sm btn-primary" style="float:right;"><i class="fa fa-edit"></i> Update</button>
+                                    <!-- </div> -->
+                                <!-- </div> -->
+                            </div>
+                        </div>  
+                      
+                
                     </div>
-                </div>
-                <div class="col-md-12">
-
-
-                </div>
-            </div>
+                </form>
+            </div>        
+                
+            
     </main>
 </body>
 <?php include '../layout/footer.html.php'; ?>
 
 </html>
 <script>
+    <?php
+      if (isset($_SESSION['toastr'])) {
+        echo 'tata.'.$_SESSION['toastr']['type'].'("'.$_SESSION['toastr']['title'].'", "'.$_SESSION['toastr']['message'].'", {
+          duration: 5000
+        })';
+        unset($_SESSION['toastr']);
+      }
+    ?> 
+
     $('#establishmentsTable').DataTable({
         responsive: {
             details: true
         }
     });
+
+    $(document).on('change', '#province', function(){
+      $('#lgu').val('');
+      $('#lgu').empty();
+      let id = $(this).val();
+
+      let path = '../entity/getLGUs.php?id='+id;
+
+      let dd = getLGUs(path);
+    })
+
+    function getLGUs(path) {
+      $.get(path, function(data, status){
+          let dd = JSON.parse(data);
+          $('#lgu').append($('<option>').val('').text(''));
+          $.each(dd, function(key, item){
+            $('#lgu').append($('<option>').val(item.code).text(item.name));
+
+          });
+        }
+      );
+      
+      return 0;
+    }
 </script>
 
 

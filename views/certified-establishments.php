@@ -20,38 +20,31 @@
         </div>
         <div class="card-body" style="background-color: #f9f8f8;">
 
-<!--           <div class="d-flex align-items-center row">
-              <div class="position-relative col-md-4 my-2">
-                  <input class="form-control form-control-lg form-control-solid" name="name" value="" placeholder="Search establishment name">
-              </div>
-              <div class="d-flex align-items-left col-md-8 my-2">
-                  <button type="submit" class="btn btn-light-primary py-2 me-5 mr-2">
-                      <i class="fa fa-search"></i> Search
-                  </button>
-                  <a href="certified-establishments.php" class="btn btn-secondary py-2 me-5 mr-2">
-                      <i class="fa fa-sync-alt"></i> Reset
-                  </a>
-              </div>
-          </div> -->
-         
-
-
         <table class="table table-hover mb-0 border-bottom" id="establishmentsTable">
             <thead>
                 <tr>
+                    <th hidden style="text-align: center;">ID</th>
                     <th width="25%">AGENCY</th>
                     <th width="25%">ESTABLISHMENT</th>
                     <th width="40%">ADDRESS</th>
                     <th width="15%">SAFETY SEAL NO</th>
                     <th width="10%">ISSUED ON</th>
                     <th width="10%">VALID UNTIL</th>
-                    <th width="10%">STATUS</th>
+                    <!-- <th width="10%">STATUS</th> -->
                 </tr>
             </thead>
             <tbody>
               <?php 
               
-        $sql = "SELECT id,user_id, agency as GOV_AGENCY_NAME, establishment as GOV_ESTB_NAME, address as ADDRESS, safety_seal_no, date_approved, status FROM `tbl_app_checklist` WHERE status ='Approved'";
+        $sql = "SELECT ac.id, p.id as province_id, p.name as province, cm.code as lgu, ac.user_id, ac.agency as GOV_AGENCY_NAME, ac.establishment as GOV_ESTB_NAME, ac.address as ADDRESS, ac.safety_seal_no, ac.date_approved, ac.status FROM `tbl_app_checklist` ac 
+            LEFT JOIN tbl_admin_info ai on ai.ID = ac.user_id
+LEFT JOIN tbl_province p on p.id = ai.PROVINCE
+LEFT JOIN tbl_citymun cm on cm.province = ai.PROVINCE AND cm.code = ai.LGU 
+WHERE ac.status ='Approved' ORDER BY p.id, cm.id, ai.id";
+
+
+
+
         $result1 = mysqli_query($conn, $sql);
             while ($row = mysqli_fetch_array($result1)) {
 
@@ -67,23 +60,9 @@
               {
                 $agency = $row['GOV_AGENCY_NAME'];
               }
-
-
-            //   $selectApplication = ' SELECT `id`, `control_no`, `user_id`, `status`, `has_consent`, `date_created`, `date_proceed`, `receiver_id`, `date_received`, `approver_id`, `date_approved`, `safety_seal_no`, `date_modified` FROM `tbl_app_checklist` WHERE status = "Approved" ';
-            //   $execSelectApplication = $conn->query($selectApplication);
-            //   while ($resultApplication = $execSelectApplication->fetch_assoc()) 
-            //   {
-            //     $selectApplicantDetails = ' SELECT `ID`, `REGION`, `PROVINCE`, `LGU`, `OFFICE`, `CMLGOO_NAME`, `UNAME`, `PASSWORD`, `VERIFICATION_CODE`, `IS_APPROVED`, `IS_VERIFIED`, `ROLES`, `EMAIL` FROM `tbl_admin_info` WHERE `ID` = "'.$resultApplication['user_id'].'" ';
-            //     $execApplicantDetails = $conn->query($selectApplicantDetails);
-            //     $resultApplicantDetails = $execApplicantDetails->fetch_assoc();
-
-
-
-            //     $selectAddress = ' SELECT `ID`, `USER_ID`, `ADDRESS`, `POSITION`, `MOBILE_NO`, `EMAIL_ADDRESS`, `GOV_AGENCY_NAME`, `GOV_ESTB_NAME`, `DATE_REGISTERED`, `GOV_NATURE_NAME` FROM `tbl_userinfo` WHERE `USER_ID` = "'.$resultApplication['user_id'].'" ';
-            //     $execAddress = $conn->query($selectAddress);
-            //     $resultAddress = $execAddress->fetch_assoc();
                ?>
                 <tr class="clickable-row" data-href="establishment-profile.php?unique_id=<?php echo $row['id']; ?>">
+                        <td hidden><?php echo $row['province_id']; ?></td>
                         <td class="align-middle">
                             <a href="establishment-profile.php?unique_id=<?php echo $row['id']; ?>" target="_blank" class="">
                                 <div class="font-weight-bold">
@@ -116,12 +95,12 @@
                              <?php echo date('F d, Y', strtotime("+6 months", strtotime($row['date_approved']))); ?>
                             </span>
                         </td>
-                        <td class="align-middle" nowrap="">
+                        <!-- <td class="align-middle" nowrap="">
                             <span class="label label-lg label-light-success label-inline font-weight-bold py-4">
                                 <i class="la la-clipboard-check mr-2"></i>
-                             <?php if ($row['status'] == 'Approved') { echo '<span class="text-success">CERTIFIED<span>';} else {echo '<span class="text-danger">'.$row['status'].'<span>'; } ?>
+                             <?php //if ($row['status'] == 'Approved') { echo '<span class="text-success">CERTIFIED<span>';} else {echo '<span class="text-danger">'.$row['status'].'<span>'; } ?>
                             </span>
-                        </td>
+                        </td> -->
                     </tr>
 
 
@@ -146,10 +125,14 @@
 
   <script>
     $('#establishmentsTable').DataTable( {
-        responsive: {
-            details: true
-        },
-        "autoWidth": false,
-        "lengthMenu": [[20, 50, -1], [20, 50, "All"]]
-    } );
+        //"responsive": true,
+        //"autoWidth": false,
+        //"lengthMenu": [[20, 50, -1], [20, 50, "All"]],
+        //"columnDefs": [
+        //    {
+        //        "targets": [ 0 ],
+        //        "visible": false
+        //    }
+        //]
+      } );
   </script>

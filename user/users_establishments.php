@@ -66,9 +66,7 @@
                             Home / My Establishments
                         </div>
                         <div class="card-body" style="background-color: #f9f8f8;">
-                            <table class="table table-hover mb-0 border-bottom" id="establishmentsTable" style="font-size: 10pt; width: 1500px;
-    overflow-x: scroll;
-    font-size: 10pt;">
+                            <table class="table table-hover mb-0 border-bottom" id="establishmentsTable" style="font-size: 10pt; width: 1500px; overflow-x: scroll; font-size: 10pt;">
                                 <thead>
                                     <tr>
                                         <th class="text-center" width="15%">Status</th>

@@ -33,10 +33,12 @@ foreach ($user_est as $key => $data) {
             </span>
         </td>
         <td nowrap="">
-            <span class="label label-lg label-light-success label-inline font-weight-bold py-4">
-                <i class="la la-clipboard-check mr-2"></i>
-                <?php echo date('F d, Y', strtotime("+6 months", strtotime($data['date_created']))); ?>
-            </span>
+            <?php if ($data['ac_status'] == 'Approved'): ?>
+                <span class="label label-lg label-light-success label-inline font-weight-bold py-4">
+                    <i class="la la-clipboard-check mr-2"></i>
+                    <?php echo date('F d, Y', strtotime("+6 months", strtotime($data['date_created']))); ?>
+                </span>
+            <?php endif ?>
         </td>
         <td nowrap="">
             <?php if ($data['ac_status'] == 'Disapproved' OR $data['ac_status'] == 'Returned'){ ?>
