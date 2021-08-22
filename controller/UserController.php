@@ -18,4 +18,8 @@ $user_info = $app->getUserInfo($id);
 $province_opts = $am->getProvinces();
 $lgu_opts = $am->getCityMuns($user_info['province_id']);
 $government_nature = $cm->getGovtNature();
+$has_applied = false;
+if (count($user_est) > 0) {
+	$has_applied = true;
+}
 ?>

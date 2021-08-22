@@ -39,6 +39,9 @@
                                         <td style="width:15%;">Step 4:</td>
                                         <td>If approved, print the Safety Seal Certification on an A4 size paper. If not approved, ask for reassessment.</td>
                                     </tr>
+                                    <tr>
+                                        <td class="text-center" colspan="2"><b>~ If applicant has existing application, system will not accept new transactions.</b></td>
+                                    </tr>
                                 </table>
                               
 
@@ -49,14 +52,16 @@
                     <!-- </div> -->
                 </div>
 
-                <div class="col-md-12">
+                <div class="col-md-12 mt-3 py-3">
                     <div class="row">
-                        <span class="label label-lg label-light-success label-inline font-weight-bold mt-3 py-3">
-                            <!-- <i class="la la-clipboard-check mr-2"></i> -->
-                            <a href="../wbstapplication.php?create_new" class="btn btn-primary btn-md">
-                                <i class="fa fa-plus-square"></i> Apply
-                            </a>
-                        </span>
+                        <?php if (!$has_applied): ?>
+                            <span class="label label-lg label-light-success label-inline font-weight-bold">
+                                <!-- <i class="la la-clipboard-check mr-2"></i> -->
+                                <a href="../wbstapplication.php?create_new" class="btn btn-primary btn-md">
+                                    <i class="fa fa-plus-square"></i> Apply
+                                </a>
+                            </span>
+                        <?php endif ?>
                     </div>
                 </div>
                 <div class="col-md-12">
