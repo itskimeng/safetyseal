@@ -169,7 +169,7 @@
                     <div class="card-header" style="background-color: #009688; color:#fff;">
                         <h5 class="card-title" style="font-size: 9pt;"><img src="frontend/images/logo.png" style="width: 30px;" alt=""> ESTABLISHMENTS WITH SAFETY SEAL CERTIFICATE</h5>
 
-                        <a href="entity/ssc_establishment_print.php?province=cavite" class="btn btn-sm btn-info" style="float: right;"><i class="fa fa-print"></i> Printss</a>
+                        <a href="entity/ssc_establishment_print.php?province=cavite" class="btn btn-sm btn-info" style="float: right;"><i class="fa fa-print"></i> Print</a>
                     </div>
 
                     <div class="card-body" style="overflow:auto;">
