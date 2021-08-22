@@ -167,17 +167,14 @@
             <div class="col-md-4">
                 <div class="card" style="height: 562px;">
                     <div class="card-header" style="background-color: #009688; color:#fff;">
-                        <h5 class="card-title" style="font-size: 12pt;"><img src="frontend/images/logo.png" style="width: 30px;" alt=""> ESTABLISHMENTS WITH SAFETY SEAL CERTIFICATE</h5>
+                        <h5 class="card-title" style="font-size: 9pt;"><img src="frontend/images/logo.png" style="width: 30px;" alt=""> ESTABLISHMENTS WITH SAFETY SEAL CERTIFICATE</h5>
+
+                        <a href="entity/ssc_establishment_print.php?province=cavite" class="btn btn-sm btn-info" style="float: right;"><i class="fa fa-print"></i> Printss</a>
                     </div>
 
                     <div class="card-body" style="overflow:auto;">
                         <div class="col-sm-12">
                             <?php if(!empty($est_safety_seal)): ?>
-                                <div class="row" style="text-align: right; margin-bottom: 3px;">
-                                    <div class="col-md-12">
-                                        <a href="entity/ssc_establishment_print.php?province=cavite"><i class="fa fa-print"></i> Print</a>
-                                    </div>
-                                </div>
                                 <?php foreach ($est_safety_seal as $key => $establishments) : ?>
                                     <div class="row" style="border-radius: 5px; border: solid 1px #ff6319b8; margin-bottom: 3px;">
                                         <div class="col-sm-7">
