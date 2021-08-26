@@ -14,7 +14,7 @@
             </header>
             <img src="../frontend/images/banner_calabarzon.png" height="10%" width="100%" alt="">
 
-            <div class="container">
+            <div class="container mb-3">
                 <div class="col-md-12">
                     <!-- <div class="row"> -->
                         <!-- <div class="form-box shadow p-1 mb-5 bg-body rounded box text-center"> -->
@@ -98,8 +98,8 @@
             </div>
     </main>
 </body>
-<?php include '../layout/footer.html.php'; ?>
-
+<?php include '../layout/footer.html.v2.php'; ?>
+<?php include '../layout/custom_page-above.php'; ?>
 </html>
 <style type="text/css">
     #establishmentsTable_wrapper {

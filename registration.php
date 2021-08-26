@@ -12,9 +12,9 @@
 </body>
 
 <?php require_once 'layout/footer.html.php'; ?>
+<?php include 'layout/custom_page-above.php'; ?>
 <?php require_once 'views/verification_modal.php'; ?>
 <?php require_once 'views/verified_modal.php'; ?>
-
 </html>
 <script>
 

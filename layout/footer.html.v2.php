@@ -144,7 +144,7 @@ h1, h2, h3, h4, h5, h6 {
 .new_footer_top .footer_bg {
     position: absolute;
     bottom: 0;
-    background: url("frontend/images/footer.png") no-repeat scroll center 0;
+    background: url("../frontend/images/footer.png") no-repeat scroll center 0;
     width: 100%;
     height: 266px;
 }
@@ -217,11 +217,11 @@ h1, h2, h3, h4, h5, h6 {
                             <div class="f_widget social-widget pl_80 wow fadeInLeft" data-wow-delay="0.8s" style="visibility: visible; animation-delay: 0.8s; animation-name: fadeInLeft;">
                                 <h3 class="f-title f_600 t_color f_size_18">STAY CONNECTED</h3>
                                 <div class="f_social_icon">
-                                    <img src="frontend/images/calabarzon.png" alt="" style="width: 6rem;">
-                                    <img src="frontend/images/lgrc_logo.png" alt="" style="width: 6rem;">
-                                    <img src="frontend/images/fb.png" alt="" style="width: 5rem;">
-                                    <img src="frontend/images/twitter.png" alt="" style="width: 5rem;">
-                                    <img src="frontend/images/yt.png" alt="" style="width: 5rem;">
+                                    <img src="../frontend/images/calabarzon.png" alt="" style="width: 6rem;">
+                                    <img src="../frontend/images/lgrc_logo.png" alt="" style="width: 6rem;">
+                                    <img src="../frontend/images/fb.png" alt="" style="width: 5rem;">
+                                    <img src="../frontend/images/twitter.png" alt="" style="width: 5rem;">
+                                    <img src="../frontend/images/yt.png" alt="" style="width: 5rem;">
                                 
                                 </div>
                             </div>

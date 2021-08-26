@@ -1,9 +1,8 @@
+<div class="container" style="padding-top: 5%; padding-bottom: 1%;">
+  <img src="frontend/images/banner_calabarzon.png" height="10%" width="100%" alt="">
+</div>
+
 <div class="registration-image">
-<div class="bg-white d-none d-sm-block">
-                    <div class="container" >
-                        <img src="frontend/images/banner_calabarzon.png" style="margin-top:5%;"width="90%" height="100%" alt="">
-                    </div>
-                </div>
   <div class="container">
     
     <div class="pt-5">
@@ -13,7 +12,7 @@
         <div class="col-lg-7 mb-4 text-white">
           <!-- <header class="py-5 mt-5"> -->
           <header>
-            <h1 class="display-6 headingText">Safety Seal Registration</h1>
+            <h1 class="display-6 headingText" style="color: white;">Safety Seal Registration</h1>
             <p class="lead mb-0" style=" font-size:17px; color:#e8e7e7;">
               Register Now! for Safety Seal Certification
             </p>
@@ -23,7 +22,7 @@
 
 
         <div class="col-md-5">
-          <div class="py-5">
+          <div class="py-4">
             <div class="form-box shadow p-3 mb-5 bg-body rounded">
 
 
@@ -64,15 +63,15 @@
                 </div>
 
                 <!-- Remember Me -->
-                <div class="checkbox-list">
-                  <label class="checkbox">
-                    <input id="remember_me" type="checkbox" name="remember" />
-                    <span></span>
-                    Remember me
-                  </label>
-                </div>
+                <!-- <div class="checkbox-list"> -->
+                  <!-- <label class="checkbox"> -->
+                    <!-- <input id="remember_me" type="checkbox" name="remember" /> -->
+                    <!-- <span></span> -->
+                    <!-- Remember me -->
+                  <!-- </label> -->
+                <!-- </div> -->
 
-                <div class="mt-6">
+                <div class="form-group mt-3">
                   <button type="submit" name="login" class="btn btn-light-primary">
                     Login
                   </button>

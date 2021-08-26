@@ -23,4 +23,5 @@
 </body>
 
 <?php require_once 'layout/footer.html.php'; ?>
+<?php include 'layout/custom_page-above.php'; ?>
 </html>

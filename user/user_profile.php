@@ -6,10 +6,9 @@
 <?php include 'user_header.php'; ?>
 <?php include '../controller/UserController.php'; ?>
 
-
 <body>
     <main>
-        <div class="container" style="margin-top: 5%;">
+        <div class="container" style="margin-top: 4%;">
             <header>
                 <?php include 'user_navbar.php'; ?>
             </header>
@@ -174,8 +173,7 @@
             
     </main>
 </body>
-<?php include '../layout/footer.html.php'; ?>
-
+<?php include '../layout/footer.html.v2.php'; ?>
 </html>
 <script>
     <?php

@@ -16,4 +16,5 @@
     </script>
 </body>
 <?php include 'layout/footer.html.php'; ?>
+<?php include 'layout/custom_page-above.php'; ?>
 </html>

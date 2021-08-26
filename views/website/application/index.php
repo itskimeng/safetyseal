@@ -3,14 +3,20 @@
 
 ?>
 
-<div class="registration-image" style="padding-top:3%;">
+<div class="container" style="padding-top: 5%;">
+  <img src="frontend/images/banner_calabarzon.png" height="10%" width="100%" alt="">
+    <hr>
+  
+</div>
+
+<div class="registration-image">
   <div class="container">
-    <div class="pt-5">
+    <div class="pt-4">
       <div class="row align-items-center heading">
         
         <div class="col-md-12">
           <div class="py-1">
-            <div class="form-box shadow p-1 mb-5 bg-body rounded box">
+            <div class="form-box shadow p-1 mb-4 bg-body rounded box">
 
               <div class="ribbon blue"><span><?php echo isset($_GET['create_new']) ? 'Draft' : $userinfo['status']; ?></span></div>
               

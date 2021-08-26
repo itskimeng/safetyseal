@@ -8,9 +8,11 @@
                 <?php include 'views/homepage.html.php'; ?>
         </div>
     </main>
-
-
-    <script>
+</body>
+<?php include 'layout/footer.html.php'; ?>
+<?php include 'layout/custom_page-above.php'; ?>
+</html>
+<script>
 		$(document).ready(function(){
 			$(".owl-carousel").owlCarousel({
 				stagePadding: 50,
@@ -42,8 +44,5 @@
 			});
 		});
     </script>
-</body>
-<?php include 'layout/footer.html.php'; ?>
-</html>
 <script src="frontend/js/banner.js"></script>
 

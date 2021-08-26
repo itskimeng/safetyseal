@@ -70,7 +70,6 @@
 
         <div class="main-content">
           <div class="owl-carousel owl-theme">
-
               <div class="item">
                 <div class="card">
                   <div class="card-header" style="background-color: #480272; color:white; height: 65px;">
