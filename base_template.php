@@ -1,5 +1,3 @@
-<?php require_once 'session_checker.php'; ?>
-
 <!DOCTYPE html>
 <html>
   <head>
