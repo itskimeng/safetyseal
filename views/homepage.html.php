@@ -1,5 +1,6 @@
   <?php require_once 'application/config/connection.php'; ?>
   <img src="frontend/images/banner_calabarzon.png" height="10%" width="100%" alt="">
+  <hr>
  
 
   <div class = "container bg-light">
@@ -76,7 +77,9 @@
                     <center>Bauan Municipal Building <i class="fa fa-check"></i></center>
                   </div>
                   <div class="card-body cardRecentEstablishment">
-                    <img src="files/certified/bauan.png" alt="" height="250">
+                    <div style="height: 250px;">
+                      <img src="files/certified/bauan.png" alt="" style="height: 100%; width: 100%; object-fit: cover;">
+                    </div>
                   </div>
                   <div class="card-footer text-muted">
                     Certified: <b>July 08, 2021</b>
@@ -90,9 +93,9 @@
                     <center>BJMP City of Cabuyao <i class="fa fa-check"></i></center>
                   </div>
                   <div class="card-body cardRecentEstablishment">
-                    <!-- <a href="establishment-profile.php?unique_id=172"> -->
-                      <img src="files/certified/cabuyao.png" alt="" height="250">
-                    <!-- </a> -->
+                    <div style="height: 250px;">
+                      <img src="files/certified/cabuyao.png" alt="" style="height: 100%; width: 100%; object-fit: cover;">
+                    </div>
                   </div>
                   <div class="card-footer text-muted">
                     Certified: <b>July 01, 2021</b>
@@ -106,9 +109,9 @@
                     <center>BFP Calamba City Station <i class="fa fa-check"></i></center>
                   </div>
                   <div class="card-body cardRecentEstablishment">
-                    <!-- <a href="establishment-profile.php?unique_id=110"> -->
-                      <img src="files/certified/BFP Calamba City Station.jpg" alt="" height="250">
-                    <!-- </a> -->
+                    <div style="height: 250px;">
+                      <img src="files/certified/BFP Calamba City Station.jpg" alt="" style="height: 100%; width: 100%; object-fit: cover;">
+                    </div>
                   </div>
                   <div class="card-footer text-muted">
                     Certified: <b>June 30, 2021</b>
@@ -122,9 +125,9 @@
                     <center>BFP Laguna Provincial Satellite Office <i class="fa fa-check"></i></center>
                   </div>
                   <div class="card-body cardRecentEstablishment">
-                    <!-- <a href="establishment-profile.php?unique_id=110"> -->
-                      <img src="files/certified/BFP Laguna Provincial Satellite Office.jpg" alt="" height="250">
-                    <!-- </a> -->
+                    <div style="height: 250px;">
+                      <img src="files/certified/BFP Laguna Provincial Satellite Office.jpg" alt="" style="height: 100%; width: 100%; object-fit: cover;">
+                    </div>
                   </div>
                   <div class="card-footer text-muted">
                     Certified: <b>June 30, 2021</b>
