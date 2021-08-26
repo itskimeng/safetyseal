@@ -8,12 +8,12 @@
 
 <body>
     <main>
-        <div class="container" style="margin-top: 4%;">
+        <div class="container" style="margin-top: 5%;">
             <header>
                 <?php include 'user_navbar.php'; ?>
             </header>
             <img src="../frontend/images/banner_calabarzon.png" height="10%" width="100%" alt="">
-
+            <hr>
                 <div class="row mt-2">
                     <form action="../entity/post_user_acct2.php?id=<?php echo $user_info['id']; ?>" enctype="multipart/form-data" method="post">
                     <div class="col-md-12">
