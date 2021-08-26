@@ -13,7 +13,7 @@
   background-color: #243866;
   color: white;
   cursor: pointer;
-  padding: 15px;
+  padding: 10px;
   border-radius: 4px;
 }
 
