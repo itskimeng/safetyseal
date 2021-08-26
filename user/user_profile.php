@@ -1,4 +1,6 @@
 <?php session_start() ?>
+<?php require '../session_checker.v2.php'; ?>
+
 <!DOCTYPE html>
 <html lang="en">
 <?php include 'user_header.php'; ?>
