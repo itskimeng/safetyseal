@@ -17,6 +17,16 @@
 
 </html>
 <script>
+
+    <?php
+    if (isset($_SESSION['toastr'])) {
+      echo 'tata.' . $_SESSION['toastr']['type'] . '("' . $_SESSION['toastr']['title'] . '", "' . $_SESSION['toastr']['message'] . '", {
+          duration: 5000
+        })';
+      unset($_SESSION['toastr']);
+    }
+    ?>
+    
     $(window).on('load', function() {
         let flag = '<?php if (isset($_GET['flag'])) { echo $_GET['flag']; } else { echo ''; } ?>';
         let isVerified = '<?php if (isset($_GET['verified'])) { echo $_GET['verified']; } else { echo ''; } ?>';
