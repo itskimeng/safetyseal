@@ -1,6 +1,6 @@
 <?php
 session_start();
-  require 'session_checker.php';
+  require 'session_checker.php';  
   require_once 'frontend/bower_components/phpti-master/src/ti.php'; 
 ?>
 
