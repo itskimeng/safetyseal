@@ -66,56 +66,31 @@ if (!$is_adminro) {
 	$reports['total_received'] = $app->showAllApplications('',$timestamp,ApplicationManager::STATUS_RECEIVED);
 	$reports['total_approved'] = $app->showAllApplications('',$timestamp,ApplicationManager::STATUS_APPROVED);
 	$reports['total_disapproved'] = $app->showAllApplications('',$timestamp,ApplicationManager::STATUS_DISAPPROVED);
-	// $reports['total_returned'] = $app->showAllApplications('',$timestamp,ApplicationManager::STATUS_RETURNED);
-	// $reports['total_reassess'] = $app->showAllApplications('',$timestamp,ApplicationManager::STATUS_REASSESS);
-
-	// $reports['total_disapproved'] = $reports['total_disapproved'] + $reports['total_returned'] + $reports['total_reassess'];
-
-	$reports['batangas_application'] = $app->showAllApplications(3,$timestamp);
-	$reports['batangas_received'] = $app->showAllApplications(3,$timestamp,ApplicationManager::STATUS_RECEIVED);
-	$reports['batangas_approved'] = $app->showAllApplications(3,$timestamp,ApplicationManager::STATUS_APPROVED);
-	$reports['batangas_disapproved'] = $app->showAllApplications(3,$timestamp,ApplicationManager::STATUS_DISAPPROVED);
-	// $reports['batangas_returned'] = $app->showAllApplications(3,$timestamp,ApplicationManager::STATUS_RETURNED);
-	// $reports['batangas_reassess'] = $app->showAllApplications(3,$timestamp,ApplicationManager::STATUS_REASSESS);
-
-	// $reports['batangas_disapproved'] = $reports['batangas_disapproved'] + $reports['batangas_returned'];
 
 	$reports['cavite_application'] = $app->showAllApplications(1,$timestamp);
 	$reports['cavite_received'] = $app->showAllApplications(1,$timestamp,ApplicationManager::STATUS_RECEIVED);
 	$reports['cavite_approved'] = $app->showAllApplications(1,$timestamp,ApplicationManager::STATUS_APPROVED);
 	$reports['cavite_disapproved'] = $app->showAllApplications(1,$timestamp,ApplicationManager::STATUS_DISAPPROVED);
-	// $reports['cavite_returned'] = $app->showAllApplications(1,$timestamp,ApplicationManager::STATUS_RETURNED);
-	// $reports['cavite_reassess'] = $app->showAllApplications(1,$timestamp,ApplicationManager::STATUS_REASSESS);
-
-	// $reports['cavite_disapproved'] = $reports['cavite_disapproved'] + $reports['cavite_returned'];
-
+	
 	$reports['laguna_application'] = $app->showAllApplications(2,$timestamp);
 	$reports['laguna_received'] = $app->showAllApplications(2,$timestamp,ApplicationManager::STATUS_RECEIVED);
 	$reports['laguna_approved'] = $app->showAllApplications(2,$timestamp,ApplicationManager::STATUS_APPROVED);
 	$reports['laguna_disapproved'] = $app->showAllApplications(2,$timestamp,ApplicationManager::STATUS_DISAPPROVED);
-	// $reports['laguna_returned'] = $app->showAllApplications(2,$timestamp,ApplicationManager::STATUS_RETURNED);
-	// $reports['laguna_reassess'] = $app->showAllApplications(2,$timestamp,ApplicationManager::STATUS_REASSESS);
 
-	// $reports['laguna_disapproved'] = $reports['laguna_disapproved'] + $reports['laguna_returned'];
-
+	$reports['batangas_application'] = $app->showAllApplications(3,$timestamp);
+	$reports['batangas_received'] = $app->showAllApplications(3,$timestamp,ApplicationManager::STATUS_RECEIVED);
+	$reports['batangas_approved'] = $app->showAllApplications(3,$timestamp,ApplicationManager::STATUS_APPROVED);
+	$reports['batangas_disapproved'] = $app->showAllApplications(3,$timestamp,ApplicationManager::STATUS_DISAPPROVED);
+	
 	$reports['rizal_application'] = $app->showAllApplications(4,$timestamp);
 	$reports['rizal_received'] = $app->showAllApplications(4,$timestamp,ApplicationManager::STATUS_RECEIVED);
 	$reports['rizal_approved'] = $app->showAllApplications(4,$timestamp,ApplicationManager::STATUS_APPROVED);
 	$reports['rizal_disapproved'] = $app->showAllApplications(4,$timestamp,ApplicationManager::STATUS_DISAPPROVED);
-	// $reports['rizal_returned'] = $app->showAllApplications(4,$timestamp,ApplicationManager::STATUS_RETURNED);
-	// $reports['rizal_reassess'] = $app->showAllApplications(4,$timestamp,ApplicationManager::STATUS_REASSESS);
-
-	// $reports['rizal_disapproved'] = $reports['rizal_disapproved'] + $reports['rizal_returned'];
-
+	
 	$reports['huc_application'] = $app->showAllApplications('huc',$timestamp);
 	$reports['huc_received'] = $app->showAllApplications('huc',$timestamp,ApplicationManager::STATUS_RECEIVED);
 	$reports['huc_approved'] = $app->showAllApplications('huc',$timestamp,ApplicationManager::STATUS_APPROVED);
 	$reports['huc_disapproved'] = $app->showAllApplications('huc',$timestamp,ApplicationManager::STATUS_DISAPPROVED);
-	// $reports['huc_returned'] = $app->showAllApplications('huc',$timestamp,ApplicationManager::STATUS_RETURNED);
-	// $reports['huc_reassess'] = $app->showAllApplications('huc',$timestamp,ApplicationManager::STATUS_REASSESS);
-
-	// $reports['huc_disapproved'] = $reports['huc_disapproved'] + $reports['huc_returned'];
-
 }
 
 if ($is_pfp) {
