@@ -70,6 +70,55 @@
 
         <div class="main-content">
           <div class="owl-carousel owl-theme">
+
+              <div class="item">
+                <div class="card">
+                  <div class="card-header" style="background-color: #480272; color:white; height: 65px;">
+                    <center>Brgy. Sta. Catalina Sur, Candelaria, Quezon <i class="fa fa-check"></i></center>
+                  </div>
+                  <div class="card-body cardRecentEstablishment">
+                    <div style="height: 250px;">
+                      <img src="files/certified/243345704_2622208094741650_6176768287141045830_n.jpg" alt="" style="height: 100%; width: 100%; object-fit: cover;">
+                    </div>
+                  </div>
+                  <div class="card-footer text-muted">
+                    Certified: <b>July 26, 2021</b>
+                  </div>
+                </div>
+              </div>
+
+              <div class="item">
+                <div class="card">
+                  <div class="card-header" style="background-color: #480272; color:white; height: 65px;">
+                    <center>Brgy. Sta. Catalina Sur, Candelaria, Quezon <i class="fa fa-check"></i></center>
+                  </div>
+                  <div class="card-body cardRecentEstablishment">
+                    <div style="height: 250px;">
+                      <img src="files/certified/brgy_stacatalina2.jpg" alt="" style="height: 100%; width: 100%; object-fit: cover;">
+                    </div>
+                  </div>
+                  <div class="card-footer text-muted">
+                    Certified: <b>July 26, 2021</b>
+                  </div>
+                </div>
+              </div>
+
+              <div class="item">
+                <div class="card">
+                  <div class="card-header" style="background-color: #480272; color:white; height: 65px;">
+                    <center>Brgy. Sta. Catalina Sur, Candelaria, Quezon <i class="fa fa-check"></i></center>
+                  </div>
+                  <div class="card-body cardRecentEstablishment">
+                    <div style="height: 250px;">
+                      <img src="files/certified/brgy_stacatalina3.jpg" alt="" style="height: 100%; width: 100%; object-fit: cover;">
+                    </div>
+                  </div>
+                  <div class="card-footer text-muted">
+                    Certified: <b>July 26, 2021</b>
+                  </div>
+                </div>
+              </div>
+
               <div class="item">
                 <div class="card">
                   <div class="card-header" style="background-color: #480272; color:white; height: 65px;">
