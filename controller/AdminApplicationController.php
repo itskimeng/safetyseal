@@ -153,6 +153,14 @@ function month_options($today) {
 function getApplicationLists($conn, $province, $lgus, $status, $is_clusterhead)
 {
 	$data = [];
+	$colors = [
+    	'Draft'			=> 'secondary',
+    	'For Receiving' => 'primary',
+    	'Received' 		=> 'yellow',
+    	'Disapproved' 	=> 'red',
+    	'Returned' 		=> 'red',
+    	'Approved' 		=> 'green'
+    ];
 
 	foreach ($lgus as $key => $lgu) {
 		$codes[] = $lgu['code']; 
@@ -165,34 +173,25 @@ function getApplicationLists($conn, $province, $lgus, $status, $is_clusterhead)
 	    LEFT JOIN tbl_admin_info ai on ai.id = ac.user_id
 	    LEFT JOIN tbl_userinfo ui on ui.user_id = ai.id";
 
-	$sql1 = " WHERE ai.PROVINCE = ".$province." AND ai.LGU IN (".$codes.") AND ac.application_type = 'Applied' AND ac.status <> '".$status."'";
+	$sql1 = " WHERE ai.PROVINCE = ".$province." AND ai.LGU IN (".$codes.") AND ac.application_type = 'Applied' AND ac.status <> '".$status."' AND ac.status <> 'Returned'";
 
 	$query = mysqli_query($conn, $bsql.$sql1);
 	    
     while ($row = mysqli_fetch_assoc($query)) {
-        $color = 'green';
-        if ($row['status'] == 'For Receiving') {
-            $color = 'primary';
-        } elseif ($row['status'] == 'Received') {
-            $color = 'yellow';
-        } elseif ($row['status'] == 'Disapproved') {
-            $color = 'red';
-        }
-
         $data[$row['id']] = [
-            'id' => $row['id'],
-            'userid' => $row['userid'],
-            'fname' => $row['fname'],
-            'agency' => $row['pagency'],
-            'address' => $row['address'],
-            'date_created' => date('F d, Y', strtotime($row['date_created'])),
-            'control_no' => $row['control_no'],
-            'ss_no' => $row['ss_no'],
-            'status' => $row['status'],
-            'color' => $color,
-            'ac_address' => $row['ac_address'],
-            'app_type' => $row['app_type'],
-            'token' => $row['token'],
+            'id' 			=> $row['id'],
+            'userid' 		=> $row['userid'],
+            'fname' 		=> $row['fname'],
+            'agency' 		=> $row['pagency'],
+            'address' 		=> $row['address'],
+            'date_created' 	=> date('F d, Y', strtotime($row['date_created'])),
+            'control_no' 	=> $row['control_no'],
+            'ss_no' 		=> $row['ss_no'],
+            'status' 		=> $row['status'],
+            'color' 		=> $colors[$row['status']],
+            'ac_address' 	=> $row['ac_address'],
+            'app_type' 		=> $row['app_type'],
+            'token' 		=> $row['token'],
             'validity_date' => !empty($row['date_approved']) ? date('F d, Y', strtotime("+6 months", strtotime($row['date_approved']))) : ''
         ];    
     }
@@ -202,29 +201,20 @@ function getApplicationLists($conn, $province, $lgus, $status, $is_clusterhead)
     $query = mysqli_query($conn, $bsql.$sql2);
     
     while ($row = mysqli_fetch_assoc($query)) {
-        $color = 'green';
-        if ($row['status'] == 'For Receiving') {
-            $color = 'primary';
-        } elseif ($row['status'] == 'Received') {
-            $color = 'yellow';
-        } elseif ($row['status'] == 'Disapproved') {
-            $color = 'red';
-        }
-
         $data[$row['id']] = [
-            'id' => $row['id'],
-            'userid' => $row['userid'],
-            'fname' => $row['fname'],
-            'agency' => !empty($row['cagency']) ? $row['cagency'] : $row['pagency'],
-            'address' => $row['address'],
-            'date_created' => date('F d, Y', strtotime($row['date_created'])),
-            'control_no' => $row['control_no'],
-            'ss_no' => $row['ss_no'],
-            'status' => $row['status'],
-            'color' => $color,
-            'ac_address' => $row['ac_address'],
-            'app_type' => $row['app_type'],
-            'token' => $row['token'],
+            'id' 			=> $row['id'],
+            'userid' 		=> $row['userid'],
+            'fname' 		=> $row['fname'],
+            'agency' 		=> !empty($row['cagency']) ? $row['cagency'] : $row['pagency'],
+            'address' 		=> $row['address'],
+            'date_created' 	=> date('F d, Y', strtotime($row['date_created'])),
+            'control_no' 	=> $row['control_no'],
+            'ss_no' 		=> $row['ss_no'],
+            'status' 		=> $row['status'],
+            'color' 		=> $colors[$row['status']],
+            'ac_address' 	=> $row['ac_address'],
+            'app_type' 		=> $row['app_type'],
+            'token' 		=> $row['token'],
             'validity_date' => !empty($row['date_approved']) ? date('F d, Y', strtotime("+6 months", strtotime($row['date_approved']))) : ''
         ];    
     }
@@ -234,29 +224,20 @@ function getApplicationLists($conn, $province, $lgus, $status, $is_clusterhead)
     $query = mysqli_query($conn, $bsql.$sql3);
     
     while ($row = mysqli_fetch_assoc($query)) {
-        $color = 'green';
-        if ($row['status'] == 'For Receiving') {
-            $color = 'primary';
-        } elseif ($row['status'] == 'Received') {
-            $color = 'yellow';
-        } elseif ($row['status'] == 'Disapproved') {
-            $color = 'red';
-        }
-
         $data[$row['id']] = [
-            'id' => $row['id'],
-            'userid' => $row['userid'],
-            'fname' => $row['fname'],
-            'agency' => !empty($row['cagency']) ? $row['cagency'] : $row['pagency'],
-            'address' => $row['address'],
-            'date_created' => date('F d, Y', strtotime($row['date_created'])),
-            'control_no' => $row['control_no'],
-            'ss_no' => $row['ss_no'],
-            'status' => $row['status'],
-            'color' => $color,
-            'ac_address' => $row['ac_address'],
-            'app_type' => $row['app_type'],
-            'token' => $row['token'],
+            'id' 			=> $row['id'],
+            'userid' 		=> $row['userid'],
+            'fname' 		=> $row['fname'],
+            'agency'	 	=> !empty($row['cagency']) ? $row['cagency'] : $row['pagency'],
+            'address' 		=> $row['address'],
+            'date_created' 	=> date('F d, Y', strtotime($row['date_created'])),
+            'control_no' 	=> $row['control_no'],
+            'ss_no' 		=> $row['ss_no'],
+            'status' 		=> $row['status'],
+            'color' 		=> $colors[$row['status']],
+            'ac_address' 	=> $row['ac_address'],
+            'app_type' 		=> $row['app_type'],
+            'token' 		=> $row['token'],
             'validity_date' => !empty($row['date_approved']) ? date('F d, Y', strtotime("+6 months", strtotime($row['date_approved']))) : ''
         ];    
     }
@@ -303,115 +284,66 @@ function generateData($result)
 function getPFPApplicationLists($conn, $province, $status)
 {
 	$data = [];
+	$colors = [
+    	'Draft'			=> 'secondary',
+    	'For Receiving' => 'primary',
+    	'Received' 		=> 'yellow',
+    	'Disapproved' 	=> 'red',
+    	'Returned' 		=> 'red',
+    	'Approved' 		=> 'green'
+    ];
 
-    $sql = "SELECT 
-	    ac.id as id,
-	    ai.CMLGOO_NAME as fname,
-	    ui.GOV_AGENCY_NAME as pagency,
-	    ac.agency as cagency,
-	    ui.ADDRESS as address,
-	    DATE_FORMAT(ac.date_created, '%Y-%m-%d') as date_created,
-	    DATE_FORMAT(ac.date_approved, '%Y-%m-%d') as date_approved,
-	    ui.id as userid,
-	    ac.control_no as control_no,
-	    ac.safety_seal_no as ss_no,
-	    ac.status as status,
-	    ac.address as ac_address,
-	    ac.application_type as app_type,
-	    ac.person as person,
-	    ac.token as token
-	    FROM tbl_app_checklist ac
-	    LEFT JOIN tbl_admin_info ai on ai.id = ac.user_id
+    $sql = "SELECT ac.id as id, ai.CMLGOO_NAME as fname, ui.GOV_AGENCY_NAME as pagency, ac.agency as cagency,
+	    ui.ADDRESS as address, DATE_FORMAT(ac.date_created, '%Y-%m-%d') as date_created, DATE_FORMAT(ac.date_approved, '%Y-%m-%d') as date_approved, ui.id as userid, ac.control_no as control_no, ac.safety_seal_no as ss_no,
+	    ac.status as status, ac.address as ac_address, ac.application_type as app_type, ac.person as person,
+	    ac.token as token FROM tbl_app_checklist ac LEFT JOIN tbl_admin_info ai on ai.id = ac.user_id
 	    LEFT JOIN tbl_userinfo ui on ui.user_id = ai.id";
 
-	$sql1 = " WHERE ai.PROVINCE = ".$province." AND ac.application_type = 'Applied' AND ac.status <> '$status'";
+	$sql1 = " WHERE ai.PROVINCE = ".$province." AND ac.application_type = 'Applied' AND ac.status <> '$status' AND ac.status <> 'Returned'";
 	 
-	    $query = mysqli_query($conn, $sql.$sql1);
+    $query = mysqli_query($conn, $sql.$sql1);
 
-	    
-	    while ($row = mysqli_fetch_assoc($query)) {
-	        $color = 'green';
-	        if ($row['status'] == 'For Receiving') {
-	            $color = 'primary';
-	        } elseif ($row['status'] == 'Received') {
-	            $color = 'yellow';
-	        } elseif ($row['status'] == 'Disapproved') {
-	            $color = 'red';
-	        }
+    while ($row = mysqli_fetch_assoc($query)) {
+        $data[$row['id']] = [
+            'id' 			=> $row['id'],
+            'userid' 		=> $row['userid'],
+            'fname' 		=> !empty($row['person']) ? $row['person'] : $row['fname'],
+            'agency' 		=> $row['pagency'],
+            'address' 		=> $row['address'],
+            'date_created' 	=> date('F d, Y', strtotime($row['date_created'])),
+            'control_no' 	=> $row['control_no'],
+            'ss_no' 		=> $row['ss_no'],
+            'status' 		=> $row['status'],
+            'color' 		=> $colors[$row['status']],
+            'ac_address' 	=> $row['ac_address'],
+            'app_type' 		=> $row['app_type'],
+            'token' 		=> $row['token'],
+            'validity_date' => !empty($row['date_approved']) ? date('F d, Y', strtotime("+6 months", strtotime($row['date_approved']))) : ''
+        ];    
+    }
 
-	        $data[$row['id']] = [
-	            'id' => $row['id'],
-	            'userid' => $row['userid'],
-	            'fname' => !empty($row['person']) ? $row['person'] : $row['fname'],
-	            'agency' => $row['pagency'],
-	            'address' => $row['address'],
-	            'date_created' => date('F d, Y', strtotime($row['date_created'])),
-	            'control_no' => $row['control_no'],
-	            'ss_no' => $row['ss_no'],
-	            'status' => $row['status'],
-	            'color' => $color,
-	            'ac_address' => $row['ac_address'],
-	            'app_type' => $row['app_type'],
-	            'token' => $row['token'],
-	            'validity_date' => !empty($row['date_approved']) ? date('F d, Y', strtotime("+6 months", strtotime($row['date_approved']))) : ''
-	        ];    
-	    }
-
-	    // $sql2 = "SELECT 
-	    // ac.id as id,
-	    // ai.CMLGOO_NAME as fname,
-	    // ui.GOV_AGENCY_NAME as pagency,
-	    // ac.agency as cagency,
-	    // ui.ADDRESS as address,
-	    // DATE_FORMAT(ac.date_created, '%Y-%m-%d') as date_created,
-	    // DATE_FORMAT(ac.date_approved, '%Y-%m-%d') as date_approved,
-	    // ui.id as userid,
-	    // ac.control_no as control_no,
-	    // ac.safety_seal_no as ss_no,
-	    // ac.status as status,
-	    // ac.address as ac_address,
-	    // ac.application_type as app_type,
-	    // ac.person as person,
-	    // ac.token as token
-	    // FROM tbl_app_checklist ac
-	    // LEFT JOIN tbl_admin_info ai on ai.id = ac.user_id
-	    // LEFT JOIN tbl_userinfo ui on ui.user_id = ai.id
-	    // WHERE ai.PROVINCE = ".$province." AND ac.application_type = 'Encoded' AND ac.status = 'Approved'";
-
-	    $sql2 = " WHERE ai.PROVINCE = ".$province." AND ac.application_type = 'Encoded'";
-	 
-	    $query = mysqli_query($conn, $sql.$sql2);
-	    // $data = [];
-	    
-	    while ($row = mysqli_fetch_assoc($query)) {
-	        $color = 'green';
-	        if ($row['status'] == 'For Receiving') {
-	            $color = 'primary';
-	        } elseif ($row['status'] == 'Received') {
-	            $color = 'yellow';
-	        } elseif ($row['status'] == 'Disapproved') {
-	            $color = 'red';
-	        }
-
-	        $data[$row['id']] = [
-	            'id' => $row['id'],
-	            'userid' => $row['userid'],
-	            'fname' => !empty($row['person']) ? $row['person'] : $row['fname'],
-	            'agency' => !empty($row['cagency']) ? $row['cagency'] : $row['pagency'],
-	            'address' => $row['address'],
-	            'date_created' => $row['date_created'],
-	            'control_no' => $row['control_no'],
-	            'ss_no' => $row['ss_no'],
-	            'status' => $row['status'],
-	            'color' => $color,
-	            'ac_address' => $row['ac_address'],
-	            'app_type' => $row['app_type'],
-	            'token' => $row['token'],
-	            'validity_date' => !empty($row['date_approved']) ? date('F d, Y', strtotime("+6 months", strtotime($row['date_approved']))) : ''
-	        ];    
-	    }
-	// }
-
+    $sql2 = " WHERE ai.PROVINCE = ".$province." AND ac.application_type = 'Encoded'";
+ 
+    $query = mysqli_query($conn, $sql.$sql2);
+    
+    while ($row = mysqli_fetch_assoc($query)) {
+        $data[$row['id']] = [
+            'id' 			=> $row['id'],
+            'userid' 		=> $row['userid'],
+            'fname' 		=> !empty($row['person']) ? $row['person'] : $row['fname'],
+            'agency' 		=> !empty($row['cagency']) ? $row['cagency'] : $row['pagency'],
+            'address' 		=> $row['address'],
+            'date_created' 	=> $row['date_created'],
+            'control_no' 	=> $row['control_no'],
+            'ss_no' 		=> $row['ss_no'],
+            'status' 		=> $row['status'],
+            'color' 		=> $colors[$row['status']],
+            'ac_address' 	=> $row['ac_address'],
+            'app_type' 		=> $row['app_type'],
+            'token' 		=> $row['token'],
+            'validity_date' => !empty($row['date_approved']) ? date('F d, Y', strtotime("+6 months", strtotime($row['date_approved']))) : ''
+        ];    
+    }
 
     return $data;
 

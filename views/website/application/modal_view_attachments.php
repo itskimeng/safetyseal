@@ -2,7 +2,7 @@
   <div class="modal-dialog modal-dialog-scrollable modal-xl">
     <div class="modal-content">
       <div class="modal-header" style="background-color: #0d6efd !important;">
-        <h5 class="modal-title" id="exampleModalLabel" style="color:white;"><i class="fa fa-link"></i> View Attachments</h5>
+        <h5 class="modal-title" id="exampleModalLabel" style="color:white;"><i class="fa fa-link"></i> Uploaded Attachments</h5>
         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
       </div>
       <form method="POST" enctype="multipart/form-data" action="entity/delete_attachments.php">
@@ -11,7 +11,7 @@
         <input type="hidden" name="control_no" value="<?php echo $userinfo['code']; ?>"/>  
         <input type="hidden" name="token_id" value="<?php if(isset($_GET['ssid'])){echo $_GET['ssid'];}else{}?>"/>        
 
-        <div class="modal-body" id="tbody-view_attchmnt">
+        <div class="modal-body" id="tbody-view_attchmnt" style="max-height: 570px; overflow-y: scroll;">
             
         </div>
         <div class="modal-footer">
@@ -56,30 +56,6 @@
       .next(".custom-file-label")
       .html(filenames.join(","));
   });
-
-  // $(document).on('click', '.btn-delete_attachments', function(){
-  //   let path = 'entity/delete_attachments.php';
-  //   let data = $('#form-delete_attachments').serialize();
-  //   let xbox = $('.up-attachment');
-  //   let is_valid = false;
-  //   $.each(xbox, function(key, item){
-  //     if ($(this).is(':checked')) {
-  //       is_valid = true;
-  //     }
-  //   });
-
-  //   // let checker1 = checkAllSelected();
-  //   //   let checker2 = checkUploads();
-  //     if (is_valid) {
-  //       $.post(path, data, function(data, status){
-  //         // if (status == 'success') {
-  //         //   setTimeout(function(){// wait for 5 secs(2)
-  //         //     location.reload(); // then reload the page.(3) 
-  //         //   }, 1000);
-  //         // }
-  //       });
-  //     }
-  // });
 
   $(document).on('change', '.up-attachment', function(){
     let xbox = $('.up-attachment');

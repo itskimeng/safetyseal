@@ -322,22 +322,50 @@
       }
     });
 
-    $(document).on('click', '.btn-add_attachments', function(){
+    $(document).on('click', '.btn-add_attachments', function(e){
       let $this = $(this);
       let $attachment = $('#customFile');
 
-      if ($attachment.val() != "") {
-        $this.html('<i class="fa fa-circle-notch fa-spin"></i> Uploading...');
-      }
-      // $this.attr('disabled', true);
+      let len = $attachment[0].files.length;
 
-      let btn_close = $("#modal_evaluation .btn-secondary");
-      btn_close.css('display', 'none');
-      $("#modal_attachments").modal({
-        backdrop: 'static',
-        keyboard: false
-      });
+      // alert($attachment[0].files[0].size);
+      let $filesizes = 0;
+      let $valid_file = true;
+
+      for (var i = 0; i < len; i++) {
+        let filetype = $attachment[0].files[i].type;
+
+        if (filetype.indexOf("png") < 0 && filetype.indexOf("jpg") < 0 && filetype.indexOf("jpeg") < 0 && filetype.indexOf("JPG") < 0 && filetype.indexOf("JPEG") < 0 && filetype.indexOf("PNG") < 0 && filetype.indexOf("word") < 0 && filetype.indexOf("sheet") < 0 && filetype.indexOf("pdf") < 0
+            ) {
+          $valid_file = false; 
+        }
+
+        $filesizes = $filesizes + $attachment[0].files[i].size;
+      }
+
+      if(($filesizes > 10485760) || (!$valid_file)) { // 10 MB (this size is in bytes)
+        //Prevent default and display error
+        tata.warn('Warning', 'Invalid file type or file size is over 10Mb.');
+        e.preventDefault();
+      } else {
+        if ($attachment.val() != "") {
+          $this.html('<i class="fa fa-circle-notch fa-spin"></i> Uploading...');
+        }
+        // $this.attr('disabled', true);
+
+        let btn_close = $("#modal_evaluation .btn-secondary");
+        btn_close.css('display', 'none');
+        $("#modal_attachments").modal({
+          backdrop: 'static',
+          keyboard: false
+        });
+      }
+
     });
+
+    function get_extension(filename) {
+      return filename.split('.').pop().toLowerCase();
+    }
 
     $(document).on('click', '.option', function(){
       let $this = $(this);
@@ -450,6 +478,12 @@
 
   })
 
+  $(document).on('click', '.btn-open-exlink', function(e){ 
+      e.preventDefault(); 
+      var url = $(this).attr('href'); 
+      window.open(url);
+  });
+
   function checkAllSelected()
   {
     let tbody = $('#chklist_body tr');
@@ -472,8 +506,6 @@
       // if (asmnt.is(':checked') || other_tool.val() != undefined && other_tool.val() != '') {
       // }
     });
-
-    console.log($counter);
 
     if ($counter < 14) {
       tata.warn('Warning', 'All items in the checklist must be assess.');
@@ -511,34 +543,38 @@
     return checker;
   }
 
-      
-      // if ($counter < 14) {
-      //   tata.warn('Warning', 'All items in the checklist must be assess.');
-      // } else {
-      //   $('#modal_evaluation').modal('show');
-      // }  
 
   function generateAttachments($data, $element) {
     let tr = '';
     $element.empty();
-    tr+= '<div class="col-md-12">';
+    tr+= '<div class="col-sm-12">';
     tr+= '<div class="row">';
     $.each($data, function(key, item){
-      tr+= '<div class="col-md-3 mb-1">';
-      tr+= '<div class="card" style="width: 15rem;">';
-      tr+= '<div class="checkers" style="padding-left: 1rem;">';
+      tr+= '<div class="col-sm-2 mb-1">';
+      tr+= '<div class="card" style="/* width: 15rem; */">';
+      tr+= '<div class="checkers" style="padding-left: .5rem;">';
       tr+= '<div class="form-group">';
       tr+= '<input type="hidden" name="att_id['+item['caid']+']" value="'+item['file_id']+'">';
       tr+= '<input class="form-check-input chklist_na up-attachment" name="chklists['+item['caid']+']" type="checkbox" value="">';
       tr+= '</div>';
       tr+= '</div>';
-      tr+= '<div class="pic-holder" style="padding-top: 5%;height: 12rem;">';
-      tr+= '<img src="https://drive.google.com/uc?export=view&id='+item['file_id']+'" class="card-img-top" alt="..." style="max-width: 100%; max-height: 100%; object-fit: cover;">';
+      tr+= '<div class="pic-holder" style="padding-top: 5%;height: 8rem;">';
+
+      if (item['cover_page'] != null) {
+        tr+= '<img src="'+item['cover_page']+'" class="card-img-top" alt="..." style="max-width: 100%; max-height: 100%; object-fit: cover;">';  
+      } else {
+        tr+= '<img src="https://drive.google.com/uc?export=view&id='+item['file_id']+'" class="card-img-top" alt="..." style="max-width: 100%; max-height: 100%; object-fit: cover;">';
+      }
+      
       tr+= '</div>';
       tr+= '<div class="card-body" style="text-overflow: ellipsis;white-space: nowrap;overflow: hidden;height: 3.5rem;padding: 0.3rem 0.3rem;">';
-      tr+= '<a href="'+item['location']+'" class="">';
-      tr+= item['file_name'];
+      tr+= '<div class="row">';
+      tr+= '<div class="col-sm-12" style="text-align:center;">';
+      tr+= '<a class="btn btn-md btn-secondary btn-open-exlink" href="'+item['location']+'" style="width:100%">';
+      tr+= '<i class="fa fa-eye"></i> View';
       tr+= '</a>';
+      tr+= '</div>';
+      tr+= '</div>';
       tr+= '</div>';
       tr+= '</div>';
       tr+= '</div>';

@@ -6,6 +6,7 @@
         <!-- <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button> -->
       </div>
 
+
       <?php if (isset($_GET['code'])): ?>
         <form method="POST" enctype="multipart/form-data" action="entity/post_attachments2.php">
       <?php else: ?>
@@ -20,7 +21,15 @@
 
         <div class="modal-body">
             <div class="mb-3">
-              <!-- <input class="form-control" type="file" id="formFileMultiple" multiple> -->
+              <div class="row mb-1">
+                <div class="col-md-12" style="font-size:14px;">
+                  <div class="" style="background-color: #d0d0d0; border-radius: 3px; color: #625d5d; padding: 5px;">
+                    Allowed File Size: 10MB<br>
+                    Allowed File Type: 'pdf', 'png', 'jpeg', 'jpg', 'xls', 'word'
+                  </div>
+                </div>
+              </div>
+
               <div class="form-group">
                 <div class="custom-file">
                   <input type="file" name="files[]" multiple class="custom-file-input form-control" id="customFile" required>
@@ -53,6 +62,16 @@
 </style>
 
 <script type="text/javascript">
+
+  // $('form').submit(function( e ) {
+  //   if(!$('#customFile')[0].files[0].size < 10485760) { // 10 MB (this size is in bytes)
+  //       //Prevent default and display error
+  //       tata.warn('Warning', 'File size is over 10Mb.');
+  //       e.preventDefault();
+  //   }
+  
+  // });
+
   $('input[type="file"]').on("change", function() {
     let filenames = [];
     let files = this.files;

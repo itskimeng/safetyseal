@@ -46,32 +46,54 @@ $parent = new Google_ParentReference(); //previously Google_ParentReference
 $parent->setId($_SESSION['order']);
 
 $files = $_SESSION['FILES']['files']['tmp_name'];
+$file_invalid = false;
 
-foreach ($files as $key => $file_name) {
-    $fileTmpPath = $file_name;
-    $fileName = $_SESSION['FILES']['name'][$key];
-    $fileSize = $_SESSION['FILES']['size'][$key];
-    $fileType = $_SESSION['FILES']['type'][$key];
-    $fileNameCmps = explode(".", $fileName);
-    $fileExtension = strtolower(end($fileNameCmps));
 
-    $newFileName = $_SESSION['checklist_order'].'-'.$_SESSION['control_no'].'-'.md5(time() . $fileName) . '.' . $fileExtension;
-    $mime_type = finfo_file($finfo, $fileTmpPath);
+try {
+    foreach ($files as $key => $file_name) {
+        $fileTmpPath = $file_name;
+        $fileName = $_SESSION['FILES']['name'][$key];
+        $fileSize = $_SESSION['FILES']['size'][$key];
+        $fileType = $_SESSION['FILES']['type'][$key];
 
-    // upload file to drive
-    $upFile = uploadFileToDrive($client, $fileTmpPath, $parent, $newFileName, $mime_type);
-    
-    // create entry to db
-    // insertToEntry($conn, $client, $_SESSION['entry_id'], $upFile);
-    insertToEntry($conn, $client->getClientId(), $client->getClientSecret(), $_SESSION['entry_id'], $upFile);
+        $fileNameCmps = explode(".", $fileName);
+        $fileExtension = strtolower(end($fileNameCmps));
+
+        $newFileName = $_SESSION['checklist_order'].'-'.$_SESSION['control_no'].'-'.md5(time() . $fileName) . '.' . $fileExtension;
+        $mime_type = finfo_file($finfo, $fileTmpPath);
+
+        // upload file to drive
+        $upFile = uploadFileToDrive($client, $fileTmpPath, $parent, $newFileName, $mime_type);
+        
+        // create entry to db
+        insertToEntry($conn, $client->getClientId(), $client->getClientSecret(), $_SESSION['entry_id'], $upFile, $mime_type);
+    }
+
+
+    finfo_close($finfo);
+
+    $_SESSION['toastr'] = $app->addFlash('success', 'Attachments has been successfully uploaded.', 'Checklist #'.$_SESSION['checklist_order']);
+} catch (Exception $e) {
+    $_SESSION['toastr'] = $app->addFlash('success', $e->getMessage(), 'Checklist #'.$_SESSION['checklist_order']);
 }
 
-finfo_close($finfo);
 
-$_SESSION['toastr'] = $app->addFlash('success', 'Attachments has been successfully uploaded.', 'Checklist #'.$_SESSION['checklist_order']);
+
 
 header('location:../wbstapplication.php?ssid='.$_SESSION['token'].'&code='.$_SESSION['gcode'].'&scope='.$_SESSION['gscope'].'');exit;
 
+
+
+function fileSizeChecker($size) 
+{
+    $is_large = false;
+
+    if ($size > 50000000) {
+        $is_large = true;
+    }
+
+    return $is_large;
+}
 
 function getGoogleClient($client_id, $client_secret, $url)
 {
@@ -109,12 +131,12 @@ function uploadFileToDrive($client, $path, $parent, $filename, $mime_type)
     return $data;
 }
 
-function insertToEntry($conn, $client_id, $client_secret, $entry, $file) 
+function insertToEntry($conn, $client_id, $client_secret, $entry, $file, $file_type) 
 {
     $today = new DateTime();
     $today = $today->format('Y-m-d H:i:s');
 
-    $sql = 'INSERT INTO tbl_app_checklist_attachments (entry_id, file_id, file_name, location, date_created, client_id, client_secret) VALUES ("'.$entry.'", "'.$file['id'].'", "'.$file['originalFilename'].'", "'.$file['alternateLink'].'", "'.$today.'", "'.$client_id.'", "'.$client_secret.'")';
+    $sql = 'INSERT INTO tbl_app_checklist_attachments (entry_id, file_id, file_name, location, date_created, client_id, client_secret, file_type) VALUES ("'.$entry.'", "'.$file['id'].'", "'.$file['originalFilename'].'", "'.$file['alternateLink'].'", "'.$today.'", "'.$client_id.'", "'.$client_secret.'", "'.$file_type.'")';
 
     $result = mysqli_query($conn, $sql);
 
