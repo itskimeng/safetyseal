@@ -32,7 +32,9 @@ if (isset($_GET['code'])) {
     //header('location:../wbstapplication.php?ssid='.$token.'');exit;
     $_SESSION['toastr'] = $app->addFlash('success', 'Please try to reupload the file', 'Checklist #'.$_SESSION['checklist_order']);
 
-    $url2 = $url2.'/safetyseal/wbstapplication.php?ssid='.$_SESSION['token'].'&code='.$_SESSION['gcode'].'&scope='.$_SESSION['gscope'].'';
+    // $url2 = $url2.'/safetyseal/wbstapplication.php?ssid='.$_SESSION['token'].'&code='.$_SESSION['gcode'].'&scope='.$_SESSION['gscope'].'';
+    $url2 = $url2.'/wbstapplication.php?ssid='.$_SESSION['token'].'&code='.$_SESSION['gcode'].'&scope='.$_SESSION['gscope'].'';
+
     header('location: '.$url2);exit;
 } elseif (!isset($_SESSION['accessToken'])) {
     $client->authenticate();
