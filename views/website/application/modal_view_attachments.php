@@ -17,6 +17,8 @@
         <div class="modal-footer">
           <button type="button" class="btn btn-secondary" data-bs-dismiss="modal"><i class="fa fa-window-close"></i> Close</button>
           <?php if (!in_array($userinfo['status'], ['For Receiving', 'Approved', 'Disapproved'])): ?>
+            <button type="button" class="btn btn-warning btn-all_attachments" data-value="unselectall"><i class="fa fa-check-circle"></i> Select All</button>
+
             <button type="submit" class="btn btn-danger btn-delete_attachments" disabled><i class="fa fa-trash"></i> Remove Selected</button>
           <?php endif ?>
         </div>
@@ -55,6 +57,27 @@
     $(this)
       .next(".custom-file-label")
       .html(filenames.join(","));
+  });
+
+  $(document).on('click', '.btn-all_attachments', function(e){
+
+    if ($(this).data('value') == 'unselectall') {
+      $('.up-attachment').prop('checked', true);
+      $(this).data('value', 'selectall');
+      $(this).html('<i class="fa fa-times-circle"></i> Unselect All');
+      $('.btn-delete_attachments').attr('disabled', false); 
+    } else {
+      $('.up-attachment').prop('checked', false);
+      $(this).data('value', 'unselectall');
+      $(this).html('<i class="fa fa-check-circle"></i> Select All');
+      $('.btn-delete_attachments').attr('disabled', true);  
+    }
+
+  });
+
+  $(document).on('click', '.btn-delete_attachments', function(e){
+    $('.btn-all_attachments').attr('disabled', true);
+    $(this).html('<i class="fa fa-circle-notch fa-spin"></i> Removing...');
   });
 
   $(document).on('change', '.up-attachment', function(){
