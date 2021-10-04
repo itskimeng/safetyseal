@@ -48,8 +48,6 @@ $parent->setId($_SESSION['order']);
 $files = $_SESSION['FILES']['files']['tmp_name'];
 $file_invalid = false;
 
-
-try {
     foreach ($files as $key => $file_name) {
         $fileTmpPath = $file_name;
         $fileName = $_SESSION['FILES']['name'][$key];
@@ -73,10 +71,6 @@ try {
     finfo_close($finfo);
 
     $_SESSION['toastr'] = $app->addFlash('success', 'Attachments has been successfully uploaded.', 'Checklist #'.$_SESSION['checklist_order']);
-} catch (Exception $e) {
-    $_SESSION['toastr'] = $app->addFlash('success', $e->getMessage(), 'Checklist #'.$_SESSION['checklist_order']);
-}
-
 
 
 
