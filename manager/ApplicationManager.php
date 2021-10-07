@@ -45,11 +45,11 @@ class ApplicationManager
 
     public function findChecklist($token)
     {
-        $sql = "SELECT id FROM tbl_app_checklist WHERE token = '".$token."'";
+        $sql = "SELECT id, control_no FROM tbl_app_checklist WHERE token = '".$token."'";
         $query = mysqli_query($this->conn, $sql);
         $result = mysqli_fetch_assoc($query);
         
-        return $result['id'];
+        return $result;
     }
 
     public function insertChecklist($control_no, $establishment, $nature, $address, $userid, $date_created, $token)
@@ -72,6 +72,7 @@ class ApplicationManager
     public function insertChecklistEntry($data)
     {
         $sql = 'INSERT INTO tbl_app_checklist_entry (parent_id, chklist_id, answer, reason, date_created) VALUES ('.$data["parent_id"].', '.$data["chklist_id"].', "'.$data["answer"].'", "'.$data["reason"].'", "'.$data["date_created"].'")';
+
         $result = mysqli_query($this->conn, $sql);
 
         return $result;
@@ -438,7 +439,7 @@ class ApplicationManager
         
         while ($row = mysqli_fetch_assoc($query)) {
             $color = 'green';
-            if ($row['status'] == 'For Receiving') {
+            if ($row['status'] == 'For Receiving' OR $row['status'] == 'For Reassessment') {
                 $color = 'primary';
             } elseif ($row['status'] == 'Received') {
                 $color = 'yellow';

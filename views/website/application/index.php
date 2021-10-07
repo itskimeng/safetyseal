@@ -325,12 +325,10 @@
     $(document).on('click', '.btn-add_attachments', function(e){
       let $this = $(this);
       let $attachment = $('#customFile');
-
       let len = $attachment[0].files.length;
-
-      // alert($attachment[0].files[0].size);
       let $filesizes = 0;
       let $valid_file = true;
+      let btn_close = $("#modal_evaluation .btn-secondary");
 
       for (var i = 0; i < len; i++) {
         let filetype = $attachment[0].files[i].type;
@@ -344,16 +342,14 @@
       }
 
       if(($filesizes > 10485760) || (!$valid_file)) { // 10 MB (this size is in bytes)
-        //Prevent default and display error
         tata.warn('Warning', 'Invalid file type or file size is over 10Mb.');
         e.preventDefault();
       } else {
         if ($attachment.val() != "") {
           $this.html('<i class="fa fa-circle-notch fa-spin"></i> Uploading...');
+          $('.btn-close_attachments').attr('disabled', true);
         }
-        // $this.attr('disabled', true);
 
-        let btn_close = $("#modal_evaluation .btn-secondary");
         btn_close.css('display', 'none');
         $("#modal_attachments").modal({
           backdrop: 'static',
@@ -362,10 +358,6 @@
       }
 
     });
-
-    function get_extension(filename) {
-      return filename.split('.').pop().toLowerCase();
-    }
 
     $(document).on('click', '.option', function(){
       let $this = $(this);

@@ -39,7 +39,7 @@
                                 <td>If approved, print the Safety Seal Certification on an A4 size paper. If not approved, ask for reassessment.</td>
                             </tr>
                             <tr>
-                                <td class="text-center" colspan="2"><b><i>~ system will not accept new transaction if applicant has existing application. ~.</i></b></td>
+                                <td class="text-center" colspan="2"><b><i>~ system will not accept new transaction if applicant has existing application. ~</i></b></td>
                             </tr>
                         </table>
                     </div>

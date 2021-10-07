@@ -154,12 +154,13 @@ function getApplicationLists($conn, $province, $lgus, $status, $is_clusterhead)
 {
 	$data = [];
 	$colors = [
-    	'Draft'			=> 'secondary',
-    	'For Receiving' => 'primary',
-    	'Received' 		=> 'yellow',
-    	'Disapproved' 	=> 'red',
-    	'Returned' 		=> 'red',
-    	'Approved' 		=> 'green'
+    	'Draft'			    => 'secondary',
+    	'For Receiving'     => 'primary',
+        'For Reassessment'  => 'primary',
+    	'Received'          => 'yellow',
+    	'Disapproved'       => 'red',
+    	'Returned' 		    => 'red',
+    	'Approved' 		    => 'green'
     ];
 
 	foreach ($lgus as $key => $lgu) {

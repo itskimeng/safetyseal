@@ -3,9 +3,11 @@ session_start();
 date_default_timezone_set('Asia/Manila');
 
 require '../manager/ApplicationManager.php';
+require '../manager/SafetysealHistoryManager.php';
 require '../application/config/connection.php';
 
 $app = new ApplicationManager();
+$shm = new SafetysealHistoryManager();
 $today = new DateTime();
 
 $userid = $_SESSION['userid'];
@@ -20,6 +22,8 @@ $recommendations = isset($_POST['recommendations']) ? $_POST['recommendations'] 
 $assessments = isset($_POST['assessments']) ? $_POST['assessments'] : '';
 $status = ApplicationManager::STATUS_APPROVED;
 $ssc_no = '';
+$application = findID($conn, $checklist_id);
+
 
 if (!empty($assessments)) {
 	foreach ($assessments as $key => $assess) {
@@ -45,6 +49,10 @@ if ($status == 'Approved') {
 $app->evaluateChecklist($checklist_id, $status, $ssc_no, $today->format('Y-m-d H:i:s'), $userid);
 $_SESSION['toastr'] = $app->addFlash('success', 'The application has been set to '.$status.'.', 'Success');
 
+$msg = 'application ' .$application['control_no']. ' has been ' .$status;
+
+$shm->insert(['fid'=>$checklist_id, 'mid'=>SafetysealHistoryManager::MENU_ADMIN_APPLICATION, 'uid'=>$userid, 'action'=> SafetysealHistoryManager::ACTION_UPDATE, 'message'=> $msg, 'action_date'=> $today->format('Y-m-d H:i:s')]);
+
 
 
 $degree = $app->getStatus($conn,$userid,$control_no);
@@ -58,6 +66,10 @@ foreach ($degree as $key => $data) {
 		DisapprovedApplicant($email,$control_no);
 	}
 }
+
+
+
+
 function ApprovedApplicant($emailAddress,$ss_no,$control_no)
 {
 
@@ -108,6 +120,15 @@ function DisapprovedApplicant($emailAddress,$control_no)
 	$headers .= "MIME-Version: 1.0" . "\r\n";
 	$headers .= "Content-type:text/html;charset=UTF-800" . "\r\n";
 	mail($to, $subject, $message, $headers);
+}
+
+function findID($conn, $id) 
+{
+	$sql = "SELECT id, control_no, status FROM tbl_app_checklist WHERE id = '".$id."'";
+	$query = mysqli_query($conn, $sql);
+    $result = mysqli_fetch_assoc($query);
+
+    return $result;
 }
 
 

@@ -3,9 +3,11 @@ session_start();
 date_default_timezone_set('Asia/Manila');
 
 require '../manager/ApplicationManager.php';
+require '../manager/SafetysealHistoryManager.php';
 require '../application/config/connection.php';
 
 $am = new ApplicationManager();
+$shm = new SafetysealHistoryManager();
 $today = new DateTime();
 
 $userid = $_SESSION['userid'];
@@ -17,6 +19,7 @@ $is_new = $_POST['is_new'];
 $establishment = $_POST['establishment'];
 $nature = $_POST['nature'];
 $address = $_POST['address'];
+$code = '';
 
 if ($is_new) {
 	$code = $am->generateControlNumber($userid);
@@ -27,7 +30,7 @@ if ($is_new) {
 	$am->updateChecklist($token, $establishment, $nature, $address, $today->format('Y-m-d H:i:s'));
 }
 
-$parent_id = $am->findChecklist($token);
+$parent = $am->findChecklist($token);
 foreach ($checklists as $key => $id) {
 	$check_val = $reason = $other_tool = '';
 	$ulist_id = isset($_POST['ulist_id'][$key]) ? $_POST['ulist_id'][$key] : '';
@@ -44,7 +47,7 @@ foreach ($checklists as $key => $id) {
 	}
 
 	$data = [
-		'parent_id' => $parent_id,
+		'parent_id' => $parent['id'],
 		'chklist_id' => $is_new ? $key : $ulist_id,
 		'user_id' => $userid,
 		'answer' => $check_val,
@@ -60,6 +63,13 @@ foreach ($checklists as $key => $id) {
 		$am->updateChecklistEntry($data);
 	}
 }
+
+$msg = $is_new ? 'created ' : 'updated ';
+$action = $is_new ? SafetysealHistoryManager::ACTION_POST : SafetysealHistoryManager::ACTION_UPDATE;
+
+$msg = $msg .' application ' .$parent['control_no'];
+
+$shm->insert(['fid'=>$parent['id'], 'mid'=>SafetysealHistoryManager::MENU_PUBLIC_APPLICATION, 'uid'=>$userid, 'action'=> $action, 'message'=> $msg, 'action_date'=> $today->format('Y-m-d H:i:s')]);
 
 $_SESSION['toastr'] = $am->addFlash('success', 'Successfully updated the checklist.', 'Checklist');
 

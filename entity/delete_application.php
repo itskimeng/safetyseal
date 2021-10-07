@@ -3,19 +3,24 @@ session_start();
 date_default_timezone_set('Asia/Manila');
 
 require '../manager/ApplicationManager.php';
+require '../manager/SafetysealHistoryManager.php';
 require '../application/config/connection.php';
 
 $app = new ApplicationManager();
+$shm = new SafetysealHistoryManager();
 $today = new DateTime();
 
 $userid = $_SESSION['userid'];
 $uname = $_SESSION['username'];
 
 $token = $_GET['ssid'];
-$control_no = deleteApplication($conn, $token);
+$application = deleteApplication($conn, $token);
 
-$_SESSION['toastr'] = $app->addFlash('error', 'Application <b>'.$control_no.'</b> has been successfully deleted.', 'Remove');
+$_SESSION['toastr'] = $app->addFlash('error', 'Application <b>'.$application['control_no'].'</b> has been successfully deleted.', 'Remove');
 
+$msg = 'deleted application ' .$application['control_no'];
+
+$shm->insert(['fid'=>$application['id'], 'mid'=>SafetysealHistoryManager::MENU_PUBLIC_APPLICATION, 'uid'=>$userid, 'action'=> SafetysealHistoryManager::ACTION_DELETE, 'message'=> $msg, 'action_date'=> $today->format('Y-m-d H:i:s')]);
 
 header('location:../user/users_establishments.php');
 
@@ -46,5 +51,5 @@ function deleteApplication($conn, $id)
 	$sql = "DELETE FROM tbl_app_checklist WHERE token = '".$id."'";
 	$query = mysqli_query($conn, $sql);
 
-	return $control_no;
+	return $result1;
 }

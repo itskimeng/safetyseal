@@ -20,8 +20,6 @@ $pdf = new TCPDF(PDF_PAGE_ORIENTATION, PDF_UNIT, PDF_PAGE_FORMAT, true, 'UTF-8',
 // set document information
 $pdf->SetCreator('DILG RICTU');
 $pdf->SetAuthor('DILG RICTU');
-// $pdf->SetTitle('LGCDD Task Management | '.$header['text'].' List');
-// $pdf->SetSubject('LGCDD Activity Planner');
 $pdf->SetKeywords('TCPDF, PDF, todo');
 
 // set default header data
@@ -213,7 +211,7 @@ function generateEntry($dd) {
 	$html.= '<tr><td>Instruction: (✓) Check the appropriate box (Yes/No), if the following requirement is provided:</td></tr>';
 	$html.= '</table>';
 
-	$html .= '<table class="table-striped" border="1" cellspacing="1" cellpadding="1" style="font-size:9pt;">';
+	$html .= '<table class="table-striped" border="1" cellspacing="1" cellpadding="5" style="font-size:9pt; text-align: justify;">';
 	
 	$html .= '<tr style="text-align:center;">';
 	$html .= '<th width="28%;"><b>Requirement</b></th>';
@@ -223,10 +221,26 @@ function generateEntry($dd) {
 	$html .= '<th width="8%;"><b>N/A</b></th>';
 	$html .= '<th width="18%;"><b>Reason why N/A</b></th>';
 	$html .= '</tr>';
-	foreach ($dd as $data) {
-		$html .= '<tr>';
+	foreach ($dd as $key => $data) {
+		$html .= '<tr nobr="true">';
 		$html .= '<td>';
-		$html .= $data['requirement'];
+		if ($key == 49559) {
+			$html .= 'Availability of designated Safety Officer with the following functions:';
+			$html .= '<ol type="a">';
+			$html .= '<li>coordinate with the appropriate bodies for support and referral to community-based
+isolation facilities for confirmed cases with mild symptoms, and to health facilities for severe and critical care,';
+			$html .= '</li>';
+			$html .= '<li>undertake contact tracing or coordinate the conduct thereof; and';
+			$html .= '</li>';
+			$html .= '<li>monitor status of employees quarantined or isolated; and';
+			$html .= '</li>';
+			$html .= '<li>implement return to work policies.';
+			$html .= '</li>';
+			$html .= '</ol>';
+		} else {
+			$html .= $data['requirement'];
+		}
+
 		$html .= '</td>';
 		$html .= '<td>';
 		$html .= '<ul>';

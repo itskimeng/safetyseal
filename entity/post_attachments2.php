@@ -10,13 +10,16 @@ $client_id = '652005841335-l518ghdsao3b9f3g6cqb9slqv3li9r35.apps.googleuserconte
 $client_secret = 'jbHNwSs2aIqFoG6zv4D6LQPP';
 
 require '../manager/ApplicationManager.php';
+require '../manager/SafetysealHistoryManager.php';
 require '../application/config/connection.php';
 
 require_once 'google-api-php-client/src/Google_Client.php';
 require_once 'google-api-php-client/src/contrib/Google_DriveService.php';
 
 $app = new ApplicationManager();
+$shm = new SafetysealHistoryManager();
 $client = getGoogleClient($client_id, $client_secret, $url);
+$today = new DateTime();
 
 if (isset($_POST['checklist_order'])) {
     $_SESSION['checklist_order'] = $_POST['checklist_order'];    
@@ -29,11 +32,10 @@ if (isset($_POST['checklist_order'])) {
 
 if (isset($_GET['code'])) {
     $_SESSION['accessToken'] = $client->authenticate($_GET['code']);
-    //header('location:../wbstapplication.php?ssid='.$token.'');exit;
-    $_SESSION['toastr'] = $app->addFlash('success', 'Please try to reupload the file', 'Checklist #'.$_SESSION['checklist_order']);
+    $_SESSION['toastr'] = $app->addFlash('success', 'Please try to reupload the file.', 'Account Verified!');
 
-    // $url2 = $url2.'/safetyseal/wbstapplication.php?ssid='.$_SESSION['token'].'&code='.$_SESSION['gcode'].'&scope='.$_SESSION['gscope'].'';
-    $url2 = $url2.'/wbstapplication.php?ssid='.$_SESSION['token'].'&code='.$_SESSION['gcode'].'&scope='.$_SESSION['gscope'].'';
+    $url2 = $url2.'/safetyseal/wbstapplication.php?ssid='.$_SESSION['token'].'&code='.$_SESSION['gcode'].'&scope='.$_SESSION['gscope'].'';
+    // $url2 = $url2.'/wbstapplication.php?ssid='.$_SESSION['token'].'&code='.$_SESSION['gcode'].'&scope='.$_SESSION['gscope'].'';
 
     header('location: '.$url2);exit;
 } elseif (!isset($_SESSION['accessToken'])) {
@@ -48,33 +50,38 @@ $parent = new Google_ParentReference(); //previously Google_ParentReference
 $parent->setId($_SESSION['order']);
 
 $files = $_SESSION['FILES']['files']['tmp_name'];
+$control_no = $_SESSION['control_no'];
+$userid = $_SESSION['userid'];
+$parent = findID($conn, $_SESSION['entry_id']);
+$attachment_count = count($files);
 $file_invalid = false;
 
-    foreach ($files as $key => $file_name) {
-        $fileTmpPath = $file_name;
-        $fileName = $_SESSION['FILES']['name'][$key];
-        $fileSize = $_SESSION['FILES']['size'][$key];
-        $fileType = $_SESSION['FILES']['type'][$key];
+foreach ($files as $key => $file_name) {
+    $fileTmpPath = $file_name;
+    $fileName = $_SESSION['FILES']['name'][$key];
+    $fileSize = $_SESSION['FILES']['size'][$key];
+    $fileType = $_SESSION['FILES']['type'][$key];
 
-        $fileNameCmps = explode(".", $fileName);
-        $fileExtension = strtolower(end($fileNameCmps));
+    $fileNameCmps = explode(".", $fileName);
+    $fileExtension = strtolower(end($fileNameCmps));
 
-        $newFileName = $_SESSION['checklist_order'].'-'.$_SESSION['control_no'].'-'.md5(time() . $fileName) . '.' . $fileExtension;
-        $mime_type = finfo_file($finfo, $fileTmpPath);
+    $newFileName = $_SESSION['checklist_order'].'-'.$_SESSION['control_no'].'-'.md5(time() . $fileName) . '.' . $fileExtension;
+    $mime_type = finfo_file($finfo, $fileTmpPath);
 
-        // upload file to drive
-        $upFile = uploadFileToDrive($client, $fileTmpPath, $parent, $newFileName, $mime_type);
-        
-        // create entry to db
-        insertToEntry($conn, $client->getClientId(), $client->getClientSecret(), $_SESSION['entry_id'], $upFile, $mime_type);
-    }
+    // upload file to drive
+    $upFile = uploadFileToDrive($client, $fileTmpPath, $parent, $newFileName, $mime_type);
+    
+    // create entry to db
+    insertToEntry($conn, $client->getClientId(), $client->getClientSecret(), $_SESSION['entry_id'], $upFile, $mime_type);
+}
 
+finfo_close($finfo);
 
-    finfo_close($finfo);
+$_SESSION['toastr'] = $app->addFlash('success', 'Attachments has been successfully uploaded.', 'Checklist #'.$_SESSION['checklist_order']);
 
-    $_SESSION['toastr'] = $app->addFlash('success', 'Attachments has been successfully uploaded.', 'Checklist #'.$_SESSION['checklist_order']);
+$msg = 'uploaded '.$attachment_count.' attachment to ' .$control_no .' for Checklist #'.$_SESSION['checklist_order'];
 
-
+$shm->insert(['fid'=>$parent, 'mid'=>SafetysealHistoryManager::MENU_PUBLIC_APPLICATION, 'uid'=>$userid, 'action'=> SafetysealHistoryManager::ACTION_UPDATE, 'message'=> $msg, 'action_date'=> $today->format('Y-m-d H:i:s')]);
 
 header('location:../wbstapplication.php?ssid='.$_SESSION['token'].'&code='.$_SESSION['gcode'].'&scope='.$_SESSION['gscope'].'');exit;
 
@@ -137,4 +144,13 @@ function insertToEntry($conn, $client_id, $client_secret, $entry, $file, $file_t
     $result = mysqli_query($conn, $sql);
 
     return $result;
+}
+
+function findID($conn, $id)
+{
+    $sql = "SELECT parent_id FROM tbl_app_checklist_entry WHERE id = ".$id."";
+    $query = mysqli_query($conn, $sql);
+    $result = mysqli_fetch_assoc($query);
+        
+    return $result['parent_id'];
 }
