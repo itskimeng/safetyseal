@@ -41,14 +41,14 @@
 
             .zoom {
                 z-index: 1;
-                transition: transform .2s; /* Animation */
+                transition: transform .5s; /* Animation */
             }
 
             .zoom:hover {
-                z-index: 99999999999999;
-                margin-top: 13px !important;
-                margin-bottom: 13px !important;
-                transform: scale(1.15); /* (150% zoom - Note: if the zoom is too large, it will go outside of the viewport) */
+                z-index: 9999;
+                /*margin-top: 13px !important;*/
+                /*margin-bottom: 13px !important;*/
+                transform: scale(1.1); /* (150% zoom - Note: if the zoom is too large, it will go outside of the viewport) */
             }
 
         </style>
