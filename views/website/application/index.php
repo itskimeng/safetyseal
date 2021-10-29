@@ -18,7 +18,15 @@
           <div class="py-1">
             <div class="form-box shadow p-1 mb-4 bg-body rounded box">
 
-              <div class="ribbon blue"><span><?php echo isset($_GET['create_new']) ? 'Draft' : $userinfo['status']; ?></span></div>
+              <div class="ribbon blue">
+                <?php if (isset($_GET['create_new'])): ?>
+                  <span>Draft</span>
+                <?php elseif ($userinfo['status'] == 'Reassess'): ?>
+                  <span>Draft</span>
+                <?php else: ?>  
+                  <span><?php echo $userinfo['status']; ?></span>
+                <?php endif ?>
+              </div>
               
               <form method="POST" action="entity/post_application.php" class="bg-white  rounded-5 shadow-5-strong p-5">
 
@@ -26,7 +34,7 @@
                   <a href="user/users_establishments.php" class="btn btn-secondary btn-sm">
                       <i class="fa fa-arrow-circle-left"></i> Close
                   </a>
-                  <?php if ($userinfo['status'] == 'Returned'): ?>
+                  <?php if (in_array($userinfo['status'], ['Returned', 'Revoked'])): ?>
                     <a href="entity/post_reassess.php?ssid=<?php echo $_GET['ssid']; ?>&stt=Reassess" class="btn btn-warning btn-sm"><i class="fa fa-redo" aria-hidden="true"></i> Reassess
                     </a>
                     <a href="entity/delete_application.php?ssid=<?php echo $_GET['ssid']; ?>" class="btn btn-danger btn-sm"><i class="fas fa-trash"></i> Remove
@@ -41,7 +49,7 @@
                 <input type="hidden" name="city_mun" value="<?php echo $_SESSION['city_mun'];?>">
 
                 <!-- user return details -->
-                <?php if ($userinfo['status'] == 'Returned'): ?>
+                <?php if (in_array($userinfo['status'], ['Returned', 'Revoked'])): ?>
                   <div class="col-md-12 mt-3">
                     <?php include 'user_return_details.php'; ?>
                   </div>
@@ -56,12 +64,12 @@
                   <?php include 'checklist.php'; ?>
                 <?php endif ?>
 
-                <?php if (in_array($userinfo['status'], ['Returned', 'Disapproved'])): ?>
+                <?php if (in_array($userinfo['status'], ['Returned', 'Disapproved', 'Revoked'])): ?>
                   <?php include 'comments.php'; ?>
                 <?php endif ?>
 
                 <!-- Submit button -->
-                <?php if (isset($_GET['create_new']) OR in_array($userinfo['status'], ['Draft', 'Disapproved', 'Reassess'])): ?>
+                <?php if (isset($_GET['create_new']) OR in_array($userinfo['status'], ['Draft', 'Disapproved', 'Reassess', 'For Renewal'])): ?>
                   <div class="panel panel-default pt-4">
                     <div class="row">
                       
@@ -399,8 +407,7 @@
       let $modal = $("#modal-view_attachments");
       let form_id = $modal.find('#cform-entry_id');
 
-
-      let path = 'entity/get_attachments.php?id='+id.val();
+      let path = 'entity/get_attachments.php?id='+id.val()+'&for_renewal=<?php echo $userinfo['for_renewal']; ?>';
 
       $.get(path, function(data, key){
         let dd = JSON.parse(data);
@@ -429,12 +436,10 @@
       if (checker1 && checker2) {
         $.get(path, function(data, status){
           if (status == 'success') {
-
             tata.success('Success', 'Successfully submitted.');
-
             setTimeout(function(){// wait for 5 secs(2)
               location.reload(); // then reload the page.(3) 
-            }, 1000);
+            }, 999);
           }
         });
       }

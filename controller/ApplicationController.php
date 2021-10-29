@@ -30,9 +30,10 @@ if (!empty($_SESSION['userid'])) {
 		$userinfo = $app->getUsers($userid, $token);
 		$admininfo = $app->getApproverDetails($province,$lgu);
 
-		$appchecklists = $app->getUserChecklistsEntry($token);
+		$table = $userinfo['for_renewal'] ? 'tbl_app_checklist_renewal_entry' : 'tbl_app_checklist_entry';
+		$appchecklists = $app->getUserChecklistsEntry($token, $table);
 
-		$appchecklists_attchmnt = $app->getUserChecklistsAttachments($token);
+		$appchecklists_attchmnt = $app->getUserChecklistsAttachments($token, $userinfo['for_renewal']);
 
 	}
 	

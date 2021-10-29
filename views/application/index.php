@@ -17,18 +17,6 @@
     <hr>
   </div>
 </div>
-
-<!-- <div class="container">
-<form method="post" enctype="multipart/form-data" action="entity/upload_table.php">
-  <div class="form-group">
-      <div class="custom-file">
-        <input type="file" name="files" multiple class="custom-file-input form-control" id="customFile" required>
-      </div>
-    </div>
-  </div>
-  <button type="submit">Submit</button>
-</form>
-</div> -->
     
 <!-- Main content -->
 <div class="content">

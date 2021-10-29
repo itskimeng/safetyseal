@@ -66,22 +66,23 @@
                         <div class="card">
                             <div class="row">
                                 <div class="card-header">
-                                    Home / My Establishments
+                                    My Establishments
                                 </div>
                                 <div class="card-body" style="background-color: #f9f8f8;">
-                                    <table class="table table-hover mb-0 border-bottom" id="establishmentsTable" style="font-size: 10pt; width: 1500px; overflow-x: scroll; font-size: 10pt;">
+                                    <table class="table table-hover border-bottom" id="establishmentsTable" style="font-size: 11pt;">
                                         <thead>
                                             <tr>
-                                                <th class="text-center" width="15%">Status</th>
-                                                <th class="text-center" width="15%">Control No.</th>
-                                                <th class="text-center" width="20%">NAME</th>
-                                                <th class="text-center" width="12%">AGENCY</th>
-                                                <th class="text-center" width="20%">ESTABLISHMENT</th>
-                                                <th class="text-center" width="20%">LOCATION</th>
-                                                <th class="text-center" width="11%">SAFETY SEAL NO</th>
-                                                <th class="text-center">ISSUED </th>
-                                                <th class="text-center">VALID UNTIL</th>
-                                                <th class="text-center">ACTION</th>
+                                                <th class="text-center" width="10%">Control No.</th>
+                                                <th class="text-center" width="10%">Status</th>
+                                                <!-- <th class="text-center" width="20%">NAME</th> -->
+                                                <!-- <th class="text-center" width="12%">AGENCY</th> -->
+                                                <th class="text-center" width="16%">ESTABLISHMENT</th>
+                                                <!-- <th class="text-center" width="20%">LOCATION</th> -->
+                                                <th class="text-center" width="10%">SAFETY SEAL NO</th>
+                                                <th class="text-center" width="10%">ISSUED </th>
+                                                <th class="text-center" width="10%">RENEWED </th>
+                                                <th class="text-center" width="10%">VALID UNTIL</th>
+                                                <th class="text-center" width="8%">ACTION</th>
                                             </tr>
                                         </thead>
                                         <tbody>
@@ -102,17 +103,71 @@
 <?php include '../layout/custom_page-above.php'; ?>
 </html>
 <style type="text/css">
-    #establishmentsTable_wrapper {
-        max-width: 2500px;
-        overflow-x: scroll;
+    #establishmentsTable {
+        /*max-width: 2500px;*/
+        /*overflow-x: scroll;*/
+        font-family: poppins,sans-serif;
     }
+
+    #establishmentsTable > tbody > tr {
+        background-color: white;
+    }
+
+    .label {
+        padding: 5px;
+        border-radius: 4px;
+    }
+
+    .btn-renew {
+      background-color: #004A7F;
+      -webkit-border-radius: 10px;
+      border-radius: 10px;
+      border: none;
+      color: #FFFFFF;
+      cursor: pointer;
+      display: inline-block;
+      font-family: Arial;
+      font-size: 20px;
+      padding: 5px 10px;
+      text-align: center;
+      text-decoration: none;
+      -webkit-animation: glowing 1500ms infinite;
+      -moz-animation: glowing 1500ms infinite;
+      -o-animation: glowing 1500ms infinite;
+      animation: glowing 1500ms infinite;
+    }
+
+    @-webkit-keyframes glowing {
+      0% { background-color: #B20000; -webkit-box-shadow: 0 0 3px #B20000; }
+      50% { background-color: #FF0000; -webkit-box-shadow: 0 0 5px #FF0000; }
+      100% { background-color: #B20000; -webkit-box-shadow: 0 0 3px #B20000; }
+    }
+
+    @-moz-keyframes glowing {
+      0% { background-color: #B20000; -moz-box-shadow: 0 0 3px #B20000; }
+      50% { background-color: #FF0000; -moz-box-shadow: 0 0 5px #FF0000; }
+      100% { background-color: #B20000; -moz-box-shadow: 0 0 3px #B20000; }
+    }
+
+    @-o-keyframes glowing {
+      0% { background-color: #B20000; box-shadow: 0 0 3px #B20000; }
+      50% { background-color: #FF0000; box-shadow: 0 0 5px #FF0000; }
+      100% { background-color: #B20000; box-shadow: 0 0 3px #B20000; }
+    }
+
+    @keyframes glowing {
+      0% { background-color: #B20000; box-shadow: 0 0 3px #B20000; }
+      50% { background-color: #FF0000; box-shadow: 0 0 5px #FF0000; }
+      100% { background-color: #B20000; box-shadow: 0 0 3px #B20000; }
+    }
+
 </style>
 <script>
-    $('#establishmentsTable').DataTable({
-        responsive: {
-            details: true
-        }
-    });
+    // $('#establishmentsTable').DataTable({
+    //     responsive: {
+    //         details: true
+    //     }
+    // });
 
     <?php
     // toastr output & session reset

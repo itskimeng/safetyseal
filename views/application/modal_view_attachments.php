@@ -27,9 +27,6 @@
     <div class="modal-content">
       <div class="modal-header">
         <h4 class="modal-title"><i class="fa fa-link"></i> View Attachments</h4>
-        <!-- <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-          <span aria-hidden="true">×</span>
-        </button> -->
       </div>
       <form method="POST" enctype="multipart/form-data" action="entity/delete_attachments.php">
         <input type="hidden" name="checklist_order" value=""/>
@@ -37,22 +34,14 @@
         <input type="hidden" name="control_no" value="<?php //echo $applicant['control_no']; ?>"/>  
         <input type="hidden" name="token_id" value="<?php //echo $applicant['ssid']; ?>"/>        
 
-        <div class="modal-body">
-          <div id="tbody-view_attchmnt">
-            
-          </div>           
+        <div class="modal-body" id="tbody-view_attchmnt" style="max-height: 570px; overflow-y: scroll;">
+          
         </div>
+
         <div class="modal-footer justify-content-between">
           <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
         </div>
       </form>
-      <!-- <div class="modal-body">
-        <p>One fine body…</p>
-      </div>
-      <div class="modal-footer justify-content-between">
-        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-        <button type="button" class="btn btn-primary">Save changes</button>
-      </div> -->
     </div>
     <!-- /.modal-content -->
   </div>

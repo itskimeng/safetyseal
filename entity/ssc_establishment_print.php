@@ -120,7 +120,7 @@ function generateDetails($data)
 	$html.= '</tr>';
 
 	foreach ($data as $key => $dd) {
-		$html.= '<tr>';
+		$html.= '<tr nobr="true">';
 		$html.= '<td>';
 		$html.= $dd['province'];
 		$html.= '</td>';

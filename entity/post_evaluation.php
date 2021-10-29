@@ -29,9 +29,8 @@ if (!empty($assessments)) {
 	foreach ($assessments as $key => $assess) {
 		if ($assess == 'failed' OR $assess == 'fail') {
 			$status = ApplicationManager::STATUS_DISAPPROVED;
-			
 		}
-		$entry = $app->insertAssessment($key, $assess, $email);
+		$entry = $app->insertAssessment($key, $assess, $email, $application['for_renewal']);
 	}
 }
 
@@ -42,11 +41,14 @@ if (empty($notes)) {
 	$app->updateValidationChecklist($checklist_id, $defects, $recommendations, $today->format('Y-m-d H:i:s'));	
 }
 
-if ($status == 'Approved') {
+if ($status == 'Approved' AND !$application['for_renewal']) {
 	$ssc_no = $app->generateCode($userid);
+} elseif ($status == 'Approved' AND $application['for_renewal']) {
+	$sql = "UPDATE tbl_app_checklist SET date_renewed = '".$today->format('Y-m-d H:i:s')."'";
+	$query = mysqli_query($conn, $sql);
 }
 
-$app->evaluateChecklist($checklist_id, $status, $ssc_no, $today->format('Y-m-d H:i:s'), $userid);
+$app->evaluateChecklist($checklist_id, $status, $ssc_no, $today->format('Y-m-d H:i:s'), $userid, $application['for_renewal']);
 $_SESSION['toastr'] = $app->addFlash('success', 'The application has been set to '.$status.'.', 'Success');
 
 $msg = 'application ' .$application['control_no']. ' has been ' .$status;
@@ -124,7 +126,7 @@ function DisapprovedApplicant($emailAddress,$control_no)
 
 function findID($conn, $id) 
 {
-	$sql = "SELECT id, control_no, status FROM tbl_app_checklist WHERE id = '".$id."'";
+	$sql = "SELECT id, control_no, status, for_renewal FROM tbl_app_checklist WHERE id = '".$id."'";
 	$query = mysqli_query($conn, $sql);
     $result = mysqli_fetch_assoc($query);
 

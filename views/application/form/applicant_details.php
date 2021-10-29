@@ -1,7 +1,25 @@
 <div class="row">
-
+ 
   <div class="col-lg-12 col-md-6 col-sm-3">
-  <div class="card">
+    <?php if ($applicant['status'] == 'Approved'): ?>
+      <div class="row mb-3">
+        <div class="col-md-6 col-sm-3">
+          <div class="row">
+              <div class="col-md-2">
+                <!-- <a href="entity/delete_admin_application.php?token=<?php //echo $_GET['appid']; ?>" class="btn btn-danger btn-block btn-sm" style="margin-bottom: -2%;">
+                  <i class="fa fa-ban"></i> Revoke
+                </a> -->
+                <button type="button" id="btn-revoke_modal" class="btn btn-danger btn-block btn-sm btn-revoke_modal" style="margin-bottom: -2%;">
+                  <i class="fa fa-ban"></i> Revoke
+                </button>
+              </div>  
+          </div>
+
+        </div>  
+      </div>
+    <?php endif ?>
+
+    <div class="card">
       <div class="card-header">
         <h3 class="card-title"><i class="fa fa-info-circle" aria-hidden="true"></i> <b>APPLICATION DETAILS</b></h3> 
         <span  class="badge bg-primary" style="font-size:13pt;"> <?php echo $applicant['status']; ?></span>
@@ -24,6 +42,9 @@
               <?php if ($applicant['status'] == 'Approved'): ?>
                 <label class="form-label" for="form1Example1">Safety Seal No.</label><br>
                 <input type="text" id="form1Example1" class="form-control" style="background-color: #008000e6; color: white; font-weight: bold;" value="<?php echo $applicant['ss_no']; ?>" disabled />
+              <?php elseif ($applicant['for_renewal']): ?>
+                <label class="form-label" for="form1Example1">Safety Seal No.</label><br>
+                <input type="text" id="form1Example1" class="form-control" style="background-color: #b07c06e6; color: white; font-weight: bold;" value="<?php echo $applicant['ss_no']; ?>" disabled />
               <?php endif ?>
             </div>
             <div class="form-outline mb-2 col-md-3">

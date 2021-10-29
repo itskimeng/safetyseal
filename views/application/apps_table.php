@@ -61,10 +61,7 @@
 
 
                     <?php elseif (in_array($applicant['status'], ['For Receiving', 'For Reassessment'])): ?>
-                      <!-- <a href="entity/post_received.php?appid=<?php echo $applicant['id']; ?>&ussir=<?php echo $applicant['userid']; ?>&status=<?php echo $applicant['status']; ?>" class="btn btn-primary btn-block btn-sm" style="margin-bottom: -2%;">
-                        <i class="fa fa-box"></i> Receive
-                      </a> -->
-
+              
                       <a href="admin_application_open.php?appid=<?php echo $applicant['id']; ?>&ussir=<?php echo $applicant['userid']; ?>" class="btn btn-info btn-block btn-sm" style="margin-bottom: -2%;" title="View Checklist">
                         <i class="fa fa-folder-open"></i> View
                       </a>

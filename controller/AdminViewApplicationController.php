@@ -33,8 +33,8 @@ $is_readonly = false;
 if ($applicant['status'] == 'Approved' OR $applicant['status'] == 'Disapproved') {
     $is_readonly = true;
 }
-$applicants_data = getUserChecklistsEntry($conn, $appid); 
-$appchecklists_attchmnt = $app->getUserChecklistsAttachments($applicant['ssid']);
+$applicants_data = getUserChecklistsEntry($conn, $appid, $applicant['for_renewal']); 
+$appchecklists_attchmnt = $app->getUserChecklistsAttachments($applicant['ssid'], $applicant['for_renewal']);
 $app_notes = getUserChecklistsValidations($conn, $appid);
 
 function getUserAccess($conn, $id)
@@ -84,6 +84,7 @@ function getUserChecklists($conn, $id)
         ac.address as ac_address,
         ac.token as ssid,
         ui.POSITION as position,
+        ac.for_renewal as for_renewal,
        	DATE_FORMAT(ac.date_created, '%M %d, %Y') as date_created
         FROM tbl_app_checklist ac
         LEFT JOIN tbl_admin_info ai on ai.id = ac.user_id
@@ -97,7 +98,7 @@ function getUserChecklists($conn, $id)
     return $data;
 }
 
-function getUserChecklistsEntry($conn, $id)
+function getUserChecklistsEntry($conn, $id, $for_renewal)
 {
     $sql = "SELECT 
         c.id as clist_id,  
@@ -111,16 +112,20 @@ function getUserChecklistsEntry($conn, $id)
         e.pnp_remarks as pnp_remarks,
         e.bfp_remarks as bfp_remarks,
         ui.GOV_NATURE_NAME as nature,
-        ui.POSITION as position
-        FROM tbl_app_checklist_entry e
-        LEFT JOIN tbl_app_checklist ac on ac.id = e.parent_id
-        LEFT JOIN tbl_app_certchecklist c on c.id = e.chklist_id
-        LEFT JOIN tbl_admin_info ai on ai.id = ac.user_id
-        LEFT JOIN tbl_userinfo ui on ui.id = ai.id
-        WHERE ac.id = $id";
+        ui.POSITION as position ";
+
+    if ($for_renewal) {
+        $sql .= " FROM tbl_app_checklist_renewal_entry e";
+    } else {
+        $sql .= " FROM tbl_app_checklist_entry e";
+    }
      
-
-
+    $sql .= " LEFT JOIN tbl_app_checklist ac on ac.id = e.parent_id 
+            LEFT JOIN tbl_app_certchecklist c on c.id = e.chklist_id 
+            LEFT JOIN tbl_admin_info ai on ai.id = ac.user_id 
+            LEFT JOIN tbl_userinfo ui on ui.id = ai.id 
+            WHERE ac.id = $id";   
+        
     $query = mysqli_query($conn, $sql);
     $data = [];
 

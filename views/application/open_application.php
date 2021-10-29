@@ -366,7 +366,7 @@
       let id = tr.find('#cform-ulist_id');
       let $modal = $("#modal-view_attachments");
       let form_id = $modal.find('#cform-entry_id');
-      let path = 'entity/get_attachments.php?id=' + id.val();
+      let path = 'entity/get_attachments.php?id='+id.val()+'&for_renewal=<?php echo $applicant['for_renewal']; ?>';
 
       $.get(path, function(data, key) {
         let dd = JSON.parse(data);
@@ -418,28 +418,75 @@
       }
     });
 
+    $(document).on('click', '.btn-open-exlink', function(e){ 
+      e.preventDefault(); 
+      var url = $(this).attr('href'); 
+      window.open(url);
+    });
+
+    // function generateAttachments($data, $element) {
+    //   let tr = '';
+    //   $element.empty();
+    //   tr += '<div class="col-md-12">';
+    //   tr += '<div class="row">';
+    //   $.each($data, function(key, item) {
+    //     tr += '<div class="col-md-3 mb-1">';
+    //     tr += '<div class="card" style="width: 15rem;">';
+    //     tr += '<div class="pic-holder" style="padding-top: 5%;height: 12rem;">';
+    //     tr += '<img src="https://drive.google.com/uc?export=view&id=' + item['file_id'] + '" class="card-img-top" alt="..." style="max-width: 100%; max-height: 100%; object-fit: cover;">';
+    //     tr += '</div>';
+    //     // tr+= '<iframe src="https://drive.google.com/uc?export=view&id='+item['file_id']+'" class="card-img-top"></iframe>';
+    //     tr += '<div class="card-body" style="text-overflow: ellipsis;white-space: nowrap;overflow: hidden;height: 3.5rem;padding: 0.3rem 0.3rem;">';
+    //     tr += '<a href="' + item['location'] + '" class="">';
+    //     tr += item['file_name'];
+    //     tr += '</a>';
+    //     tr += '</div>';
+    //     tr += '</div>';
+    //     tr += '</div>';
+    //   });
+    //   tr += '</div>';
+    //   tr += '</div>';
+
+    //   $element.append(tr);
+    // }
+
     function generateAttachments($data, $element) {
       let tr = '';
       $element.empty();
-      tr += '<div class="col-md-12">';
-      tr += '<div class="row">';
-      $.each($data, function(key, item) {
-        tr += '<div class="col-md-3 mb-1">';
-        tr += '<div class="card" style="width: 15rem;">';
-        tr += '<div class="pic-holder" style="padding-top: 5%;height: 12rem;">';
-        tr += '<img src="https://drive.google.com/uc?export=view&id=' + item['file_id'] + '" class="card-img-top" alt="..." style="max-width: 100%; max-height: 100%; object-fit: cover;">';
-        tr += '</div>';
-        // tr+= '<iframe src="https://drive.google.com/uc?export=view&id='+item['file_id']+'" class="card-img-top"></iframe>';
-        tr += '<div class="card-body" style="text-overflow: ellipsis;white-space: nowrap;overflow: hidden;height: 3.5rem;padding: 0.3rem 0.3rem;">';
-        tr += '<a href="' + item['location'] + '" class="">';
-        tr += item['file_name'];
-        tr += '</a>';
-        tr += '</div>';
-        tr += '</div>';
-        tr += '</div>';
+      tr+= '<div class="col-sm-12">';
+      tr+= '<div class="row">';
+      $.each($data, function(key, item){
+        tr+= '<div class="col-sm-2 mb-1">';
+        tr+= '<div class="card" style="/* width: 15rem; */">';
+        tr+= '<div class="checkers" style="padding-left: 1.5rem;">';
+        tr+= '<div class="form-group">';
+        tr+= '<input type="hidden" name="att_id['+item['caid']+']" value="'+item['file_id']+'">';
+        // tr+= '<input class="form-check-input chklist_na up-attachment" name="chklists['+item['caid']+']" type="checkbox" value="">';
+        tr+= '</div>';
+        tr+= '</div>';
+        tr+= '<div class="pic-holder" style="padding-top: 5%;height: 8rem;">';
+
+        if (item['cover_page'] != null) {
+          tr+= '<img src="'+item['cover_page']+'" class="card-img-top" alt="..." style="max-width: 100%; max-height: 100%; object-fit: cover;">';  
+        } else {
+          tr+= '<img src="https://drive.google.com/uc?export=view&id='+item['file_id']+'" class="card-img-top" alt="..." style="max-width: 100%; max-height: 100%; object-fit: cover;">';
+        }
+        
+        tr+= '</div>';
+        tr+= '<div class="card-body" style="text-overflow: ellipsis;white-space: nowrap;overflow: hidden;height: 3.5rem;padding: 0.3rem 0.3rem;">';
+        tr+= '<div class="row">';
+        tr+= '<div class="col-sm-12" style="text-align:center;">';
+        tr+= '<a class="btn btn-md btn-secondary btn-open-exlink" href="'+item['location']+'" style="width:100%">';
+        tr+= '<i class="fa fa-eye"></i> View';
+        tr+= '</a>';
+        tr+= '</div>';
+        tr+= '</div>';
+        tr+= '</div>';
+        tr+= '</div>';
+        tr+= '</div>';
       });
-      tr += '</div>';
-      tr += '</div>';
+      tr+= '</div>';
+      tr+= '</div>';
 
       $element.append(tr);
     }

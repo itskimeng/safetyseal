@@ -24,8 +24,10 @@ class UserManager
         ac.nature as ac_nature,
         ac.address as ac_address,
         ac.status as ac_status,
+        DATE_FORMAT(ac.date_renewed, '%Y-%m-%d') as date_renewed,
         DATE_FORMAT(ac.date_created, '%Y-%m-%d') as date_created,
-        ai.UNAME as username
+        ai.UNAME as username,
+        ac.for_renewal as for_renewal
         FROM tbl_app_checklist ac
         LEFT JOIN tbl_admin_info ai on ai.id = ac.user_id
         LEFT JOIN tbl_userinfo u on ai.ID = u.USER_ID
@@ -35,20 +37,45 @@ class UserManager
         $data = [];
         
         while ($row = mysqli_fetch_assoc($query)) {
+
+            // $date2 = date_create($date2);
+
+            $date_created = date('F d, Y',strtotime($row['date_created']));
+            $date_renewed = date('F d, Y',strtotime($row['date_renewed']));
+            $date_today = new DateTime();
+            $date_today = date('F d, Y', strtotime($date_today->format('Y-m-d')));
+
+            if (($row['ac_status'] == "Approved") AND ($row['for_renewal']) AND (!empty($row['date_renewed']))) {
+                $date_validity = date('F d, Y', strtotime("+6 months", strtotime($row['date_renewed'])));
+            } else {
+                $date_validity = date('F d, Y', strtotime("+6 months", strtotime($row['date_created'])));
+            }
+
+            $date1=date_create($date_today);
+            $date2=date_create($date_validity);
+
+
+
+            $interval = date_diff($date1, $date2);
+
             $data[] = [
-                'name' => $row['name'],
-                'agency' => $row['agency'],
-                'establishment' => $row['establishment'],
-                'location' => $row['location'],
-                'control_no' => $row['control_no'],
-                'ss_no' => $row['ss_no'],
-                'token' => $row['token'],
-                'date_created' => $row['date_created'],
-                'ac_establishment' => $row['ac_establishment'],
-                'ac_nature' => $row['ac_nature'],
-                'ac_address' => $row['ac_address'],
-                'ac_status' => $row['ac_status'],
-                'username' => $row['username']
+                'name'              => $row['name'],
+                'agency'            => $row['agency'],
+                'establishment'     => $row['establishment'],
+                'location'          => $row['location'],
+                'control_no'        => $row['control_no'],
+                'ss_no'             => $row['ss_no'],
+                'token'             => $row['token'],
+                'date_created'      => $date_created,
+                'date_validity'     => $date_validity,
+                'interval'          => $interval->m,
+                'ac_establishment'  => $row['ac_establishment'],
+                'ac_nature'         => $row['ac_nature'],
+                'ac_address'        => $row['ac_address'],
+                'ac_status'         => $row['ac_status'],
+                'username'          => $row['username'],
+                'for_renewal'       => $row['for_renewal'],
+                'date_renewed'      => $date_renewed
             ];    
         }
 

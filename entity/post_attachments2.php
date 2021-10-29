@@ -55,6 +55,13 @@ $userid = $_SESSION['userid'];
 $parent = findID($conn, $_SESSION['entry_id']);
 $attachment_count = count($files);
 $file_invalid = false;
+$appchecklists = $app->findChecklist($_SESSION['control_no']);
+
+$table = 'tbl_app_checklist_entry';
+
+if ($appchecklists['for_renewal']) {
+    $table = 'tbl_app_checklist_renewal_entry';
+}
 
 foreach ($files as $key => $file_name) {
     $fileTmpPath = $file_name;
@@ -72,7 +79,7 @@ foreach ($files as $key => $file_name) {
     $upFile = uploadFileToDrive($client, $fileTmpPath, $parent, $newFileName, $mime_type);
     
     // create entry to db
-    insertToEntry($conn, $client->getClientId(), $client->getClientSecret(), $_SESSION['entry_id'], $upFile, $mime_type);
+    insertToEntry($conn, $client->getClientId(), $client->getClientSecret(), $_SESSION['entry_id'], $upFile, $mime_type, $appchecklists['for_renewal']);
 }
 
 finfo_close($finfo);
@@ -134,12 +141,17 @@ function uploadFileToDrive($client, $path, $parent, $filename, $mime_type)
     return $data;
 }
 
-function insertToEntry($conn, $client_id, $client_secret, $entry, $file, $file_type) 
+function insertToEntry($conn, $client_id, $client_secret, $entry, $file, $file_type, $for_renewal) 
 {
     $today = new DateTime();
     $today = $today->format('Y-m-d H:i:s');
 
-    $sql = 'INSERT INTO tbl_app_checklist_attachments (entry_id, file_id, file_name, location, date_created, client_id, client_secret, file_type) VALUES ("'.$entry.'", "'.$file['id'].'", "'.$file['originalFilename'].'", "'.$file['alternateLink'].'", "'.$today.'", "'.$client_id.'", "'.$client_secret.'", "'.$file_type.'")';
+    if ($for_renewal == 'tbl_app_checklist_attachments') {
+        $sql = 'INSERT INTO tbl_app_checklist_attachments (entry_id, file_id, file_name, location, date_created, client_id, client_secret, file_type) VALUES ("'.$entry.'", "'.$file['id'].'", "'.$file['originalFilename'].'", "'.$file['alternateLink'].'", "'.$today.'", "'.$client_id.'", "'.$client_secret.'", "'.$file_type.'")';
+    } else {
+        $sql = 'INSERT INTO tbl_app_checklist_attachments (renewal_id, file_id, file_name, location, date_created, client_id, client_secret, file_type) VALUES ("'.$entry.'", "'.$file['id'].'", "'.$file['originalFilename'].'", "'.$file['alternateLink'].'", "'.$today.'", "'.$client_id.'", "'.$client_secret.'", "'.$file_type.'")';
+    }
+
 
     $result = mysqli_query($conn, $sql);
 

@@ -53,9 +53,11 @@ $timestamp = date('Y-m-d H:i:s', time());
 
 if (!$is_adminro) {
 	if ($is_pfp) {
-		$applicants = getPFPApplicationLists($conn, $province, ApplicationManager::STATUS_DRAFT);
+       // FOR PROVINCIAL FOCAL PERSONS
+	   $applicants = getPFPApplicationLists($conn, $province, ApplicationManager::STATUS_DRAFT);
 	} elseif (!$is_clusterhead) {
-		$applicants = $app->getApplicationLists($province, $citymun, ApplicationManager::STATUS_DRAFT);
+       // FOR MLGOO ACCOUNTS 
+	   $applicants = $app->getApplicationLists($province, $citymun, ApplicationManager::STATUS_DRAFT);
 	} else {
 		$applicants = getApplicationLists($conn, $province, $citymun_opts, ApplicationManager::STATUS_DRAFT, $is_clusterhead);
 	}

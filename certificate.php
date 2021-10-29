@@ -3,11 +3,11 @@ session_start();
 require_once 'application/config/connection.php'; 
 
 if ($_GET['token']) {
-	$selectApplication = ' SELECT `id`, `control_no`, `user_id`, `status`, `has_consent`, `date_created`, `date_proceed`, `receiver_id`, `date_received`, `approver_id`, `date_approved`, `safety_seal_no`, `date_modified` FROM `tbl_app_checklist` WHERE status = "Approved" AND `token` = "'.$_GET['token'].'" ';
+	$selectApplication = ' SELECT `id`, `control_no`, `user_id`, `status`, `has_consent`, `date_created`, `date_proceed`, `receiver_id`, `date_received`, `approver_id`, `date_approved`, `safety_seal_no`, `date_modified`, `for_renewal`, `date_renewed` FROM `tbl_app_checklist` WHERE status = "Approved" AND `token` = "'.$_GET['token'].'" ';
 }
 else
 {
-	$selectApplication = ' SELECT `id`, `control_no`, `user_id`, `status`, `has_consent`, `date_created`, `date_proceed`, `receiver_id`, `date_received`, `approver_id`, `date_approved`, `safety_seal_no`, `date_modified` FROM `tbl_app_checklist` WHERE status = "Approved" AND `user_id` = "'.$_SESSION['userid'].'" ';
+	$selectApplication = ' SELECT `id`, `control_no`, `user_id`, `status`, `has_consent`, `date_created`, `date_proceed`, `receiver_id`, `date_received`, `approver_id`, `date_approved`, `safety_seal_no`, `date_modified`, `for_renewal`, `date_renewed` FROM `tbl_app_checklist` WHERE status = "Approved" AND `user_id` = "'.$_SESSION['userid'].'" ';
 }
 
 
@@ -60,9 +60,10 @@ $pdf->Cell(1,1,'Valid Until ');
 
 $pdf->SetFont('Arial','U',14);
 $pdf->SetXY(126,275);
-$pdf->Cell(1,1,': '.date('F d, Y', strtotime("+6 months", strtotime($resultApplication['date_approved']))));
+$pdf->Cell(1,1,': '.date('F d, Y', strtotime("+6 months", strtotime($resultApplication['date_renewed']))));
 
 
 // $pdf->Output();
-$pdf->Output('D',$resultApplication['safety_seal_no'].'.pdf');
+$pdf->Output('I',$resultApplication['safety_seal_no'].'.pdf');
+// $pdf->Output('personnel_report.pdf', 'I');
  ?>

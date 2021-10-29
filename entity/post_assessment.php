@@ -24,7 +24,7 @@ $application = findID($conn, $checklist_id);
 
 if (!empty($assessments)) {
 	foreach ($assessments as $key => $assessment) {
-		$entry = insertAssessment($conn, $key, $assessment);
+		$entry = insertAssessment($conn, $key, $assessment, $application['for_renewal']);
 	}
 }
 
@@ -70,8 +70,13 @@ function getValidationLists($conn, $appid) {
 	return $result;	
 }
 
-function insertAssessment($conn, $id, $assessment) {
-	$sql = "UPDATE tbl_app_checklist_entry SET assessment = '".$assessment."' WHERE id = ".$id."";
+function insertAssessment($conn, $id, $assessment, $for_renewal) {
+	if ($for_renewal) {
+		$sql = "UPDATE tbl_app_checklist_renewal_entry SET assessment = '".$assessment."' WHERE id = ".$id."";	
+	} else {
+		$sql = "UPDATE tbl_app_checklist_entry SET assessment = '".$assessment."' WHERE id = ".$id."";
+	}
+	
 	$query = mysqli_query($conn, $sql);
      
 	return $result;	
@@ -86,7 +91,7 @@ function insertRemarks($conn, $id, $prefix, $remarks) {
 
 function findID($conn, $id) 
 {
-	$sql = "SELECT id, control_no, status FROM tbl_app_checklist WHERE id = '".$id."'";
+	$sql = "SELECT id, control_no, status, for_renewal FROM tbl_app_checklist WHERE id = '".$id."'";
 	$query = mysqli_query($conn, $sql);
     $result = mysqli_fetch_assoc($query);
 

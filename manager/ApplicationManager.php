@@ -12,7 +12,9 @@ class ApplicationManager
     const STATUS_RECEIVED           = "Received";
     const STATUS_FOR_REASSESSMENT   = "For Reassessment";
     const STATUS_REASSESS           = "Reassess";
+    const STATUS_FOR_RENEWAL        = "For Renewal";
     const STATUS_RETURNED           = "Returned";
+    const STATUS_REVOKED            = "Revoked";
     const TYPE_APPLIED              = "Applied";
     const TYPE_ENCODED              = "Encoded";
     
@@ -45,7 +47,7 @@ class ApplicationManager
 
     public function findChecklist($token)
     {
-        $sql = "SELECT id, control_no FROM tbl_app_checklist WHERE token = '".$token."'";
+        $sql = "SELECT id, control_no, for_renewal FROM tbl_app_checklist WHERE token = '".$token."'";
         $query = mysqli_query($this->conn, $sql);
         $result = mysqli_fetch_assoc($query);
         
@@ -96,9 +98,9 @@ class ApplicationManager
 
     }
 
-    public function updateChecklistEntry($data)
+    public function updateChecklistEntry($data, $table)
     {
-        $sql = "UPDATE tbl_app_checklist_entry 
+        $sql = "UPDATE $table 
                 SET tracing_tool = '".$data['tracing_tool']."', other_tool = '".$data['other_tool']."', answer = '".$data['answer']."', reason = '".$data['reason']."' WHERE id = ".$data['chklist_id']."";
 
         $result = mysqli_query($this->conn, $sql);
@@ -106,7 +108,7 @@ class ApplicationManager
         return $result;
     }
 
-    public function getUserChecklistsEntry($token)
+    public function getUserChecklistsEntry($token, $table)
     {
         $sql = "SELECT 
             c.id as clist_id,  
@@ -115,25 +117,22 @@ class ApplicationManager
             e.id as ulist_id,
             e.answer as answer,
             e.reason as reason,
-            a.status as status,
             e.assessment as assessment,
             e.other_tool as other_tool,
             a.status as status,
             e.tracing_tool as tracing_tool
-            FROM tbl_app_checklist_entry e
+            FROM $table e
             LEFT JOIN tbl_app_checklist a on a.id = e.parent_id
             LEFT JOIN tbl_app_certchecklist c on c.id = e.chklist_id
             LEFT JOIN tbl_admin_info ai on ai.id = a.user_id
             WHERE a.token = '".$token."'";
-
-            
 
         $query = mysqli_query($this->conn, $sql);
         $data = [];
 
         while ($row = mysqli_fetch_assoc($query)) {
             $is_disabled = true;
-            if (in_array($row['status'], array('Draft', 'Disapproved', 'Reassess'))) {
+            if (in_array($row['status'], array('Draft', 'Disapproved', 'Reassess', 'For Renewal'))) {
                 $is_disabled = false;
             }
 
@@ -155,7 +154,7 @@ class ApplicationManager
         return $data;
     }
 
-    public function getUserChecklistsAttachments($token)
+    public function getUserChecklistsAttachments($token, $for_renewal)
     {
         $sql = "SELECT 
             e.id as eid,
@@ -163,10 +162,15 @@ class ApplicationManager
             ca.file_id as file_id,
             ca.file_name as file_name,
             ca.location as location
-            FROM tbl_app_checklist_attachments ca 
-            LEFT JOIN tbl_app_checklist_entry e on e.id = ca.entry_id
-            LEFT JOIN tbl_app_checklist a on a.id = e.parent_id
-            WHERE a.token = '".$token."'";
+            FROM tbl_app_checklist_attachments ca ";
+
+        if ($for_renewal) {
+            $sql .= " LEFT JOIN tbl_app_checklist_renewal_entry e on e.id = ca.renewal_id";
+        } else {
+            $sql .= " LEFT JOIN tbl_app_checklist_entry e on e.id = ca.entry_id";
+        }    
+        
+        $sql .= " LEFT JOIN tbl_app_checklist a on a.id = e.parent_id WHERE a.token = '".$token."'";
 
         $query = mysqli_query($this->conn, $sql);
         $data = [];
@@ -242,7 +246,9 @@ class ApplicationManager
             aco.defects as defects,
             aco.recommendations as recommendations,
             ac.remarks as remarks,
-            ac.token as token
+            ac.token as token,
+            ac.for_renewal as for_renewal,
+            ac.safety_seal_no as ssc_no
             FROM tbl_app_checklist ac
             LEFT JOIN tbl_admin_info ai on ai.id = ac.user_id
             LEFT JOIN tbl_userinfo ui on ui.user_id = ai.id
@@ -263,24 +269,26 @@ class ApplicationManager
                 $date_created = $today;
             }
             $data = [
-                'id' => $row['id'],
-                'acid' => $row['acid'],
-                'date_created' => $date_created,
-                'address' => $row['address'],
-                'agency' => $row['agency'],
-                'establishment' => $row['establishment2'],
-                'nature' => $row['nature'],
-                'fname' => $row['fname'],
-                'contact_details' => $row['contact_details'],
-                'status' => !empty($row['status']) ? $row['status'] : 'Draft',
-                'pcode' => $row['pcode'],
-                'mcode' => $row['mcode'],
-                'defects' => $row['defects'],
-                'recommendations' => $row['recommendations'],
-                'code' => !empty($row['control_no']) ? $row['control_no'] : '2021-'.'_____',
-                'date_proceed' => $row['date_proceed'],
-                'remarks' => $row['remarks'],
-                'token' => $row['token']
+                'id'                => $row['id'],
+                'acid'              => $row['acid'],
+                'date_created'      => $date_created,
+                'address'           => $row['address'],
+                'agency'            => $row['agency'],
+                'establishment'     => $row['establishment2'],
+                'nature'            => $row['nature'],
+                'fname'             => $row['fname'],
+                'contact_details'   => $row['contact_details'],
+                'status'            => !empty($row['status']) ? $row['status'] : 'Draft',
+                'pcode'             => $row['pcode'],
+                'mcode'             => $row['mcode'],
+                'defects'           => $row['defects'],
+                'recommendations'   => $row['recommendations'],
+                'code'              => !empty($row['control_no']) ? $row['control_no'] : '2021-'.'_____',
+                'date_proceed'      => $row['date_proceed'],
+                'remarks'           => $row['remarks'],
+                'token'             => $row['token'],
+                'for_renewal'       => $row['for_renewal'],
+                'ssc_no'            => $row['ssc_no']
             ];      
         }
 
@@ -428,7 +436,8 @@ class ApplicationManager
         ac.status as status,
         ac.address as ac_address,
         ac.application_type as app_type,
-        ac.token as token
+        ac.token as token,
+        ac.for_renewal as for_renewal
         FROM tbl_app_checklist ac
         LEFT JOIN tbl_admin_info ai on ai.id = ac.user_id
         LEFT JOIN tbl_userinfo ui on ui.user_id = ai.id
@@ -443,11 +452,11 @@ class ApplicationManager
                 $color = 'primary';
             } elseif ($row['status'] == 'Received') {
                 $color = 'yellow';
-            } elseif ($row['status'] == 'Disapproved') {
+            } elseif (in_array($row['status'], ['Disapproved', 'Revoked'])) {
                 $color = 'red';
             }
-            if($row['status'] =='Approved'){
-                $validity = date('F d, Y', strtotime("+6 months", strtotime($row['date_approved'])));
+            if($row['status'] =='Approved' OR $row['for_renewal']){
+                $validity = date('F d, Y', strtotime("+6 months", strtotime($row['date_created'])));
             }else{
                 $validity = '';
             }
@@ -735,16 +744,24 @@ class ApplicationManager
 
    
 
-    public function insertAssessment($id, $assessment) {
-        $sql = "UPDATE tbl_app_checklist_entry SET assessment = '".$assessment."' WHERE id = ".$id."";
+    public function insertAssessment($id, $assessment, $for_renewal) {
+        if ($for_renewal) {
+            $sql = "UPDATE tbl_app_checklist_renewal_entry SET assessment = '".$assessment."' WHERE id = ".$id."";
+        } else {
+            $sql = "UPDATE tbl_app_checklist_entry SET assessment = '".$assessment."' WHERE id = ".$id."";
+        }
         $query = mysqli_query($this->conn, $sql);
          
         return $query; 
     }
 
-    public function evaluateChecklist($checklist_id, $status, $safety_seal_no, $date_modified, $approver)
+    public function evaluateChecklist($checklist_id, $status, $safety_seal_no, $date_modified, $approver, $for_renewal)
     {
-        $sql = "UPDATE tbl_app_checklist SET safety_seal_no = '".$safety_seal_no."', date_approved = '".$date_modified."', date_modified = '".$date_modified."', approver_id = ".$approver.", status = '".$status."' WHERE id = ".$checklist_id."";
+        if ($for_renewal) {
+            $sql = "UPDATE tbl_app_checklist SET date_modified = '".$date_modified."', approver_id = ".$approver.", status = '".$status."' WHERE id = ".$checklist_id."";
+        } else {
+            $sql = "UPDATE tbl_app_checklist SET safety_seal_no = '".$safety_seal_no."', date_approved = '".$date_modified."', date_modified = '".$date_modified."', approver_id = ".$approver.", status = '".$status."' WHERE id = ".$checklist_id."";
+        }
         $result = mysqli_query($this->conn, $sql);
 
         return $result;

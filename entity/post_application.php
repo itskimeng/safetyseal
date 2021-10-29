@@ -31,6 +31,13 @@ if ($is_new) {
 }
 
 $parent = $am->findChecklist($token);
+
+if ($parent['for_renewal']) {
+	$table = 'tbl_app_checklist_renewal_entry';
+} else {
+	$table = 'tbl_app_checklist_entry';
+}
+
 foreach ($checklists as $key => $id) {
 	$check_val = $reason = $other_tool = '';
 	$ulist_id = isset($_POST['ulist_id'][$key]) ? $_POST['ulist_id'][$key] : '';
@@ -60,7 +67,7 @@ foreach ($checklists as $key => $id) {
 	if ($is_new) {
 		$am->insertChecklistEntry($data);
 	} else {
-		$am->updateChecklistEntry($data);
+		$am->updateChecklistEntry($data, $table);
 	}
 }
 
