@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html>
+<!-- test -->
   <head>
     <link rel="shortcut icon" type="image/png" href="frontend/images/logo.png">
     <meta charset="utf-8">
