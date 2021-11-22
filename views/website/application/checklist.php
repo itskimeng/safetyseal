@@ -144,8 +144,11 @@
               </button>
             </div>
           <?php endif ?>
+          
             <?php if (!empty($appchecklists_attchmnt[$list['ulist_id']])): ?>
               <input type="hidden" name="has_attachments[]" class="has_attachments" value="true"/>
+              <input type="hidden" name="checklist-order" id="checklist-order" value="<?php echo $key+1; ?>"/>
+
               <div class="col-md-12">
                 <button type="button" class="btn btn-primary btn-sm btn-attachments_view" data-bs-toggle="modal" style="width: 100%;">
                   <i class="fa fa-link"></i> View

@@ -10,10 +10,16 @@
         <input type="text" id="form1Example1" class="form-control" value="<?php echo $userinfo['code']; ?>" placeholder="" disabled/>
         <input type="hidden" name="application_id" id="application_id" value="<?php echo $userinfo['acid']; ?>">
       </div>
-      <div class="form-outline mb-2 col-md-4">
-        <label class="form-label" for="form1Example1">SSC No.:</label><br>
-        <input type="text" id="form1Example1" class="form-control" value="<?php echo $userinfo['ssc_no']; ?>" disabled />
-      </div>
+
+      <?php if (!isset($_GET['create_new']) AND $userinfo['for_renewal']): ?>
+        <div class="form-outline mb-2 col-md-4">
+          <label class="form-label" for="form1Example1">SSC No.:</label><br>
+          <input type="text" id="form1Example1" class="form-control" value="<?php echo $userinfo['ssc_no']; ?>" disabled />
+        </div>
+      <?php else: ?>
+        <div class="form-outline mb-2 col-md-4">
+        </div>
+      <?php endif ?>
       <div class="form-outline mb-2 col-md-4">
         <label class="form-label" for="form1Example1">Date Registered:</label><br>
         <input type="text" id="form1Example1" class="form-control" value="<?php echo $userinfo['date_created']; ?>" disabled />

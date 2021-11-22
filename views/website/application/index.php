@@ -297,6 +297,23 @@
       }
     ?> 
 
+    // $(document).on('change', '#cbx-allyes', function(){
+    //   let selected = $(this).is(':checked');
+    //   if (selected) {
+    //     $('#chklist_body > tr').each(function(){
+    //       let cbx = $(this).find('.chklist_yes');
+    //       cbx.prop("checked", true);
+    //       cbx.trigger('change');
+    //     });
+    //   } else {
+    //     $('#chklist_body > tr').each(function(){
+    //       let cbx = $(this).find('.chklist_yes');
+    //       cbx.prop("checked", false);
+    //       cbx.trigger('change');
+    //     });
+    //   }
+    // })
+
     $(document).on('click', '.form-check-input', function(){
       let tr = $(this).closest('tr');
       let chkcol = $(this).data('chkcol');
@@ -406,18 +423,30 @@
       let id = tr.find('#cform-ulist_id');
       let $modal = $("#modal-view_attachments");
       let form_id = $modal.find('#cform-entry_id');
+      let list_order = tr.find('#checklist-order');
+      let caption = 'Checklist #'+list_order.val();
+      let modal_label = $modal.find('#exampleModalLabel');
+      modal_label.html('<i class="fa fa-link"></i> Attachments - '+caption);
 
-      let path = 'entity/get_attachments.php?id='+id.val()+'&for_renewal=<?php echo $userinfo['for_renewal']; ?>';
+      let path = 'entity/get_bucket_uploads.php?id='+id.val()+'&for_renewal=<?php echo $userinfo['for_renewal']; ?>&list_order='+list_order.val();
 
       $.get(path, function(data, key){
         let dd = JSON.parse(data);
-        $('#tbody-view_attchmnt').empty();
-        generateAttachments(dd, $('#tbody-view_attchmnt'));
+        generateAttachments(dd);
       })
 
       form_id.val(id.val());
       $modal.modal('show');
     });
+
+    $(document).on('hidden.bs.modal', '#modal-view_attachments', function (e) {
+      $('.cont').empty();
+      $('.cont').append(generateSpinner());
+    })
+
+    function generateSpinner() {
+      return '<div class="loadingio-spinner-interwind-1mn62qz6yu9"><div class="ldio-2ejy8czjmjr"><div><div><div><div></div></div></div><div><div><div></div></div></div></div></div></div>';
+    }
 
     $(document).on('click', '.btn-submit_application', function(){
       let checker1 = checkAllSelected();
@@ -541,33 +570,32 @@
   }
 
 
-  function generateAttachments($data, $element) {
+  function generateAttachments($data) {
     let tr = '';
-    $element.empty();
     tr+= '<div class="col-sm-12">';
     tr+= '<div class="row">';
     $.each($data, function(key, item){
       tr+= '<div class="col-sm-2 mb-1">';
-      tr+= '<div class="card" style="/* width: 15rem; */">';
+      tr+= '<div class="card" style="/* width: 15rem; */ background-color: #c9c9c9;">';
       tr+= '<div class="checkers" style="padding-left: .5rem;">';
       tr+= '<div class="form-group">';
-      tr+= '<input type="hidden" name="att_id['+item['caid']+']" value="'+item['file_id']+'">';
-      tr+= '<input class="form-check-input chklist_na up-attachment" name="chklists['+item['caid']+']" type="checkbox" value="">';
-      tr+= '</div>';
-      tr+= '</div>';
-      tr+= '<div class="pic-holder" style="padding-top: 5%;height: 8rem;">';
 
-      if (item['cover_page'] != null) {
-        tr+= '<img src="'+item['cover_page']+'" class="card-img-top" alt="..." style="max-width: 100%; max-height: 100%; object-fit: cover;">';  
+      tr+= '<input class="form-check-input chklist_na up-attachment" name="filename[]" type="checkbox" value="'+item.filename+'">';
+      tr+= '</div>';
+      tr+= '</div>';
+      tr+= '<div class="pic-holder" style="padding-top: 5%;height: 8rem; overflow: hidden;">';
+
+      if (item['cover_page'] == null) {
+        tr+= '<img src="'+item.url+'" class="card-img-top" alt="..." style="max-width: 100%; max-height: 100%; object-fit: cover; transform: scale(2);">';  
       } else {
-        tr+= '<img src="https://drive.google.com/uc?export=view&id='+item['file_id']+'" class="card-img-top" alt="..." style="max-width: 100%; max-height: 100%; object-fit: cover;">';
+        tr+= '<img src="'+item.cover_page+'" class="card-img-top" alt="..." style="max-width: 100%; max-height: 100%; object-fit: cover;">';
       }
       
       tr+= '</div>';
       tr+= '<div class="card-body" style="text-overflow: ellipsis;white-space: nowrap;overflow: hidden;height: 3.5rem;padding: 0.3rem 0.3rem;">';
       tr+= '<div class="row">';
       tr+= '<div class="col-sm-12" style="text-align:center;">';
-      tr+= '<a class="btn btn-md btn-secondary btn-open-exlink" href="'+item['location']+'" style="width:100%">';
+      tr+= '<a class="btn btn-md btn-success" href="'+item.url+'" target="_blank" rel="noopener noreferrer" style="width:100%">';
       tr+= '<i class="fa fa-eye"></i> View';
       tr+= '</a>';
       tr+= '</div>';
@@ -579,7 +607,12 @@
     tr+= '</div>';
     tr+= '</div>';
 
-    $element.append(tr);
+    // $('').
+
+    $('#tbody-view_attchmnt').css('overflow-y', 'scroll');
+    $('.cont').empty();
+    $('.cont').hide().append(tr).show('slow');
+    // $element.append(tr).show('slow');
   }
 
   function uncheckOthers(arg, tr) {
@@ -592,4 +625,4 @@
     });
   }
 </script>
-<script src="frontend/js/ajax.js"></script>
+<!-- <script src="frontend/js/ajax.js"></script> -->

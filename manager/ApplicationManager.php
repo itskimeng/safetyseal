@@ -159,9 +159,7 @@ class ApplicationManager
         $sql = "SELECT 
             e.id as eid,
             ca.id as caid,
-            ca.file_id as file_id,
-            ca.file_name as file_name,
-            ca.location as location
+            ca.file_name as file_name
             FROM tbl_app_checklist_attachments ca ";
 
         if ($for_renewal) {
@@ -179,9 +177,7 @@ class ApplicationManager
             $data[$row['eid']][] = [
                 'eid' => $row['eid'],
                 'caid' => $row['caid'],
-                'file_id' => $row['file_id'],
-                'file_name' => $row['file_name'],
-                'location' => $row['location']
+                'file_name' => $row['file_name']
             ];    
         }
 
@@ -1145,6 +1141,28 @@ class ApplicationManager
         $query = mysqli_query($this->conn, $sql);
 
         return 0;
+    }
+
+    public function insertAttachments($entry_id, $file) {
+        $sql = 'INSERT INTO tbl_app_checklist_attachments SET entry_id = "'.$entry_id.'", file_name = "'.$file.'", date_created = NOW()';
+
+        $query = mysqli_query($this->conn, $sql);
+
+        return $data;
+    }
+
+    public function getUserMOVS($id, $for_renewal='')
+    {
+        $sql = "SELECT * FROM tbl_app_checklist_attachments WHERE entry_id = $id";
+
+        $query = mysqli_query($this->conn, $sql);
+        $data = [];
+
+        while ($row = mysqli_fetch_assoc($query)) {
+            $data[] = $row['file_name'];    
+        }
+
+        return $data;
     }
 
 }
