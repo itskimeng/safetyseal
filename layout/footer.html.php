@@ -192,8 +192,10 @@ h1, h2, h3, h4, h5, h6 {
                         <div class="col-lg-5 col-md-6">
                             <div class="f_widget company_widget wow fadeInLeft" data-wow-delay="0.2s" style="visibility: visible; animation-delay: 0.2s; animation-name: fadeInLeft;">
                                 <h3 class="f-title f_600 t_color f_size_18">SAFETY SEAL CERTIFICATION</h3>
-                                <img style="float: left; margin-right: 3%;" src="https://safetyseal.ncr.dilg.gov.ph/images/safety_seal_icon.png" alt="">
+                                <!-- <img style="float: left; margin-right: 3%;" src="https://safetyseal.ncr.dilg.gov.ph/images/safety_seal_icon.png" alt=""> -->
+                                <img style="float: left; margin-right: 3%;" src="#" alt="">
                                 
+
                                 <div style="text-align:justify;"> <span>The Safety Seal Certification is a voluntary certification scheme that affirms that an establishment
                                     is compliant with the minimum public health standards set by the government and uses or integrates
                                     its contact tracing with staysafe.ph.</span></div>
