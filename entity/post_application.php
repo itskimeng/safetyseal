@@ -80,4 +80,4 @@ $shm->insert(['fid'=>$parent['id'], 'mid'=>SafetysealHistoryManager::MENU_PUBLIC
 
 $_SESSION['toastr'] = $am->addFlash('success', 'Successfully updated the checklist.', 'Checklist');
 
-header('location:../wbstapplication.php?ssid='.$token.'&code='.$_SESSION['gcode'].'&scope='.$_SESSION['gscope'].'');
+header('location:../wbstapplication.php?ssid='.$token);

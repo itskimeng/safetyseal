@@ -297,22 +297,7 @@
       }
     ?> 
 
-    // $(document).on('change', '#cbx-allyes', function(){
-    //   let selected = $(this).is(':checked');
-    //   if (selected) {
-    //     $('#chklist_body > tr').each(function(){
-    //       let cbx = $(this).find('.chklist_yes');
-    //       cbx.prop("checked", true);
-    //       cbx.trigger('change');
-    //     });
-    //   } else {
-    //     $('#chklist_body > tr').each(function(){
-    //       let cbx = $(this).find('.chklist_yes');
-    //       cbx.prop("checked", false);
-    //       cbx.trigger('change');
-    //     });
-    //   }
-    // })
+    var checker_count = 0;
 
     $(document).on('click', '.form-check-input', function(){
       let tr = $(this).closest('tr');
@@ -409,9 +394,13 @@
       let vv = $(this);
       let id = tr.find('#cform-ulist_id');
       let $modal = $("#exampleModal");
+      let modal_label = $modal.find('#exampleModalLabel');
+      let list_order = tr.find('#checklist-order');
+      let caption = 'Checklist #'+list_order.val();
+      
       let form_id = $modal.find('#cform-entry_id');
       let co_id = $modal.find('#cform-checklist_order');
-
+      modal_label.html('<i class="fa fa-link"></i> Attachments - '+caption);
 
       form_id.val(id.val());
       co_id.val(vv.val());
@@ -426,23 +415,40 @@
       let list_order = tr.find('#checklist-order');
       let caption = 'Checklist #'+list_order.val();
       let modal_label = $modal.find('#exampleModalLabel');
+      let checker_id = $(this).data('checker_id');
       modal_label.html('<i class="fa fa-link"></i> Attachments - '+caption);
 
-      let path = 'entity/get_bucket_uploads.php?id='+id.val()+'&for_renewal=<?php echo $userinfo['for_renewal']; ?>&list_order='+list_order.val();
+      if (checker_id != checker_count) {
+        clearModalView();
 
-      $.get(path, function(data, key){
-        let dd = JSON.parse(data);
-        generateAttachments(dd);
-      })
+        let path = 'entity/get_bucket_uploads.php?id='+id.val()+'&for_renewal=<?php echo $userinfo['for_renewal']; ?>&list_order='+list_order.val();
+        
+        $.get(path, function(data, key){
+          let dd = JSON.parse(data);
+          generateAttachments(dd);
+        });
+
+        checker_count = checker_id;
+      }
 
       form_id.val(id.val());
       $modal.modal('show');
     });
 
     $(document).on('hidden.bs.modal', '#modal-view_attachments', function (e) {
+      // clearModalView();
+    })
+
+    function clearModalView() {
       $('.cont').empty();
       $('.cont').append(generateSpinner());
-    })
+
+      $('.btn-all_attachments').hide('slow');
+      $('.btn-delete_attachments').hide('slow');
+      
+      $('.btn-all_attachments').addClass('button-hidden');
+      $('.btn-delete_attachments').addClass('button-hidden');
+    }
 
     function generateSpinner() {
       return '<div class="loadingio-spinner-interwind-1mn62qz6yu9"><div class="ldio-2ejy8czjmjr"><div><div><div><div></div></div></div><div><div><div></div></div></div></div></div></div>';
@@ -612,6 +618,13 @@
     $('#tbody-view_attchmnt').css('overflow-y', 'scroll');
     $('.cont').empty();
     $('.cont').hide().append(tr).show('slow');
+
+    $('.btn-all_attachments').show('slow');
+    $('.btn-delete_attachments').show('slow');
+
+    $('.btn-all_attachments').removeClass('button-hidden');
+    $('.btn-delete_attachments').removeClass('button-hidden');
+
     // $element.append(tr).show('slow');
   }
 

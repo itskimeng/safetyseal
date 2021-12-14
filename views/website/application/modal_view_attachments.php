@@ -22,10 +22,12 @@
         </div>
         <div class="modal-footer">
           <button type="button" class="btn btn-secondary" data-bs-dismiss="modal"><i class="fa fa-window-close"></i> Close</button>
-          <?php if (!in_array($userinfo['status'], ['For Receiving', 'Approved', 'Disapproved'])): ?>
+          <?php if (!in_array($userinfo['status'], ["For Receiving", "Approved", "Disapproved"])): ?>
             <button type="button" class="btn btn-warning btn-all_attachments button-hidden" data-value="unselectall"><i class="fa fa-check-circle"></i> Select All</button>
 
-            <button type="submit" class="btn btn-danger btn-delete_attachments  button-hidden" disabled><i class="fa fa-trash"></i> Remove Selected</button>
+            <button type="submit" class="btn btn-danger btn-delete_attachments button-hidden" disabled><i class="fa fa-trash"></i> Remove Selected</button>
+          <?php else: ?>
+          <?php echo $userinfo['status']; ?>
           <?php endif ?>
         </div>
       </form>

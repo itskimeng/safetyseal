@@ -137,6 +137,8 @@
           </div>
         </td> 
         <td class="text-center">
+          <input type="hidden" name="checklist-order" id="checklist-order" value="<?php echo $key+1; ?>"/>
+
           <?php if (!$list['is_disabled']): ?>
             <div class="col-md-12 mb-1">
               <button type="button" class="btn btn-warning btn-block btn-sm btn-attachments_upload" data-bs-toggle="modal" <?php echo $list['is_disabled'] ? 'disabled' : ''; ?> value="CL<?php echo $key+1; ?>" style="width: 100%;">
@@ -147,10 +149,9 @@
           
             <?php if (!empty($appchecklists_attchmnt[$list['ulist_id']])): ?>
               <input type="hidden" name="has_attachments[]" class="has_attachments" value="true"/>
-              <input type="hidden" name="checklist-order" id="checklist-order" value="<?php echo $key+1; ?>"/>
-
+              
               <div class="col-md-12">
-                <button type="button" class="btn btn-primary btn-sm btn-attachments_view" data-bs-toggle="modal" style="width: 100%;">
+                <button type="button" class="btn btn-primary btn-sm btn-attachments_view" data-bs-toggle="modal" style="width: 100%;" data-checker_id="<?php echo $key+1; ?>">
                   <i class="fa fa-link"></i> View
                 </button>
               </div>
