@@ -806,7 +806,7 @@ class ApplicationManager
 
     public function generateControlNumber($user)
     {
-        $ccode = '2021';
+        $ccode = date('Y');
         $sql = "SELECT counter, id FROM tbl_config WHERE code = '" . $ccode . "'";
         $query = mysqli_query($this->conn, $sql);
         $result = mysqli_fetch_array($query);
@@ -971,6 +971,7 @@ class ApplicationManager
         $data = [];
         $today = new DateTime();
         $today = $today->format('F d, Y');
+        $yy = date('Y');
 
         while ($row = mysqli_fetch_assoc($query)) {
             $data = [
@@ -986,7 +987,7 @@ class ApplicationManager
                 'status' => 'Draft',
                 'pcode' => $row['pcode'],
                 'mcode' => $row['mcode'],
-                'code' => '2021-'.'_____',
+                'code' => $yy.'-'.'_____',
                 'date_proceed' => '',
                 'status' => !empty($row['status']) ? $row['status'] : 'Draft',
                 'safetyseal_no' => $row['ss_no']
