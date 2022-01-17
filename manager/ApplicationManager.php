@@ -751,7 +751,7 @@ class ApplicationManager
         return $query; 
     }
 
-    public function evaluateChecklist($checklist_id, $status, $safety_seal_no, $date_modified, $approver, $for_renewal)
+    public function evaluateChecklist($checklist_id, $status, $safety_seal_no, $date_modified, $approver, $for_renewal=false)
     {
         if ($for_renewal) {
             $sql = "UPDATE tbl_app_checklist SET date_modified = '".$date_modified."', approver_id = ".$approver.", status = '".$status."' WHERE id = ".$checklist_id."";

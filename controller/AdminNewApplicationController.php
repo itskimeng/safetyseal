@@ -37,7 +37,9 @@ if (empty($appid)) {
 } else {
     $is_new = false;
     $applicant = getUserChecklists($conn, $appid); 
-    $cert_details = $am->getUserChecklistsEntry($appid);
+    // $table = $userinfo['for_renewal'] ? 'tbl_app_checklist_renewal_entry' : 'tbl_app_checklist_entry';
+    $table = 'tbl_app_checklist_entry';
+    $cert_details = $am->getUserChecklistsEntry($appid, $table);
     $check_allpass = checkAssessmentPass($cert_details);
     $check_allfail = checkAssessmentFail($cert_details);
     $check_allfail = checkAssessmentFail($cert_details);
