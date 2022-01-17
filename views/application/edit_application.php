@@ -202,11 +202,11 @@
       let path = 'entity/post_newapplicant.php';
 
       $.post(path, form, function(data, key){
-        // if (status == 'success') {
-            // setTimeout(function(){// wait for 5 secs(2)
-            //   location.reload(); // then reload the page.(3) 
-            // }, 1000);
-          // }
+        if (key == 'success') {
+            setTimeout(function(){// wait for 5 secs(2)
+              location.reload(); // then reload the page.(3) 
+            }, 1000);
+          }
       });
     })
 
