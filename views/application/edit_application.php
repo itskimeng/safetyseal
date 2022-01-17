@@ -200,7 +200,7 @@
     $(document).on('click', '.btn-draft_save', function(){
       let form = $('#app-details').serialize();
       let path = 'entity/post_newapplicant.php';
-
+      // test
       $.post(path, form, function(data, key){
         if (key == 'success') {
             setTimeout(function(){// wait for 5 secs(2)
