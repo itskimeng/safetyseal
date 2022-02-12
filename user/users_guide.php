@@ -57,7 +57,7 @@
                     <div class="col-md-9">
                         <div class="row">
                             <div class="col-md-12">
-                                 <iframe src="../fpdf/safetyseal_users_guide_applicant_2022.pdf" width="100%" height="500px"></iframe>
+                                 <iframe src="../fpdf/guide/safetyseal_users_guide_applicant_2022.pdf" width="100%" height="500px"></iframe>
                             </div>
                         </div>
                     </div>
