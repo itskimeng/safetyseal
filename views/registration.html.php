@@ -30,10 +30,10 @@
                 <div class="h3 font-weight-bold">
                   Sign In to SafetySeal
                 </div>
-                <!-- <p class="text-muted">
+                <p class="text-muted">
                   New Here?
                   <a href="#!" data-bs-toggle="modal" data-bs-target="#exampleModal">Create an account</a>
-                </p> -->
+                </p>
               </div>
               <div class="alert-messages text-center">
                 
