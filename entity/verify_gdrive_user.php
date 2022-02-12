@@ -7,7 +7,10 @@ require_once 'google-api-php-client/src/contrib/Google_DriveService.php';
 $client = new Google_Client();
 $client->setClientId('764156499113-l6peicrrmg9kn0p2bm5u5hhq148fr3bn.apps.googleusercontent.com');
 $client->setClientSecret('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');
-$client->setRedirectUri('https://localhost:8080/safetyseal/verification_page.php');
+
+// $client->setRedirectUri('https://localhost:8080/safetyseal/verification_page.php'); //local
+$client->setRedirectUri('https://safetyseal.calabarzon.dilg.gov.ph/verification_page.php'); //live
+
 $client->setScopes(array('https://www.googleapis.com/auth/drive.file', 'https://www.googleapis.com/auth/drive.appdata'));
 
 if (isset($_POST['token_id'])) {
