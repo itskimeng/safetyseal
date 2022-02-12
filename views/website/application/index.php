@@ -468,7 +468,7 @@
       let form_validator = checklistChecker();
 
       // console.log(valid_request);
-      // console.log(form_validator);
+      console.log(form_validator);
 
       if (checker1 && checker2) {
         if (form_validator) {
@@ -493,10 +493,12 @@
         } else if (row.find('.chklist_no').is(':checked')) {
           answer = 'no';
         } else if (row.find('.chklist_na').is(':checked')) {
-          answer = 'na';
+          answer = 'n/a';
         } else if (row.find('.checklist2_opt').is(':checked')) {
           answer = 'other';
-        } else if (answered_checklist[key] != answer) {
+        }
+
+        if (answered_checklist[key] != answer) {
           checker = false;
         }
       })
