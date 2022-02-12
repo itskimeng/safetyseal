@@ -7,7 +7,7 @@
           <h5 class="modal-title" id="exampleModalLabel"><i class="fa fa-question-circle" aria-hidden="true"></i> Revoke Application</h5>
         </div>
         <div class="modal-body">
-          <input type="hidden" id="rtn-chklist_id" name="rtn-chklist_id" value="<?php echo $_GET['appid']; ?>">
+          <input type="hidden" id="rtn-chklist_id" name="rtn-chklist_id" value="<?= $_GET['appid']; ?>">
           <div class="col-md-12">
             <div class="form-group">
               <label for="exampleFormControlTextarea1">Reason: </label>
