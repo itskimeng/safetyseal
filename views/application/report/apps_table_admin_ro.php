@@ -13,82 +13,64 @@
               <th rowspan="2" class="header_pink" style="vertical-align: middle;">Total No. of Applications Received</th>
               <th rowspan="2" class="header_yellow" style="vertical-align: middle;">Total No. of Establishments Issued with Safety Seal Certification </th>
               <th colspan="2" class="header_yellow" style="vertical-align: middle;">Pending Applications</th>
-              <!-- <th class="header_yellow" colspan="2" style="vertical-align: middle;">MODE OF ACQUISITION</th> -->
-              <!-- <th class="header_yellow" rowspan="2" style="vertical-align: middle;">Total No. of SSC Posted in Official Website</th> -->
-              <!-- <th class="header_pink" rowspan="2" style="vertical-align: middle;">Total No. of Complaints Received</th> -->
             </tr>
             <tr>
               <th width="13%" class="header_yellow" style="vertical-align: middle;">For Assessment</th>
               <th width="13%" class="header_yellow" style="vertical-align: middle;">Returned</th>
             </tr>
-            <!-- <tr> -->
-              <!-- <td class="header_pink"></td>
-              <td class="header_pink"><b><i>a</i></b></td>
-              <td class="header_yellow"><b><i>g</i></b></td>
-              <td class="header_yellow"><b><i>i</i></b></td> -->
-              <!-- <td class="header_yellow" colspan="2"><b><i>j</i></b></td>
-              <td class="header_yellow"><b><i>k</i></b></td>
-              <td class="header_pink"><b><i>l</i></b></td> -->
-            <!-- </tr> -->
 
           </thead>
           <tbody id="list_body">
               <tr style="background-color: #8ae38a;">
                 <td style="text-align: center; vertical-align: middle;"><b>TOTAL</b></td>
-                <td style="font-size:20pt; text-align: center; vertical-align: middle;"><b><?php echo $reports['total_application']; ?></b></td>
-                <td style="font-size:20pt; text-align: center; vertical-align: middle;"><b><?php echo $reports['total_approved']; ?></b></td>
-                <td style="font-size:20pt; text-align: center; vertical-align: middle;"><b><?php echo $reports['total_received']; ?></b></td>
-                <td style="font-size:20pt; text-align: center; vertical-align: middle;"><b><?php echo $reports['total_disapproved']; ?></b></td>
-                <!-- <td style="font-size:20pt; text-align: center; vertical-align: middle;"><b>0</b></td> -->
-                <!-- <td style="font-size:20pt; text-align: center; vertical-align: middle;"><b><?php //echo $reports['total_approved']; ?></b></td>
-                <td style="font-size:20pt; text-align: center; vertical-align: middle;"><b>0</b></td> -->
+                <td style="font-size:20pt; text-align: center; vertical-align: middle;"><b><?= $reports['total_application']; ?></b></td>
+                <td style="font-size:20pt; text-align: center; vertical-align: middle;"><b><?= $reports['total_approved']; ?></b></td>
+                <td style="font-size:20pt; text-align: center; vertical-align: middle;"><b><?= $reports['total_received']; ?></b></td>
+                <td style="font-size:20pt; text-align: center; vertical-align: middle;"><b><?= $reports['total_disapproved']; ?></b></td>
               </tr>
               <tr>
                 <td style="text-align: center; vertical-align: middle;"><b>BATANGAS</b></td>
-                <td style="font-size:20pt; text-align: center; vertical-align: middle;"><b><?php echo $reports['batangas_application']; ?></b></td>
-                <td style="font-size:20pt; text-align: center; vertical-align: middle;"><b><?php echo $reports['batangas_approved']; ?></b></td>
-                <td style="font-size:20pt; text-align: center; vertical-align: middle;"><b><?php echo $reports['batangas_received']; ?></b></td>
-                <td style="font-size:20pt; text-align: center; vertical-align: middle;"><b><?php echo $reports['batangas_disapproved']; ?></b></td>
-                <!-- <td style="font-size:20pt; text-align: center; vertical-align: middle;"><b>0</b></td> -->
-                <!-- <td style="font-size:20pt; text-align: center; vertical-align: middle;"><b><?php //echo $reports['batangas_approved']; ?></b></td>
-                <td style="font-size:20pt; text-align: center; vertical-align: middle;"><b>0</b></td> -->
+                <td style="font-size:20pt; text-align: center; vertical-align: middle;"><b><?= $reports['batangas_application']; ?></b></td>
+                <td style="font-size:20pt; text-align: center; vertical-align: middle;"><b><?= $reports['batangas_approved']; ?></b></td>
+                <td style="font-size:20pt; text-align: center; vertical-align: middle;"><b><?= $reports['batangas_received']; ?></b></td>
+                <td style="font-size:20pt; text-align: center; vertical-align: middle;"><b><?= $reports['batangas_disapproved']; ?></b></td>
               </tr>
               <tr>
                 <td style="text-align: center; vertical-align: middle;"><b>CAVITE</b></td>
-                <td style="font-size:20pt; text-align: center; vertical-align: middle;"><b><?php echo $reports['cavite_application']; ?></b></td>
-                <td style="font-size:20pt; text-align: center; vertical-align: middle;"><b><?php echo $reports['cavite_approved']; ?></b></td>
-                <td style="font-size:20pt; text-align: center; vertical-align: middle;"><b><?php echo $reports['cavite_received']; ?></b></td>
-                <td style="font-size:20pt; text-align: center; vertical-align: middle;"><b><?php echo $reports['cavite_disapproved']; ?></b></td>
+                <td style="font-size:20pt; text-align: center; vertical-align: middle;"><b><?= $reports['cavite_application']; ?></b></td>
+                <td style="font-size:20pt; text-align: center; vertical-align: middle;"><b><?= $reports['cavite_approved']; ?></b></td>
+                <td style="font-size:20pt; text-align: center; vertical-align: middle;"><b><?= $reports['cavite_received']; ?></b></td>
+                <td style="font-size:20pt; text-align: center; vertical-align: middle;"><b><?= $reports['cavite_disapproved']; ?></b></td>
                 <!-- <td style="font-size:20pt; text-align: center; vertical-align: middle;"><b>0</b></td> -->
                 <!-- <td style="font-size:20pt; text-align: center; vertical-align: middle;"><b><?php //echo $reports['cavite_approved']; ?></b></td>
                 <td style="font-size:20pt; text-align: center; vertical-align: middle;"><b>0</b></td> -->
               </tr>
               <tr>
                 <td style="text-align: center; vertical-align: middle;"><b>LAGUNA</b></td>
-                <td style="font-size:20pt; text-align: center; vertical-align: middle;"><b><?php echo $reports['laguna_application']; ?></b></td>
-                <td style="font-size:20pt; text-align: center; vertical-align: middle;"><b><?php echo $reports['laguna_approved']; ?></b></td>
-                <td style="font-size:20pt; text-align: center; vertical-align: middle;"><b><?php echo $reports['laguna_received']; ?></b></td>
-                <td style="font-size:20pt; text-align: center; vertical-align: middle;"><b><?php echo $reports['laguna_disapproved']; ?></b></td>
+                <td style="font-size:20pt; text-align: center; vertical-align: middle;"><b><?= $reports['laguna_application']; ?></b></td>
+                <td style="font-size:20pt; text-align: center; vertical-align: middle;"><b><?= $reports['laguna_approved']; ?></b></td>
+                <td style="font-size:20pt; text-align: center; vertical-align: middle;"><b><?= $reports['laguna_received']; ?></b></td>
+                <td style="font-size:20pt; text-align: center; vertical-align: middle;"><b><?= $reports['laguna_disapproved']; ?></b></td>
                 <!-- <td style="font-size:20pt; text-align: center; vertical-align: middle;"><b>0</b></td> -->
                 <!-- <td style="font-size:20pt; text-align: center; vertical-align: middle;"><b><?php //echo $reports['laguna_approved']; ?></b></td>
                 <td style="font-size:20pt; text-align: center; vertical-align: middle;"><b>0</b></td> -->
               </tr>
               <tr>
                 <td style="text-align: center; vertical-align: middle;"><b>RIZAL</b></td>
-                <td style="font-size:20pt; text-align: center; vertical-align: middle;"><b><?php echo $reports['rizal_application']; ?></b></td>
-                <td style="font-size:20pt; text-align: center; vertical-align: middle;"><b><?php echo $reports['rizal_approved']; ?></b></td>
-                <td style="font-size:20pt; text-align: center; vertical-align: middle;"><b><?php echo $reports['rizal_received']; ?></b></td>
-                <td style="font-size:20pt; text-align: center; vertical-align: middle;"><b><?php echo $reports['rizal_disapproved']; ?></b></td>
+                <td style="font-size:20pt; text-align: center; vertical-align: middle;"><b><?= $reports['rizal_application']; ?></b></td>
+                <td style="font-size:20pt; text-align: center; vertical-align: middle;"><b><?= $reports['rizal_approved']; ?></b></td>
+                <td style="font-size:20pt; text-align: center; vertical-align: middle;"><b><?= $reports['rizal_received']; ?></b></td>
+                <td style="font-size:20pt; text-align: center; vertical-align: middle;"><b><?= $reports['rizal_disapproved']; ?></b></td>
                 <!-- <td style="font-size:20pt; text-align: center; vertical-align: middle;"><b>0</b></td> -->
                 <!-- <td style="font-size:20pt; text-align: center; vertical-align: middle;"><b><?php //echo $reports['rizal_approved']; ?></b></td>
                 <td style="font-size:20pt; text-align: center; vertical-align: middle;"><b>0</b></td> -->
               </tr>
               <tr>
                 <td style="text-align: center; vertical-align: middle;"><b>QUEZON (including Lucena HUC)</b></td>
-                <td style="font-size:20pt; text-align: center; vertical-align: middle;"><b><?php echo $reports['huc_application']; ?></b></td>
-                <td style="font-size:20pt; text-align: center; vertical-align: middle;"><b><?php echo $reports['huc_approved']; ?></b></td>
-                <td style="font-size:20pt; text-align: center; vertical-align: middle;"><b><?php echo $reports['huc_received']; ?></b></td>
-                <td style="font-size:20pt; text-align: center; vertical-align: middle;"><b><?php echo $reports['huc_disapproved']; ?></b></td>
+                <td style="font-size:20pt; text-align: center; vertical-align: middle;"><b><?= $reports['huc_application']; ?></b></td>
+                <td style="font-size:20pt; text-align: center; vertical-align: middle;"><b><?= $reports['huc_approved']; ?></b></td>
+                <td style="font-size:20pt; text-align: center; vertical-align: middle;"><b><?= $reports['huc_received']; ?></b></td>
+                <td style="font-size:20pt; text-align: center; vertical-align: middle;"><b><?= $reports['huc_disapproved']; ?></b></td>
                 <!-- <td style="font-size:20pt; text-align: center; vertical-align: middle;"><b>0</b></td> -->
                 <!-- <td style="font-size:20pt; text-align: center; vertical-align: middle;"><b><?php //echo $reports['huc_approved']; ?></b></td>
                 <td style="font-size:20pt; text-align: center; vertical-align: middle;"><b>0</b></td> -->

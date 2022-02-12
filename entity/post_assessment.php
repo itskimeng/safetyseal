@@ -2,6 +2,7 @@
 session_start();
 date_default_timezone_set('Asia/Manila');
 
+require '../Model/Connection.php';
 require '../manager/ApplicationManager.php';
 require '../manager/SafetysealHistoryManager.php';
 require '../application/config/connection.php';
@@ -70,13 +71,9 @@ function getValidationLists($conn, $appid) {
 	return $result;	
 }
 
-function insertAssessment($conn, $id, $assessment, $for_renewal) {
-	if ($for_renewal) {
-		$sql = "UPDATE tbl_app_checklist_renewal_entry SET assessment = '".$assessment."' WHERE id = ".$id."";	
-	} else {
-		$sql = "UPDATE tbl_app_checklist_entry SET assessment = '".$assessment."' WHERE id = ".$id."";
-	}
-	
+function insertAssessment($conn, $id, $assessment, $for_renewal) 
+{
+	$sql = "UPDATE tbl_app_checklist_entry SET assessment = '".$assessment."' WHERE id = ".$id."";
 	$query = mysqli_query($conn, $sql);
      
 	return $result;	

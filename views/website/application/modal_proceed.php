@@ -2,7 +2,7 @@
   <div class="modal-dialog modal-lg modal-dialog-scrollable">
     <div class="modal-content">
       <div class="modal-header">
-        <h5 class="modal-title" style="color:white;" id="exampleModalLabel"><i class="fa fa-share"></i> Proceed</h5>
+        <h5 class="modal-title" style="color:white;" id="exampleModalLabel"><i class="fas fa-question-circle"></i> Proceed</h5>
         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
       </div>
 
@@ -17,7 +17,7 @@
 
 
 
-        <div class="modal-body">
+        <div class="modal-body" style="padding: 40px;">
           <div class="mb-3">
             <table>
               <tbody>

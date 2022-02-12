@@ -2,6 +2,7 @@
 session_start();
 date_default_timezone_set('Asia/Manila');
 
+require '../Model/Connection.php';
 require '../manager/ApplicationManager.php';
 require '../manager/SafetysealHistoryManager.php';
 require '../application/config/connection.php';

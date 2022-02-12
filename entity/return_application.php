@@ -2,6 +2,7 @@
 session_start();
 date_default_timezone_set('Asia/Manila');
 
+require '../Model/Connection.php';
 require '../manager/ApplicationManager.php';
 require '../manager/SafetysealHistoryManager.php';
 require '../application/config/connection.php';
@@ -20,7 +21,8 @@ $application = findID($conn, $checklist_id);
 $app->returnChecklist($checklist_id, ApplicationManager::STATUS_RETURNED, $today->format('Y-m-d H:i:s'), $userid, $remarks);	
 $_SESSION['toastr'] = $app->addFlash('success', 'The application has been returned.', 'Returned');
 
-$msg = 'application '.$application['control_no'].' has been returned: '.$remarks;
+$msg = 'application '.$application['control_no'].' has been returned.';
+$msg = $msg .'<br><br> <b>Remarks:</b> '.$remarks;
 
 $shm->insert(['fid'=>$checklist_id, 'mid'=>SafetysealHistoryManager::MENU_ADMIN_APPLICATION, 'uid'=>$userid, 'action'=> SafetysealHistoryManager::ACTION_RETURN, 'message'=> $msg, 'action_date'=> $today->format('Y-m-d H:i:s')]);
 

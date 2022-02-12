@@ -4,12 +4,12 @@
   <div class="container">
     <div class="row mb-2">
       <div class="col-sm-6">
-        <h5 class="m-0"> Application Edit</h5>
+        <h5 class="m-0"> Manual Application Edit</h5>
       </div><!-- /.col -->
       <div class="col-sm-6">
         <ol class="breadcrumb float-sm-right">
           <li class="breadcrumb-item"><a href="dashboard.v2.php">Home</a></li>
-          <li class="breadcrumb-item"><a href="admin_application.php">Application</a></li>
+          <li class="breadcrumb-item"><a href="admin_application.php">Application List</a></li>
           <li class="breadcrumb-item active"> Edit</li>
         </ol>
       </div>
@@ -22,22 +22,39 @@
 <div class="content">
   <div class="container">
     <!-- <form method="POST" action="entity/post_newapplicant.php"> -->
-      <?php if (!in_array($applicant['status'], ['Approved', 'Disapproved'])): ?>
-        <div class="row mb-3">
-          <div class="col-md-6 col-sm-3">
+      <!-- <?php //if (!in_array($applicant['status'], ['Approved', 'Disapproved'])): ?> -->
+        <div class="row mb-2">
+          <div class="col-md-12">
             <div class="row">
-                <div class="col-md-2">
-                  <a href="entity/delete_admin_application.php?token=<?php echo $_GET['appid']; ?>" class="btn btn-danger btn-block btn-sm" style="margin-bottom: -2%;">
-                    <i class="fa fa-trash"></i> Remove
-                  </a>
-                </div>  
+              
+              <div class="col-md-6">
+                <div class="row">
+                    <div class="col-md-2">
+
+                      <a href="admin_application_summary.php?appid=<?= $applicant['acid']; ?>&ussir=<?= $_SESSION['userid']; ?>" class="btn btn-secondary btn-block btn-sm" style="margin-bottom: -2%;">
+                        <i class="fa fa-arrow-circle-left"></i> Back</a>
+                    </div>  
+                </div>
+              </div>
+              <!-- <div class="col-md-6">
+                <div class="row text-right">
+                  <div class="col-md-12">
+                    <div class="btn-group">
+                      <a href="entity/delete_admin_application.php?token=<?= $_GET['appid']; ?>" class="btn btn-danger btn-block btn-sm" style="margin-bottom: -2%;">
+                        <i class="fa fa-trash"></i> Remove
+                      </a>
+                    </div>  
+                  </div>
+                </div>
+              </div> -->
+
             </div>
-
-          </div>  
+          </div>
         </div>
-      <?php endif ?>
+      <!-- <?php //endif ?> -->
 
-      <input type="hidden" name="is_new" value="<?php echo $is_new; ?>">
+      <input type="hidden" name="is_new" value="<?= $is_new; ?>">
+      
       <?php include 'add/details.php'; ?>
 
       <?php if (!$is_new): ?>
@@ -48,7 +65,7 @@
         <div class="col-lg-12 col-md-6 col-sm-3 mb-3">   
           <div class="panel panel-default">
             <div class="row">
-              <?php if ($applicant['status'] <> 'Approved'): ?>
+              <?php if (!$is_readonly): ?>
                 <?php if ($is_new): ?>
                   <div class="col-md-12 pull-right">
                     <button type="submit" class="btn btn-primary btn-block" style="width: 100%;"><i class="fa fa-pen-alt"></i> 
@@ -180,7 +197,7 @@
     // });
 
     $(document).on('click', '.btn-save_application', function(){
-      let form = {id: "<?php echo $_GET['appid']; ?>", citymun: $('#cform-citymun').val()};
+      let form = {id: "<?= $_GET['appid']; ?>", citymun: $('#cform-citymun').val()};
       let path = 'entity/post_evaluation2.php';
 
       let $this = $(this);

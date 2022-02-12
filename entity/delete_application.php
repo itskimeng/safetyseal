@@ -2,6 +2,7 @@
 session_start();
 date_default_timezone_set('Asia/Manila');
 
+require '../Model/Connection.php';
 require '../manager/ApplicationManager.php';
 require '../manager/SafetysealHistoryManager.php';
 require '../application/config/connection.php';
@@ -22,7 +23,7 @@ $msg = 'deleted application ' .$application['control_no'];
 
 $shm->insert(['fid'=>$application['id'], 'mid'=>SafetysealHistoryManager::MENU_PUBLIC_APPLICATION, 'uid'=>$userid, 'action'=> SafetysealHistoryManager::ACTION_DELETE, 'message'=> $msg, 'action_date'=> $today->format('Y-m-d H:i:s')]);
 
-header('location:../user/users_establishments.php');
+header('location:../user/application_list.php');
 
 function deleteApplication($conn, $id) 
 {

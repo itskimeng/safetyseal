@@ -1,6 +1,7 @@
 <?php
 date_default_timezone_set('Asia/Manila');
 
+require 'Model/Connection.php';
 require 'application/config/connection.php';
 require 'manager/ApplicationManager.php';
 require 'manager/ComponentsManager.php';
@@ -31,6 +32,7 @@ $government_nature = $cm->getGovtNature();
 
 $check_allpass = false;
 $check_allfail = false;
+$is_readonly = false;
 
 if (empty($appid)) {
     $cert_details = $am->getChecklists();
@@ -44,7 +46,13 @@ if (empty($appid)) {
     $check_allfail = checkAssessmentFail($cert_details);
     $check_allfail = checkAssessmentFail($cert_details);
     $attachments = getUserEncodedList($conn, $appid);
+    if (in_array($applicant['status'], ['Approved', 'Renewed'])) {
+        $is_readonly = true;    
+    }
+
 }
+
+
 
 function checkAssessmentPass($data) {
     $counter = 0;
@@ -107,6 +115,7 @@ function getUserChecklists($conn, $id)
         ac.token as token,
         ac.safety_seal_no as ss_no,
         ac.lgu as lgu,
+        ac.id as acid,
         DATE_FORMAT(ac.date_created, '%m/%d/%Y') as date_created
         FROM tbl_app_checklist ac
         LEFT JOIN tbl_admin_info ai on ai.id = ac.user_id

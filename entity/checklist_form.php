@@ -2,6 +2,7 @@
 session_start();
 date_default_timezone_set('Asia/Manila');
 
+require '../Model/Connection.php';
 require '../tcpdfv02/tcpdf.php';
 require '../manager/ApplicationManager.php';
 require '../application/config/connection.php';
@@ -71,7 +72,7 @@ $pdf->writeHTML($html, true, false, true, false, '');
 $html = generateSignatory($user);
 $pdf->writeHTML($html, true, false, true, false, '');
 
-if (in_array($user['status'], ['Approved', 'Disapproved'])) {
+if (in_array($user['status'], ['Approved', 'Disapproved', 'Expired', 'Renewed'])) {
 	$html = generateValidations($validations);
 	$pdf->writeHTML($html, true, false, true, false, '');
 
@@ -107,8 +108,9 @@ function fetchtUserDetails($conn, $control_no)
             ac.establishment as establishment,
             ac.nature as nature,
             ac.address as address,
+            ac.safety_seal_no as ssno,
             aip.CMLGOO_NAME as approver,
-            DATE_FORMAT(ac.date_approved, '%m-%d-%Y') as date_approved
+            DATE_FORMAT(ac.date_approved, '%M %d, %Y') as date_approved
             FROM tbl_app_checklist ac
             LEFT JOIN tbl_admin_info ai on ai.id = ac.user_id
             LEFT JOIN tbl_admin_info aip on aip.id = ac.approver_id
@@ -130,6 +132,7 @@ function fetchtUserDetails($conn, $control_no)
             }
             $data = [
                 'id' => $row['id'],
+                'ss_no' => $row['ssno'],
                 'acid' => $row['acid'],
                 'date_created' => $date_created,
                 'address' => $row['address'],
@@ -144,7 +147,8 @@ function fetchtUserDetails($conn, $control_no)
                 'code' => !empty($row['control_no']) ? $row['control_no'] : '2021-'.'_____',
                 'date_proceed' => $row['date_proceed'],
                 'approver' => $row['approver'],
-                'date_approved' => $row['date_approved']
+                'date_approved' => $row['date_approved'],
+                'today' => $today
             ];      
         }
 
@@ -334,43 +338,84 @@ function generateDetails($dd)
 {
 	$html = '<table class="" cellspacing="1" cellpadding="1" style="font-size:10.5pt;">';
 	$html.= '<tr>';
-	$html.= '<td>';
-	$html.= 'Control No: <u>' .$dd['code'] .'</u>';
+	$html.= '<td>Control No:</td>';
+
+	if (!empty($dd['ss_no'])) {
+		$html.= '<td>Safetyseal No:</td>';
+	} else {
+		$html.= '<td></td>';
+	}
+
+	$html.= '<td>Date Created:</td>';
+	$html.= '</tr>';
+
+	$html.= '<tr style="line-height:180%;">';
+	$html.= '<td style="background-color:#e9ecef; border:2px solid #ced4da;">  '.$dd['code'];
 	$html.= '</td>';
-	$html.= '<td>';
-	$html.= '</td>';
-	$html.= '<td>';
-	$html.= 'Date: <u>' .$dd['date_created'].'</u>';
+
+	if (in_array($dd['status'], ['Expired', 'Revoked'])) {
+		$html.= '<td style="background-color:red; border:2px solid white; color:white;">  <b>'.$dd['ss_no'];
+		$html.= ' ('.strtoupper($dd['status']).')</b></td>';
+	} elseif (!empty($dd['ss_no'])) {
+		$html.= '<td style="background-color:green; border:2px solid white; color:white;">  <b>'.$dd['ss_no'];
+		$html.= '</b></td>';
+	} else {
+		$html.= '<td></td>';
+	}
+	
+	$html.= '<td style="background-color:#e9ecef; border:2px solid #ced4da;">  '.$dd['date_created'];
 	$html.= '</td>';
 	$html.= '</tr>';
 
 	$html.= '<tr>';
-	$html.= '<td colspan="3">';
-	$html.= 'Name of Government Agency/ Office: <u>' .$dd['agency'].'</u>';
-	$html.= '</td>';
+	$html.= '<td colspan="5">Name of Government Agency/ Office:</td>';
 	$html.= '</tr>';
-	$html.= '<tr>';
-	$html.= '<td colspan="3">';
-	$html.= 'Name of Government Establlishment/ Department/ Office/ Unit: <u>'.$dd['establishment'].'</u>';
-	$html.= '</td>';
-	$html.= '</tr>';
-	$html.= '<tr>';
-	$html.= '<td colspan="3">';
-	$html.= 'Nature of Government Establlishment/ Department/ Office/ Unit: <u>'.$dd['nature'].'</u>';
-	$html.= '</td>';
-	$html.= '</tr>';
-	$html.= '<tr>';
-	$html.= '<td colspan="3">';
-	$html.= 'Address : <u>'.$dd['address'].'</u>';
+
+	$html.= '<tr style="line-height:180%;">';
+	$html.= '<td colspan="5" style="background-color:#e9ecef; border:2px solid #ced4da;">  '.$dd['agency'];
 	$html.= '</td>';
 	$html.= '</tr>';
 
 	$html.= '<tr>';
-	$html.= '<td width="67%">';
-	$html.= 'Name of Person in Charge: <u>'.$dd['fname'].'</u>';
+	$html.= '<td colspan="5">Name of Government Establishment/Department/Office/Unit:</td>';
+	$html.= '</tr>';
+
+	$html.= '<tr style="line-height:180%;">';
+	$html.= '<td colspan="5" style="background-color:#e9ecef; border:2px solid #ced4da;">  '.$dd['establishment'];
+	$html.= '</td>';
+	$html.= '</tr>';
+
+	$html.= '<tr>';
+	$html.= '<td colspan="5">Nature of Government Establishment/Department/Office/Unit:</td>';
+	$html.= '</tr>';
+
+	$html.= '<tr style="line-height:180%;">';
+	$html.= '<td colspan="5" style="background-color:#e9ecef; border:2px solid #ced4da;">  '.$dd['nature'];
+	$html.= '</td>';
+	$html.= '</tr>';
+
+	$html.= '<tr>';
+	$html.= '<td colspan="5">Address:</td>';
+	$html.= '</tr>';
+
+	$html.= '<tr style="line-height:180%; text-align: justify;">';
+	$html.= '<td colspan="5" style="background-color:#e9ecef; border:2px solid #ced4da;">  '.$dd['address'];
+	$html.= '</td>';
+	$html.= '</tr>';
+
+	$html.= '<tr>';
+	$html.= '<td>Name of Person in Charge:</td>';
+	$html.= '<td>';
+	$html.= '</td>';
+	$html.= '<td>Contact Details:</td>';
+	$html.= '</tr>';
+
+	$html.= '<tr style="line-height:180%;">';
+	$html.= '<td style="background-color:#e9ecef; border:2px solid #ced4da;">  '.$dd['fname'];
 	$html.= '</td>';
 	$html.= '<td>';
-	$html.= 'Contact Details: <u>'.$dd['contact_details'].'</u>';
+	$html.= '</td>';
+	$html.= '<td style="background-color:#e9ecef; border:2px solid #ced4da;">  '.$dd['contact_details'];
 	$html.= '</td>';
 	$html.= '</tr>';
 
@@ -389,7 +434,7 @@ function generateSignatory($dd)
 	$html.= '</tr>';
 	$html.= '<tr>';
 	$html.= '<td colspan="2">';
-	$html.= '<br><br><br>';
+	$html.= '<br><br><br><br><br>';
 	$html.= '</td>';
 	$html.= '</tr>';
 	$html.= '</table>';
@@ -446,7 +491,7 @@ function generateApprover($dd)
 	$html.= '';
 	$html.= '</td>';
 	$html.= '<td style="text-align:right; font-size:9pt;">';
-	$html.= '<b>'.$dd['approver'].' / '.$dd['date_approved'].'</b>';
+	$html.= '<b>'.$dd['approver'].' / '.$dd['today'].'</b>';
 	$html.= '</td>';
 	$html.= '</tr>';
 	$html.= '<tr>';

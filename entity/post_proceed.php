@@ -2,6 +2,7 @@
 session_start();
 date_default_timezone_set('Asia/Manila');
 
+require '../Model/Connection.php';
 require '../manager/ApplicationManager.php';
 require '../manager/SafetysealHistoryManager.php';
 require '../application/config/connection.php';
@@ -17,6 +18,8 @@ $checklist_id = $_POST['chklist_id'];
 $contact_details= $_POST['contact_details'];
 $token = $_POST['token'];
 $has_consent = isset($_POST['consent']) ? true : false;
+$code = isset($_GET['code']) ? $_GET['code'] : '';
+$scope = isset($_GET['scope']) ? $_GET['scope'] : '';
 
 $application = findID($conn, $checklist_id);
 
@@ -28,7 +31,8 @@ $msg = 'application '.$application['control_no'].' submitted ' .ApplicationManag
 $shm->insert(['fid'=>$checklist_id, 'mid'=>SafetysealHistoryManager::MENU_PUBLIC_APPLICATION, 'uid'=>$userid, 'action'=> SafetysealHistoryManager::ACTION_UPDATE, 'message'=> $msg, 'action_date'=> $today->format('Y-m-d H:i:s')]);
 
 
-header('location:../wbstapplication.php?ssid='.$token.'');
+// header('location:../wbstapplication.php?ssid='.$token.'');
+header('location:../wbstapplication.php?ssid='.$token.'&code='.$gcode.'&scope='.$scope);
 
 function findID($conn, $id) 
 {

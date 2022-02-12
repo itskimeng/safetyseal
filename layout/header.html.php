@@ -41,6 +41,9 @@
 <script src="frontend/owl-carousel/dist/owl.carousel.min.js"></script>
   
 <script type="text/javascript" src="https://cdn.datatables.net/1.10.15/js/jquery.dataTables.min.js"></script>
+<script src="frontend/knob/js/jquery.knob.js"></script>
+    <script src="frontend/js/jquery.ba-throttle-debounce.js"></script>
 
+    <script src="frontend/countdown-circle-gampang/dist/jquery-countdowngampang.min.js"></script>
 </head>
 

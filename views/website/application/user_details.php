@@ -11,7 +11,7 @@
         <input type="hidden" name="application_id" id="application_id" value="<?php echo $userinfo['acid']; ?>">
       </div>
 
-      <?php if (!isset($_GET['create_new']) AND $userinfo['for_renewal']): ?>
+      <?php if (!isset($_GET['create_new']) AND !$userinfo['for_renewal'] AND $userinfo['status'] == 'Approved'): ?>
         <div class="form-outline mb-2 col-md-4">
           <label class="form-label" for="form1Example1">SSC No.:</label><br>
           <input type="text" id="form1Example1" class="form-control" value="<?php echo $userinfo['ssc_no']; ?>" disabled />
@@ -40,11 +40,7 @@
     <div class="row">
       <div class="form-outline mb-2 col-md-12">
         <label class="form-label" for="form1Example1">Name of Sub-Office/Unit:</label><br>
-        <?php if ($is_new): ?>
-          <input type="text" id="form1Example1" name="establishment" class="form-control" value="<?php echo $userinfo['establishment']; ?>"/>
-        <?php else: ?>  
-          <input type="text" id="form1Example1" name="establishment" class="form-control" value="<?php echo $userinfo['establishment']; ?>"/>
-        <?php endif ?>
+        <input type="text" id="form1Example1" name="establishment" class="form-control" value="<?php echo $userinfo['establishment']; ?>"/>
       </div>
     </div>
   </div>

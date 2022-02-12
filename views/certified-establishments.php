@@ -40,7 +40,7 @@
             LEFT JOIN tbl_admin_info ai on ai.ID = ac.user_id
 LEFT JOIN tbl_province p on p.id = ai.PROVINCE
 LEFT JOIN tbl_citymun cm on cm.province = ai.PROVINCE AND cm.code = ai.LGU 
-WHERE ac.status ='Approved' ORDER BY p.id, cm.id, ai.id";
+WHERE ac.status IN ('Approved', 'Renewed') ORDER BY p.id, cm.id, ai.id";
 
 
 

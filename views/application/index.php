@@ -4,13 +4,13 @@
   <div class="container">
     <div class="row mb-2">
       <div class="col-sm-6">
-        <h5 class="m-0"> Application <small><b><?php echo $hlbl; ?></b></small>
+        <h5 class="m-0"> Application List <small><b><?php echo $hlbl; ?></b></small>
         </h5>
       </div><!-- /.col -->
       <div class="col-sm-6">
         <ol class="breadcrumb float-sm-right">
           <li class="breadcrumb-item"><a href="dashboard.v2.php">Home</a></li>
-          <li class="breadcrumb-item active">Application</li>
+          <li class="breadcrumb-item active">Application List</li>
         </ol>
       </div>
     </div>
@@ -28,22 +28,10 @@
 
 <script>
   $(function () {
-    // $('select').select2();
   $('#reservation').daterangepicker()
 
     $("#list_table").DataTable({
-      // "responsive": true, "lengthChange": false, "autoWidth": false,
-      // "buttons": ["copy", "csv", "excel", "pdf", "print", "colvis"]
     }).buttons().container().appendTo('#list_table_wrapper .col-md-6:eq(0)');
-    // $('#list_table').DataTable({
-    //   "paging": true,
-    //   "lengthChange": false,
-    //   "searching": false,
-    //   "ordering": true,
-    //   "info": true,
-    //   "autoWidth": false,
-    //   "responsive": true,
-    // });
 
     <?php
     if (isset($_SESSION['toastr'])) {

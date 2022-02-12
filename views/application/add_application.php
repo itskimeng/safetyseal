@@ -4,12 +4,12 @@
   <div class="container">
     <div class="row mb-2">
       <div class="col-sm-6">
-        <h5 class="m-0"> Application New</h5>
+        <h5 class="m-0"> Manual Application New</h5>
       </div><!-- /.col -->
       <div class="col-sm-6">
         <ol class="breadcrumb float-sm-right">
           <li class="breadcrumb-item"><a href="dashboard.v2.php">Home</a></li>
-          <li class="breadcrumb-item"><a href="admin_application.php">Application</a></li>
+          <li class="breadcrumb-item"><a href="admin_application.php">Application List</a></li>
           <li class="breadcrumb-item active"> New</li>
         </ol>
       </div>
@@ -21,26 +21,31 @@
 <!-- Main content -->
 <div class="content">
   <div class="container">
+
+    <div class="row mb-2">
+      <div class="col-md-12">
+        <a href="admin_application.php" class="btn btn-secondary btn-sm">
+          <i class="fa fa-arrow-circle-left"></i> Back
+        </a>
+      </div>
+    </div>
+
     <form method="POST" action="entity/post_newapplicant.php">
+      
       <?php include 'add/add_details.php'; ?>   
 
-      <div class="row">
-        <div class="col-lg-12 col-md-6 col-sm-3 mb-3">
-          <!-- <div class="card"> -->
-            <!-- <div class="card-body card-body-details table-responsive"> -->
-              <div class="col-md-12">
-                <div class="row">
-                  <div class="col-md-6">
-                    <button type="submit" class="btn btn-primary btn-block" style="width: 100%;"><i class="fa fa-pen-alt"></i> Save</button>
-                  </div>
-                  <?php if (!$is_new): ?>
-                    <div class="col-md-6">
-                      <button type="submit" class="btn btn-success btn-block" style="width: 100%;"><i class="fa fa-pen-alt"></i> Submit</button>
-                    </div>
-                  <?php endif ?>
-                </div>
+      <div class="row mb-3">
+        <div class="col-md-12">
+          <div class="row">
+            <div class="col-md-6">
+              <button type="submit" class="btn btn-primary btn-block" style="width: 100%;"><i class="fa fa-pen-alt"></i> Save</button>
+            </div>
+            <?php if (!$is_new): ?>
+              <div class="col-md-6">
+                <button type="submit" class="btn btn-success btn-block" style="width: 100%;"><i class="fa fa-pen-alt"></i> Submit</button>
               </div>
-            <!-- </div>` -->
+            <?php endif ?>
+          </div>
         </div>
       </div>
 

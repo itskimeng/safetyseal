@@ -1,6 +1,7 @@
 <?php
 date_default_timezone_set('Asia/Manila');
 
+require 'Model/Connection.php';
 require 'application/config/connection.php';
 require 'manager/ApplicationManager.php';
 
@@ -56,8 +57,9 @@ if (!$is_adminro) {
        // FOR PROVINCIAL FOCAL PERSONS
 	   $applicants = getPFPApplicationLists($conn, $province, ApplicationManager::STATUS_DRAFT);
 	} elseif (!$is_clusterhead) {
-       // FOR MLGOO ACCOUNTS 
-	   $applicants = $app->getApplicationLists($province, $citymun, ApplicationManager::STATUS_DRAFT);
+       // FOR MLGOO ACCOUNTS
+        $applicants = $app->getUserApplications($province, $citymun, ApplicationManager::STATUS_DRAFT); 
+	   // $applicants = $app->getApplicationLists($province, $citymun, ApplicationManager::STATUS_DRAFT);
 	} else {
 		$applicants = getApplicationLists($conn, $province, $citymun_opts, ApplicationManager::STATUS_DRAFT, $is_clusterhead);
 	}
@@ -66,7 +68,7 @@ if (!$is_adminro) {
 	$applicants = $app->getAllApplicationLists();
 	$reports['total_application'] = $app->showAllApplications('',$timestamp);
 	$reports['total_received'] = $app->showAllApplications('',$timestamp,ApplicationManager::STATUS_RECEIVED);
-	$reports['total_approved'] = $app->showAllApplications('',$timestamp,ApplicationManager::STATUS_APPROVED);
+    $reports['total_approved'] = $app->showAllApplications('',$timestamp,ApplicationManager::STATUS_APPROVED);
 	$reports['total_disapproved'] = $app->showAllApplications('',$timestamp,ApplicationManager::STATUS_DISAPPROVED);
 
 	$reports['cavite_application'] = $app->showAllApplications(1,$timestamp);
@@ -75,7 +77,7 @@ if (!$is_adminro) {
 	$reports['cavite_disapproved'] = $app->showAllApplications(1,$timestamp,ApplicationManager::STATUS_DISAPPROVED);
 	
 	$reports['laguna_application'] = $app->showAllApplications(2,$timestamp);
-	$reports['laguna_received'] = $app->showAllApplications(2,$timestamp,ApplicationManager::STATUS_RECEIVED);
+    $reports['laguna_received'] = $app->showAllApplications(2,$timestamp,ApplicationManager::STATUS_RECEIVED);
 	$reports['laguna_approved'] = $app->showAllApplications(2,$timestamp,ApplicationManager::STATUS_APPROVED);
 	$reports['laguna_disapproved'] = $app->showAllApplications(2,$timestamp,ApplicationManager::STATUS_DISAPPROVED);
 
@@ -165,13 +167,16 @@ function getApplicationLists($conn, $province, $lgus, $status, $is_clusterhead)
     	'Approved' 		    => 'green'
     ];
 
+    $date_today = new DateTime();
+    $date_today = date('Y-m-d', strtotime($date_today->format('Y-m-d')));
+
 	foreach ($lgus as $key => $lgu) {
 		$codes[] = $lgu['code']; 
 	}
 
 	$codes = implode(',', $codes);
 
-	$bsql = "SELECT ac.id as id,ai.CMLGOO_NAME as fname,ui.GOV_AGENCY_NAME as pagency, ac.agency as cagency, ui.ADDRESS as address,DATE_FORMAT(ac.date_created, '%Y-%m-%d') as date_created,DATE_FORMAT(ac.date_approved, '%Y-%m-%d H:i:s') as date_approved,ui.id as userid,ac.control_no as control_no,ac.safety_seal_no as ss_no,ac.status as status,ac.address as ac_address,ac.application_type as app_type,ac.token as token
+	$bsql = "SELECT ac.id as id,ai.CMLGOO_NAME as fname,ui.GOV_AGENCY_NAME as pagency, ac.agency as cagency, ui.ADDRESS as address,DATE_FORMAT(ac.date_created, '%Y-%m-%d') as date_created,DATE_FORMAT(ac.date_approved, '%Y-%m-%d H:i:s') as date_approved,ui.id as userid,ac.control_no as control_no,ac.safety_seal_no as ss_no,ac.status as status,ac.address as ac_address,ac.application_type as app_type,ac.token as token, ac.for_renewal
 	    FROM tbl_app_checklist ac
 	    LEFT JOIN tbl_admin_info ai on ai.id = ac.user_id
 	    LEFT JOIN tbl_userinfo ui on ui.user_id = ai.id";
@@ -181,6 +186,27 @@ function getApplicationLists($conn, $province, $lgus, $status, $is_clusterhead)
 	$query = mysqli_query($conn, $bsql.$sql1);
 	    
     while ($row = mysqli_fetch_assoc($query)) {
+        if (($row['status'] == "Approved") AND ($row['for_renewal']) AND (!empty($row['date_renewed']))) {
+            $date_validity = date('Y-m-d', strtotime("+6 months", strtotime($row['date_renewed'])));
+            $date_validity_f = date('M d, Y', strtotime("+6 months", strtotime($row['date_renewed'])));
+        } else {
+            $date_validity_f = date('M d, Y', strtotime("+6 months", strtotime($row['date_approved'])));
+            $date_validity = date('Y-m-d', strtotime("+6 months", strtotime($row['date_approved'])));
+        }
+
+        $date1 = date_create($date_today);
+        $date2 = date_create($date_validity);
+        $interval = $date1->diff($date2);
+        
+        $status = $row['status'];
+        if (!empty($row['date_approved'])) {
+            if ($row['status'] == 'For Renewal') {
+                $status = $row['status'];
+            } elseif ($date_today >= $date_validity) {
+                $status = 'Expired';
+            }
+        }
+
         $data[$row['id']] = [
             'id' 			=> $row['id'],
             'userid' 		=> $row['userid'],
@@ -190,7 +216,8 @@ function getApplicationLists($conn, $province, $lgus, $status, $is_clusterhead)
             'date_created' 	=> date('F d, Y', strtotime($row['date_created'])),
             'control_no' 	=> $row['control_no'],
             'ss_no' 		=> $row['ss_no'],
-            'status' 		=> $row['status'],
+            'status' 		=> $status,
+            'for_renewal'   => $row['for_renewal'],
             'color' 		=> $colors[$row['status']],
             'ac_address' 	=> $row['ac_address'],
             'app_type' 		=> $row['app_type'],
@@ -204,6 +231,27 @@ function getApplicationLists($conn, $province, $lgus, $status, $is_clusterhead)
     $query = mysqli_query($conn, $bsql.$sql2);
     
     while ($row = mysqli_fetch_assoc($query)) {
+        if (($row['status'] == "Approved") AND ($row['for_renewal']) AND (!empty($row['date_renewed']))) {
+            $date_validity = date('Y-m-d', strtotime("+6 months", strtotime($row['date_renewed'])));
+            $date_validity_f = date('M d, Y', strtotime("+6 months", strtotime($row['date_renewed'])));
+        } else {
+            $date_validity_f = date('M d, Y', strtotime("+6 months", strtotime($row['date_approved'])));
+            $date_validity = date('Y-m-d', strtotime("+6 months", strtotime($row['date_approved'])));
+        }
+
+        $date1 = date_create($date_today);
+        $date2 = date_create($date_validity);
+        $interval = $date1->diff($date2);
+        
+        $status = $row['status'];
+        if (!empty($row['date_approved'])) {
+            if ($row['status'] == 'For Renewal') {
+                $status = $row['status'];
+            } elseif ($date_today >= $date_validity) {
+                $status = 'Expired';
+            }
+        }
+
         $data[$row['id']] = [
             'id' 			=> $row['id'],
             'userid' 		=> $row['userid'],
@@ -213,7 +261,7 @@ function getApplicationLists($conn, $province, $lgus, $status, $is_clusterhead)
             'date_created' 	=> date('F d, Y', strtotime($row['date_created'])),
             'control_no' 	=> $row['control_no'],
             'ss_no' 		=> $row['ss_no'],
-            'status' 		=> $row['status'],
+            'status' 		=> $status,
             'color' 		=> $colors[$row['status']],
             'ac_address' 	=> $row['ac_address'],
             'app_type' 		=> $row['app_type'],
@@ -227,6 +275,27 @@ function getApplicationLists($conn, $province, $lgus, $status, $is_clusterhead)
     $query = mysqli_query($conn, $bsql.$sql3);
     
     while ($row = mysqli_fetch_assoc($query)) {
+        if (($row['status'] == "Approved") AND ($row['for_renewal']) AND (!empty($row['date_renewed']))) {
+            $date_validity = date('Y-m-d', strtotime("+6 months", strtotime($row['date_renewed'])));
+            $date_validity_f = date('M d, Y', strtotime("+6 months", strtotime($row['date_renewed'])));
+        } else {
+            $date_validity_f = date('M d, Y', strtotime("+6 months", strtotime($row['date_approved'])));
+            $date_validity = date('Y-m-d', strtotime("+6 months", strtotime($row['date_approved'])));
+        }
+
+        $date1 = date_create($date_today);
+        $date2 = date_create($date_validity);
+        $interval = $date1->diff($date2);
+        
+        $status = $row['status'];
+        if (!empty($row['date_approved'])) {
+            if ($row['status'] == 'For Renewal') {
+                $status = $row['status'];
+            } elseif ($date_today >= $date_validity) {
+                $status = 'Expired';
+            }
+        }
+
         $data[$row['id']] = [
             'id' 			=> $row['id'],
             'userid' 		=> $row['userid'],
@@ -236,7 +305,7 @@ function getApplicationLists($conn, $province, $lgus, $status, $is_clusterhead)
             'date_created' 	=> date('F d, Y', strtotime($row['date_created'])),
             'control_no' 	=> $row['control_no'],
             'ss_no' 		=> $row['ss_no'],
-            'status' 		=> $row['status'],
+            'status' 		=> $status,
             'color' 		=> $colors[$row['status']],
             'ac_address' 	=> $row['ac_address'],
             'app_type' 		=> $row['app_type'],
@@ -313,7 +382,7 @@ function getPFPApplicationLists($conn, $province, $status)
             'fname' 		=> !empty($row['person']) ? $row['person'] : $row['fname'],
             'agency' 		=> $row['pagency'],
             'address' 		=> $row['address'],
-            'date_created' 	=> date('F d, Y', strtotime($row['date_created'])),
+            'date_created' 	=> date('M d, Y', strtotime($row['date_created'])),
             'control_no' 	=> $row['control_no'],
             'ss_no' 		=> $row['ss_no'],
             'status' 		=> $row['status'],
@@ -321,7 +390,8 @@ function getPFPApplicationLists($conn, $province, $status)
             'ac_address' 	=> $row['ac_address'],
             'app_type' 		=> $row['app_type'],
             'token' 		=> $row['token'],
-            'validity_date' => !empty($row['date_approved']) ? date('F d, Y', strtotime("+6 months", strtotime($row['date_approved']))) : ''
+            'issued_date'   => '',
+            'validity_date' => !empty($row['date_approved']) ? date('M d, Y', strtotime("+6 months", strtotime($row['date_approved']))) : ''
         ];    
     }
 

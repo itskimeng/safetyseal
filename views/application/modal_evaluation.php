@@ -1,14 +1,9 @@
-<!-- Modal -->
-
 <div class="modal fade" id="modal_evaluation" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true" data-keyboard="false" data-backdrop="static">
   <div class="modal-dialog" role="document">
     <div class="modal-content">
       <!-- <form method="POST" action="f"></form> -->
       <div class="modal-header">
         <h5 class="modal-title" id="exampleModalLabel"><i class="fa fa-question-circle" aria-hidden="true"></i> Confirmation</h5>
-        <!-- <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-          <span aria-hidden="true">&times;</span>
-        </button> -->
       </div>
       <div class="modal-body">
         Are you sure you want to submit this assessment?

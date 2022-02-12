@@ -1,7 +1,5 @@
-<?php require_once 'controller/ApplicationController.php';?>
-<?php require_once 'controller/RegistrationComponentsController.php';
-
-?>
+<?php require_once 'controller/ApplicationController.php'; ?>
+<?php require_once 'controller/RegistrationComponentsController.php'; ?>
 
 <div class="container" style="padding-top: 5%;">
   <img src="frontend/images/banner_calabarzon.png" height="10%" width="100%" alt="">
@@ -15,45 +13,53 @@
       <div class="row align-items-center heading">
         
         <div class="col-md-12">
+          <div class="form-box shadow px-5 mb-2 bg-body rounded box">
+            <div class="bg-white pt-2 pb-2">
+              <span class="">
+                <?php if (isset($_GET['create_new'])): ?>
+                  <a href="user/application_list.php" type="button" class="btn btn-secondary btn-sm">
+                    <i class="fa fa-arrow-circle-left"></i> Back</a>  
+                <?php else: ?>  
+                  <a href="user/application.php?ssid=<?= $_GET['ssid']; ?>&code=<?= $_GET['code']; ?>&scope=<?= $_GET['scope']; ?>" type="button" class="btn btn-secondary btn-sm">
+                    <i class="fa fa-arrow-circle-left"></i> Back</a>
+                <?php endif ?>
+
+
+                <?php if (in_array($userinfo['status'], ['Returned', 'Revoked'])): ?>
+                  <a href="entity/post_reassess.php?ssid=<?php echo $_GET['ssid']; ?>&stt=Reassess" class="btn btn-warning btn-sm"><i class="fa fa-redo" aria-hidden="true"></i> Reassess
+                  </a>
+                  <a type="button" class="btn btn-danger btn-sm btn-delete_app" data-bs-toggle="modal" data-target="#modal-delete_app"><i class="fas fa-trash"></i> Delete</a>
+                <?php endif ?>
+              </span>
+              
+            </div>
+          </div>
+        </div>
+
+        <div class="col-md-12">
           <div class="py-1">
             <div class="form-box shadow p-1 mb-4 bg-body rounded box">
 
-              <div class="ribbon blue">
+              <div class="ribbon <?= $userinfo['status'] == 'Expired' ? 'red' : 'blue'; ?>">
                 <?php if (isset($_GET['create_new'])): ?>
                   <span>Draft</span>
                 <?php elseif ($userinfo['status'] == 'Reassess'): ?>
                   <span>Draft</span>
                 <?php else: ?>  
-                  <span><?php echo $userinfo['status']; ?></span>
+                  <span><?= $userinfo['status']; ?></span>
                 <?php endif ?>
               </div>
               
-              <form method="POST" action="entity/post_application.php" class="bg-white  rounded-5 shadow-5-strong p-5">
-
-                <span class="label label-lg label-light-success label-inline font-weight-bold py-3">
-                  <a href="user/users_establishments.php" class="btn btn-secondary btn-sm">
-                      <i class="fa fa-arrow-circle-left"></i> Close
-                  </a>
-                  <?php if (in_array($userinfo['status'], ['Returned', 'Revoked'])): ?>
-                    <a href="entity/post_reassess.php?ssid=<?php echo $_GET['ssid']; ?>&stt=Reassess" class="btn btn-warning btn-sm"><i class="fa fa-redo" aria-hidden="true"></i> Reassess
-                    </a>
-                    <a href="entity/delete_application.php?ssid=<?php echo $_GET['ssid']; ?>" class="btn btn-danger btn-sm"><i class="fas fa-trash"></i> Remove
-                    </a>
-                  <?php endif ?>
-                </span>
+              <form method="POST" action="entity/post_application.php" class="bg-white rounded-5 shadow-5-strong p-5">
+                <div class="form-group">
+                  <strong style="font-size:20px;"><i class="fas fa-clipboard-list"></i> CHECKLIST FORM</strong>
+                </div>
                 <hr>
                 <input type="hidden" name="is_new" value="<?php echo $is_new; ?>">
                 <input type="hidden" name="token" value="<?php echo !empty($_GET['ssid']) ? $_GET['ssid'] : ''; ?>">
                 <input type="hidden" name="mobile_no" value="<?php echo $userinfo['contact_details'];?>">
                 <input type="hidden" name="province" value="<?php echo $_SESSION['province'];?>">
                 <input type="hidden" name="city_mun" value="<?php echo $_SESSION['city_mun'];?>">
-
-                <!-- user return details -->
-                <?php if (in_array($userinfo['status'], ['Returned', 'Revoked'])): ?>
-                  <div class="col-md-12 mt-3">
-                    <?php include 'user_return_details.php'; ?>
-                  </div>
-                <?php endif ?>
 
                 <!-- user details -->
                 <div class="col-md-12 mt-3">
@@ -80,7 +86,7 @@
                       </div>
                       <?php if (in_array($userinfo['status'], ['Disapproved','Reassess'])): ?>
                         <div class="col-md-6">
-                          <a href="#" type="button" class="btn btn-success btn-block btn-reassess" style="width: 100%;"><i class="fa fa-share"></i> Reassess</a>
+                          <a href="#" type="button" class="btn btn-success btn-block btn-reassess" style="width: 100%;"><i class="fa fa-share"></i> Submit</a>
                         </div>
                       <?php elseif (!$is_new): ?>
                         <div class="col-md-6">
@@ -139,6 +145,7 @@
 <?php include 'modal_attachments.php';?>
 <?php include 'modal_view_attachments.php';?>
 <?php include 'modal_proceed.php';?>
+<?php include 'modal_delete_app.php';?>
 <style type="text/css">
 .box {
   /*width: 200px;*/
@@ -298,7 +305,7 @@
     ?> 
 
     var checker_count = 0;
-
+    
     $(document).on('click', '.form-check-input', function(){
       let tr = $(this).closest('tr');
       let chkcol = $(this).data('chkcol');
@@ -421,11 +428,11 @@
       if (checker_id != checker_count) {
         clearModalView();
 
-        let path = 'entity/get_bucket_uploads.php?id='+id.val()+'&for_renewal=<?php echo $userinfo['for_renewal']; ?>&list_order='+list_order.val();
+        let path = 'entity/get_attachments.php?id='+id.val()+'&for_renewal=<?php echo $userinfo['for_renewal']; ?>&list_order='+list_order.val();
         
         $.get(path, function(data, key){
           let dd = JSON.parse(data);
-          generateAttachments(dd);
+          setTimeout(function(){generateAttachments(dd)}, 1500); 
         });
 
         checker_count = checker_id;
@@ -434,10 +441,6 @@
       form_id.val(id.val());
       $modal.modal('show');
     });
-
-    $(document).on('hidden.bs.modal', '#modal-view_attachments', function (e) {
-      // clearModalView();
-    })
 
     function clearModalView() {
       $('.cont').empty();
@@ -454,14 +457,52 @@
       return '<div class="loadingio-spinner-interwind-1mn62qz6yu9"><div class="ldio-2ejy8czjmjr"><div><div><div><div></div></div></div><div><div><div></div></div></div></div></div></div>';
     }
 
+    $(document).on('click', '.btn-delete_app', function(e){
+      $('#modal-delete_app').modal('show'); 
+    });
+
     $(document).on('click', '.btn-submit_application', function(){
       let checker1 = checkAllSelected();
       let checker2 = checkUploads();
+      // let valid_request = '<?= $valid_request; ?>';
+      let form_validator = checklistChecker();
+
+      // console.log(valid_request);
+      // console.log(form_validator);
 
       if (checker1 && checker2) {
-        $('#modall_proceed').modal('show');  
+        if (form_validator) {
+          $('#modall_proceed').modal('show');  
+        } else {
+          tata.info('Info', 'All changes made in the list must be save first to proceed.');
+        }
+
       }
     });
+
+    function checklistChecker() { // will check for any changes made in the checklist
+      let answered_checklist = JSON.parse('<?= $answered_checklist; ?>');
+      let checker = true;
+
+      $('#chklist_body tr').each(function(key, item){
+        let answer = ''; 
+        let row = $(this);
+        
+        if (row.find('.chklist_yes').is(':checked')) {
+          answer = 'yes';
+        } else if (row.find('.chklist_no').is(':checked')) {
+          answer = 'no';
+        } else if (row.find('.chklist_na').is(':checked')) {
+          answer = 'na';
+        } else if (row.find('.checklist2_opt').is(':checked')) {
+          answer = 'other';
+        } else if (answered_checklist[key] != answer) {
+          checker = false;
+        }
+      })
+        
+      return checker;
+    }
 
     $(document).on('click', '.btn-reassess', function(){
       let path = 'entity/post_reassess.php?ssid=<?php echo isset($_GET['ssid']) ? $_GET['ssid'] : ''; ?>&stt=FA';
@@ -471,7 +512,7 @@
       if (checker1 && checker2) {
         $.get(path, function(data, status){
           if (status == 'success') {
-            tata.success('Success', 'Successfully submitted.');
+            tata.success('Success', 'Application Successfully submitted.');
             setTimeout(function(){// wait for 5 secs(2)
               location.reload(); // then reload the page.(3) 
             }, 999);
@@ -586,7 +627,7 @@
       tr+= '<div class="checkers" style="padding-left: .5rem;">';
       tr+= '<div class="form-group">';
 
-      tr+= '<input class="form-check-input chklist_na up-attachment" name="filename[]" type="checkbox" value="'+item.filename+'">';
+      tr+= '<input class="form-check-input chklist_na up-attachment" name="filename['+item.caid+']" type="checkbox" value="'+item.file_id+'">';
       tr+= '</div>';
       tr+= '</div>';
       tr+= '<div class="pic-holder" style="padding-top: 5%;height: 8rem; overflow: hidden;">';
@@ -612,8 +653,6 @@
     });
     tr+= '</div>';
     tr+= '</div>';
-
-    // $('').
 
     $('#tbody-view_attchmnt').css('overflow-y', 'scroll');
     $('.cont').empty();

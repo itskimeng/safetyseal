@@ -6,11 +6,11 @@
       </div>
       <div class="card-body">
 
-        <?php if (!isset($_SESSION['accessToken']) AND !isset($_GET['code'])): ?>
+        <?php if (!isset($_SESSION['accessToken']) AND empty($_GET['code'])): ?>
             <form method="POST" action="entity/verify_gdrive_user2.php">
-              <input type="hidden" name="token_id" value="<?php echo $_GET['appid']; ?>">
-              <input type="hidden" name="gcode" value="<?php echo isset($_GET['code']) ? $_GET['code'] : ''; ?>"/>
-              <input type="hidden" name="gscope" value="<?php echo isset($_GET['gscope']) ? $_GET['gscope'] : ''; ?>"/>  
+              <input type="hidden" name="token_id" value="<?= $_GET['appid']; ?>">
+              <input type="hidden" name="gcode" value="<?= isset($_GET['code']) ? $_GET['code'] : ''; ?>"/>
+              <input type="hidden" name="gscope" value="<?= isset($_GET['gscope']) ? $_GET['gscope'] : ''; ?>"/>  
               <input type="hidden" name="filename_upload" class="filename_upload" value="">
 
               <div class="row">
@@ -25,17 +25,17 @@
               </div>        
             </form>
         <?php else: ?>
-          <?php if ($applicant['status'] == 'Approved'): ?>
+          <?php if ($is_readonly): ?>
             <div class="col-md-12">
               <div class="row">
                 <div class="col-md-12">
                     <div class="form-group">
                       <div class="input-group">
-                        <input type="text" class="form-control filename_upload" readonly style="z-index: 30;" value="<?php echo isset($attachments['file_name']) ? $attachments['file_name'] : ''; ?>">
+                        <input type="text" class="form-control filename_upload" readonly style="z-index: 30;" value="<?= isset($attachments['file_name']) ? $attachments['file_name'] : ''; ?>">
                         <div class="input-group-btn">
                         
                           <div class="fileUpload btn-group" style="right:3px;">
-                            <a href="<?php echo $attachments['location']; ?>" class="btn btn-warning cancel">
+                            <a href="<?= $attachments['location']; ?>" class="btn btn-warning cancel">
                               <i class="fas fa-folder-open"></i><span> View</span>
                             </a>
                           </div>                    
@@ -53,28 +53,30 @@
               <div class="form-group">
                 <div class="input-group">
                   
-                  <input type="hidden" name="ttid" value="<?php echo $_GET['appid']; ?>">
+                  <input type="hidden" name="ttid" value="<?= $_GET['appid']; ?>">
+                  <input type="hidden" name="encoded_id" value="<?= $applicant['acid']; ?>">
+                  <input type="hidden" name="cn" value="<?= $applicant['control_no']; ?>">
 
-                  <input type="text" class="form-control filename_upload" autocomplete="off" readonly style="z-index: 30;" value="<?php echo isset($attachments['file_name']) ? $attachments['file_name'] : ''; ?>">
+                  <input type="text" class="form-control filename_upload" autocomplete="off" readonly style="z-index: 30;" value="<?= isset($attachments['file_name']) ? $attachments['file_name'] : ''; ?>">
                   <div class="input-group-btn">
-                    <span class="fileUpload btn btn-secondary <?php echo !empty($attachments) ? 'btn-disabled' : ''; ?>" style="right: 4px;">
+                    <span class="fileUpload btn btn-secondary <?= !empty($attachments) ? 'btn-disabled' : ''; ?>" style="right: 4px;">
                       <span class="upl" id="upload">Select single file</span>
                         <input type="file" name="file" class="upload up" id="up" onchange="readURL(this);" required />
                     </span>
 
                     <div class="btn-group">                        
-                      <button type="submit" class="btn btn-primary start" <?php echo !empty($attachments) ? 'disabled' : ''; ?>>                          
+                      <button type="submit" class="btn btn-primary start" <?= !empty($attachments) ? 'disabled' : ''; ?>>                          
                         <i class="fas fa-upload"></i><span> Upload</span>                        
                       </button>                      
             </form>
               <?php if (isset($attachments['location'])): ?>
-                      <a href="<?php echo $attachments['location']; ?>" class="btn btn-warning cancel">
+                      <a href="<?= $attachments['location']; ?>" class="btn btn-warning cancel" target="_blank">
                         <i class="fas fa-folder-open"></i><span> View</span>
                       </a>
                       <form method="POST" enctype="multipart/form-data" action="entity/delete_encoded_attachments.php">
-                        <input type="hidden" name="ttid" value="<?php echo $_GET['appid']; ?>">
-                        <input type="hidden" name="fid" value="<?php echo $attachments['file_id']; ?>">
-                        <input type="hidden" name="iid" value="<?php echo $attachments['attid']; ?>">
+                        <input type="hidden" name="ttid" value="<?= $_GET['appid']; ?>">
+                        <input type="hidden" name="fid" value="<?= $attachments['file_id']; ?>">
+                        <input type="hidden" name="iid" value="<?= $attachments['attid']; ?>">
 
                         <button type="submit" class="btn btn-danger delete">
                           <i class="fas fa-trash"></i><span> Delete</span>

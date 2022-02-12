@@ -1,32 +1,18 @@
 <div class="row">
  
   <div class="col-lg-12 col-md-6 col-sm-3">
-    <?php if ($applicant['status'] == 'Approved'): ?>
-      <div class="row mb-3">
-        <div class="col-md-6 col-sm-3">
-          <div class="row">
-              <div class="col-md-2">
-                <!-- <a href="entity/delete_admin_application.php?token=<?php //echo $_GET['appid']; ?>" class="btn btn-danger btn-block btn-sm" style="margin-bottom: -2%;">
-                  <i class="fa fa-ban"></i> Revoke
-                </a> -->
-                <button type="button" id="btn-revoke_modal" class="btn btn-danger btn-block btn-sm btn-revoke_modal" style="margin-bottom: -2%;">
-                  <i class="fa fa-ban"></i> Revoke
-                </button>
-              </div>  
-          </div>
-
-        </div>  
-      </div>
-    <?php endif ?>
-
+  
     <div class="card">
       <div class="card-header">
-        <h3 class="card-title"><i class="fa fa-info-circle" aria-hidden="true"></i> <b>APPLICATION DETAILS</b></h3> 
-        <span  class="badge bg-primary" style="font-size:13pt;"> <?php echo $applicant['status']; ?></span>
+        <h3 class="card-title"><i class="fa fa-info-circle" aria-hidden="true"></i> <b>CHECKLIST FORM</b></h3> 
         <div class="card-tools">
-          <button type="button" class="btn btn-tool btn-tool-details" data-card-widget="collapse" title="Collapse">
-            <i class="fas fa-minus"></i>
-          </button>
+          <?php if ($applicant['status'] == 'Approved'): ?>
+            <span class="badge bg-success" style="font-size:13pt; background-color: #00a65a!important;"><i class="fa fa-check-circle"></i> <?= $applicant['status']; ?></span>
+          <?php elseif (in_array($applicant['status'], ['Disapproved', 'Revoked', 'Expired'])): ?>
+            <span class="badge bg-danger" style="font-size:13pt;"><i class="fa fa-ban"></i> <?= $applicant['status']; ?></span>
+          <?php else: ?>
+            <span class="badge bg-info" style="font-size:13pt;"> <?= $applicant['status']; ?></span>
+          <?php endif ?>
         </div>
       </div>
       <!-- /.card-header -->
@@ -36,20 +22,20 @@
           <div class="row pl-2 pr-2 pt-3">
             <div class="form-outline mb-2 col-md-4">
               <label class="form-label" for="form1Example1">Control No:</label><br>
-              <input type="text" id="form1Example1" class="form-control" value="<?php echo $applicant['control_no']; ?>" disabled/>
+              <input type="text" id="form1Example1" class="form-control" value="<?= $applicant['control_no']; ?>" disabled/>
             </div>
             <div class="form-outline mb-2 col-md-5">
-              <?php if ($applicant['status'] == 'Approved'): ?>
+              <?php if (in_array($applicant['status'], ['Approved', 'Renewed', 'Expired'])): ?>
                 <label class="form-label" for="form1Example1">Safety Seal No.</label><br>
-                <input type="text" id="form1Example1" class="form-control" style="background-color: #008000e6; color: white; font-weight: bold;" value="<?php echo $applicant['ss_no']; ?>" disabled />
+                <input type="text" id="form1Example1" class="form-control" style="background-color: #00a65a; color: white; font-weight: bold;" value="<?= $applicant['ss_no']; ?>" disabled />
               <?php elseif ($applicant['for_renewal']): ?>
                 <label class="form-label" for="form1Example1">Safety Seal No.</label><br>
-                <input type="text" id="form1Example1" class="form-control" style="background-color: #b07c06e6; color: white; font-weight: bold;" value="<?php echo $applicant['ss_no']; ?>" disabled />
+                <input type="text" id="form1Example1" class="form-control" style="background-color: #b07c06e6; color: white; font-weight: bold;" value="<?= $applicant['ss_no']; ?> (FOR RENEWAL)" disabled />
               <?php endif ?>
             </div>
             <div class="form-outline mb-2 col-md-3">
               <label class="form-label" for="form1Example1">Date:</label><br>
-              <input type="text" id="form1Example1" class="form-control" value="<?php echo $applicant['date_created']; ?>" disabled />
+              <input type="text" id="form1Example1" class="form-control" value="<?= $applicant['date_created']; ?>" disabled />
             </div>
           </div>
         </div>
@@ -58,7 +44,7 @@
           <div class="row pl-2 pr-2">
             <div class="form-outline mb-2 col-md-12">
               <label class="form-label" for="form1Example1">Name of Government Agency/ Office:</label><br>
-              <input type="text" id="form1Example1" class="form-control" value="<?php echo $applicant['agency']; ?>" disabled/>
+              <input type="text" id="form1Example1" class="form-control" value="<?= $applicant['agency']; ?>" disabled/>
             </div>
           </div>
         </div>
@@ -67,7 +53,7 @@
           <div class="row pl-2 pr-2">
             <div class="form-outline mb-2 col-md-12">
               <label class="form-label" for="form1Example1">Name of Government Establlishment/ Department/ Office/ Unit:</label><br>
-              <input type="text" id="form1Example1" class="form-control" value="<?php echo $applicant['ac_establishment']; ?>" disabled/>
+              <input type="text" id="form1Example1" class="form-control" value="<?= $applicant['ac_establishment']; ?>" disabled/>
             </div>
           </div>
         </div>
@@ -76,7 +62,7 @@
           <div class="row pl-2 pr-2">
             <div class="form-outline mb-2 col-md-12">
               <label class="form-label" for="form1Example1">Nature of Government Establlishment/ Department/ Office/ Unit:</label><br>
-              <input type="text" id="form1Example1" class="form-control" value="<?php echo $applicant['ac_nature']; ?>" disabled/>
+              <input type="text" id="form1Example1" class="form-control" value="<?= $applicant['ac_nature']; ?>" disabled/>
             </div>
           </div>
         </div>
@@ -85,7 +71,7 @@
           <div class="row pl-2 pr-2">
             <div class="form-outline mb-2 col-md-12">
               <label class="form-label" for="form1Example1">Address:</label><br>
-              <input type="text" id="form1Example1" class="form-control" value="<?php echo $applicant['ac_address']; ?>" disabled/>
+              <input type="text" id="form1Example1" class="form-control" value="<?= $applicant['ac_address']; ?>" disabled/>
             </div>
           </div>
         </div>
@@ -94,13 +80,13 @@
           <div class="row pl-2 pr-2 pb-3">
             <div class="form-outline mb-2 col-md-6">
               <label class="form-label" for="form1Example1">Name of Person in Charge:</label><br>
-              <input type="text" id="form1Example1" class="form-control" value="<?php echo $applicant['fname']; ?>" disabled/>
+              <input type="text" id="form1Example1" class="form-control" value="<?= $applicant['fname']; ?>" disabled/>
             </div>
             <div class="form-outline mb-2 col-md-2">
             </div>
             <div class="form-outline mb-2 col-md-4">
               <label class="form-label" for="form1Example1">Contact Details:</label><br>
-              <input type="text" id="form1Example1" class="form-control" value="<?php echo $applicant['contact_details']; ?>" disabled />
+              <input type="text" id="form1Example1" class="form-control" value="<?= $applicant['contact_details']; ?>" disabled />
             </div>
           </div>
         </div>

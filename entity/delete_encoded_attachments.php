@@ -3,6 +3,7 @@ session_start();
 $url_array = explode('?', 'https://'.$_SERVER ['HTTP_HOST'].$_SERVER['REQUEST_URI']);
 $url = $url_array[0];
 
+require '../Model/Connection.php';
 require '../manager/ApplicationManager.php';
 require '../application/config/connection.php';
 
@@ -10,11 +11,15 @@ require_once 'google-api-php-client/src/Google_Client.php';
 require_once 'google-api-php-client/src/contrib/Google_DriveService.php';
 
 $app = new ApplicationManager();
-$client = getGoogleClient($url);
+$baseconn = new Connection();
+
+$client_id = $conn->googleClient;
+$client_secret = $conn->googleSecret;
+
+$client = getGoogleClient($client_id, $client_secret, $url);
+
 
 $token = !empty($_POST['ttid']) ? $_POST['ttid'] : $_SESSION['ss_id'];
-$fid = $_POST['fid'];
-$iid = $_POST['iid'];
 $gcode = $_SESSION['gcode'];
 $gscope = $_SESSION['gscope'];
 
@@ -26,24 +31,30 @@ if (isset($_GET['code'])) {
     $client->authenticate();
 }
 
-$client->setAccessToken($_SESSION['accessToken']);
-$finfo = finfo_open(FILEINFO_MIME_TYPE);
+if (!empty($_POST)) {
+    $fid = $_POST['fid'];
+    $iid = $_POST['iid'];
 
-removeFromGDrive($client, $fid);
-removeFromDB($conn, $iid);
+    $client->setAccessToken($_SESSION['accessToken']);
+    $finfo = finfo_open(FILEINFO_MIME_TYPE);
 
-finfo_close($finfo);
+    removeFromGDrive($client, $fid);
+    removeFromDB($conn, $iid);
 
-$_SESSION['toastr'] = $app->addFlash('success', 'Attachment has been deleted', 'Success');
+    finfo_close($finfo);
+
+    $_SESSION['toastr'] = $app->addFlash('success', 'Attachment has been deleted', 'Success');
+}
+
 
 header('location:../admin_application_edit.php?appid='.$token.'&code='.$gcode.'&scope='.$gscope.'');exit;
 
 
-function getGoogleClient($url)
+function getGoogleClient($client_id, $client_secret, $url)
 {
     $client = new Google_Client();    
-    $client->setClientId('312607959862-4po30giaf5ft6gk4e214nadae33dp8rl.apps.googleusercontent.com');
-    $client->setClientSecret('i0aX5UG17jovoF2aPgqfoGvS');
+    $client->setClientId($client_id);
+    $client->setClientSecret($client_secret);
     $client->setRedirectUri($url);
     $client->setScopes(array('https://www.googleapis.com/auth/drive'));
 

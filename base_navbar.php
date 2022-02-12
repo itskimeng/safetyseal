@@ -41,6 +41,9 @@
         </li>
         <?php endif;?>
        
+       <li class="nav-item">
+            <a href="users_guide.php" class="nav-link">Users Guide</a>
+          </li>
 
         <li class="nav-item">
           <a href="views/logout.php" class="nav-link">Logout(<?php echo $_SESSION['username'];?>)</a>

@@ -1,19 +1,19 @@
-<button onclick="topFunction()" id="myBtn" title="Go to top"><i class="fas fa-2x fa-arrow-alt-circle-up"></i></button>
+<button onclick="topFunction()" id="myBtn" title="Go to top"><i class="fa fa-2x fa-arrow-alt-circle-up"></i></button>
 
 <style type="text/css">
     #myBtn {
   display: none;
   position: fixed;
   bottom: 20px;
-  right: 30px;
+  right: 15px;
   z-index: 99;
-  font-size: 18px;
+  font-size: 15px;
   border: none;
   outline: none;
   background-color: #243866;
   color: white;
   cursor: pointer;
-  padding: 10px;
+  padding: 8px;
   border-radius: 4px;
 }
 

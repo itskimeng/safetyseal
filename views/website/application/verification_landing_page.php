@@ -17,7 +17,10 @@
                 <div>
                   <p class="text-center">Account has been verified for this session.</p>
                   <div class="form-group" style="margin-bottom: 10px;">
-                    <?php //print_r($_SESSION); ?>
+                    <?php 
+                      $_SESSION['gcode'] = $_GET['code'];
+                      $_SESSION['gscope'] = $_GET['scope'];
+                    ?>
                     <a href="wbstapplication.php?ssid=<?php echo $_SESSION['ss_id']; ?>&code=<?php echo $_GET['code']; ?>&scope=<?php echo $_GET['scope']; ?>" class="btn btn-success btn-lg" style="width:100%" id="btnContinue">Continue</a>
                   </div>
                 </div>

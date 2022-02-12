@@ -2,11 +2,17 @@
 session_start();
 date_default_timezone_set('Asia/Manila');
 
+require '../Model/Connection.php';
 require '../manager/ApplicationManager.php';
+require '../manager/SafetysealHistoryManager.php';
+require '../manager/ApplicationHistoryManager.php';
 require '../application/config/connection.php';
 
 $app = new ApplicationManager();
+$shm = new SafetysealHistoryManager();
+$ahm = new ApplicationHistoryManager();
 $today = new DateTime();
+
 
 $userid = $_SESSION['userid'];
 $province = $_SESSION['province'];
@@ -21,21 +27,38 @@ if ($is_clusterhead OR $is_pfp) {
 }
 
 $checklist_id = findID($conn, $token);
-$status = ApplicationManager::STATUS_APPROVED;
 
-$ss_no = generateCode($conn, $province, $citymun);
-
-$app->evaluateChecklist($checklist_id, $status, $ss_no, $today->format('Y-m-d H:i:s'), $userid);
+if (!$checklist_id['for_renewal']) {
+    $status = ApplicationManager::STATUS_APPROVED;
+    $ss_no = generateCode($conn, $province, $citymun);
+    
+    $app->evaluateChecklist($checklist_id['id'], $status, $ss_no, $today->format('Y-m-d H:i:s'), $userid);
+} else {
+    $status = 'Renewed';
+    $ss_no = $checklist_id['ssn'];
+    
+    $app->evaluateChecklist2($checklist_id['id'], $status, $ss_no, $today->format('Y-m-d H:i:s'), $userid);
+}
 
 $_SESSION['toastr'] = $app->addFlash('success', 'The application has been set to '.$status.'.', 'Success');
 
 
+$msg = 'application ' .$checklist_id['control_no'] .' has been approved';
+$shm->insert(['fid'=>$checklist_id['id'], 'mid'=>SafetysealHistoryManager::MENU_ADMIN_APPLICATION, 'uid'=>$userid, 'action'=>$status, 'message'=> $msg, 'action_date'=> $today->format('Y-m-d H:i:s')]);
+
+$issued_date = new DateTime($today->format('Y-m-d H:i:s'));
+$validity_date = date('Y-m-d', strtotime("+6 months", strtotime($issued_date->format('Y-m-d'))));
+$validity_date = new DateTime($validity_date);
+
+$ahm->insert(['app_id'=>$checklist_id['id'], 'issued_date'=>$today->format('Y-m-d'), 'expiration_date'=>$validity_date->format('Y-m-d'), 'status'=>$status, 'date_created'=>$today->format('Y-m-d H:i:s')]);
+
+
 function findID($conn, $id) {
-	$sql = 'SELECT id FROM tbl_app_checklist where token = "'.$id.'"';
+	$sql = 'SELECT id, control_no, for_renewal, safety_seal_no as ssn FROM tbl_app_checklist where token = "'.$id.'"';
     $query = mysqli_query($conn, $sql);
 	$result = mysqli_fetch_array($query);
         
-    return $result['id']; 
+    return $result; 
 }
 
 function generateCode($conn, $province, $citymun) 

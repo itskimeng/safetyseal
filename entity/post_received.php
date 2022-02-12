@@ -2,6 +2,7 @@
 session_start();
 date_default_timezone_set('Asia/Manila');
 
+require '../Model/Connection.php';
 require '../manager/ApplicationManager.php';
 require '../manager/SafetysealHistoryManager.php';
 require '../application/config/connection.php';
@@ -22,7 +23,6 @@ $_SESSION['toastr'] = $app->addFlash('success', 'The application has been receiv
 $msg = 'received application ' .$application['control_no'];
 
 $shm->insert(['fid'=>$checklist_id, 'mid'=>SafetysealHistoryManager::MENU_ADMIN_APPLICATION, 'uid'=>$userid, 'action'=> SafetysealHistoryManager::ACTION_RECEIVE, 'message'=> $msg, 'action_date'=> $today->format('Y-m-d H:i:s')]);
-
 
 header('location:../admin_application_view.php?appid='.$checklist_id.''.'&ussir='.$userid.'');
 

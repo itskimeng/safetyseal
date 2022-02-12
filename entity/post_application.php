@@ -2,6 +2,7 @@
 session_start();
 date_default_timezone_set('Asia/Manila');
 
+require '../Model/Connection.php';
 require '../manager/ApplicationManager.php';
 require '../manager/SafetysealHistoryManager.php';
 require '../application/config/connection.php';
@@ -31,12 +32,7 @@ if ($is_new) {
 }
 
 $parent = $am->findChecklist($token);
-
-if ($parent['for_renewal']) {
-	$table = 'tbl_app_checklist_renewal_entry';
-} else {
-	$table = 'tbl_app_checklist_entry';
-}
+$table = 'tbl_app_checklist_entry';
 
 foreach ($checklists as $key => $id) {
 	$check_val = $reason = $other_tool = '';
@@ -51,17 +47,19 @@ foreach ($checklists as $key => $id) {
 	} elseif (isset($_POST['chklist_na'][$key])) {
 		$check_val = 'n/a';
 		$reason = $_POST['chklist_reason'][$key];
+	} elseif (!empty($other_tool)) {
+		$check_val = 'other';
 	}
 
 	$data = [
-		'parent_id' => $parent['id'],
-		'chklist_id' => $is_new ? $key : $ulist_id,
-		'user_id' => $userid,
-		'answer' => $check_val,
-		'reason' => $reason,
-		'date_created' => $today->format('Y-m-d H:i:s'),
-		'other_tool' => $other_tool,
-		'tracing_tool' => $tracing_tool
+		'parent_id' 	=> $parent['id'],
+		'chklist_id' 	=> $is_new ? $key : $ulist_id,
+		'user_id' 		=> $userid,
+		'answer' 		=> $check_val,
+		'reason' 		=> $reason,
+		'date_created' 	=> $today->format('Y-m-d H:i:s'),
+		'other_tool' 	=> $other_tool,
+		'tracing_tool' 	=> $tracing_tool
 	];
 
 	if ($is_new) {
@@ -80,4 +78,4 @@ $shm->insert(['fid'=>$parent['id'], 'mid'=>SafetysealHistoryManager::MENU_PUBLIC
 
 $_SESSION['toastr'] = $am->addFlash('success', 'Successfully updated the checklist.', 'Checklist');
 
-header('location:../wbstapplication.php?ssid='.$token);
+header('location:../wbstapplication.php?ssid='.$token.'&code=&scope=');

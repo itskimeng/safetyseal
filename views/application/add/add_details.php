@@ -3,13 +3,10 @@
 <input type="hidden" name="token_id" value="<?php echo isset($applicant['token']) ? $applicant['token'] : ''; ?>">
   <div class="col-lg-12 col-md-6 col-sm-3">
     <div class="card">
-      <div class="card-header">
-        <h3 class="card-title"><i class="fa fa-info-circle" aria-hidden="true"></i> <b>APPLICATION DETAILS</b></h3> 
-        <span  class="badge bg-primary" style="font-size:13pt;"> <?php echo $is_new ? 'Draft':$applicant['status']; ?></span>
+      <div class="card-header" style="background-color: #243866; color: white;">
+        <h3 class="card-title"><i class="fa fa-info-circle" aria-hidden="true"></i> <b>CHECKLIST FORM</b></h3> 
         <div class="card-tools">
-          <button type="button" class="btn btn-tool btn-tool-details" data-card-widget="collapse" title="Collapse">
-            <i class="fas fa-minus"></i>
-          </button>
+          <span  class="badge bg-primary" style="font-size:13pt;"> <?php echo $is_new ? 'Draft':$applicant['status']; ?></span>
         </div>
       </div>
 
@@ -17,7 +14,7 @@
       <div class="card-body card-body-details table-responsive p-0 collapse show">
         <?php if ($is_clusterhead OR $is_pfp): ?>
           <div class="col-md-12">
-            <div class="row pl-2 pr-2">
+            <div class="row pl-2 pr-2 pt-3">
               <div class="form-group mb-2 col-md-4">
                 <label>City/Municipality</label>
                 <select id="cform-citymun" name="lgu" class="form-control select2bs4 select2-hidden-accessible" style="width: 100%;" data-select2-id="17" tabindex="-1" aria-hidden="true">
@@ -96,7 +93,7 @@
         <div class="col-md-12">
           <div class="row pl-2 pr-2">
             <div class="form-outline mb-2 col-md-12">
-              <label class="form-label" for="form1Example1">Nature of Government Establlishment/ Department/ Office/ Unit:</label><br>
+              <label class="form-label" for="form1Example1">Nature of Government Establishment/ Department/ Office/ Unit:</label><br>
                 <!-- <input type="text" id="form1Example1" name="nature" class="form-control" value="" required/> -->
                 <?php if (isset($applicant['status']) AND $applicant['status'] == 'Approved'): ?>
                   <input type="text" id="form1Example1" name="nature" class="form-control" value="<?php echo $applicant['nature']; ?>" disabled/>  

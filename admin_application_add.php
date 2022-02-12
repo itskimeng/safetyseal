@@ -10,5 +10,6 @@ require_once 'frontend/bower_components/phpti-master/src/ti.php'; ?>
 <?php endblock('title'); ?>
 
 <?php startblock('content'); ?>
+  <?php include 'macro/macro.php'; ?>
   <?php include('views/application/add_application.php'); ?>
 <?php endblock(); ?>

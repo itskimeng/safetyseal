@@ -4,13 +4,14 @@
   <div class="container">
     <div class="row mb-2">
       <div class="col-sm-6">
-        <h5 class="m-0"> Application View</h5>
+        <h5 class="m-0"> Application Summary</h5>
       </div><!-- /.col -->
       <div class="col-sm-6">
         <ol class="breadcrumb float-sm-right">
           <li class="breadcrumb-item"><a href="dashboard.v2.php">Home</a></li>
-          <li class="breadcrumb-item"><a href="admin_application.php">Application</a></li>
-          <li class="breadcrumb-item active"> View</li>
+          <li class="breadcrumb-item"><a href="admin_application.php">Application List</a></li>
+          <li class="breadcrumb-item"><a href="admin_view_application.php?userid=<?= $applicant['user_id']; ?>&type=<?= $applicant['application_type'];?>&_view">Application View</a></li>
+          <li class="breadcrumb-item active">Application Summary</a></li>
         </ol>
       </div>
     </div>
@@ -20,245 +21,300 @@
 
 <!-- Main content -->
 <div class="content">
+  
   <div class="container">
+    <div class="row">
+      <div class="col-md-12 mb-2">
+        <?php if ($applicant['application_type'] == 'Applied'): ?>
+          <a href="admin_view_application.php?userid=<?= $applicant['user_id']; ?>&type=<?= $applicant['application_type'];?>&_view" class="btn btn-secondary btn-sm">
+            <i class="fa fa-arrow-circle-left"></i> Back
+          </a>
+        <?php else: ?>
+          <a href="admin_view_application.php?person=<?= $applicant['person']; ?>&type=<?= $applicant['application_type'];?>&_view" class="btn btn-secondary btn-sm">
+            <i class="fa fa-arrow-circle-left"></i> Back
+          </a>
+        <?php endif ?>
 
-    <?php if ($useraccess['nature'] == 'PNP' OR $useraccess['position'] == 'PNP' OR $useraccess['nature'] == 'BFP' OR $useraccess['position'] == 'BFP'): ?>
-      <div class="callout callout-warning">
-        <h5>Reminder!</h5>
-        <p>Assessment for the PNP and BFP Inspection Team will start once <b>CMLGOO</b> has <b>RECEIVED</b> the application.</p>
       </div>
-    <?php endif ?>
-
-    <?php if ($useraccess['nature'] != 'PNP' AND $useraccess['position'] != 'PNP' AND $useraccess['nature'] != 'BFP' AND $useraccess['position'] != 'BFP'): ?>
-    <div class="row mb-3">
-      <div class="col-md-6 col-sm-3">
-        <div class="row">
-            <div class="col-md-2">
-              <button type="button" id="btn-return_modal" class="btn btn-danger btn-block btn-sm btn-return_modal" style="margin-bottom: -2%;">
-                <i class="fa fa-undo-alt"></i> Return
-              </button>
-            </div> 
-
-            <div class="col-md-2">
-              <a href="entity/post_received.php?appid=<?php echo $_GET['appid']; ?>&ussir=<?php echo $_GET['appid']; ?>&status=For Receiving" class="btn btn-primary btn-block btn-sm" style="margin-bottom: -2%;">
-                <i class="fa fa-box"></i> Receive
-              </a>
-            </div>  
-          
-        </div>
-
-      </div>  
     </div>
-  <?php endif ?>
+    <div class="row">
+      <div class="col-md-4">
+        <div class="card">
+          <div class="card-header bg-violet">
+            <h5 class="card-title"><i class="fas fa-info-circle"></i> <b>Application</b></h5>
+            <div class="card-tools">
+              <div class="col-md-12">
+                <?php if ($applicant['application_type'] == 'Encoded'): ?>
+                  <div class="btn-group">
+                    <a href="admin_application_edit.php?appid=<?= $applicant['ssid']; ?>&code=&scope=" class="btn btn-info btn-sm rounded-circle" style="margin-bottom: -2%;" title="View Checklist"><i class="fa fa-edit"></i></a>
+                  </div>
 
-    <?php include 'form/applicant_details.php'; ?>
+                  <?php if ($is_expired AND !$applicant['for_renewal']): ?>
+                    <div class="btn-group">
+                      <a href="entity/renew_admin_application.php?ssid=<?= $applicant['ssid']; ?>" type="button" class="btn btn-warning btn-block btn-sm rounded-circle" title="Apply For Renewal"><i class="fas fa-retweet"></i></a>
+                    </div>  
+                  <?php endif ?>
 
-    <div class="row mb-4">
-      <?php if ($applicant['status'] <> 'For Receiving' and $applicant['status'] <> 'Draft') : ?>
-        <form method="POST" action="entity/post_assessment.php" id="form-evaluation">
-        <?php endif ?>
-        <input type="hidden" name="appid" value="<?php echo $applicant['appid']; ?>">
-        <input type="hidden" name="email" value="<?php echo $applicant['email']; ?>">
-        <input type="hidden" name="id" value="<?php echo $applicant['user_id']; ?>">
-        <input type="hidden" name="control_no" value="<?php echo $applicant['control_no']; ?>">
-        <div class="col-lg-12 col-md-6 col-sm-3">
-          <div class="card">
-            <div class="card-header">
-              <h3 class="card-title"><i class="fa fa-tasks"></i> <b>ANSWERED CHECKLISTS</b></h3>
-            </div>
-            <!-- /.card-header -->
-            <div class="card-body table-responsive p-0">
-              <table class="table table-hover table-striped" style="font-size:9.5pt;">
-                <thead class="text-center" style="background-color: #1da6da; color: white;">
-                  <tr>
-                    <th width="3%">#</th>
-                    <th width="15%">REQUIREMENTS</th>
-                    <th width="20%">MOVs to be<br>Produced/ Uploaded</th>
-                    <th class="text-center" width="5%">ANSWER</th>
-                    <th width="11%">REASON WHY N/A</th>
-                    <th width="5%">ATTACHMENTS</th>
-                    <th width="13%">REMARKS FROM PNP</th>
-                    <th width="13%">REMARKS FROM BFP</th>
-                    <?php if ($applicant['status'] <> 'For Receiving' AND $applicant['status'] <> 'Draft' AND $applicant['status'] <> 'For Reassessment') : ?>
-                      <th>ASSESSMENT</th>
-                    <?php endif ?>
-                  </tr>
-                </thead>
-                <tbody id="checklist_form">
-                  <?php foreach ($applicants_data as $key => $list) : ?>
-
-                    <tr>
-                      <td>
-                        <b><?php echo $key + 1; ?>.</b>
-                        <input type="hidden" id="cform-hidden_entid" name="hidden_entid" value="<?php echo $list['ulist_id']; ?>" />
-                      </td>
-                      <td>
-                        <?php echo $list['requirement']; ?>
-                        <?php if ($key == 0) : ?>
-                          <br><br>Other contact tracing tool:<br>
-                          <span class="badge badge-info right" style="font-size:10pt;"><?php echo $list['other_tool']; ?></span>
-                        <?php endif ?>
-                      </td>
-                      <td>
-                        <ul>
-                          <?php foreach ($list['description'] as $description) : ?>
-                            <li><?php echo $description ?></li>
-                          <?php endforeach ?>
-                        </ul>
-                      </td>
-                      <td class="text-center" style="font-size: 15pt;">
-                        <span class="badge bg-<?php echo $list['badge']; ?>"><?php echo $list['answer']; ?></span>
-                      </td>
-                      <td><?php echo $list['reason']; ?></td>
-                      <td class="text-center">
-                        <div class="col-md-12">
-                          <?php if (!empty($appchecklists_attchmnt[$list['ulist_id']])) : ?>
-                            <input type="hidden" id="cform-ulist_id" name="ulist_id[<?php echo $list['ulist_id']; ?>]" value="<?php echo $list['ulist_id']; ?>">
-
-                            <input type="hidden" name="checklist-order" id="checklist-order" value="<?php echo $key+1; ?>"/>
-
-                            <button type="button" class="btn btn-warning btn-sm btn-attachments_view" data-bs-toggle="modal" style="font-size: 9.5pt;">
-                              <i class="fa fa-link"></i> View
-                            </button>
-                          <?php else : ?>
-                            <p>No Attachments Available</p>
-                          <?php endif ?>
-                        </div>
-                      </td>
-                      <td>
-                        <div class="col-md-12">
-                          <div class="form-group">
-                            <?php if ($list['nature'] == 'pnp') : ?>
-                              <textarea class="form-control" rows="3" name="pnp_remarks[<?php echo $list['ulist_id']; ?>]" placeholder="Enter ..." style="font-size: 9.5pt;" <?php echo $is_readonly ? 'disabled' : ''; ?> value="<?php echo isset($list['pnp_remarks']) ? $list['pnp_remarks'] : ''; ?>"><?php echo isset($list['pnp_remarks']) ? $list['pnp_remarks'] : ''; ?></textarea>
-                            <?php else : ?>
-                              <?php echo isset($list['pnp_remarks']) ? $list['pnp_remarks'] : ''; ?>
-                            <?php endif ?>
-                          </div>
-                        </div>
-                      </td>
-                      <td>
-                        <div class="col-md-12">
-                          <div class="form-group">
-                            <?php if ($list['nature'] == 'pnp') : ?>
-                              <textarea class="form-control" rows="3" name="bfp_remarks[<?php echo $list['ulist_id']; ?>]" placeholder="Enter ..." style="font-size: 9.5pt;" <?php echo $is_readonly ? 'disabled' : ''; ?> value="<?php echo isset($list['bfp_remarks']) ? $list['bfp_remarks'] : ''; ?>"><?php echo isset($list['bfp_remarks']) ? $list['bfp_remarks'] : ''; ?></textarea>
-                            <?php else : ?>
-                              <?php echo isset($list['bfp_remarks']) ? $list['bfp_remarks'] : ''; ?>
-                            <?php endif ?>
-
-                          </div>
-                        </div>
-                      </td>
-                      
-                        
-                    </tr>
-                  <?php endforeach; ?>
-                </tbody>
-              </table>
-            </div>
-            <!-- /.card-body -->
-          </div>
-        </div>
-
-        <?php if (!in_array($applicant['status'], ['For Receiving', 'Draft', 'For Reassessment'])) : ?>
-          <div class="col-lg-12 col-md-6 col-sm-3">
-            <div class="card card-default">
-              <div class="card-header">
-                <h3 class="card-title"><i class="fa fa-search" aria-hidden="true"></i> <b>FOR ONSITE VALIDATION/ INSPECTION</b></h3>
-
-                <div class="card-tools">
-                  <button type="button" class="btn btn-tool btn-tool-onsite" data-card-widget="collapse">
-                    <i class="fas fa-minus"></i>
-                  </button>
-                </div>
-              </div>
-              <!-- /.card-header -->
-              <div class="card-body card-body-onsite collapse show">
-                <div class="row">
-                  <div class="col-md-12">
-                    <div class="form-group">
-                      <label>Defects/Defeciencies noted during inspection:</label>
-                      <textarea class="form-control" rows="3" name="defects" placeholder="Enter ..." <?php echo $is_readonly ? 'disabled' : ''; ?> value="<?php echo isset($app_notes['defects']) ? $app_notes['defects'] : ''; ?>"><?php echo isset($app_notes['defects']) ? $app_notes['defects'] : ''; ?></textarea>
+                  <?php if ($is_expired AND !in_array($applicant['status'], ['Approved', 'Renewed', 'Expired'])): ?>
+                    <div class="btn-group">
+                      <a href="entity/delete_admin_application.php?token=<?= $applicant['ssid']; ?>" class="btn btn-danger btn-block btn-sm rounded-circle" style="margin-bottom: -2%;"><i class="fa fa-trash"></i></a>
                     </div>
-                  </div>
-                </div>
-                <div class="row">
-                  <div class="col-md-12" style="margin-bottom:-1%;">
-                    <div class="form-group">
-                      <label>Recommendations</label>
-                      <textarea class="form-control" name="recommendations" rows="3" placeholder="Enter ..." <?php echo $is_readonly ? 'disabled' : ''; ?> value="<?php echo isset($app_notes['recommendations']) ? $app_notes['recommendations'] : ''; ?>"><?php echo isset($app_notes['recommendations']) ? $app_notes['recommendations'] : ''; ?></textarea>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-        <?php endif ?>
+                  <?php endif ?>
 
-        <?php if ($applicant['status'] <> 'Approved' and $applicant['status'] <> 'Disapproved') : ?>
-          <div class="col-lg-12 col-md-6 col-sm-3">
-            <!-- <div class="card"> -->
+                <?php elseif (in_array($applicant['status'], ['For Receiving', 'For Reassessment'])): ?>
+                  <a href="admin_checklist_view.php?appid=<?= $_GET['appid']; ?>&ussir=<?= $_GET['ussir']; ?>" type="button" class="btn btn-primary btn-sm rounded-circle" data-toggle="tooltip" data-placement="left" title="Edit Application"><i class="fa fa-edit"></i></a>
 
-            <div class="panel panel-default">
-              <div class="row">
-                <?php if (in_array($applicant['status'], ['For Receiving', 'Draft', 'For Reassessment'])) : ?>
-                  <?php if ($useraccess['nature'] != 'PNP' AND $useraccess['position'] != 'PNP' AND $useraccess['nature'] != 'BFP' AND $useraccess['position'] != 'BFP'): ?>
-                  <div class="col-md-12">
-                    
-                    <a href="entity/post_received.php?appid=<?php echo $_GET['appid']; ?>&ussir=<?php echo $_GET['appid']; ?>&status=For Receiving" class="btn btn-primary btn-block btn-sm" style="margin-bottom: -2%;">
-                      <i class="fa fa-box"></i> Receive
-                    </a>
+                  <div class="btn-group">
+                    <a type="button" id="btn-return_modal" class="btn btn-danger btn-sm btn-return_modal btn-sm rounded-circle" data-toggle="tooltip" data-placement="top" title="Return Application">
+                      <i class="fa fa-undo-alt"></i></a>
                   </div>
+
+                  <a href="admin_checklist_edit.php?appid=<?= $_GET['appid']; ?>&ussir=<?= $_GET['ussir']; ?>" type="button" class="btn btn-success btn-sm rounded-circle" data-toggle="tooltip" data-placement="right" title="Receive Application"><i class="fa fa-box"></i></a>
+
+                <?php else: ?>
+                  <a href="admin_application_view.php?appid=<?= $_GET['appid']; ?>&ussir=<?= $_GET['ussir']; ?>" type="button" class="btn btn-primary btn-sm rounded-circle" data-toggle="tooltip" data-placement="left" title="Edit Application"><i class="fa fa-edit"></i></a>
+
                 <?php endif ?>
-                <?php else : ?>
-
-                  <div class="<?php echo $is_new ? 'col-md-12' : 'col-md-12'; ?> pull-right">
-                    <?php if ($is_nature == 'BFP' || $is_nature == 'PNP') : ?>
-                      <div class="col-md-12">
-                        <button type="submit" class="btn btn-primary btn-block" name="login" style="width: 100%;"><i class="fa fa-pen-alt"></i>
-                          Save as Draft
-                        </button>
-                      </div>
-
-                    <?php else : ?>
-                      <div class="row">
-                        <div class="col-md-6">
-                          <button type="submit" class="btn btn-primary btn-block" name="login" style="width: 100%;"><i class="fa fa-pen-alt"></i>
-                            Save as Draft
-                          </button>
-                        </div>
-                        <div class="col-md-6">
-                          <button type="button" class="btn btn-success btn-block btn-proceed" data-toggle="modal" style="width: 100%;"><i class="fa fa-share"></i>
-                            Submit
-                          </button>
-                          </button>
-                        </div>
-                      <?php endif; ?>
-
-
-
-
-                    <?php endif ?>
-                      </div>
-                  </div>
               </div>
-
             </div>
+          </div>
+          <div class="card-body p-0">
+            <div class="row">
+              <div class="col-md-12">
+                <table class="table table-responsive">
+                  <tbody>
+                    <tr>
+                      <td width="25%">Control No</td>
+                      <td width="45%"><label class="control-label"><?= $applicant['control_no']; ?></label></td>
+                    </tr>
+                    <tr>
+                      <td width="25%">Date Created</td>
+                      <td width="45%"><label class="control-label"><?= $applicant['date_created']; ?></label></td>
+                    </tr>
+                    <tr>
+                      <td width="25%">Establishment</td>
+                      <td width="45%"><label class="control-label"><?= $applicant['ac_establishment']; ?></label></td>
+                    </tr>
+                    <tr>
+                      <td width="25%">Safetyseal No</td>
+                      <td width="45%"><label class="control-label">
+                        <?php if (in_array($applicant['status'], ['Draft', 'For Renewal'])): ?>
+                          ---
+                        <?php else: ?>
+                          <?= $applicant['ss_no']; ?>
+                        <?php endif ?>
+                        </label>
+                    </td>
+                    </tr>
+                    <tr>
+                      <td width="25%">Issued On</td>
+                      <td width="45%"><label class="control-label">
+                        <?php if (in_array($applicant['status'], ['Draft', 'For Renewal'])): ?>
+                          ---
+                        <?php else: ?>
+                          <?= $applicant['date_approved']; ?>
+                        <?php endif ?>
+                        </label>
+                      </td>
+                    </tr>
+                    <tr>
+                      <td width="25%">Valid Until</td>
+                      <td width="45%"><label class="control-label"><?= $validity_date; ?></label></td>
+                    </tr>
 
-          <?php endif ?>
-          <?php if ($applicant['status'] <> 'For Receiving' and $applicant['status'] <> 'Draft') : ?>
-        </form>
-      <?php endif ?>
+                    <?php if ($applicant['application_type'] == 'Applied'): ?>
+                      <tr>
+                        <td width="25%">Contact Tracing Tool</td>
+                        <td width="45%"><label class="control-label"><?= $other_tool; ?></label></td>
+                      </tr>
+                    <?php endif ?>
+                    
+                    <tr>
+                      <td width="25%">Status</td>
+                      <td width="45%">
+                        <?php if ($is_expired): ?>
+                          <span class="badge badge-danger mb-1" style="background-color: #d60b0b; font-size: 13.5px;">Expired</span>
+                        <?php elseif (in_array($applicant['status'], ['Approved', 'Renewed'])): ?>
+                          <span class="badge badge-success mb-1" style="background-color: #00a65a; font-size: 13.5px;"><?= $applicant['status']; ?></span>
+                        <?php elseif (in_array($applicant['status'], ['Revoked', 'Disapproved', 'Expired'])):?>
+                          <span class="badge badge-danger mb-1" style="background-color: #d60b0b; font-size: 13.5px;"><?= $applicant['status']; ?></span>
+                        <?php else: ?>
+                          <span class="badge badge-info mb-1" style="background-color: #243866; font-size: 13.5px;"><?= $applicant['status']; ?></span>
+                        <?php endif ?>
+                        <br>
+
+                        <?php if ($applicant['application_type'] == 'Encoded'): ?>
+                          
+                          <?php if ($encoded_checklist > 0): ?>
+                              <label class="mb-1" style="font-size:15px;"><i class="fas fa-check-circle" style="color:#3ebe3e;"></i>  Uploaded Signed Checklist</label><br>
+                          <?php else: ?>
+                              <label class="mb-1" style="font-size:15px;"><i class="fas fa-times-circle" style="color:#d25555;"></i>  Uploaded Signed Checklist</label><br>
+                          <?php endif ?>                        
+
+                        <?php else: ?>
+                          <?php if ($is_complete_attachments): ?>
+                              <label class="mb-1" style="font-size:15px;"><i class="fas fa-check-circle" style="color:#3ebe3e;"></i> <?= $upload_count; ?>/<?= $count_answeredyes; ?> Uploaded MOVS</label><br>
+                          <?php else: ?>
+                              <label class="mb-1" style="font-size:15px;"><i class="fas fa-times-circle" style="color:#d25555;"></i> <?= $upload_count; ?>/<?= $count_answeredyes; ?> Uploaded MOVS</label><br>
+                          <?php endif ?>
+
+                          <?php if ($is_complete_asessment): ?>
+                              <label class="mb-1" style="font-size:15px;"><i class="fas fa-check-circle" style="color:#3ebe3e;"></i> 100% Self Asessment</label><br>
+                          <?php else: ?>
+                              <label class="mb-1" style="font-size:15px;"><i class="fas fa-times-circle" style="color:#d25555;"></i> <?= $complete_percentage; ?>% Self Asessment</label><br>
+                          <?php endif ?>
+
+                          <?php if (in_array($applicant['status'], ['For Reassessment', 'For Receiving'])): ?>
+                              <p class="text-success" style="font-size:12px;">Application is now ready for assessment.</p>
+                          <?php elseif (in_array($applicant['status'], ['Approved', 'Renewed'])): ?>
+                              <!-- <p class="text-success" style="font-size:10.5px;">Your application is now ready to submit.</p> -->
+                          <?php elseif (in_array($applicant['status'], ['Expired', 'Received'])): ?>
+                          <?php else: ?>
+                              <p class="text-warning" style="font-size:11.5px; color: #fd7e14;">Application is waiting for the applicant's response.</p>
+                          <?php endif ?>    
+                        <?php endif ?>
+
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="col-md-8">
+        <div class="row">
+          <div class="col-md-12">
+            <div class="card">
+            <div class="card-header bg-violet">
+              <h5><i class="fas fa-info-circle"></i> <b>Approval History</b></h5>
+            </div>
+            <div class="card-body p-0 custom-box-body" style="max-height: 500px; overflow-y: auto; overflow-x: hidden;">
+              <div class="row">
+                <div class="col-md-12">
+                  <table class="table table-responsive" style="width: 100%;">
+                    <tbody>
+                      <tr>
+                        <td style="color: #c0c0c0; width:23%; text-align: center;"><b>DATE</b></td>
+                        <td style="color: #c0c0c0; text-align: center; width:25%;"><b>USER</b></td>
+                        <td style="color: #c0c0c0; text-align: center; width:20%;"><b>ACTION</b></td>
+                        <td style="color: #c0c0c0; text-align: center;"><b>REMARK</b></td>
+                      </tr>
+                      <?php if (!empty($approval_history)): ?>
+                        <?php foreach ($approval_history as $key => $history): ?>
+                          <tr>
+                              <td style="vertical-align: bottom;">
+                                  <small><?= $history['interval']; ?></small><br>
+                                  <?= $history['action_date']; ?>
+                              </td>
+                              <td style="vertical-align: bottom;">
+                                  <?= $history['name']; ?>
+                              </td>
+                              <td style="vertical-align: bottom; text-align: center;">
+                                  <?= ucfirst($history['action']); ?>
+                              </td>
+                              <td>
+                                 <?= ucfirst($history['message']); ?> 
+                              </td>
+                          </tr>
+                        <?php endforeach ?>
+                      <?php else: ?>
+                        <tr>
+                          <td colspan="4" style="text-align:center;">No data available</td>
+                        </tr>
+                      <?php endif ?>
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+            </div>
+          </div>
+          </div>
+        </div>
+
+        <div class="row">
+          <div class="col-md-12">
+            <div class="card">
+            <div class="card-header bg-violet">
+              <h5><i class="fas fa-info-circle"></i> <b>Application History</b></h5>
+            </div>
+            <div class="card-body p-0">
+              <div class="row">
+                <div class="col-md-12">
+                  <table class="table table-responsive" style="width: 100%;">
+                    <tbody>
+                      <tr>
+                        <td style="color: #c0c0c0; text-align: center; width: 18%;"><b>SAFETYSEAL NO</b></td>
+                        <td style="color: #c0c0c0; text-align: center; width: 25%;"><b>DATE</b></td>
+                        <td style="color: #c0c0c0; text-align: center; width: 25%;"><b>ISSUED DATE</b></td>
+                        <td style="color: #c0c0c0; text-align: center; width: 25%;"><b>EXPIRATION DATE</b></td>
+                        <td style="color: #c0c0c0; text-align: center; width: 10%;"><b>STATUS</b></td>
+                      </tr>
+                      <?php if (!empty($application_history)): ?>
+                         <?php foreach ($application_history as $key => $history): ?>
+                          <tr>
+                              <td style="vertical-align: bottom; text-align: center;">
+                                  <?= $applicant['ss_no']; ?>
+                              </td>
+                              <td style="vertical-align: bottom; text-align: center;">
+                                  <?= $history['date_created']; ?>
+                              </td>
+                              <td style="vertical-align: bottom; text-align: center;">
+                                  <?= $history['issued_date']; ?>
+                              </td>
+                              <td style="vertical-align: bottom; text-align: center;">
+                                  <?= ucfirst($history['expiration_date']); ?>
+                              </td>
+                              <td>
+                                 <?= ucfirst($history['status']); ?> 
+                              </td>
+                          </tr>
+                        <?php endforeach ?>
+                      <?php else: ?>
+                        <tr>
+                          <td colspan="5" style="text-align:center;">No data available</td>
+                        </tr>
+                      <?php endif ?>
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+            </div>
+          </div>
+          </div>
+        </div>
+
+      </div>
     </div>
-  </div>
 
-  <?php include 'modal_evaluation.php'; ?>
-  <?php include 'modal_view_attachments.php'; ?>
-  <?php include 'modal_returned.php';?> 
+  </div>
 
 </div>
 
+<?php include 'modal_returned.php';?> 
+
 
 <style type="text/css">
+  .bg-violet {
+    background-color: #002851 !important;
+    color: white;
+  }
+
+  div.custom-box-body::-webkit-scrollbar {
+      width: 10px;
+  }
+   
+  div.custom-box-body::-webkit-scrollbar-track {
+      -webkit-box-shadow: inset 0 0 2px rgba(0,0,0,0.3); 
+      border-radius: 2px;
+  }
+   
+  div.custom-box-body::-webkit-scrollbar-thumb {
+      border-radius: 2px;
+      -webkit-box-shadow: inset 0 0 2px rgba(0,0,0,0.5); 
+  }
+
   .dlk-radio input[type="radio"] {
     margin-left: -99999px;
     display: none;
@@ -380,6 +436,11 @@
     //   form_id.val(id.val());
     //   $modal.modal('show');
     // });
+
+    $(document).on('click', '.btn-return_modal', function(){
+      let $modal = $("#modal_return_remarks");
+      $modal.modal('show');
+    });
 
     $(document).on('click', '.btn-attachments_view', function(){
       let tr = $(this).closest('tr');

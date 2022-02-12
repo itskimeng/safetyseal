@@ -35,7 +35,7 @@
           <?php if ($key == 0): ?>
             <div class="wrapper">
 
-              <?php if (in_array($userinfo['status'], ['Draft', 'Disapproved', 'Reassess'])): ?>
+              <?php if (in_array($userinfo['status'], ['Draft', 'Disapproved', 'Reassess', 'For Renewal'])): ?>
                <input type="radio" class="checklist1_opt" name="tracing_tool[<?php echo $list['clist_id']; ?>]" value='staysafe' id="option-1" <?php echo $list['tracing_tool'] == 'staysafe' ? 'checked' : ''; ?>>
                <input type="radio" class="checklist2_opt" name="tracing_tool[<?php echo $list['clist_id']; ?>]" value='others' id="option-2" <?php echo $list['tracing_tool'] == 'others' ? 'checked' : ''; ?>>
                  <label for="option-1" class="option option-1 btn-sm" data-val="staysafe">

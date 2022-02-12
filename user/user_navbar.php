@@ -17,7 +17,8 @@
           <?php if (!isset($_SESSION['username'])): ?>
             <a class="nav-link" href="registration.php" id="navapplication">Application </a>
           <?php else: ?>
-            <a class="nav-link" href="../wbstapplication.php?create_new" id="navapplication">Application </a>          
+            <!-- <a class="nav-link" href="../wbstapplication.php?create_new" id="navapplication">Application </a>           -->
+            <a class="nav-link" href="../user/application_list.php" id="navapplication">Application </a>          
           <?php endif ?>
           </li>
         
@@ -45,8 +46,8 @@
                 Logout(<?php echo $_SESSION['username']; ?>)
               </a>
               <ul class="dropdown-menu dropdown-menu-dark" aria-labelledby="navbarDarkDropdownMenuLink">
-                <li><a class="dropdown-item" href="user_profile.php">My Profile</a></li>
-                <li><a class="dropdown-item" href="users_establishments.php">My Establishments</a></li>
+                <li><a class="dropdown-item" href="account.php">Account</a></li>
+                <li><a class="dropdown-item" href="establishment.php">Agency</a></li>
                 <li><a class="dropdown-item" href="../views/logout.php">Log out</a></li>
               </ul>
             </li>

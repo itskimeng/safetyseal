@@ -2,6 +2,7 @@
 session_start();
 date_default_timezone_set('Asia/Manila');
 
+require '../Model/Connection.php';
 require '../manager/ApplicationManager.php';
 require '../application/config/connection.php';
 
@@ -14,19 +15,29 @@ $gcode = $_SESSION['gcode'];
 $gscope = $_SESSION['gscope'];
 
 $token = $_GET['token'];
-$control_no = deleteApplication($conn, $token);
+$dd = deleteApplication($conn, $token);
 
-$_SESSION['toastr'] = $app->addFlash('error', 'Application <b>'.$control_no.'</b> has been successfully deleted.', 'Remove');
+$_SESSION['toastr'] = $app->addFlash('error', 'Application <b>'.$dd['cn'].'</b> has been successfully deleted.', 'Remove');
 
-header('location:../admin_application.php');
+// header('location:../admin_application.php');
+if ($dd['type'] == 'Applied') {
+	header('location:../admin_view_application.php?userid='.$dd['user'].'&type=Applied&_view');
+} else {
+	header('location:../admin_view_application.php?person='.$dd['person'].'&type=Encoded&_view');
+}
 
 function deleteApplication($conn, $id) 
 {
-	$sql = "SELECT id, control_no FROM tbl_app_checklist WHERE token = '".$id."'";
+	$sql = "SELECT id, user_id, person, control_no, application_type FROM tbl_app_checklist WHERE token = '".$id."'";
 	$query = mysqli_query($conn, $sql);
     $result1 = mysqli_fetch_assoc($query);
 
-    $control_no = $result1['control_no'];
+    $data = [
+    	'cn'		=>	$result1['control_no'], 
+    	'user'		=>	$result1['user_id'], 
+    	'person'	=>	$result1['person'], 
+    	'type'		=>	$result1['application_type']
+    ];
     
     $sql = "DELETE FROM tbl_app_checklist_encoded_attachments WHERE parent_id = '".$result1['id']."'";
 	$result = mysqli_query($conn, $sql);
@@ -34,5 +45,7 @@ function deleteApplication($conn, $id)
 	$sql = "DELETE FROM tbl_app_checklist WHERE token = '".$id."'";
 	$query = mysqli_query($conn, $sql);
 
-	return $control_no;
+
+
+	return $data;
 }

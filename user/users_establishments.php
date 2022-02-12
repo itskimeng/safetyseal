@@ -14,86 +14,56 @@
             </header>
             <img src="../frontend/images/banner_calabarzon.png" height="10%" width="100%" alt="">
             <hr>
-            <div class="container mb-3">
+            <div class="container mb-3 pt-3">
                 <div class="row">
-                  <div style="border-radius: 5px;border: 1px solid #b0adad; margin-bottom: -15px;">
-                    <div class="row">
-                        <div class="pt-2 pb-2" style="background-color: #fff317; padding: 12px; color: #3a2a2a;">
-                            <i class="fa fa-directions"></i> <b>Steps in Online Application and Processing</b>
-                        </div>
-                        <table class="table table-striped table-bordered">
-                            <tr>
-                                <td style="width:15%;">Step 1:</td>
-                                <td>Register an account in the Safety Seal Portal</td>
-                            </tr>
-                            <tr>
-                                <td style="width:15%;">Step 2:</td>
-                                <td>Fill-up the Online Safety Seal Self-Assessment Checklist and upload the documents for the Means of Verification (MOV).</td>
-                            </tr>
-                            <tr>
-                                <td style="width:15%;">Step 3:</td>
-                                <td>Wait for the Inspection and Assessment Team to conduct their assessment.</td>
-                            </tr>
-                            <tr>
-                                <td style="width:15%;">Step 4:</td>
-                                <td>If approved, print the Safety Seal Certification on an A4 size paper. If not approved, ask for reassessment.</td>
-                            </tr>
-                            <tr>
-                                <td class="text-center" colspan="2"><b><i>~ system will not accept new transaction if applicant has existing application. ~</i></b></td>
-                            </tr>
-                        </table>
-                    </div>
-                  </div>
-                </div>
+                    <div class="col-md-3">
+                        <!-- Tabs nav -->
+                        <div class="nav flex-column nav-pills nav-pills-custom" id="v-pills-tab" role="tablist" aria-orientation="vertical">
+                            <a class="nav-link mb-3 p-3 shadow active" id="v-pills-home-tab" data-toggle="pill" href="#v-pills-home" role="tab" aria-controls="v-pills-home" aria-selected="true">
+                                <i class="fa fa-building" aria-hidden="true"></i>
+                                <span class="font-weight-bold small"> My Establishment</span>
+                            </a>
 
-                <div class="col-md-12 mt-3 py-3">
-                    <div class="row">
-                        <div class="col-md-2">
-                            <?php if (!$has_applied): ?>
-                                <!-- <span class="label label-lg label-light-success label-inline font-weight-bold"> -->
-                                    <!-- <i class="la la-clipboard-check mr-2"></i> -->
-                                    <a href="../wbstapplication.php?create_new" class="btn btn-primary btn-md">
-                                        <i class="fa fa-plus-square"></i> Apply New
-                                    </a>
-                                <!-- </span> -->
-                            <?php endif ?>
-                            
+                            <a class="nav-link mb-3 p-3 shadow" id="v-pills-profile-tab" data-toggle="pill" href="#v-pills-profile" role="tab" aria-controls="v-pills-profile" aria-selected="false">
+                                <i class="fa fa-cog" aria-hidden="true"></i>
+                                <span class="font-weight-bold small"> Account</span>
+                            </a>
+
+                            <a class="nav-link mb-3 p-3 shadow" id="v-pills-messages-tab" data-toggle="pill" href="#v-pills-messages" role="tab" aria-controls="v-pills-messages" aria-selected="false">
+                                <i class="fas fa-clipboard-list"></i> 
+                                <span class="font-weight-bold small">Application</span>
+                            </a>
+
+                            <a class="nav-link mb-3 p-3 shadow" id="v-pills-settings-tab" data-toggle="pill" href="#v-pills-settings" role="tab" aria-controls="v-pills-settings" aria-selected="false">
+                                <i class="fa fa-check mr-2"></i>
+                                <span class="font-weight-bold small text-uppercase">----</span>
+                            </a>
                         </div>
                     </div>
-                </div>
-                <div class="col-md-12">
-                    <div class="row">
-                        <div class="card">
-                            <div class="row">
-                                <div class="card-header">
-                                    My Establishments
-                                </div>
-                                <div class="card-body" style="background-color: #f9f8f8;">
-                                    <table class="table table-hover border-bottom" id="establishmentsTable" style="font-size: 11pt;">
-                                        <thead>
-                                            <tr>
-                                                <th class="text-center" width="10%">Control No.</th>
-                                                <th class="text-center" width="10%">Status</th>
-                                                <!-- <th class="text-center" width="20%">NAME</th> -->
-                                                <!-- <th class="text-center" width="12%">AGENCY</th> -->
-                                                <th class="text-center" width="16%">ESTABLISHMENT</th>
-                                                <!-- <th class="text-center" width="20%">LOCATION</th> -->
-                                                <th class="text-center" width="10%">SAFETY SEAL NO</th>
-                                                <th class="text-center" width="10%">ISSUED </th>
-                                                <th class="text-center" width="10%">RENEWED </th>
-                                                <th class="text-center" width="10%">VALID UNTIL</th>
-                                                <th class="text-center" width="8%">ACTION</th>
-                                            </tr>
-                                        </thead>
-                                        <tbody>
-                                            <?php include 'views/fetch_table_est.php';?>
-                                        </tbody>
-                                    </table>
-                                </div>
-                                
+
+
+                    <div class="col-md-9">
+                        <div class="tab-content" id="v-pills-tabContent">
+                            <div class="tab-pane fade shadow rounded bg-white show active p-5" id="v-pills-home" role="tabpanel" aria-labelledby="v-pills-home-tab">
+                                <h4 class="font-italic mb-4">Personal information</h4>
+                                <p class="font-italic text-muted mb-2">Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
+                            </div>
+                            
+                            <div class="tab-pane fade shadow rounded bg-white p-5" id="v-pills-profile" role="tabpanel" aria-labelledby="v-pills-profile-tab">
+                                <h4 class="font-italic mb-4">Bookings</h4>
+                                <p class="font-italic text-muted mb-2">Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
+                            </div>
+                            
+                            <div class="tab-pane fade shadow rounded bg-white p-5" id="v-pills-messages" role="tabpanel" aria-labelledby="v-pills-messages-tab">
+                                <h4 class="font-italic mb-4">Reviews</h4>
+                                <p class="font-italic text-muted mb-2">Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
+                            </div>
+                            
+                            <div class="tab-pane fade shadow rounded bg-white p-5" id="v-pills-settings" role="tabpanel" aria-labelledby="v-pills-settings-tab">
+                                <h4 class="font-italic mb-4">Confirm booking</h4>
+                                <p class="font-italic text-muted mb-2">Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
                             </div>
                         </div>
-                        
                     </div>
                 </div>
             </div>
@@ -159,6 +129,44 @@
       0% { background-color: #B20000; box-shadow: 0 0 3px #B20000; }
       50% { background-color: #FF0000; box-shadow: 0 0 5px #FF0000; }
       100% { background-color: #B20000; box-shadow: 0 0 3px #B20000; }
+    }
+
+    /*
+    *
+    * ==========================================
+    * CUSTOM UTIL CLASSES
+    * ==========================================
+    */
+    .nav-pills-custom .nav-link {
+        color: #aaa;
+        background: #fff;
+        position: relative;
+    }
+
+    .nav-pills-custom .nav-link.active {
+        color: #45b649;
+        background: #fff;
+    }
+
+
+    /* Add indicator arrow for the active tab */
+    @media (min-width: 992px) {
+        .nav-pills-custom .nav-link::before {
+            content: '';
+            display: block;
+            border-top: 8px solid transparent;
+            border-left: 10px solid #fff;
+            border-bottom: 8px solid transparent;
+            position: absolute;
+            top: 50%;
+            right: -10px;
+            transform: translateY(-50%);
+            opacity: 0;
+        }
+    }
+
+    .nav-pills-custom .nav-link.active::before {
+        opacity: 1;
     }
 
 </style>

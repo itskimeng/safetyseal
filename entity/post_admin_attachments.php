@@ -6,15 +6,24 @@ $url_array2 = explode('?', 'http://'.$_SERVER ['HTTP_HOST']);
 $url = $url_array[0];
 $url2 = $url_array2[0];
 
-
+require '../Model/Connection.php';
 require '../manager/ApplicationManager.php';
 require '../application/config/connection.php';
+require '../manager/SafetysealHistoryManager.php';
 
 require_once 'google-api-php-client/src/Google_Client.php';
 require_once 'google-api-php-client/src/contrib/Google_DriveService.php';
 
 $app = new ApplicationManager();
 $client = getGoogleClient($url);
+$shm = new SafetysealHistoryManager();
+$base_conn = new Connection();
+$today = new DateTime();
+
+$client_id = $base_conn->googleClient;
+$client_secret = $base_conn->googleSecret;
+
+
 
 $token = !empty($_POST['ttid']) ? $_POST['ttid'] : $_SESSION['ss_id'];
 if (!empty($_POST['ttid'])) {
@@ -22,49 +31,100 @@ if (!empty($_POST['ttid'])) {
 }
 
 $gcode = isset($_SESSION['gcode']) ? $_SESSION['gcode'] : '';
-$gscope = isset($_SESSION['gsncope']) ? $_SESSION['gsncope'] : '';
+$gscope = isset($_SESSION['gscope']) ? $_SESSION['gscope'] : '';
 
-if (!empty($_GET['code'])) {
+if (isset($_GET['code'])) {
     $_SESSION['accessToken'] = $client->authenticate($_GET['code']);
-    $token = $_SESSION['ttid'];
-    $_SESSION['ttid'] = '';
-    $_SESSION['toastr'] = $app->addFlash('success', 'Session has been configured. Please try to reupload the file.', 'Success');
-    
-    $url2 = $url2."/safetyseal/admin_application_edit.php?appid=".$token."&code=".$gcode."&scope=".$gscope."";
-
-    header('location: '.$url2);exit;
+    header('location:'.$url);exit;
 } elseif (!isset($_SESSION['accessToken'])) {
     $client->authenticate();
 }
 
-$client->setAccessToken($_SESSION['accessToken']);
-$finfo = finfo_open(FILEINFO_MIME_TYPE);
+if (!empty($_POST)) {
+    $fid = $_POST['encoded_id'];
+    $userid = $_SESSION['userid'];
+    $cn = $_POST['cn'];
 
-//Set the Parent Folder
-$parent = new Google_ParentReference(); //previously Google_ParentReference
-$parent->setId('1HkrulaOmeSwmWuAEgyyt82nq_6IcKMf1');
+    $client->setAccessToken($_SESSION['accessToken']);
+    $finfo = finfo_open(FILEINFO_MIME_TYPE);
 
-$file = $_FILES['file'];
+    //Set the Parent Folder
+    $parent = new Google_ParentReference(); //previously Google_ParentReference
+    $parent->setId('1HkrulaOmeSwmWuAEgyyt82nq_6IcKMf1');
 
-$fileTmpPath = $file['tmp_name'];
-$fileName = $file['name'];
-$fileSize = $file['size'];
-$fileType = $file['type'];
-$fileNameCmps = explode(".", $fileName);
-$fileExtension = strtolower(end($fileNameCmps));
+    $file = $_FILES['file'];
 
-$newFileName = md5(time() . $fileName) . '.' . $fileExtension;
-$mime_type = finfo_file($finfo, $fileTmpPath);
+    $fileTmpPath = $file['tmp_name'];
+    $fileName = $file['name'];
+    $fileSize = $file['size'];
+    $fileType = $file['type'];
+    $fileNameCmps = explode(".", $fileName);
+    $fileExtension = strtolower(end($fileNameCmps));
 
-// upload file to drive
-$upFile = uploadFileToDrive($client, $fileTmpPath, $parent, $newFileName, $mime_type);
+    // $newFileName = md5(time() . $fileName) . '.' . $fileExtension;
+    $newFileName = $cn.'-'.md5(time() . $fileName) . '.' . $fileExtension;
+    $mime_type = finfo_file($finfo, $fileTmpPath);
 
-// create entry to db
-insertToEntry($conn, $token, $upFile);
+    // upload file to drive
+    $upFile = uploadFileToDrive($client, $fileTmpPath, $parent, $newFileName, $mime_type);
 
-finfo_close($finfo);
+    // create entry to db
+    insertToEntry($conn, $token, $upFile);
 
-$_SESSION['toastr'] = $app->addFlash('success', 'Checklist has been uploaded successfully.', 'Success');
+    finfo_close($finfo);
+
+    $_SESSION['toastr'] = $app->addFlash('success', 'Checklist has been uploaded successfully.', 'Success');
+
+    $msg = 'uploaded signed checklist to ' .$cn;
+    
+    $shm->insert(['fid'=>$fid, 'mid'=>SafetysealHistoryManager::MENU_PUBLIC_APPLICATION, 'uid'=>$userid, 'action'=> SafetysealHistoryManager::ACTION_UPDATE, 'message'=> $msg, 'action_date'=> $today->format('Y-m-d H:i:s')]);
+
+} else {
+    $_SESSION['toastr'] = $app->addFlash('success', 'Please try to reupload the movs.', 'Account Verified!');
+
+}
+
+// if (!empty($_GET['code'])) {
+//     $_SESSION['accessToken'] = $client->authenticate($_GET['code']);
+//     $token = $_SESSION['ttid'];
+//     $_SESSION['ttid'] = '';
+//     $_SESSION['toastr'] = $app->addFlash('success', 'Session has been configured. Please try to reupload the file.', 'Success');
+    
+//     $url2 = $url2."/safetyseal/admin_application_edit.php?appid=".$token."&code=".$gcode."&scope=".$gscope."";
+
+//     header('location: '.$url2);exit;
+// } elseif (!isset($_SESSION['accessToken'])) {
+//     $client->authenticate();
+// }
+
+// $client->setAccessToken($_SESSION['accessToken']);
+// $finfo = finfo_open(FILEINFO_MIME_TYPE);
+
+// //Set the Parent Folder
+// $parent = new Google_ParentReference(); //previously Google_ParentReference
+// $parent->setId('1HkrulaOmeSwmWuAEgyyt82nq_6IcKMf1');
+
+// $file = $_FILES['file'];
+
+// $fileTmpPath = $file['tmp_name'];
+// $fileName = $file['name'];
+// $fileSize = $file['size'];
+// $fileType = $file['type'];
+// $fileNameCmps = explode(".", $fileName);
+// $fileExtension = strtolower(end($fileNameCmps));
+
+// $newFileName = md5(time() . $fileName) . '.' . $fileExtension;
+// $mime_type = finfo_file($finfo, $fileTmpPath);
+
+// // upload file to drive
+// $upFile = uploadFileToDrive($client, $fileTmpPath, $parent, $newFileName, $mime_type);
+
+// // create entry to db
+// insertToEntry($conn, $token, $upFile);
+
+// finfo_close($finfo);
+
+// $_SESSION['toastr'] = $app->addFlash('success', 'Checklist has been uploaded successfully.', 'Success');
 
 header('location:../admin_application_edit.php?appid='.$token.'&code='.$gcode.'&scope='.$gscope.'');
 

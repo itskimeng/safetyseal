@@ -1,25 +1,76 @@
 <?php
 date_default_timezone_set('Asia/Manila');
 
+require 'Model/Connection.php';
 require 'application/config/connection.php';
 require 'manager/ApplicationManager.php';
 
 $appid = $_GET['appid'];
 
 $app = new ApplicationManager();
+$today = new DateTime();
+$today = $today->format('Y-m-d');
 
 $province = $_SESSION['province'];
 $citymun = $_SESSION['city_mun'];
 $nature = $_SESSION['nature'];
 $userid = $_SESSION['userid'];
+$ssid = $_GET['appid'];
 
 $province_opts = $app->getProvinces();
 $citymun_opts = $app->getCityMuns($province);
 $applicants = $app->getApplicationLists($province,$citymun,ApplicationManager::STATUS_DRAFT);
 $is_nature = getNature($nature);
 
+$approval_history = $app->getApprovalHistory($ssid);
+$application_history = $app->getApplicationHistory($ssid);
+
 $useraccess = getUserAccess($conn, $userid); 
 $applicant = getUserChecklists($conn, $appid); 
+$is_expired = false;
+
+$validity_date = '';
+if (!empty($applicant['date_approved'])) {
+    $validity_date = date('Y-m-d', strtotime("+6 months", strtotime($applicant['date_approved'])));
+    
+    if ($today > $validity_date) {
+        $is_expired = true;
+    }
+}
+
+
+
+if (!empty($applicant['date_approved']) AND in_array($applicant['status'], ['Approved', 'Renewed', 'Expired'])) {
+    $validity_date = date('M d, Y', strtotime("+6 months", strtotime($applicant['date_approved'])));
+} else {
+    $validity_date = '---';
+}
+
+$encoded_checklist = $app->getEncodedAttachmentChecklist($applicant['ssid']);
+$answered_checklist = $app->getAnsweredChecklist($ssid);
+$count_answeredyes = $app->getAnsweredChecklistYes($ssid);
+
+$is_complete_asessment = count($answered_checklist) == 14 ? true : false;
+$complete_percentage = 0;
+foreach ($answered_checklist as $key => $answer) {
+    if ($answer != null) {
+        $complete_percentage += 1; 
+    }
+}
+
+$approval_history = $app->getApprovalHistory($ssid);
+$application_history = $app->getApplicationHistory($ssid);
+
+$attachments = $app->getUserChecklistsAttachments($applicant['ssid'], false);
+$upload_count = count($app->getUserChecklistsAttachmentsYES($ssid));
+
+// $is_complete_attachments = count($attachments) == 14 ? true : false;
+$is_complete_attachments = $upload_count == $count_answeredyes ? true : false;
+
+$complete_percentage = ($complete_percentage / 14) * 100;
+$complete_percentage = number_format($complete_percentage, 0, ',', ' ');
+
+$other_tool = $app->getContactTracingTool($ssid);
 
 if (strstr($_SERVER['REQUEST_URI'], '/admin_application_open.php')) {
     if ($applicant['status'] == 'Received') {
@@ -30,7 +81,7 @@ if (strstr($_SERVER['REQUEST_URI'], '/admin_application_open.php')) {
 }
 
 $is_readonly = false;
-if ($applicant['status'] == 'Approved' OR $applicant['status'] == 'Disapproved') {
+if (in_array($applicant['status'], ['Approved', 'Disapproved', 'Revoked', 'Expired', 'Renewed'])) {
     $is_readonly = true;
 }
 $applicants_data = getUserChecklistsEntry($conn, $appid, $applicant['for_renewal']); 
@@ -85,7 +136,10 @@ function getUserChecklists($conn, $id)
         ac.token as ssid,
         ui.POSITION as position,
         ac.for_renewal as for_renewal,
-       	DATE_FORMAT(ac.date_created, '%M %d, %Y') as date_created
+        ac.person as person,
+        ac.application_type as application_type,
+       	DATE_FORMAT(ac.date_created, '%b %d, %Y') as date_created,
+        DATE_FORMAT(ac.date_approved, '%b %d, %Y') as date_approved
         FROM tbl_app_checklist ac
         LEFT JOIN tbl_admin_info ai on ai.id = ac.user_id
         LEFT JOIN tbl_userinfo ui on ui.user_id = ai.id
@@ -114,11 +168,11 @@ function getUserChecklistsEntry($conn, $id, $for_renewal)
         ui.GOV_NATURE_NAME as nature,
         ui.POSITION as position ";
 
-    if ($for_renewal) {
-        $sql .= " FROM tbl_app_checklist_renewal_entry e";
-    } else {
+    // if ($for_renewal) {
+    //     $sql .= " FROM tbl_app_checklist_renewal_entry e";
+    // } else {
         $sql .= " FROM tbl_app_checklist_entry e";
-    }
+    // }
      
     $sql .= " LEFT JOIN tbl_app_checklist ac on ac.id = e.parent_id 
             LEFT JOIN tbl_app_certchecklist c on c.id = e.chklist_id 

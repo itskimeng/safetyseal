@@ -4,13 +4,15 @@
   <div class="container">
     <div class="row mb-2">
       <div class="col-sm-6">
-        <h5 class="m-0"> Application View</h5>
+        <h5 class="m-0">Checklist Edit</h5>
       </div><!-- /.col -->
       <div class="col-sm-6">
         <ol class="breadcrumb float-sm-right">
           <li class="breadcrumb-item"><a href="dashboard.v2.php">Home</a></li>
-          <li class="breadcrumb-item"><a href="admin_application.php">Application</a></li>
-          <li class="breadcrumb-item active"> View</li>
+          <li class="breadcrumb-item"><a href="admin_application.php">Application List</a></li>
+          <li class="breadcrumb-item"><a href="admin_view_application.php?userid=<?= $applicant['user_id']; ?>&type=<?= $applicant['application_type'];?>&_view">Application View</a></li>
+          <li class="breadcrumb-item"><a href="admin_application_summary.php?appid=<?php echo $_GET['appid']; ?>&ussir=<?php echo $_GET['ussir']; ?>">Application Summary</a></li>
+          <li class="breadcrumb-item active">Checklist Edit</li>
         </ol>
       </div>
     </div>
@@ -21,6 +23,36 @@
 <!-- Main content -->
 <div class="content">
   <div class="container">
+    
+    <div class="row">
+      <div class="col-md-12 mb-2">
+        <div class="row">
+          <div class="col-md-6">  
+            <div class="btn-group">
+              <a href="admin_application_summary.php?appid=<?php echo $_GET['appid']; ?>&ussir=<?php echo $_GET['ussir']; ?>" class="btn btn-secondary btn-sm">
+                <i class="fa fa-arrow-circle-left"></i> Back
+              </a>
+            </div>
+          </div>
+
+          <div class="col-md-6">
+            <div class="row text-right">
+              <div class="col-md-12">
+                <div class="btn-group">
+                  <?php if ($applicant['status'] == 'Approved'): ?>
+                    <button type="button" id="btn-revoke_modal" class="btn btn-danger btn-sm btn-revoke_modal">
+                      <i class="fa fa-ban"></i> Revoke
+                    </button>
+                  <?php endif ?>
+                  
+                </div>
+              </div>
+            </div>    
+          </div>
+        </div>
+
+      </div>
+    </div>
 
     <?php include 'form/applicant_details.php'; ?>
 
@@ -48,8 +80,8 @@
                     <th class="text-center" width="5%">ANSWER</th>
                     <th width="11%">REASON WHY N/A</th>
                     <th width="5%">ATTACHMENTS</th>
-                    <th width="13%">REMARKS FROM PNP</th>
-                    <th width="13%">REMARKS FROM BFP</th>
+                    <th width="13%">REMARKS <br>FROM PNP</th>
+                    <th width="13%">REMARKS <br>FROM BFP</th>
                     <?php if ($applicant['status'] <> 'For Receiving' and $applicant['status'] <> 'Draft') : ?>
                       <?php //if ($useraccess['nature'] != 'PNP' AND $useraccess['position'] != 'PNP' AND $useraccess['nature'] != 'BFP' AND $useraccess['position'] != 'BFP'): ?>
                           <th>ASSESSMENT</th>
@@ -127,7 +159,7 @@
                             <div class="btn-group btn-group-toggle" data-toggle="buttons">
                               <?php if ($list['assessment'] == 'pass') : ?>
                                 <label class="assessments btn bg-success btn-sm bg-success_btn active pass" style="background-color: #00800099; font-size: 9.5pt;">
-                                  <input type="radio" name="assessments[<?php echo $list['ulist_id']; ?>]" value="pass" id="option_b1" autocomplete="off" checked><i class="fa fa-check"></i> Pass
+                                  <input type="radio" name="assessments[<?php echo $list['ulist_id']; ?>]" value="passed" id="option_b1" autocomplete="off" checked><i class="fa fa-check"></i> Passed
                                 </label>
                               <?php else : ?>
                                 <label class="assessments btn bg-danger btn-sm bg-danger_btn active fail" style="background-color: #bd21308c; font-size: 9.5pt;">
@@ -154,18 +186,8 @@
                               <label class="assessments btn bg-danger btn-sm bg-danger_btn fail <?php echo $list['assessment'] == 'failed' ? 'active' : ''; ?>" style="background-color: #bd21308c; font-size: 9.5pt;">
                                 <input type="radio" name="assessments[<?php echo $list['ulist_id']; ?>]" value="fail" id="option_b2" autocomplete="off" <?php echo $list['assessment'] == 'fail' ? 'checked' : ''; ?>><i class="fa fa-times"></i> <?php echo $list['assessment'] == 'fail' ? 'Failed' : 'Fail'; ?>
                               </label>
-                            <?php //endif ?>
                             </div>
-                            <!-- <?php //else : ?>
-                              <div class="btn-group btn-group-toggle" data-toggle="buttons">
-                                <label class="assessments btn bg-success btn-sm bg-success_btn <?php //echo $list['assessment'] == 'pass' ? 'active' : ''; ?>" style="background-color: #00800099">
-                                  <input type="radio" name="assessments[<?php //echo $list['ulist_id']; ?>]" value="pass" id="option_b1" autocomplete="off" <?php //echo $list['assessment'] == 'pass' ? 'checked' : ''; ?>><i class="fa fa-check"></i> Pass
-                                </label>
-                                <label class="assessments btn bg-danger btn-sm bg-danger_btn <?php //echo $list['assessment'] == 'failed' ? 'active' : ''; ?>" style="background-color: #bd21308c">
-                                  <input type="radio" name="assessments[<?php //echo $list['ulist_id']; ?>]" value="failed" id="option_b2" autocomplete="off" <?php //echo $list['assessment'] == 'failed' ? 'checked' : ''; ?>><i class="fa fa-times"></i> Failed
-                                </label>
-                              </div> -->
-                            <?php endif ?>
+                          <?php endif ?>
 
                         </td>
                         <?php //endif ?>
@@ -217,10 +239,10 @@
           <?php endif ?>
         <?php endif ?>
 
-        <?php if ($applicant['status'] <> 'Approved' and $applicant['status'] <> 'Disapproved') : ?>
+        <?php if (!$is_readonly) : ?>
           <div class="row">
             
-          <div class="col-lg-12 col-md-6 col-sm-3">
+            <div class="col-lg-12 col-md-6 col-sm-3">
             <!-- <div class="card"> -->
 
             <div class="panel panel-default">
@@ -426,21 +448,21 @@
         $(this).html(el);
       }
 
-      checker_pass = assessmentCheckerPass();
-      checker_fail = assessmentCheckerFail();
+      // checker_pass = assessmentCheckerPass();
+      // checker_fail = assessmentCheckerFail();
 
-      if (checker_pass) {
-        // console.log('pass all');
-        $('#btn-pass_all').addClass('active');
-        $('#btn-fail_all').removeClass('active');
+      // if (checker_pass) {
+      //   // console.log('pass all');
+      //   $('#btn-pass_all').addClass('active');
+      //   $('#btn-fail_all').removeClass('active');
 
-      } else if (checker_fail) {
-        $('#btn-fail_all').addClass('active');
-        $('#btn-pass_all').removeClass('active');
-      } else {
-        $('#btn-fail_all').removeClass('active');
-        $('#btn-pass_all').removeClass('active');
-      }
+      // } else if (checker_fail) {
+      //   $('#btn-fail_all').addClass('active');
+      //   $('#btn-pass_all').removeClass('active');
+      // } else {
+      //   $('#btn-fail_all').removeClass('active');
+      //   $('#btn-pass_all').removeClass('active');
+      // }
     });
 
     $(document).on('click', '.btn-open-exlink', function(e){ 
@@ -506,7 +528,7 @@
         tr+= '<div class="card-body" style="text-overflow: ellipsis;white-space: nowrap;overflow: hidden;height: 3.5rem;padding: 0.3rem 0.3rem;">';
         tr+= '<div class="row">';
         tr+= '<div class="col-sm-12" style="text-align:center;">';
-        tr+= '<a class="btn btn-md btn-secondary btn-open-exlink" href="'+item['location']+'" style="width:100%">';
+        tr+= '<a class="btn btn-md btn-secondary btn-open-exlink" href="'+item['url']+'" style="width:100%">';
         tr+= '<i class="fa fa-eye"></i> View';
         tr+= '</a>';
         tr+= '</div>';
