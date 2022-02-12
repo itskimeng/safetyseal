@@ -69,7 +69,7 @@
                       <i class="fa fa-undo-alt"></i></a>
                   </div>
 
-                  <a href="admin_checklist_edit.php?appid=<?= $_GET['appid']; ?>&ussir=<?= $_GET['ussir']; ?>" type="button" class="btn btn-success btn-sm rounded-circle" data-toggle="tooltip" data-placement="right" title="Receive Application"><i class="fa fa-box"></i></a>
+                  <a href="entity/post_received.php?appid=<?= $_GET['appid']; ?>&ussir=<?= $_GET['appid']; ?>&status=For Receiving" type="button" class="btn btn-success btn-sm rounded-circle" data-toggle="tooltip" data-placement="right" title="Receive Application"><i class="fa fa-box"></i></a>
 
                 <?php else: ?>
                   <a href="admin_application_view.php?appid=<?= $_GET['appid']; ?>&ussir=<?= $_GET['ussir']; ?>" type="button" class="btn btn-primary btn-sm rounded-circle" data-toggle="tooltip" data-placement="left" title="Edit Application"><i class="fa fa-edit"></i></a>

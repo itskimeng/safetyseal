@@ -467,9 +467,6 @@
       // let valid_request = '<?= $valid_request; ?>';
       let form_validator = checklistChecker();
 
-      // console.log(valid_request);
-      console.log(form_validator);
-
       if (checker1 && checker2) {
         if (form_validator) {
           $('#modall_proceed').modal('show');  

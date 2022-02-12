@@ -28,7 +28,7 @@ $_SESSION['toastr'] = $app->addFlash('success', 'The application is now being as
 
 $msg = 'application '.$application['control_no'].' submitted ' .ApplicationManager::STATUS_FOR_RECEIVING;
 
-$shm->insert(['fid'=>$checklist_id, 'mid'=>SafetysealHistoryManager::MENU_PUBLIC_APPLICATION, 'uid'=>$userid, 'action'=> SafetysealHistoryManager::ACTION_UPDATE, 'message'=> $msg, 'action_date'=> $today->format('Y-m-d H:i:s')]);
+$shm->insert(['fid'=>$checklist_id, 'mid'=>SafetysealHistoryManager::MENU_PUBLIC_APPLICATION, 'uid'=>$userid, 'action'=> SafetysealHistoryManager::ACTION_SUBMIT, 'message'=> $msg, 'action_date'=> $today->format('Y-m-d H:i:s')]);
 
 
 // header('location:../wbstapplication.php?ssid='.$token.'');

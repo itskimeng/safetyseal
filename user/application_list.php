@@ -157,9 +157,9 @@
                                                                                 <a type="button" class="btn btn-danger btn-sm btn-delete_app rounded-circle" data-bs-toggle="modal" data-target="#modal-delete_app"><i class="fas fa-trash"></i></a>
                                                                             <?php endif ?>
 
-                                                                            <a href="../certificate.php?token=<?= $est['token']; ?>&status=<?= $est['ac_status']; ?>" target="_blank" type="button" class="btn btn-success btn-block btn-sm rounded-circle" data-toggle="tooltip" data-placement="top" title="View Certificate"><i class="fas fa-certificate"></i>
+                                                                            <!-- <a href="../certificate.php?token=<?= $est['token']; ?>&status=<?= $est['ac_status']; ?>" target="_blank" type="button" class="btn btn-success btn-block btn-sm rounded-circle" data-toggle="tooltip" data-placement="top" title="View Certificate"><i class="fas fa-certificate"></i>
                                                                             </a>
-
+ -->
                                                                             <?php if ($est['ac_status'] != 'Draft'): ?>
                                                                                 <a href="../entity/checklist_form.php?control_no=<?= $est['control_no']; ?>" type="button" target="_blank" class="btn btn-warning btn-block btn-sm rounded-circle" title="Print Checklist"><i class="fa fa-print"></i></a>
                                                                             <?php endif ?>

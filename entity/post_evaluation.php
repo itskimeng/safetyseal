@@ -18,7 +18,6 @@ $uname = $_SESSION['username'];
 $checklist_id = $_POST['appid'];
 
 $email = $_POST['email'];
-// $userid = $_POST['id'];
 $control_no = $_POST['control_no'];
 $defects = isset($_POST['defects']) ? $_POST['defects'] : '';
 $recommendations = isset($_POST['recommendations']) ? $_POST['recommendations'] : '';

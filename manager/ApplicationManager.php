@@ -1249,7 +1249,12 @@ class ApplicationManager extends Connection
         } else {
 
             if ($is_new) {
-                $sql = "UPDATE tbl_app_checklist SET safety_seal_no = '".$safety_seal_no."', date_approved = '".$date_modified."', date_modified = '".$date_modified."', approver_id = ".$approver.", status = '".$status."' WHERE id = ".$checklist_id."";
+                if ($status == 'Disapproved') {
+                    $sql = "UPDATE tbl_app_checklist SET safety_seal_no = '".$safety_seal_no."', date_modified = '".$date_modified."', approver_id = ".$approver.", status = '".$status."' WHERE id = ".$checklist_id."";
+                } else {
+                    $sql = "UPDATE tbl_app_checklist SET safety_seal_no = '".$safety_seal_no."', date_approved = '".$date_modified."', date_modified = '".$date_modified."', approver_id = ".$approver.", status = '".$status."' WHERE id = ".$checklist_id."";
+                }
+
             } else {
                 $sql = "UPDATE tbl_app_checklist SET date_modified = '".$date_modified."', approver_id = ".$approver.", status = '".$status."' WHERE id = ".$checklist_id."";
             }

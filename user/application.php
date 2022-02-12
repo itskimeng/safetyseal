@@ -200,7 +200,7 @@
                                                                                 <?php elseif (in_array($user_est[0]['ac_status'], ['For Receiving', 'For Reassessment'])): ?>
                                                                                     <p class="text-success" style="font-size:10.5px;">Application is now waiting for CMLGOO's response.</p>
                                                                                 <?php elseif ($is_complete_asessment AND $is_complete_attachments AND $user_est[0]['ac_status'] == 'For Renewal'): ?>
-                                                                                    <p class="text-danger" style="font-size:10.5px;">Your application is not yet ready to submit.</p>
+                                                                                    <p class="text-success" style="font-size:10.5px;">Your application is now ready to submit.</p>
                                                                                 <?php endif ?>
                                                                             </td>
                                                                         </tr>

@@ -15,8 +15,10 @@ class SafetysealHistoryManager
     const ACTION_UPLOAD             = 'upload';
     const ACTION_RETURN             = 'return';
     const ACTION_RECEIVE            = 'receive';
+    const ACTION_REASSESS           = 'reassess';
     const ACTION_RENEWAL            = 'renewal';
     const ACTION_REVOKE             = 'revoke';
+    const ACTION_SUBMIT             = 'submit';
 
     function __construct() 
     {

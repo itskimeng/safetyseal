@@ -10,7 +10,7 @@
         <ol class="breadcrumb float-sm-right">
           <li class="breadcrumb-item"><a href="dashboard.v2.php">Home</a></li>
           <li class="breadcrumb-item"><a href="admin_application.php">Application List</a></li>
-          <li class="breadcrumb-item"><a href="admin_application_summary.php?appid=<?php echo $_GET['appid']; ?>&ussir=<?php echo $_GET['ussir']; ?>">Application Summary</a></li>
+          <li class="breadcrumb-item"><a href="admin_application_summary.php?appid=<?= $_GET['appid']; ?>&ussir=<?= $_GET['ussir']; ?>">Application Summary</a></li>
           <li class="breadcrumb-item active"> Checklist View</li>
         </ol>
       </div>
@@ -38,7 +38,7 @@
 
           <div class="col-md-6">
             <div class="btn-group">
-              <a href="admin_application_summary.php?appid=<?php echo $_GET['appid']; ?>&ussir=<?php echo $_GET['ussir']; ?>" class="btn btn-secondary btn-sm">
+              <a href="admin_application_summary.php?appid=<?= $_GET['appid']; ?>&ussir=<?= $_GET['ussir']; ?>" class="btn btn-secondary btn-sm">
                 <i class="fa fa-arrow-circle-left"></i> Back
               </a>
             </div>  
@@ -54,7 +54,7 @@
                 </div>
 
                 <div class="btn-group">
-                  <a href="entity/post_received.php?appid=<?php echo $_GET['appid']; ?>&ussir=<?php echo $_GET['appid']; ?>&status=For Receiving" class="btn btn-primary btn-sm">
+                  <a href="entity/post_received.php?appid=<?= $_GET['appid']; ?>&ussir=<?= $_GET['appid']; ?>&status=For Receiving" class="btn btn-primary btn-sm">
                     <i class="fa fa-box"></i> Receive
                   </a>
                 </div>
@@ -76,10 +76,10 @@
       <?php if ($applicant['status'] <> 'For Receiving' and $applicant['status'] <> 'Draft') : ?>
         <form method="POST" action="entity/post_assessment.php" id="form-evaluation">
         <?php endif ?>
-        <input type="hidden" name="appid" value="<?php echo $applicant['appid']; ?>">
-        <input type="hidden" name="email" value="<?php echo $applicant['email']; ?>">
-        <input type="hidden" name="id" value="<?php echo $applicant['user_id']; ?>">
-        <input type="hidden" name="control_no" value="<?php echo $applicant['control_no']; ?>">
+        <input type="hidden" name="appid" value="<?= $applicant['appid']; ?>">
+        <input type="hidden" name="email" value="<?= $applicant['email']; ?>">
+        <input type="hidden" name="id" value="<?= $applicant['user_id']; ?>">
+        <input type="hidden" name="control_no" value="<?= $applicant['control_no']; ?>">
         <div class="col-lg-12 col-md-6 col-sm-3">
           <div class="card">
             <div class="card-header">
@@ -108,33 +108,33 @@
 
                     <tr>
                       <td>
-                        <b><?php echo $key + 1; ?>.</b>
-                        <input type="hidden" id="cform-hidden_entid" name="hidden_entid" value="<?php echo $list['ulist_id']; ?>" />
+                        <b><?= $key + 1; ?>.</b>
+                        <input type="hidden" id="cform-hidden_entid" name="hidden_entid" value="<?= $list['ulist_id']; ?>" />
                       </td>
                       <td>
-                        <?php echo $list['requirement']; ?>
+                        <?= $list['requirement']; ?>
                         <?php if ($key == 0) : ?>
                           <br><br>Other contact tracing tool:<br>
-                          <span class="badge badge-info right" style="font-size:10pt;"><?php echo $list['other_tool']; ?></span>
+                          <span class="badge badge-info right" style="font-size:10pt;"><?= $list['other_tool']; ?></span>
                         <?php endif ?>
                       </td>
                       <td>
                         <ul>
                           <?php foreach ($list['description'] as $description) : ?>
-                            <li><?php echo $description ?></li>
+                            <li><?= $description ?></li>
                           <?php endforeach ?>
                         </ul>
                       </td>
                       <td class="text-center" style="font-size: 15pt;">
-                        <span class="badge bg-<?php echo $list['badge']; ?>"><?php echo $list['answer']; ?></span>
+                        <span class="badge bg-<?= $list['badge']; ?>"><?= $list['answer']; ?></span>
                       </td>
-                      <td><?php echo $list['reason']; ?></td>
+                      <td><?= $list['reason']; ?></td>
                       <td class="text-center">
                         <div class="col-md-12">
                           <?php if (!empty($appchecklists_attchmnt[$list['ulist_id']])) : ?>
-                            <input type="hidden" id="cform-ulist_id" name="ulist_id[<?php echo $list['ulist_id']; ?>]" value="<?php echo $list['ulist_id']; ?>">
+                            <input type="hidden" id="cform-ulist_id" name="ulist_id[<?= $list['ulist_id']; ?>]" value="<?= $list['ulist_id']; ?>">
 
-                            <input type="hidden" name="checklist-order" id="checklist-order" value="<?php echo $key+1; ?>"/>
+                            <input type="hidden" name="checklist-order" id="checklist-order" value="<?= $key+1; ?>"/>
 
                             <button type="button" class="btn btn-warning btn-sm btn-attachments_view" data-bs-toggle="modal" style="font-size: 9.5pt;">
                               <i class="fa fa-link"></i> View
@@ -148,9 +148,9 @@
                         <div class="col-md-12">
                           <div class="form-group">
                             <?php if ($list['nature'] == 'pnp') : ?>
-                              <textarea class="form-control" rows="3" name="pnp_remarks[<?php echo $list['ulist_id']; ?>]" placeholder="Enter ..." style="font-size: 9.5pt;" <?php echo $is_readonly ? 'disabled' : ''; ?> value="<?php echo isset($list['pnp_remarks']) ? $list['pnp_remarks'] : ''; ?>"><?php echo isset($list['pnp_remarks']) ? $list['pnp_remarks'] : ''; ?></textarea>
+                              <textarea class="form-control" rows="3" name="pnp_remarks[<?= $list['ulist_id']; ?>]" placeholder="Enter ..." style="font-size: 9.5pt;" <?= $is_readonly ? 'disabled' : ''; ?> value="<?= isset($list['pnp_remarks']) ? $list['pnp_remarks'] : ''; ?>"><?= isset($list['pnp_remarks']) ? $list['pnp_remarks'] : ''; ?></textarea>
                             <?php else : ?>
-                              <?php echo isset($list['pnp_remarks']) ? $list['pnp_remarks'] : ''; ?>
+                              <?= isset($list['pnp_remarks']) ? $list['pnp_remarks'] : ''; ?>
                             <?php endif ?>
                           </div>
                         </div>
@@ -159,9 +159,9 @@
                         <div class="col-md-12">
                           <div class="form-group">
                             <?php if ($list['nature'] == 'pnp') : ?>
-                              <textarea class="form-control" rows="3" name="bfp_remarks[<?php echo $list['ulist_id']; ?>]" placeholder="Enter ..." style="font-size: 9.5pt;" <?php echo $is_readonly ? 'disabled' : ''; ?> value="<?php echo isset($list['bfp_remarks']) ? $list['bfp_remarks'] : ''; ?>"><?php echo isset($list['bfp_remarks']) ? $list['bfp_remarks'] : ''; ?></textarea>
+                              <textarea class="form-control" rows="3" name="bfp_remarks[<?= $list['ulist_id']; ?>]" placeholder="Enter ..." style="font-size: 9.5pt;" <?= $is_readonly ? 'disabled' : ''; ?> value="<?= isset($list['bfp_remarks']) ? $list['bfp_remarks'] : ''; ?>"><?= isset($list['bfp_remarks']) ? $list['bfp_remarks'] : ''; ?></textarea>
                             <?php else : ?>
-                              <?php echo isset($list['bfp_remarks']) ? $list['bfp_remarks'] : ''; ?>
+                              <?= isset($list['bfp_remarks']) ? $list['bfp_remarks'] : ''; ?>
                             <?php endif ?>
 
                           </div>
@@ -196,7 +196,7 @@
                   <div class="col-md-12">
                     <div class="form-group">
                       <label>Defects/Defeciencies noted during inspection:</label>
-                      <textarea class="form-control" rows="3" name="defects" placeholder="Enter ..." <?php echo $is_readonly ? 'disabled' : ''; ?> value="<?php echo isset($app_notes['defects']) ? $app_notes['defects'] : ''; ?>"><?php echo isset($app_notes['defects']) ? $app_notes['defects'] : ''; ?></textarea>
+                      <textarea class="form-control" rows="3" name="defects" placeholder="Enter ..." <?= $is_readonly ? 'disabled' : ''; ?> value="<?= isset($app_notes['defects']) ? $app_notes['defects'] : ''; ?>"><?= isset($app_notes['defects']) ? $app_notes['defects'] : ''; ?></textarea>
                     </div>
                   </div>
                 </div>
@@ -204,7 +204,7 @@
                   <div class="col-md-12" style="margin-bottom:-1%;">
                     <div class="form-group">
                       <label>Recommendations</label>
-                      <textarea class="form-control" name="recommendations" rows="3" placeholder="Enter ..." <?php echo $is_readonly ? 'disabled' : ''; ?> value="<?php echo isset($app_notes['recommendations']) ? $app_notes['recommendations'] : ''; ?>"><?php echo isset($app_notes['recommendations']) ? $app_notes['recommendations'] : ''; ?></textarea>
+                      <textarea class="form-control" name="recommendations" rows="3" placeholder="Enter ..." <?= $is_readonly ? 'disabled' : ''; ?> value="<?= isset($app_notes['recommendations']) ? $app_notes['recommendations'] : ''; ?>"><?= isset($app_notes['recommendations']) ? $app_notes['recommendations'] : ''; ?></textarea>
                     </div>
                   </div>
                 </div>
@@ -223,14 +223,14 @@
                   <?php if ($useraccess['nature'] != 'PNP' AND $useraccess['position'] != 'PNP' AND $useraccess['nature'] != 'BFP' AND $useraccess['position'] != 'BFP'): ?>
                   <div class="col-md-12">
                     
-                    <a href="entity/post_received.php?appid=<?php echo $_GET['appid']; ?>&ussir=<?php echo $_GET['appid']; ?>&status=For Receiving" class="btn btn-primary btn-block btn-sm" style="margin-bottom: -2%;">
+                    <a href="entity/post_received.php?appid=<?= $_GET['appid']; ?>&ussir=<?= $_GET['appid']; ?>&status=For Receiving" class="btn btn-primary btn-block btn-sm" style="margin-bottom: -2%;">
                       <i class="fa fa-box"></i> Receive
                     </a>
                   </div>
                 <?php endif ?>
                 <?php else : ?>
 
-                  <div class="<?php echo $is_new ? 'col-md-12' : 'col-md-12'; ?> pull-right">
+                  <div class="<?= $is_new ? 'col-md-12' : 'col-md-12'; ?> pull-right">
                     <?php if ($is_nature == 'BFP' || $is_nature == 'PNP') : ?>
                       <div class="col-md-12">
                         <button type="submit" class="btn btn-primary btn-block" name="login" style="width: 100%;"><i class="fa fa-pen-alt"></i>
@@ -410,7 +410,7 @@
       let modal_label = $modal.find('#exampleModalLabel');
       modal_label.html('<i class="fa fa-link"></i> Attachments - '+caption);
 
-      let path = 'entity/get_bucket_uploads.php?id='+id.val()+'&for_renewal=<?php echo $applicant['for_renewal']; ?>&list_order='+list_order.val();
+      let path = 'entity/get_bucket_uploads.php?id='+id.val()+'&for_renewal=<?= $applicant['for_renewal']; ?>&list_order='+list_order.val();
 
       $.get(path, function(data, key){
         let dd = JSON.parse(data);

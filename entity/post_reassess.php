@@ -13,6 +13,7 @@ $today = new DateTime();
 
 $userid = $_SESSION['userid'];
 $uname = $_SESSION['username'];
+$act_stat = SafetysealHistoryManager::ACTION_REASSESS;
 
 $token = $_GET['ssid'];
 $status = $_GET['stt'] == 'FA' ? ApplicationManager::STATUS_FOR_REASSESSMENT: $_GET['stt'];
@@ -23,14 +24,13 @@ $_SESSION['toastr'] = $app->addFlash('success', 'The application is now being as
 
 if ($application['status'] == ApplicationManager::STATUS_REASSESS) {
 	$msg = 'application '.$application['control_no'].' submitted ' .ApplicationManager::STATUS_FOR_REASSESSMENT;
+	$act_stat = 'submitted';
 } else {
 	$msg = 'reassesed application ' .$application['control_no'];
 }
 
-$shm->insert(['fid'=>$application['id'], 'mid'=>SafetysealHistoryManager::MENU_PUBLIC_APPLICATION, 'uid'=>$userid, 'action'=> SafetysealHistoryManager::ACTION_UPDATE, 'message'=> $msg, 'action_date'=> $today->format('Y-m-d H:i:s')]);
+$shm->insert(['fid'=>$application['id'], 'mid'=>SafetysealHistoryManager::MENU_PUBLIC_APPLICATION, 'uid'=>$userid, 'action'=> $act_stat, 'message'=> $msg, 'action_date'=> $today->format('Y-m-d H:i:s')]);
 
-
-// header('location:../wbstapplication.php?ssid='.$token.'');
 header('location:../wbstapplication.php?ssid='.$token.'&code='.$_SESSION['gcode'].'&scope='.$_SESSION['gscope'].'');
 
 
