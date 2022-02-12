@@ -24,7 +24,7 @@ require_once 'controller/UsersGuideController.php'; ?>
     <div class="container">
         <div class="row">
             <div class="col-md-12">
-                 <iframe src="fpdf/guide/safetyseal_users_guide_admin_2022.pdf" width="100%" height="500px"></iframe>
+                 <iframe src="fpdf/guide/safetyseal_users_guide_admin_2022.pdf" width="100%" height="800px"></iframe>
             </div>
         </div>
     </div>
