@@ -1204,7 +1204,7 @@ class ApplicationManager extends Connection
             if ($status == 'Disapproved') {
                 $sql.= " AND ac.status IN ('Reassess', 'Disapproved', 'Returned', 'For Reassessment')";
             } elseif ($status == 'Approved') {
-                $sql.= " AND ac.status IN ('Approved', 'Renewed')";
+                $sql.= " AND ac.status IN ('Approved')";
             } elseif ($status == 'Received') {
                 $sql.= " AND ac.status IN ('Received', 'For Renewal')";
             } else {
@@ -1223,7 +1223,7 @@ class ApplicationManager extends Connection
         $getQry = $this->db->query($sql);
         $row = mysqli_fetch_array($getQry);
 
-        return $row['total'];
+        return number_format($row['total']);
     }
 
     public function getValidationLists($appid) {
