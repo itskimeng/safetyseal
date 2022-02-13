@@ -32,8 +32,7 @@
                 </div>
                 <p class="text-muted">
                   New Here?
-                  Create an account
-                  <!-- <a href="#!" data-bs-toggle="modal" data-bs-target="#exampleModal">Create an account</a> -->
+                  <a href="#!" data-bs-toggle="modal" data-bs-target="#exampleModal">Create an account</a>
                 </p>
               </div>
               <div class="alert-messages text-center">
@@ -48,7 +47,7 @@
                     Username
                   </label>
 
-                  <input class="form-control form-control-lg form-control-solid" name="username" required="required" autofocus="autofocus" disabled>
+                  <input class="form-control form-control-lg form-control-solid" name="username" required="required" autofocus="autofocus">
                 </div>
 
                 <!-- Password -->
@@ -60,7 +59,7 @@
                     <!-- <a href="https://safetyseal.ncr.dilg.gov.ph/forgot-password" class="text-primary text-hover-primary" id="kt_login_forgot">Forgot your password?</a> -->
                   </div>
 
-                  <input class="form-control form-control-lg form-control-solid" id="password" type="password" name="password" required="required" autocomplete="current-password" disabled>
+                  <input class="form-control form-control-lg form-control-solid" id="password" type="password" name="password" required="required" autocomplete="current-password">
                 </div>
 
                 <!-- Remember Me -->

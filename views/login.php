@@ -3,9 +3,7 @@ session_start();
 // require_once '../application/config/connection.php';
 require_once '../controller/LoginController.php';
 
-if ($_POST['username'] != 'jcbajite') {
-     header('Location: ../registration.php?login=failed');
-} elseif (isset($_POST['login'])) {
+if (isset($_POST['login'])) {
      //get form data
      $username = mysqli_real_escape_string($conn, $_POST["username"]);
 
