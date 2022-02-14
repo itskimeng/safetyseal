@@ -543,7 +543,7 @@ class ApplicationManager extends Connection
                     FROM tbl_app_checklist ac
                     LEFT JOIN tbl_admin_info ai ON ai.id = ac.user_id
                     LEFT JOIN tbl_userinfo ui ON ui.user_id = ai.id
-                    WHERE ai.PROVINCE = 2 AND ai.LGU = 03 AND ac.application_type = 'Applied' AND ac.status <> 'Draft' AND ac.status <> 'Returned' AND ac.status <> 'Reassess' 
+                    WHERE ai.PROVINCE = '".$province."' AND ai.LGU = '".$lgu."' AND ac.application_type = 'Applied' AND ac.status <> 'Draft' AND ac.status <> 'Returned' AND ac.status <> 'Reassess' 
                     ORDER BY ai.id, ac.id DESC 
                     LIMIT 18446744073709551615
                 ) AS subqry
@@ -604,23 +604,23 @@ class ApplicationManager extends Connection
 
         $sql2 = "SELECT * FROM (
                     SELECT 
-                    ac.id as id,
-                    ai.CMLGOO_NAME as fname,
-                    ui.GOV_AGENCY_NAME as pagency,
-                    ac.agency as cagency,
-                    ui.ADDRESS as address,
-                    DATE_FORMAT(ac.date_created, '%Y-%m-%d') as date_created,
-                    DATE_FORMAT(ac.date_approved, '%Y-%m-%d') as date_approved,
-                    ui.id as userid,
-                    ai.id AS aid,
-                    ac.control_no as control_no,
-                    ac.safety_seal_no as ss_no,
-                    ac.status as stats,
-                    ac.address as ac_address,
-                    ac.application_type as app_type,
-                    ac.token as token,
-                    ac.person as person,
-                    ac.for_renewal as for_renewal
+                        ac.id as id,
+                        ai.CMLGOO_NAME as fname,
+                        ui.GOV_AGENCY_NAME as pagency,
+                        ac.agency as cagency,
+                        ui.ADDRESS as address,
+                        DATE_FORMAT(ac.date_created, '%Y-%m-%d') as date_created,
+                        DATE_FORMAT(ac.date_approved, '%Y-%m-%d') as date_approved,
+                        ui.id as userid,
+                        ai.id AS aid,
+                        ac.control_no as control_no,
+                        ac.safety_seal_no as ss_no,
+                        ac.status as stats,
+                        ac.address as ac_address,
+                        ac.application_type as app_type,
+                        ac.token as token,
+                        ac.person as person,
+                        ac.for_renewal as for_renewal
                     FROM tbl_app_checklist ac
                     LEFT JOIN tbl_admin_info ai on ai.id = ac.user_id
                     LEFT JOIN tbl_userinfo ui on ui.user_id = ai.id
@@ -686,23 +686,23 @@ class ApplicationManager extends Connection
 
         $sql3 = "SELECT * FROM (
                     SELECT 
-                    ac.id as id,
-                    ai.CMLGOO_NAME as fname,
-                    ui.GOV_AGENCY_NAME as pagency,
-                    ac.agency as cagency,
-                    ui.ADDRESS as address,
-                    DATE_FORMAT(ac.date_created, '%Y-%m-%d') as date_created,
-                    DATE_FORMAT(ac.date_approved, '%Y-%m-%d') as date_approved,
-                    ui.id as userid,
-                    ai.id AS aid,
-                    ac.control_no as control_no,
-                    ac.safety_seal_no as ss_no,
-                    ac.status as stats,
-                    ac.address as ac_address,
-                    ac.application_type as app_type,
-                    ac.token as token,
-                    ac.person as person,
-                    ac.for_renewal as for_renewal
+                        ac.id as id,
+                        ai.CMLGOO_NAME as fname,
+                        ui.GOV_AGENCY_NAME as pagency,
+                        ac.agency as cagency,
+                        ui.ADDRESS as address,
+                        DATE_FORMAT(ac.date_created, '%Y-%m-%d') as date_created,
+                        DATE_FORMAT(ac.date_approved, '%Y-%m-%d') as date_approved,
+                        ui.id as userid,
+                        ai.id AS aid,
+                        ac.control_no as control_no,
+                        ac.safety_seal_no as ss_no,
+                        ac.status as stats,
+                        ac.address as ac_address,
+                        ac.application_type as app_type,
+                        ac.token as token,
+                        ac.person as person,
+                        ac.for_renewal as for_renewal
                     FROM tbl_app_checklist ac
                     LEFT JOIN tbl_admin_info ai on ai.id = ac.user_id
                     LEFT JOIN tbl_userinfo ui on ui.user_id = ai.id
