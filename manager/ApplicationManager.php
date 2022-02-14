@@ -524,26 +524,26 @@ class ApplicationManager extends Connection
         
         $sql = "SELECT * FROM (
                     SELECT 
-                    ac.id AS id,
-                    ai.CMLGOO_NAME AS fname,
-                    ui.GOV_AGENCY_NAME AS agency,
-                    ui.ADDRESS AS address,
-                    DATE_FORMAT(ac.date_created, '%Y-%m-%d') AS date_created,
-                    ac.date_created AS date_createds,
-                    DATE_FORMAT(ac.date_approved, '%Y-%m-%d') AS date_approved,
-                    ui.id AS userid,
-                    ai.id AS aid,
-                    ac.control_no AS control_no,
-                    ac.safety_seal_no AS ss_no,
-                    ac.status AS stats,
-                    ac.address AS ac_address,
-                    ac.application_type AS app_type,
-                    ac.token AS token,
-                    ac.for_renewal AS for_renewal
+                        ac.id AS id,
+                        ai.CMLGOO_NAME AS fname,
+                        ui.GOV_AGENCY_NAME AS agency,
+                        ui.ADDRESS AS address,
+                        DATE_FORMAT(ac.date_created, '%Y-%m-%d') AS date_created,
+                        ac.date_created AS date_createds,
+                        DATE_FORMAT(ac.date_approved, '%Y-%m-%d') AS date_approved,
+                        ui.id AS userid,
+                        ai.id AS aid,
+                        ac.control_no AS control_no,
+                        ac.safety_seal_no AS ss_no,
+                        ac.status AS stats,
+                        ac.address AS ac_address,
+                        ac.application_type AS app_type,
+                        ac.token AS token,
+                        ac.for_renewal AS for_renewal
                     FROM tbl_app_checklist ac
                     LEFT JOIN tbl_admin_info ai ON ai.id = ac.user_id
                     LEFT JOIN tbl_userinfo ui ON ui.user_id = ai.id
-                    WHERE ai.PROVINCE = '".$province."' AND ai.LGU = '".$lgu."' AND ac.application_type = 'Applied' AND ac.status <> 'Draft' AND ac.status <> 'Returned' AND ac.status <> 'Reassess' 
+                    WHERE ai.PROVINCE = $province AND ai.LGU = $lgu AND ac.application_type = 'Applied' AND ac.status NOT IN ('Draft', 'Returned', 'Reassess') 
                     ORDER BY ai.id, ac.id DESC 
                     LIMIT 18446744073709551615
                 ) AS subqry
@@ -624,7 +624,7 @@ class ApplicationManager extends Connection
                     FROM tbl_app_checklist ac
                     LEFT JOIN tbl_admin_info ai on ai.id = ac.user_id
                     LEFT JOIN tbl_userinfo ui on ui.user_id = ai.id
-                    WHERE ai.PROVINCE = ".$province." AND ai.LGU = ".$lgu." AND ac.application_type = 'Encoded'
+                    WHERE ai.PROVINCE = $province AND ai.LGU = $lgu AND ac.application_type = 'Encoded'
                     ORDER BY ac.person, ac.id DESC 
                     LIMIT 18446744073709551615
                 ) AS subqry
@@ -706,7 +706,7 @@ class ApplicationManager extends Connection
                     FROM tbl_app_checklist ac
                     LEFT JOIN tbl_admin_info ai on ai.id = ac.user_id
                     LEFT JOIN tbl_userinfo ui on ui.user_id = ai.id
-                    WHERE ai.PROVINCE = ".$province." AND ac.lgu = ".$lgu." AND ac.application_type = 'Encoded'
+                    WHERE ai.PROVINCE = $province AND ac.lgu = $lgu AND ac.application_type = 'Encoded'
                     ORDER BY ac.person, ac.id DESC 
                     LIMIT 18446744073709551615
                 ) AS subqry

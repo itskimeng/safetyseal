@@ -63,7 +63,7 @@ if (!$is_adminro) {
 	} else {
 		$applicants = getApplicationLists($conn, $province, $citymun_opts, ApplicationManager::STATUS_DRAFT, $is_clusterhead);
 	}
-	$client_details = $app->getNotifDetailsClients(ApplicationManager::STATUS_APPROVED);
+	// $client_details = $app->getNotifDetailsClients(ApplicationManager::STATUS_APPROVED);
 } else {
 	$applicants = $app->getAllApplicationLists();
 	$reports['total_application'] = $app->showAllApplications('',$timestamp);
@@ -182,12 +182,58 @@ function getApplicationLists($conn, $province, $lgus, $status, $is_clusterhead)
 
 	$codes = implode(',', $codes);
 
-	$bsql = "SELECT ac.id as id,ai.CMLGOO_NAME as fname,ui.GOV_AGENCY_NAME as pagency, ac.agency as cagency, ui.ADDRESS as address,DATE_FORMAT(ac.date_created, '%Y-%m-%d') as date_created,DATE_FORMAT(ac.date_approved, '%Y-%m-%d H:i:s') as date_approved,ui.id as userid,ac.control_no as control_no,ac.safety_seal_no as ss_no,ac.status as status,ac.address as ac_address,ac.application_type as app_type,ac.token as token, ac.for_renewal
-	    FROM tbl_app_checklist ac
-	    LEFT JOIN tbl_admin_info ai on ai.id = ac.user_id
-	    LEFT JOIN tbl_userinfo ui on ui.user_id = ai.id";
+	// $bsql = "SELECT 
+ //                ac.id as id,
+ //                ai.CMLGOO_NAME as fname,
+ //                ui.GOV_AGENCY_NAME as pagency, 
+ //                ac.agency as cagency, 
+ //                ui.ADDRESS as address,
+ //                DATE_FORMAT(ac.date_created, '%Y-%m-%d') as date_created,
+ //                DATE_FORMAT(ac.date_approved, '%Y-%m-%d H:i:s') as date_approved,
+ //                ui.id as userid,
+ //                ac.control_no as control_no,
+ //                ac.safety_seal_no as ss_no,
+ //                ac.status as status,
+ //                ac.address as ac_address,
+ //                ac.application_type as app_type,
+ //                ac.token as token, 
+ //                ac.for_renewal
+ //    	    FROM tbl_app_checklist ac
+ //    	    LEFT JOIN tbl_admin_info ai on ai.id = ac.user_id
+ //    	    LEFT JOIN tbl_userinfo ui on ui.user_id = ai.id";
+
+    $bsql = "SELECT 
+                ac.id AS id,
+                ai.CMLGOO_NAME AS fname,
+                ui.GOV_AGENCY_NAME AS agency,
+                ui.ADDRESS AS address,
+                DATE_FORMAT(ac.date_created, '%Y-%m-%d') AS date_created,
+                ac.date_created AS date_createds,
+                DATE_FORMAT(ac.date_approved, '%Y-%m-%d') AS date_approved,
+                ui.id AS userid,
+                ai.id AS aid,
+                ac.control_no AS control_no,
+                ac.safety_seal_no AS ss_no,
+                ac.status AS stats,
+                ac.address AS ac_address,
+                ac.application_type AS app_type,
+                ac.token AS token,
+                ac.for_renewal AS for_renewal
+            FROM tbl_app_checklist ac
+            LEFT JOIN tbl_admin_info ai ON ai.id = ac.user_id
+            LEFT JOIN tbl_userinfo ui ON ui.user_id = ai.id";
+            // WHERE ai.PROVINCE = '".$province."' AND ai.LGU = '".$lgu."' AND ac.application_type = 'Applied' AND ac.status <> 'Draft' AND ac.status <> 'Returned' AND ac.status <> 'Reassess' 
+            // ORDER BY ai.id, ac.id DESC 
+            // LIMIT 18446744073709551615";
+
 
 	$sql1 = " WHERE ai.PROVINCE = ".$province." AND ai.LGU IN (".$codes.") AND ac.application_type = 'Applied' AND ac.status <> '".$status."' AND ac.status <> 'Returned'";
+    $sql1 .= " ORDER BY ai.id, ac.id DESC LIMIT 18446744073709551615";
+
+    $sub_qry = "SELECT * FROM (".$bsql.$sql1.") AS subqry GROUP BY aid" ;
+
+    print_r($sub_qry);
+    die();
 
 	$query = mysqli_query($conn, $bsql.$sql1);
 	    
