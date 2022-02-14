@@ -15,6 +15,7 @@
         <table id="list_table" class="table table-bordered table-striped" style="font-size:10pt;">
           <thead>
             <tr>
+              <th>TYPE</th>
               <th style="text-align: center; width:14%">CONTROL NO.</th>
               <th style="text-align: center; width:18%">AGENCY NAME &<br> Person in-Charge</th>
               <th style="text-align: center; width:20%">LOCATION</th>
@@ -26,9 +27,9 @@
           <tbody id="list_body">
             <?php foreach ($applicants as $key => $applicant): ?>
               <tr>
-                <!-- <td>
-                  <?php //echo $applicant['app_type']; ?>
-                </td> -->
+                <td>
+                  <?= $applicant['app_type']; ?>
+                </td>
                 <td>
                   <input type="hidden" name="ac_id" id="cform-ac_id" value="<?= $applicant['id']; ?>">
                   <span class="label label-sm bg-<?= $applicant['color']; ?> label-inline font-weight-bold py-3"><i class="fa fa-check-circle"></i>&nbsp;<?= $applicant['status']; ?>
@@ -37,7 +38,7 @@
                   <?= $applicant['control_no']; ?>    
                 </td>
                 <td>
-                  <b class="mb-4"><?= $applicant['agency']; ?></b><br>
+                  <b class="mb-4"><?= $applicant['agency']; ?></b><br><br>
                   <i>--<?= $applicant['fname']; ?>--</i>
                 </td>
                 <td><?= $applicant['ac_address']; ?></td>
@@ -82,17 +83,20 @@
                 <td class="text-center">
                   <div class="col-md-12">
 
-                    <?php if ($applicant['app_type'] == 'Encoded'): ?>
-                        <a href="admin_view_application.php?person=<?= $applicant['fname']; ?>&type=Encoded&_view" class="btn btn-info btn-sm" title="View Checklist"><i class="fa fa-folder-open"></i></a>
-                    <?php elseif (in_array($applicant['status'], ['For Receiving', 'For Reassessment'])): ?>
-                      <a href="admin_view_application.php?userid=<?= $applicant['userid']; ?>&type=Applied&_view" class="btn btn-info btn-sm" title="View Checklist"><i class="fa fa-folder-open"></i></a>
-                    <?php else: ?>
+                    <div class="btn-group">
+                      <?php if ($applicant['app_type'] == 'Encoded'): ?>
+                          <a href="admin_view_application.php?person=<?= $applicant['fname']; ?>&type=Encoded&_view" class="btn btn-info btn-sm" title="View Checklist"><i class="fa fa-folder-open"></i></a>
+                      <?php elseif (in_array($applicant['status'], ['For Receiving', 'For Reassessment'])): ?>
                         <a href="admin_view_application.php?userid=<?= $applicant['userid']; ?>&type=Applied&_view" class="btn btn-info btn-sm" title="View Checklist"><i class="fa fa-folder-open"></i></a>
-                    <?php endif ?>
+                      <?php else: ?>
+                          <a href="admin_view_application.php?userid=<?= $applicant['userid']; ?>&type=Applied&_view" class="btn btn-info btn-sm" title="View Checklist"><i class="fa fa-folder-open"></i></a>
+                      <?php endif ?>
+                    </div>
 
                     <?php if (in_array($applicant['status'], ['Approved', 'Renewed', 'Expired'])): ?>
-                      <a href="certificate.php?token=<?= $applicant['token']; ?>&status=<?= $applicant['status']; ?>&_view" class="btn btn-warning btn-sm" style="margin-bottom: -2%;" target="_blank" title="Generate Certificate">
-                        <i class="fa fa-print"></i></a>
+                      <div class="btn-group">
+                        <a href="certificate.php?token=<?= $applicant['token']; ?>&status=<?= $applicant['status']; ?>&_view" class="btn btn-warning btn-sm" style="margin-bottom: -2%;" target="_blank" title="Generate Certificate"><i class="fa fa-print"></i></a>
+                      </div>
                     <?php endif ?>
                   </div>
                 </td>

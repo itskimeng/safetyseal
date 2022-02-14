@@ -407,23 +407,215 @@ function generateData($result)
 
 function getPFPApplicationLists($conn, $province, $status)
 {
+    $date_today = new DateTime();
+    $date_today = date('Y-m-d', strtotime($date_today->format('Y-m-d')));
+    
+    $data = [];
+    $colors = [
+        'Draft'         => 'secondary',
+        'For Receiving' => 'primary',
+        'Reassess'      => 'primary',
+        'Received'      => 'yellow',
+        'Disapproved'   => 'red',
+        'Returned'      => 'red',
+        'Approved'      => 'green'
+    ];
+
+    // $sql = "SELECT ac.id as id, ai.CMLGOO_NAME as fname, ui.GOV_AGENCY_NAME as pagency, ac.agency as cagency,
+       //  ui.ADDRESS as address, DATE_FORMAT(ac.date_created, '%Y-%m-%d') as date_created, DATE_FORMAT(ac.date_approved, '%Y-%m-%d') as date_approved, ui.id as userid, ac.control_no as control_no, ac.safety_seal_no as ss_no,
+       //  ac.status as status, ac.address as ac_address, ac.application_type as app_type, ac.person as person,
+       //  ac.token as token FROM tbl_app_checklist ac LEFT JOIN tbl_admin_info ai on ai.id = ac.user_id
+       //  LEFT JOIN tbl_userinfo ui on ui.user_id = ai.id";
+
+    $bsql = "SELECT 
+                ac.id AS id,
+                ai.CMLGOO_NAME AS fname,
+                ui.GOV_AGENCY_NAME AS agency,
+                ui.ADDRESS AS address,
+                DATE_FORMAT(ac.date_created, '%Y-%m-%d') AS date_created,
+                ac.date_created AS date_createds,
+                DATE_FORMAT(ac.date_approved, '%Y-%m-%d') AS date_approved,
+                ui.id AS userid,
+                ai.id AS aid,
+                ac.control_no AS control_no,
+                ac.safety_seal_no AS ss_no,
+                ac.status AS stats,
+                ac.address AS ac_address,
+                ac.application_type AS app_type,
+                ac.token AS token,
+                ac.for_renewal AS for_renewal
+            FROM tbl_app_checklist ac
+            LEFT JOIN tbl_admin_info ai ON ai.id = ac.user_id
+            LEFT JOIN tbl_userinfo ui ON ui.user_id = ai.id";
+
+    $sql1 = " WHERE ai.PROVINCE = $province AND ac.application_type = 'Applied' AND ac.status NOT IN ('Draft', 'Returned')";
+    $sql1 .= " ORDER BY ai.id, ac.id DESC LIMIT 18446744073709551615";
+
+    $sub_qry = "SELECT * FROM (".$bsql.$sql1.") AS subqry GROUP BY aid" ;
+     
+    $query = mysqli_query($conn, $sub_qry);
+
+    while ($row = mysqli_fetch_assoc($query)) {
+        $color = 'green';
+        if (($row['stats'] == "Approved") AND ($row['for_renewal']) AND (!empty($row['date_renewed']))) {
+            $date_validity = date('Y-m-d', strtotime("+6 months", strtotime($row['date_renewed'])));
+            $date_validity_f = date('M d, Y', strtotime("+6 months", strtotime($row['date_renewed'])));
+        } else {
+            $date_validity_f = date('M d, Y', strtotime("+6 months", strtotime($row['date_approved'])));
+            $date_validity = date('Y-m-d', strtotime("+6 months", strtotime($row['date_approved'])));
+        }
+
+        $date1 = date_create($date_today);
+        $date2 = date_create($date_validity);
+        $interval = $date1->diff($date2);
+        
+        $status = $row['stats'];
+        if (!empty($row['date_approved'])) {
+            if ($row['stats'] == 'For Renewal') {
+                $status = $row['stats'];
+            } elseif ($date_today >= $date_validity) {
+                $status = 'Expired';
+            }
+        }
+
+        if ($status == 'For Receiving') {
+            $color = 'primary';
+        } elseif ($status == 'Received') {
+            $color = 'yellow';
+        } elseif (in_array($status, ['Disapproved', 'Expired'])) {
+            $color = 'red';
+        }
+
+        $data[$row['id']] = [
+            'id'            => $row['id'],
+            'userid'        => $row['userid'],
+            'fname'         => $row['fname'],
+            'agency'        => $row['agency'],
+            'address'       => $row['address'],
+            'date_created'  => date('M d, Y', strtotime($row['date_created'])),
+            'control_no'    => $row['control_no'],
+            'ss_no'         => $row['ss_no'],
+            'status'        => $status,
+            'color'         => $color,
+            'ac_address'    => $row['ac_address'],
+            'app_type'      => $row['app_type'],
+            'token'         => $row['token'],
+            'for_renewal'   => $row['for_renewal'],
+            'issued_date'   => date('M d, Y', strtotime($row['date_approved'])),
+            'validity_date' => $date_validity_f
+        ];   
+    }
+
+    $sql2 = " WHERE ai.PROVINCE = $province AND ac.application_type = 'Encoded'";
+    $sql2 .= " ORDER BY ai.id, ac.id DESC LIMIT 18446744073709551615";
+
+    $sub_qry = "SELECT * FROM (".$bsql.$sql2.") AS subqry GROUP BY aid" ;
+ 
+    $query = mysqli_query($conn, $sub_qry);
+    
+    while ($row = mysqli_fetch_assoc($query)) {
+        $color = 'green';
+        if (($row['stats'] == "Approved") AND ($row['for_renewal']) AND (!empty($row['date_renewed']))) {
+            $date_validity = date('Y-m-d', strtotime("+6 months", strtotime($row['date_renewed'])));
+            $date_validity_f = date('M d, Y', strtotime("+6 months", strtotime($row['date_renewed'])));
+        } else {
+            $date_validity_f = date('M d, Y', strtotime("+6 months", strtotime($row['date_approved'])));
+            $date_validity = date('Y-m-d', strtotime("+6 months", strtotime($row['date_approved'])));
+        }
+
+        $date1 = date_create($date_today);
+        $date2 = date_create($date_validity);
+        $interval = $date1->diff($date2);
+        
+        $status = $row['stats'];
+        if (!empty($row['date_approved'])) {
+            if ($row['stats'] == 'For Renewal') {
+                $status = $row['stats'];
+            } elseif ($date_today >= $date_validity) {
+                $status = 'Expired';
+            }
+        }
+
+        if ($status == 'For Receiving') {
+            $color = 'primary';
+        } elseif ($status == 'Received') {
+            $color = 'yellow';
+        } elseif (in_array($status, ['Disapproved', 'Expired'])) {
+            $color = 'red';
+        }
+
+        $data[$row['id']] = [
+            'id'            => $row['id'],
+            'userid'        => $row['userid'],
+            'fname'         => $row['fname'],
+            'agency'        => $row['agency'],
+            'address'       => $row['address'],
+            'date_created'  => date('M d, Y', strtotime($row['date_created'])),
+            'control_no'    => $row['control_no'],
+            'ss_no'         => $row['ss_no'],
+            'status'        => $status,
+            'color'         => $color,
+            'ac_address'    => $row['ac_address'],
+            'app_type'      => $row['app_type'],
+            'token'         => $row['token'],
+            'for_renewal'   => $row['for_renewal'],
+            'issued_date'   => date('M d, Y', strtotime($row['date_approved'])),
+            'validity_date' => $date_validity_f
+        ];      
+    }
+
+    return $data;
+
+}
+
+function getPFPApplicationLists2($conn, $province, $status)
+{
 	$data = [];
 	$colors = [
     	'Draft'			=> 'secondary',
     	'For Receiving' => 'primary',
+        'Reassess'      => 'primary',
     	'Received' 		=> 'yellow',
     	'Disapproved' 	=> 'red',
     	'Returned' 		=> 'red',
     	'Approved' 		=> 'green'
     ];
 
-    $sql = "SELECT ac.id as id, ai.CMLGOO_NAME as fname, ui.GOV_AGENCY_NAME as pagency, ac.agency as cagency,
-	    ui.ADDRESS as address, DATE_FORMAT(ac.date_created, '%Y-%m-%d') as date_created, DATE_FORMAT(ac.date_approved, '%Y-%m-%d') as date_approved, ui.id as userid, ac.control_no as control_no, ac.safety_seal_no as ss_no,
-	    ac.status as status, ac.address as ac_address, ac.application_type as app_type, ac.person as person,
-	    ac.token as token FROM tbl_app_checklist ac LEFT JOIN tbl_admin_info ai on ai.id = ac.user_id
-	    LEFT JOIN tbl_userinfo ui on ui.user_id = ai.id";
+    // $sql = "SELECT ac.id as id, ai.CMLGOO_NAME as fname, ui.GOV_AGENCY_NAME as pagency, ac.agency as cagency,
+	   //  ui.ADDRESS as address, DATE_FORMAT(ac.date_created, '%Y-%m-%d') as date_created, DATE_FORMAT(ac.date_approved, '%Y-%m-%d') as date_approved, ui.id as userid, ac.control_no as control_no, ac.safety_seal_no as ss_no,
+	   //  ac.status as status, ac.address as ac_address, ac.application_type as app_type, ac.person as person,
+	   //  ac.token as token FROM tbl_app_checklist ac LEFT JOIN tbl_admin_info ai on ai.id = ac.user_id
+	   //  LEFT JOIN tbl_userinfo ui on ui.user_id = ai.id";
 
-	$sql1 = " WHERE ai.PROVINCE = ".$province." AND ac.application_type = 'Applied' AND ac.status <> '$status' AND ac.status <> 'Returned'";
+    $bsql = "SELECT 
+                ac.id AS id,
+                ai.CMLGOO_NAME AS fname,
+                ui.GOV_AGENCY_NAME AS agency,
+                ui.ADDRESS AS address,
+                DATE_FORMAT(ac.date_created, '%Y-%m-%d') AS date_created,
+                ac.date_created AS date_createds,
+                DATE_FORMAT(ac.date_approved, '%Y-%m-%d') AS date_approved,
+                ui.id AS userid,
+                ai.id AS aid,
+                ac.control_no AS control_no,
+                ac.safety_seal_no AS ss_no,
+                ac.status AS stats,
+                ac.address AS ac_address,
+                ac.application_type AS app_type,
+                ac.token AS token,
+                ac.for_renewal AS for_renewal
+            FROM tbl_app_checklist ac
+            LEFT JOIN tbl_admin_info ai ON ai.id = ac.user_id
+            LEFT JOIN tbl_userinfo ui ON ui.user_id = ai.id";
+
+
+
+	// $sql1 = " WHERE ai.PROVINCE = ".$province." AND ac.application_type = 'Applied' AND ac.status <> '$status' AND ac.status <> 'Returned'";
+
+    $sql1 = " WHERE ai.PROVINCE = $province AND ac.application_type = 'Applied' AND ac.status <> '".$status."' AND ac.status <> 'Returned'";
+    $sql1 .= " ORDER BY ai.id, ac.id DESC LIMIT 18446744073709551615";
+
+    $sub_qry = "SELECT * FROM (".$bsql.$sql1.") AS subqry GROUP BY aid" ;
 	 
     $query = mysqli_query($conn, $sql.$sql1);
 
@@ -447,28 +639,28 @@ function getPFPApplicationLists($conn, $province, $status)
         ];    
     }
 
-    $sql2 = " WHERE ai.PROVINCE = ".$province." AND ac.application_type = 'Encoded'";
+    // $sql2 = " WHERE ai.PROVINCE = ".$province." AND ac.application_type = 'Encoded'";
  
-    $query = mysqli_query($conn, $sql.$sql2);
+    // $query = mysqli_query($conn, $sql.$sql2);
     
-    while ($row = mysqli_fetch_assoc($query)) {
-        $data[$row['id']] = [
-            'id' 			=> $row['id'],
-            'userid' 		=> $row['userid'],
-            'fname' 		=> !empty($row['person']) ? $row['person'] : $row['fname'],
-            'agency' 		=> !empty($row['cagency']) ? $row['cagency'] : $row['pagency'],
-            'address' 		=> $row['address'],
-            'date_created' 	=> $row['date_created'],
-            'control_no' 	=> $row['control_no'],
-            'ss_no' 		=> $row['ss_no'],
-            'status' 		=> $row['status'],
-            'color' 		=> $colors[$row['status']],
-            'ac_address' 	=> $row['ac_address'],
-            'app_type' 		=> $row['app_type'],
-            'token' 		=> $row['token'],
-            'validity_date' => !empty($row['date_approved']) ? date('F d, Y', strtotime("+6 months", strtotime($row['date_approved']))) : ''
-        ];    
-    }
+    // while ($row = mysqli_fetch_assoc($query)) {
+    //     $data[$row['id']] = [
+    //         'id' 			=> $row['id'],
+    //         'userid' 		=> $row['userid'],
+    //         'fname' 		=> !empty($row['person']) ? $row['person'] : $row['fname'],
+    //         'agency' 		=> !empty($row['cagency']) ? $row['cagency'] : $row['pagency'],
+    //         'address' 		=> $row['address'],
+    //         'date_created' 	=> $row['date_created'],
+    //         'control_no' 	=> $row['control_no'],
+    //         'ss_no' 		=> $row['ss_no'],
+    //         'status' 		=> $row['status'],
+    //         'color' 		=> $colors[$row['status']],
+    //         'ac_address' 	=> $row['ac_address'],
+    //         'app_type' 		=> $row['app_type'],
+    //         'token' 		=> $row['token'],
+    //         'validity_date' => !empty($row['date_approved']) ? date('F d, Y', strtotime("+6 months", strtotime($row['date_approved']))) : ''
+    //     ];    
+    // }
 
     return $data;
 
