@@ -1,4 +1,6 @@
 <?php
+
+require 'Model/Connection.php';
 require 'application/config/connection.php';
 require 'manager/ApplicationManager.php';
 require 'manager/ComponentsManager.php';

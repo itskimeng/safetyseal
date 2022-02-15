@@ -1566,7 +1566,7 @@ class ApplicationManager extends Connection
 
     public function getAllUsers($province='', $lgu='', $roles='')
     {
-        mysqli_set_charset($this->conn, "utf8");
+        mysqli_set_charset($this->db, "utf8");
 
         $sql = "SELECT ai.id as userid, ai.CMLGOO_NAME as name, pr.name as province, pr.id as province_id, cm.name as lgu, ai.EMAIL as email, ai.roles as role, ai.IS_VERIFIED as is_verified, ai.IS_APPROVED as is_approved, ai.UNAME as username, ai.profile
         FROM tbl_admin_info ai
@@ -1576,7 +1576,7 @@ class ApplicationManager extends Connection
         WHERE ai.id IS NOT NULL";
 
         if (!empty($province)) {
-            $sql .= " AND ai.PROVINCE = '$province'";
+            $sql .= " AND ai.PROVINCE = $province";
         }
 
         $sql .= " ORDER BY pr.id, cm.id, ai.id";

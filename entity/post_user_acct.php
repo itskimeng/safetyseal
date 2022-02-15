@@ -2,6 +2,7 @@
 session_start();
 date_default_timezone_set('Asia/Manila');
 
+require '../Model/Connection.php';
 require '../application/config/connection.php';
 require '../manager/ApplicationManager.php';	
 	
