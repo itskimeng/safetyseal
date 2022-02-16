@@ -12,7 +12,7 @@
               <th rowspan="2" width="15%" class="header_pink" style="vertical-align: middle;">Name of Province</th>
               <th rowspan="2" class="header_pink" style="vertical-align: middle;">Total No. of Applications Received</th>
               <th rowspan="2" class="header_yellow" style="vertical-align: middle;">Total No. of Establishments Issued with Safety Seal Certification </th>
-              <th rowspan="2" class="header_yellow" style="vertical-align: middle;">Total No. of Establishments Applied for Renewal</th>
+              <th rowspan="2" class="header_yellow" style="vertical-align: middle;">Total No. of Establishments with Renewed Safety Seal</th>
               <th colspan="2" class="header_yellow" style="vertical-align: middle;">Pending Applications</th>
             </tr>
             <tr>
