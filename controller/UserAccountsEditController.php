@@ -36,6 +36,9 @@ if ($is_pfp) {
     $hlbl = '(PROVINCIAL FOCAL PERSON)';
 } 
 
+$user_history = $am->getApprovalHistory('', $id);
+
+
 function convertToString ($data) {
     return json_encode(array_map(function($x) { return json_encode($x); }, $data));
 }

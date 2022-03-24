@@ -1874,30 +1874,37 @@ class ApplicationManager extends Connection
         return true;
     }
 
-    public function getApprovalHistory($id) 
+    public function getApprovalHistory($id, $uid=null) 
     {
         $sql = "SELECT 
                 h.action as action,
                 ai.CMLGOO_NAME as name,
                 h.message as message,
-                DATE_FORMAT(h.action_date, '%Y-%m-%d %H:%i:%s') as action_date,
+                DATE_FORMAT(h.action_date, '%Y-%m-%d') as action_date,
                 DATE_FORMAT(h.action_date, '%b %d, %Y %h:%i %p') as date_created
                 FROM tbl_history h 
-                LEFT JOIN tbl_admin_info ai ON ai.id = h.uid
-                WHERE h.fid = $id
-                ORDER BY h.id DESC";
+                LEFT JOIN tbl_admin_info ai ON ai.id = h.uid";
+
+        if (!empty($uid)) {
+            $sql .= " WHERE h.uid = $uid";
+        } else {
+            $sql .= " WHERE h.fid = $id";
+
+        }        
+        
+        $sql .= " ORDER BY h.id DESC";
 
         $getQry = $this->db->query($sql);
         
         $date_today = new DateTime();
-        $date_today = date('Y-m-d H:i:s', strtotime($date_today->format('Y-m-d H:i:s')));
+        // $date_today = date('Y-m-d', strtotime($date_today->format('Y-m-d H:i:s')));
 
         
         $data = [];
 
         while ($result = mysqli_fetch_assoc($getQry)) {
-            $date1=date_create($date_today);
-            $date2=date_create($result['action_date']);
+            $date1 = $date_today;
+            $date2 = new DateTime($result['action_date']);
             $interval = date_diff($date1, $date2);
 
             if ($interval->y > 0) {
@@ -1922,7 +1929,7 @@ class ApplicationManager extends Connection
                 'message'       => $result['message']
             ];
         }
-
+        
         return $data;
     }
 

@@ -1,6 +1,10 @@
 <div class="card card-info">
   <div class="card-header">
     <h3 class="card-title"><i class="fa fa-info-circle" aria-hidden="true"></i> General Information</h3>
+    <div class="card-tools">
+      <button type="button" class="btn btn-warning btn-xs btn-block btn-history" data-toggle="modal" style="width: 100%;"><i class="fa fa-history"></i> View History</button>
+                    </button>
+    </div>
   </div>
   <div class="card-body">
 

@@ -52,6 +52,8 @@
   </div>
 </div>      
 
+<?php include 'modal_history.php';?>
+
 <?php include 'edit/custom.css'; ?>
 
 <script>
@@ -96,6 +98,10 @@
       let path = 'entity/getLGUs.php?id='+id;
 
       let dd = getLGUs(path);
+    })
+
+    $(document).on('click', '.btn-history', function(){
+      $('#modal_history').modal('show');  
     })
 
     function getLGUs(path) {
