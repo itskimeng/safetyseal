@@ -19,13 +19,11 @@ require_once 'controller/DashboardController.php'; ?>
     </div>
 </div>
 
-<!-- Main content -->
 <div class="content">
     <div class="container">
         <div class="row">
 
             <div class="col-lg-3 col-xs-6">
-                <!-- small box -->
                 <div class="small-box bg-primary zoom">
                     <div class="inner">
                         <h3><?php echo $total_count['For Receiving']; ?></h3>
@@ -33,17 +31,12 @@ require_once 'controller/DashboardController.php'; ?>
                     </div>
                     <div class="icon">
                         <img class="zoom" src="frontend/images/dash_received.png" style="width:100px;margin-top:-100px;margin-right:10px;" align="right" alt="">
-
                     </div>
-                    <a href="#" class="small-box-footer"><i class="fas fa-plus"></i> View More
-                        &nbsp;
-                    </a>
+                    <a href="#" class="small-box-footer">......&nbsp;</a>
                 </div>
             </div>
 
-            <!-- small box -->
             <div class="col-lg-3 col-xs-6">
-                <!-- small box -->
                 <div class="small-box bg-yellow zoom">
                     <div class="inner">
                         <h3><?php echo $total_count['Received']; ?></h3>
@@ -52,16 +45,12 @@ require_once 'controller/DashboardController.php'; ?>
                     </div>
                     <div class="icon">
                         <img class="zoom" src="frontend/images/dash_receiving.png" style="width:100px;margin-top:-100px;margin-right:10px;" align="right" alt="">
-
                     </div>
                     <?php if ($is_rofp): ?>
-                        <a href="#" class="small-box-footer"><i class="fas fa-plus"></i> View More
+                        <a href="#" class="small-box-footer"><i class="fas fa-plus"></i> View More</a>
                     <?php else: ?>
-                        <a href="#" class="small-box-footer">
+                        <a href="#" class="small-box-footer">......&nbsp;</a>
                     <?php endif ?>
-                        &nbsp;
-
-                    </a>
                 </div>
             </div>
 
@@ -71,7 +60,6 @@ require_once 'controller/DashboardController.php'; ?>
                     <div class="inner">
                         <h3><?php echo $total_count['Approved']; ?></h3>
 
-
                         <p>APPROVED</p>
                     </div>
                     <div class="icon">
@@ -79,13 +67,10 @@ require_once 'controller/DashboardController.php'; ?>
 
                     </div>
                     <?php if ($is_rofp): ?>
-                        <a href="#" class="small-box-footer"><i class="fas fa-plus"></i> View More
+                        <a href="#" class="small-box-footer"><i class="fas fa-plus"></i> View More</a>
                     <?php else: ?>
-                        <a href="#" class="small-box-footer">
+                        <a href="#" class="small-box-footer">......&nbsp;</a>
                     <?php endif ?>
-                        &nbsp;
-
-                    </a>
                 </div>
             </div>
 
@@ -174,26 +159,62 @@ require_once 'controller/DashboardController.php'; ?>
 
                                 </div>
                                 <div class="box-header with-border">
-
-                                    <!-- BAR CHART -->
                                     <div class="box box-success">
-
                                         <div class="box-body bg-ligth">
                                             <div class="chart">
                                                 <canvas id="barChart" style="height:230px; padding:5px;"></canvas>
                                             </div>
                                         </div>
-                                        <!-- /.box-body -->
                                     </div>
-
-                                    <!-- /.box -->
-
                                 </div>
-                                <!-- /.col (RIGHT) -->
                             </div>
                         </div>
                     </div>
 
+                </div>
+            </div>
+        <?php endif ?>
+
+        <?php if ($_SESSION['is_clusterhead'] > 0 OR $_SESSION['is_pfp'] > 0 OR $_SESSION['province'] == 0 AND $_SESSION['city_mun'] == 00): ?>
+            <div class="row">
+                <div class="col-md-12">
+                    <!-- <div class="row"> -->
+                        <div class="card box box-success">
+                            <div class="card-header border-transparent" style="background-color: #009688; color:#fff;">
+                                <h3 class="card-title">USER LATEST TRANSACTION</h3>
+                                <div class="card-tools">
+                                        <a href="uac.php" class="btn btn-sm btn-warning float-right">View All</a>
+                                </div>
+                            </div>
+
+                            <div class="card-body p-0">
+                                <div class="table-responsive">
+                                    <table class="table m-0">
+                                        <thead>
+                                            <tr>
+                                                <th>DATE</th>
+                                                <th>USER</th>
+                                                <th>ACTION</th>
+                                                <th>REMARK</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <?php foreach (array_slice($user_history, 0, 5) as $key => $user): ?>
+                                              <tr>
+                                                <td style="vertical-align: bottom;"><?= $user['interval']; ?><br><?= $user['action_date']; ?></td>
+                                                <td style="vertical-align: bottom;"><?= $user['name']; ?></td>
+                                                <td style="vertical-align: bottom;"><?= ucfirst($user['action']); ?></td>
+                                                <td style="vertical-align: bottom;"><?= ucfirst($user['message']); ?></td>
+                                              </tr>
+                                            <?php endforeach ?>
+                                        </tbody>
+                                    </table>
+                                </div>
+
+                            </div>
+
+                        </div>
+                    <!-- </div> -->
                 </div>
             </div>
         <?php endif ?>
@@ -211,7 +232,9 @@ require_once 'controller/DashboardController.php'; ?>
                 });
 
                 var areaChartData = {
-                    labels: ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'],
+                    // labels: ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'],
+
+                    labels: ['January', 'February', 'March', 'April', 'May'],
 
                     datasets: [{
                             labels: 'Applicants',
@@ -221,7 +244,9 @@ require_once 'controller/DashboardController.php'; ?>
                             pointStrokeColor: '#c1c7d1',
                             pointHighlightFill: '#fff',
                             pointHighlightStroke: 'rgba(220,220,220,1)',
-                            data: [<?php echo $receiving['1'] . ',' . $receiving['2'] . ',' . $receiving['3'] . ',' . $receiving['4'] . ',' . $receiving['5'] . ',' . $receiving['6'] . ',' . $receiving['7'] . ',' . $receiving['8'] . ',' . $receiving['9'] . ',' . $receiving['10'] . ',' . $receiving['11'] . ',' . $receiving['12']; ?>],
+                            // data: [<?= $receiving['1'] . ',' . $receiving['2'] . ',' . $receiving['3'] . ',' . $receiving['4'] . ',' . $receiving['5'] . ',' . $receiving['6'] . ',' . $receiving['7'] . ',' . $receiving['8'] . ',' . $receiving['9'] . ',' . $receiving['10'] . ',' . $receiving['11'] . ',' . $receiving['12']; ?>],
+
+                            data: [<?= $receiving['1'] . ',' . $receiving['2'] . ',' . $receiving['3'] . ',' . $receiving['4'] . ',' . $receiving['5']; ?>],
                         },
                         {
                             label: 'Approved Applicants',
@@ -231,7 +256,9 @@ require_once 'controller/DashboardController.php'; ?>
                             pointStrokeColor: 'rgba(60,141,188,1)',
                             pointHighlightFill: '#fff',
                             pointHighlightStroke: 'rgba(60,141,188,1)',
-                            data: [<?php echo $approved['1'] . ',' . $approved['2'] . ',' . $approved['3'] . ',' . $approved['4'] . ',' . $approved['5'] . ',' . $approved['6'] . ',' . $approved['7'] . ',' . $approved['8'] . ',' . $approved['9'] . ',' . $approved['10'] . ',' . $approved['11'] . ',' . $approved['12']; ?>],
+                            // data: [<?= $approved['1'] . ',' . $approved['2'] . ',' . $approved['3'] . ',' . $approved['4'] . ',' . $approved['5'] . ',' . $approved['6'] . ',' . $approved['7'] . ',' . $approved['8'] . ',' . $approved['9'] . ',' . $approved['10'] . ',' . $approved['11'] . ',' . $approved['12']; ?>],
+
+                            data: [<?= $approved['1'] . ',' . $approved['2'] . ',' . $approved['3'] . ',' . $approved['4'] . ',' . $approved['5']; ?>],
 
 
                         }

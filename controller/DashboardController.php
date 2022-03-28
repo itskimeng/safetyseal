@@ -16,6 +16,8 @@ $is_pfp = $_SESSION['is_pfp'];
 $is_rofp = (($province == 0) && ($citymun == 00));
 $hlbl = ""; 
 
+$user_history = $am->getApprovalHistory('', '', $province);
+
 if ($is_rofp) {
     $hlbl = '(REGIONAL OFFICE FOCAL PERSON)';
 }
@@ -363,10 +365,29 @@ function getdataForReceived($conn, $province,$lgu)
 {
     $months =  [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12];
     for ($i = 1; $i < count($months); $i++) {
-        $sql = "SELECT pro.name as 'PROVINCE' , checklist.status, count(*) as 'count', checklist.date_created FROM `tbl_app_checklist` checklist
-        LEFT JOIN tbl_admin_info ai on checklist.user_id = ai.ID
-        LEFT JOIN tbl_province pro on ai.PROVINCE = pro.id 
-        WHERE  ai.PROVINCE= '$province' AND MONTH(checklist.date_created) = $i AND checklist.status='Received' AND ai.id IS NOT NULL AND pro.id IS NOT NULL";
+        $sql = "SELECT 
+                    pro.name as 'PROVINCE', 
+                    checklist.status, 
+                    count(*) as 'count', 
+                    checklist.date_created 
+                FROM 
+                    `tbl_app_checklist` checklist
+                LEFT JOIN 
+                    tbl_admin_info ai on checklist.user_id = ai.ID
+                LEFT JOIN 
+                    tbl_province pro on ai.PROVINCE = pro.id 
+                WHERE 
+                    ai.PROVINCE= '$province' 
+                        AND 
+                    MONTH(checklist.date_created) = $i 
+                        AND 
+                    checklist.status = 'Received' 
+                        AND 
+                    ai.id IS NOT NULL 
+                        AND 
+                    pro.id IS NOT NULL 
+                        AND 
+                    YEAR(checklist.date_created) = '2022'";
 
         $query = mysqli_query($conn, $sql);
         $result = $row = mysqli_fetch_assoc($query);
@@ -394,11 +415,25 @@ function getdataForReceivedRO($conn, $province_opts)
             
             if (count($ss) >  0) {
                 $ss = implode(',', $ss);
-                $sql = "SELECT pro.name as 'PROVINCE' , checklist.status, count(*) as 'count', checklist.date_created FROM `tbl_app_checklist` checklist
-                LEFT JOIN tbl_admin_info ai on checklist.user_id = ai.ID
-                LEFT JOIN tbl_province pro on ai.PROVINCE = pro.id 
-                WHERE  ai.PROVINCE= '$key' and MONTH(checklist.date_created) = $i and checklist.status='Received'";
-
+                $sql = "SELECT 
+                            pro.name as 'PROVINCE', 
+                            checklist.status, 
+                            count(*) as 'count', 
+                            checklist.date_created AS date_created
+                        FROM 
+                            `tbl_app_checklist` checklist
+                        LEFT JOIN 
+                            tbl_admin_info ai on checklist.user_id = ai.ID
+                        LEFT JOIN 
+                            tbl_province pro on ai.PROVINCE = pro.id 
+                        WHERE 
+                            ai.PROVINCE= '$key' 
+                                AND 
+                            MONTH(checklist.date_created) = $i 
+                                AND 
+                            checklist.status='Received'
+                                AND
+                            YEAR(checklist.date_created) = '2022'";
 
                 $query = mysqli_query($conn, $sql);
                 $row = mysqli_fetch_assoc($query);
@@ -561,11 +596,26 @@ function getdataApproved($conn, $province,$lgu)
 
     $months =  [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12];
     for ($i = 1; $i < count($months); $i++) {
-        $sql = "SELECT pro.name as 'PROVINCE' , checklist.status, count(*) as 'count', checklist.date_created FROM `tbl_app_checklist` checklist
-        LEFT JOIN tbl_admin_info ai on checklist.user_id = ai.ID
-        LEFT JOIN tbl_province pro on ai.PROVINCE = pro.id 
-        WHERE  ai.PROVINCE= '$province' and MONTH(checklist.date_created) = $i and checklist.status='Approved'";
-        // ai.PROVINCE= '$province' and 
+        $sql = "SELECT 
+                    pro.name AS 'PROVINCE', 
+                    checklist.status, 
+                    count(*) AS 'count', 
+                    checklist.date_created 
+                FROM 
+                    `tbl_app_checklist` checklist
+                LEFT JOIN 
+                    tbl_admin_info ai on checklist.user_id = ai.ID
+                LEFT JOIN 
+                    tbl_province pro on ai.PROVINCE = pro.id 
+                WHERE 
+                    ai.PROVINCE= '$province' 
+                        AND 
+                    MONTH(checklist.date_created) = $i 
+                        AND 
+                    checklist.status = 'Approved'
+                        AND
+                    YEAR(checklist.date_created) = '2022'";
+
         $query = mysqli_query($conn, $sql);
         $row = mysqli_fetch_assoc($query);
         $data[$months[$i]] = $row['count'];
@@ -639,10 +689,25 @@ function getdataApprovedRO1($conn, $province_opts)
             
             if (count($ss) >  0) {
                 $ss = implode(',', $ss);
-                $sql = "SELECT pro.name as 'PROVINCE' , checklist.status, count(*) as 'count', checklist.date_created FROM `tbl_app_checklist` checklist
-                LEFT JOIN tbl_admin_info ai on checklist.user_id = ai.ID
-                LEFT JOIN tbl_province pro on ai.PROVINCE = pro.id 
-                WHERE  ai.PROVINCE= '$key' and MONTH(checklist.date_created) = $i and checklist.status='Approved'";
+                $sql = "SELECT 
+                            pro.name as 'PROVINCE', 
+                            checklist.status, 
+                            count(*) as 'count', 
+                            checklist.date_created 
+                        FROM 
+                            `tbl_app_checklist` checklist
+                        LEFT JOIN 
+                            tbl_admin_info ai on checklist.user_id = ai.ID
+                        LEFT JOIN 
+                            tbl_province pro on ai.PROVINCE = pro.id 
+                        WHERE 
+                            ai.PROVINCE= '$key' 
+                                AND 
+                            MONTH(checklist.date_created) = $i 
+                                AND 
+                            checklist.status = 'Approved'
+                                AND 
+                            YEAR(checklist.date_created) = '2022'";
 
                 $query = mysqli_query($conn, $sql);
                 $row = mysqli_fetch_assoc($query);

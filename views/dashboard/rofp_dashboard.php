@@ -13,11 +13,7 @@
 
                             <div class="box-body bg-ligth" style="background-color: #e2e3e345;">
                                 <div class="row">
-                                    <!-- <div class="col-md-12"> -->
                                         <div class="col-md-8">
-                                            <!-- <div style="margin: auto; width:54%; padding: 5px;">
-                                                <img src="_images/calabarzon.png" style="max-width: 100%;">
-                                            </div> -->
 
                                             <div class="calabarzon-map" style="margin: auto; margin-left: 267px; width: 445px;">
                                                 <img src="_images/quezon.png" style="max-width: 100%;">
