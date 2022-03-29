@@ -16,7 +16,16 @@ $is_pfp = $_SESSION['is_pfp'];
 $is_rofp = (($province == 0) && ($citymun == 00));
 $hlbl = ""; 
 
-$user_history = $am->getApprovalHistory('', '', $province);
+$chss = $chs =  [];
+if ($_SESSION['is_clusterhead']) {
+    $chs = getget($conn, $clusterhead_id);
+    foreach ($chs as $key => $ch) {
+        $chss[] = $ch['code']; 
+    }
+    $chs = implode(',', $chss);
+}
+
+$user_history = $am->getApprovalHistory('', '', $province, $clusterhead_id, $chs);
 
 if ($is_rofp) {
     $hlbl = '(REGIONAL OFFICE FOCAL PERSON)';
@@ -889,7 +898,7 @@ function getdataApprovedRO3($conn, $province_opts)
 
 function getget($conn, $id)
 {
-	$sql = "SELECT * FROM tbl_cluster_head where id = $id";	
+	$sql = "SELECT * FROM tbl_cluster_head where id = $id";
 	$query = mysqli_query($conn, $sql);
 	$result = mysqli_fetch_array($query);
 

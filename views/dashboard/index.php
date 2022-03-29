@@ -194,6 +194,8 @@ require_once 'controller/DashboardController.php'; ?>
                                             <tr>
                                                 <th>DATE</th>
                                                 <th>USER</th>
+                                                <th>PROVINCE</th>
+                                                <th>CITY/MUN.</th>
                                                 <th>ACTION</th>
                                                 <th>REMARK</th>
                                             </tr>
@@ -203,6 +205,8 @@ require_once 'controller/DashboardController.php'; ?>
                                               <tr>
                                                 <td style="vertical-align: bottom;"><?= $user['interval']; ?><br><?= $user['action_date']; ?></td>
                                                 <td style="vertical-align: bottom;"><?= $user['name']; ?></td>
+                                                <td style="vertical-align: bottom;"><?= $user['province']; ?></td>
+                                                <td style="vertical-align: bottom;"><?= $user['citymun']; ?></td>
                                                 <td style="vertical-align: bottom;"><?= ucfirst($user['action']); ?></td>
                                                 <td style="vertical-align: bottom;"><?= ucfirst($user['message']); ?></td>
                                               </tr>

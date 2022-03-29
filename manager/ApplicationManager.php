@@ -1874,27 +1874,33 @@ class ApplicationManager extends Connection
         return true;
     }
 
-    public function getApprovalHistory($id, $uid=null, $province=null) 
+    public function getApprovalHistory($id, $uid=null, $province=null, $cluster_id=null, $lgus=null) 
     {
         $sql = "SELECT 
-                    h.action as action,
-                    ai.CMLGOO_NAME as name, 
-                    h.message as message,
-                    DATE_FORMAT(h.action_date, '%Y-%m-%d') as action_date,
-                    DATE_FORMAT(h.action_date, '%b %d, %Y %h:%i %p') as date_created
+                    h.action AS action,
+                    ai.CMLGOO_NAME AS name, 
+                    h.message AS message,
+                    p.name AS province,
+                    c.name AS citymun,
+                    DATE_FORMAT(h.action_date, '%Y-%m-%d') AS action_date,
+                    DATE_FORMAT(h.action_date, '%b %d, %Y %h:%i %p') AS date_created
                 FROM 
                     tbl_history h 
                 LEFT JOIN 
                     tbl_admin_info ai ON ai.id = h.uid
                 LEFT JOIN 
-                    tbl_province p on p.id = ai.PROVINCE";
+                    tbl_province p on p.id = ai.PROVINCE
+                LEFT JOIN 
+                    tbl_citymun c ON c.code = ai.LGU AND c.province = ai.PROVINCE";
 
         if (!empty($uid)) {
             $sql .= " WHERE h.uid = $uid";
         } elseif (!empty($id)) {
             $sql .= " WHERE h.fid = $id";
+        } elseif (!empty($province) AND !empty($cluster_id)) {
+            $sql .= " WHERE ai.PROVINCE = $province AND c.code IN ($lgus) GROUP BY ai.id";
         } elseif (!empty($province)) {
-            $sql .= " WHERE p.id = $province GROUP BY ai.id";
+            $sql .= " WHERE ai.PROVINCE = $province GROUP BY ai.id";
         } elseif (empty($id) AND empty($uid)) {
             $sql .= " GROUP BY ai.id";
         }      
@@ -1928,6 +1934,8 @@ class ApplicationManager extends Connection
             $data[] = [
                 'name'          => $result['name'],
                 'action'        => $result['action'],
+                'province'      => $result['province'],
+                'citymun'       => $result['citymun'],
                 'interval'      => $interval,
                 'action_date'   => $result['date_created'],
                 'message'       => $result['message']
