@@ -1882,12 +1882,15 @@ class ApplicationManager extends Connection
                     h.message AS message,
                     p.name AS province,
                     c.name AS citymun,
+                    ac.application_type,
                     DATE_FORMAT(h.action_date, '%Y-%m-%d') AS action_date,
                     DATE_FORMAT(h.action_date, '%b %d, %Y %h:%i %p') AS date_created
                 FROM 
                     tbl_history h 
                 LEFT JOIN 
                     tbl_admin_info ai ON ai.id = h.uid
+                LEFT JOIN 
+                    tbl_app_checklist ac ON ac.id = h.fid
                 LEFT JOIN 
                     tbl_province p on p.id = ai.PROVINCE
                 LEFT JOIN 
@@ -1938,7 +1941,8 @@ class ApplicationManager extends Connection
                 'citymun'       => $result['citymun'],
                 'interval'      => $interval,
                 'action_date'   => $result['date_created'],
-                'message'       => $result['message']
+                'message'       => $result['message'],
+                'app_type'      => $result['application_type'],
             ];
         }
         

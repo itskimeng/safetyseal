@@ -192,12 +192,13 @@ require_once 'controller/DashboardController.php'; ?>
                                     <table class="table m-0">
                                         <thead>
                                             <tr>
-                                                <th>DATE</th>
-                                                <th>USER</th>
-                                                <th>PROVINCE</th>
-                                                <th>CITY/MUN.</th>
-                                                <th>ACTION</th>
-                                                <th>REMARK</th>
+                                                <th class="text-center">DATE</th>
+                                                <th class="text-center">USER</th>
+                                                <th class="text-center">PROVINCE</th>
+                                                <th class="text-center">CITY/MUN.</th>
+                                                <th class="text-center">ACTION</th>
+                                                <th class="text-center">TYPE</th>
+                                                <th class="text-center">REMARK</th>
                                             </tr>
                                         </thead>
                                         <tbody>
@@ -208,6 +209,7 @@ require_once 'controller/DashboardController.php'; ?>
                                                 <td style="vertical-align: bottom;"><?= $user['province']; ?></td>
                                                 <td style="vertical-align: bottom;"><?= $user['citymun']; ?></td>
                                                 <td style="vertical-align: bottom;"><?= ucfirst($user['action']); ?></td>
+                                                <td style="vertical-align: bottom;"><?= ucfirst($user['app_type']); ?></td>
                                                 <td style="vertical-align: bottom;"><?= ucfirst($user['message']); ?></td>
                                               </tr>
                                             <?php endforeach ?>
