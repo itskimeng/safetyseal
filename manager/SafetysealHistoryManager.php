@@ -9,6 +9,7 @@ class SafetysealHistoryManager
     const MENU_ADMIN_APPLICATION    = 3;
     const MENU_ADMIN_USER           = 4;
 
+    const ACTION_REGISTER           = 'register';
     const ACTION_POST               = 'create';
     const ACTION_UPDATE             = 'update';
     const ACTION_DELETE             = 'delete';

@@ -3,169 +3,197 @@
 
 
 <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-    <div class="modal-dialog modal-lg" role="document">
+    <div class="modal-dialog modal-xl" role="document">
         <div class="modal-content">
-            <div class="modal-header"> 
-                <h5 class="modal-title" id="exampleModalLabel">Registration</h5>
+            <div class="modal-header" style="background-color:#d4d4d4;"> 
+                <h4 class="modal-title" id="exampleModalLabel"><i class="fa fa-registered" aria-hidden="true"></i> Registration</h4>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
-                <div style="height:300px;overflow:auto;padding:10px;">
-                    <form action="application/functions/registration_save.php" method="POST" class="row g-3 needs-validation" novalidate>
-                        <input type="hidden" id="cform-array_citymuns" class="array_citymuns" name="array_citymuns" value='<?php echo $city_mun; ?>'>
-                        <!-- <input type="hidden" id="cform-array_citymuns" class="array_citymuns" name="array_citymuns" value='<?php //echo json_encode($city_mun); ?>;'> -->
+                <div id="reg_form" style="height:450px; overflow-x:hidden; overflow-y:auto;">
+                    <form action="application/functions/registration_save.php" method="POST" class="row needs-validation" novalidate>
+                        <input type="hidden" id="cform-array_citymuns" class="array_citymuns" name="array_citymuns" value='<?= $city_mun; ?>'>
 
-                        <div class="row">
-                            <div class="col-12">
-                            <div class="row">
-                                    <div class="col-md-4">
-                                        <label for="vfname" class="form-label">First Name</label>
-                                        <input required type="text" class="form-control" name="fname" id="vfname" aria-describedby="emailHelp">
-                                        <div class="invalid-feedback">
-                                            First Name is required
+                        <div class="row mb-2">
+                            <div class="col-md-12" style="text-align:right;">
+                                <h6>PERSONAL DETAILS</h6>
+                                <hr>
+                            </div>
+                        </div>
 
-                                        </div>
-                                    </div>
-                                    <div class="col-md-4">
-                                        <label for="vmname" class="form-label">Middle Name</label>
-                                        <input required type="text" class="form-control" name="mname" id="vmname" aria-describedby="emailHelp">
-                                        <div class="invalid-feedback">
-                                            Middle Name is required
-
-                                        </div>
-                                    </div>
-                                    <div class="col-md-4">
-                                        <label for="validatelname" class="form-label">Last Name</label>
-                                        <input required type="text" class="form-control" name="lname" id="lname" aria-describedby="emailHelp">
-                                        <div class="invalid-feedback">
-                                            Last Name is required
-
-                                        </div>
-                                    </div>
-                                    <div class="mb-12">
-                                    <label for="validatePosition" class="form-label">Position</label>
-                                    <input required type="text" class="form-control" name="position" id="validatePosition" aria-describedby="emailHelp">
-                                    <div class="invalid-feedback">
-                                        Position is required
-                                    </div>
+                        <div class="row mb-3">
+                            <div class="col-md-4">
+                                <label for="vfname" class="form-label">First Name</label>
+                                <input required type="text" class="form-control" name="fname" id="vfname" aria-describedby="emailHelp">
+                                <div class="invalid-feedback">
+                                    First Name is required
                                 </div>
-                                    <div class="col-md-12">
-                                        <label for="validationPhone" class="form-label">Mobile No.</label>
-                                        <input required type="number" class="form-control" name="phone_no" id="validationPhone" aria-describedby="emailHelp">
-                                        <div class="invalid-feedback">
-                                            Mobile No. is required
-                                        </div>
-                                    </div>
-                                    <div class="col-md-12">
-                                        <label for="validationEmail" class="form-label">Email Address</label>
-                                        <input required type="text" class="form-control" name="emailAddress" id="validationEmail" aria-describedby="emailHelp">
-                                        <div class="invalid-feedback">
-                                            Email Address is required
-                                        </div>
-                                    </div>
-                                    <div class="col-md-12">
-                                        <label for="validationUsername" class="form-label">Username</label>
-                                        <input required type="text" class="form-control" name="username" id="validationUsername"  onclick="setUname();"  aria-describedby="emailHelp">
-                                        <div class="invalid-feedback">
-                                            Username is required
-                                        </div>
-                                    </div>
-                                  
-                                    <div class="col-md-6">
-                                        <label for="validationPass" class="form-label">Password </label>
-                                        <input type="password" class="form-control" name="password" id="validationPass" aria-describedby="emailHelp" required>
-                                        <div class="invalid-feedback">
-                                            Password is required
+                            </div>
 
+                            <div class="col-md-4">
+                                <label for="vmname" class="form-label">Middle Name</label>
+                                <input required type="text" class="form-control" name="mname" id="vmname" aria-describedby="emailHelp">
+                                <div class="invalid-feedback">
+                                    Middle Name is required
 
-                                        </div>
-                                    </div>
-                                    <div class="col-md-6">
-                                        <label for="validationConf" class="form-label">Confirmed Password </label>
-                                        <input type="password" class="form-control" name="cpassword" id="validationConf" aria-describedby="emailHelp" required >
-                                        <div class="invalid-feedback">
-                                           Confirmed Password is required!
-                                        </div>
-                                    </div>
-                                <div class="col-md-12">
-                                    <label for="validationGovOffice" class="form-label">Name of Government Agency/Office</label>
-                                    <input required type="text" class="form-control" name="government_agency" id="validationGovOffice" aria-describedby="emailHelp">
-                                    <div class="invalid-feedback">
-                                        Name of Government Agency/Office is required
-
-                                    </div>
                                 </div>
+                            </div>
 
-                                <div class="col-md-12">
-                                    <label for="validationGovDept" class="form-label">  Name of Sub-office/Unit</label>
-                                    <input type="text" class="form-control" name="government_esta" id="validationGovDept" required>
-                                    <div class="invalid-feedback">
-                                        Name of Sub-office/Unit is required
-                                    </div>
+                            <div class="col-md-4">
+                                <label for="validatelname" class="form-label">Last Name</label>
+                                <input required type="text" class="form-control" name="lname" id="lname" aria-describedby="emailHelp">
+                                <div class="invalid-feedback">
+                                    Last Name is required
+
                                 </div>
-                                <div class="col-mb-12">
-                                    <div class="form-group">
-                                        <label for="nature">Nature of Government Establishments</label>
-                                        <select class="form-control select2bs4 select2-hidden-accessible" name="government_nature" id="nature" tabindex="-1" aria-hidden="true" required>
-                                       <option value ="" selected></option>
+                            </div>
+                        </div>
+
+                        <div class="row mb-5">
+                            <div class="col-md-4">
+                                <label for="validatePosition" class="form-label">Position</label>
+                                <input required type="text" class="form-control" name="position" id="validatePosition" aria-describedby="emailHelp">
+                                <div class="invalid-feedback">
+                                    Position is required
+                                </div>
+                            </div>
+
+                            <div class="col-md-4">
+                                <label for="validationPhone" class="form-label">Mobile No.</label>
+                                <input required type="number" class="form-control" name="phone_no" id="validationPhone" aria-describedby="emailHelp">
+                                <div class="invalid-feedback">
+                                    Mobile No. is required
+                                </div>
+                            </div>
+
+                            <div class="col-md-4">
+                                <label for="validationEmail" class="form-label">Email Address</label>
+                                <input required type="text" class="form-control" name="emailAddress" id="validationEmail" aria-describedby="emailHelp">
+                                <div class="invalid-feedback">
+                                    Email Address is required
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="row mb-2">
+                            <div class="col-md-12" style="text-align:right;">
+                                <h6>AGENCY DETAILS</h6>
+                                <hr>
+                            </div>
+                        </div>
+
+                        <div class="row mb-3">
+                            <div class="col-md-12">
+                                <label for="validationGovOffice" class="form-label">Name of Government Agency/Office</label>
+                                <input required type="text" class="form-control" name="government_agency" id="validationGovOffice" aria-describedby="emailHelp">
+                                <div class="invalid-feedback">
+                                    Name of Government Agency/Office is required
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="row mb-3">
+                            <div class="col-md-12">
+                                <label for="validationGovDept" class="form-label">  Name of Sub-office/Unit</label>
+                                <input type="text" class="form-control" name="government_esta" id="validationGovDept" required>
+                                <div class="invalid-feedback">
+                                    Name of Sub-office/Unit is required
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="row mb-3">
+                            <div class="col-md-12">
+                                <div class="form-group">
+                                    <label for="nature">Nature of Government Establishments</label>
+                                    <select class="form-control select2bs4 select2-hidden-accessible" name="government_nature" id="nature" tabindex="-1" aria-hidden="true" required>
+                                        <option value ="" selected></option>
                                         <?php foreach ($government_nature as $key => $nature):?>
-                                        <option value="<?php echo $nature;?>"><?php echo $nature;?></option>
-                                       <?php endforeach;?>
-
-                                       
-                                          
-                                        </select>
-                                        <div class="invalid-feedback">
-                                        Nature of Government Establishments< is required
-
-                                    </div>
-                                    </div>
-                                </div>
-                                <div class="mb-12">
-                                    <label for="validateAddress" class="form-label">Address</label>
-                                    <input required type="text" class="form-control" name="validateAddress" id="address" aria-describedby="emailHelp">
+                                            <option value="<?= $nature;?>"><?= $nature;?></option>
+                                        <?php endforeach;?>
+                                    </select>
                                     <div class="invalid-feedback">
-                                        Address is required
-
+                                        Nature of Government Establishments< is required
                                     </div>
                                 </div>
-                             
-                                <div class="col-mb-12">
-                                    <div class="form-group">
-                                        <label for="province">Province</label>
-                                        <select class="form-control select2bs4 select2-hidden-accessible" name="province" id="province" tabindex="-1" aria-hidden="true" required>
+                            </div>
+                        </div>
+
+                        <div class="row mb-3">
+                            <div class="col-md-12">
+                                <label for="validateAddress" class="form-label">Address</label>
+                                <input required type="text" class="form-control" name="validateAddress" id="address" aria-describedby="emailHelp">
+                                <div class="invalid-feedback">
+                                    Address is required
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="row mb-3">
+                            <div class="col-md-12">
+                                <div class="form-group">
+                                    <label for="province">Province</label>
+                                    <select class="form-control select2bs4 select2-hidden-accessible" name="province" id="province" tabindex="-1" aria-hidden="true" required>
                                         <option></option>
-                                            <?php foreach ($provinces as $key => $province): ?>
-                                                <option value="<?php echo $key;?>" data-code="<?php echo $province['code'];?>"><?php echo $province['name'];?></option>
-                                            <?php endforeach ?>
-                                        </select>
-                                        <div class="invalid-feedback">
-                                            Province is required
-
-                                        </div>
+                                        <?php foreach ($provinces as $key => $province): ?>
+                                            <option value="<?= $key;?>" data-code="<?= $province['code'];?>"><?= $province['name'];?></option>
+                                        <?php endforeach ?>
+                                    </select>
+                                    <div class="invalid-feedback">
+                                        Province is required
                                     </div>
                                 </div>
-                                
-                                <div class="col-md-12">
-                                    <div class="form-group">
+                            </div>
+                        </div>
+
+                        <div class="row mb-5">
+                            <div class="col-md-12">
+                                <div class="form-group">
                                     <label for="city_mun">City/Municipality</label>
                                     <select class="form-control select2bs4 select2-hidden-accessible" name = "municipality" style="width: 100%;" id="city_mun" tabindex="-1" aria-hidden="true" required>
                                     </select>
                                     <div class="invalid-feedback">
                                             City/Municipality is required
-
-                                        </div>
                                     </div>
-                                    
-                                </div>
-                             
-                            </div>
-                            <div class="col-7">
-                               
                                 </div>
                             </div>
                         </div>
 
+
+                        <div class="row mb-2">
+                            <div class="col-md-12" style="text-align:right;">
+                                <h6>USER CREDENTIALS</h6>
+                                <hr>
+                            </div>
+                        </div>
+
+                        <div class="row mb-3">
+                            <div class="col-md-4">
+                                <label for="validationUsername" class="form-label">Username</label>
+                                <input required type="text" class="form-control" name="username" id="validationUsername"  onclick="setUname();"  aria-describedby="emailHelp">
+                                <div class="invalid-feedback">
+                                    Username is required
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="row mb-3">
+                            <div class="col-md-6">
+                                <label for="validationPass" class="form-label">Password </label>
+                                <input type="password" class="form-control" name="password" id="validationPass" aria-describedby="emailHelp" required>
+                                <div class="invalid-feedback">
+                                    Password is required
+                                </div>
+                            </div>
+
+                            <div class="col-md-6">
+                                <label for="validationConf" class="form-label">Confirmed Password </label>
+                                <input type="password" class="form-control" name="cpassword" id="validationConf" aria-describedby="emailHelp" required >
+                                <div class="invalid-feedback">
+                                   Confirmed Password is required!
+                                </div>
+                            </div>
+                        </div>
                 </div>
             </div>
             <div class="modal-footer">

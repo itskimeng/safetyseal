@@ -91,6 +91,21 @@
   </div>
 </div>
 <?php include 'registration_modal.php' ?>
+<style type="text/css">
+  div#reg_form::-webkit-scrollbar {
+      width: 12px;
+  }
+   
+  div#reg_form::-webkit-scrollbar-track {
+      -webkit-box-shadow: inset 0 0 2px rgba(0,0,0,0.3); 
+      border-radius: 2px;
+  }
+   
+  div#reg_form::-webkit-scrollbar-thumb {
+      border-radius: 2px;
+      -webkit-box-shadow: inset 0 0 2px rgba(0,0,0,0.5); 
+  }
+</style>
 <script>
   // Example starter JavaScript for disabling form submissions if there are invalid fields
   (function() {
@@ -132,5 +147,3 @@
     });
   }
 </script>
-<style>
-</style>

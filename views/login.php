@@ -48,6 +48,8 @@ if (isset($_POST['login'])) {
                     echo $error;
                }
           }
+     } else {
+          header('Location: ../registration.php?login=failed');
      }
 } else {
      header('Location: ../registration.php?login=failed');

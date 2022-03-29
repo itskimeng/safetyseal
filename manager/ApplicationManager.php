@@ -1882,8 +1882,8 @@ class ApplicationManager extends Connection
                     h.message AS message,
                     p.name AS province,
                     c.name AS citymun,
-                    ac.application_type,
-                    DATE_FORMAT(h.action_date, '%Y-%m-%d') AS action_date,
+                    IF(h.mid = 2, '', ac.application_type) AS application_type ,
+                    DATE_FORMAT(h.action_date, '%Y-%m-%d %T') AS action_date,
                     DATE_FORMAT(h.action_date, '%b %d, %Y %h:%i %p') AS date_created
                 FROM 
                     tbl_history h 
@@ -1929,7 +1929,7 @@ class ApplicationManager extends Connection
             } elseif ($interval->h > 0) {
                 $interval = $interval->h .' hour(s) ago';
             } elseif ($interval->i > 0) {
-                $interval = $interval->s .' min(s) ago';
+                $interval = $interval->i .' min(s) ago';
             } else {
                 $interval = $interval->s .' sec(s) ago';
             }
