@@ -51,7 +51,7 @@ if (isset($_POST['resend'])) {
     $mail->SMTPSecure = "tls";
     $mail->Port = "587";
     $mail->Username = "safetyseal@calabarzon.dilg.gov.ph";
-    $mail->Password = "wvSHrgX)K#VF";
+    $mail->Password = "";
     $mail->Subject = "Safetyseal Email Verification";
     $mail->setFrom('safetyseal@calabarzon.dilg.gov.ph', 'no-reply');
     $mail->isHTML(true);
@@ -102,7 +102,7 @@ if (isset($_POST['resend'])) {
         $mail->SMTPSecure = "tls";
         $mail->Port = "587";
         $mail->Username = "safetyseal@calabarzon.dilg.gov.ph";
-        $mail->Password = "wvSHrgX)K#VF";
+        $mail->Password = "";
         $mail->Subject = "Safetyseal Email Verification";
         $mail->setFrom('safetyseal@calabarzon.dilg.gov.ph', 'no-reply');
         $mail->isHTML(true);
