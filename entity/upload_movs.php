@@ -24,7 +24,13 @@ $client_secret = $conn->googleSecret;
 $client = getGoogleClient($client_id, $client_secret, $url);
 $today = new DateTime();
 
-if (isset($_GET['code'])) {
+
+if (isset($_GET['error'])) {
+    $_SESSION['toastr'] = $am->addFlash('error', 'System needs an active google account.', 'Account Not Verified!');
+
+    header('location:../wbstapplication.php?ssid='.$_SESSION['ssid'].'&code='.$_SESSION['gcode'].'&scope='.$_SESSION['gscope'].'');exit;
+    
+} elseif (isset($_GET['code'])) {
     $_SESSION['accessToken'] = $client->authenticate($_GET['code']);
     header('location:'.$url);exit;
 } elseif (!isset($_SESSION['accessToken'])) {
