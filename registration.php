@@ -34,6 +34,7 @@
             $('#verification_modal').modal('show');
         }
         if (isVerified) {
+            $('#verified_modal').modal({backdrop: 'static', keyboard: false})  
             $('#verified_modal').modal('show');
         }
     });
@@ -45,14 +46,13 @@
             method: "POST",
             data: {
                 resend: 'resend',
-                emailTo: '<?php if (isset($_GET['email'])) {
-                                echo $_GET['email'];
-                            } else {
-                                echo '';
-                            } ?>',
+                emailAddress: '<?= isset($_GET['emailAddress']) ? $_GET['emailAddress'] : ''; ?>',
+                id: '<?= isset($_GET['id']) ? $_GET['id'] : ''; ?>',
             },
             success: function(data) {
-
+                if (data == 'success') {
+                    tata.success('Success', 'Successfully resend verification code.', {animate: 'slide', duration: 5000})
+                }
             }
         });
     });
