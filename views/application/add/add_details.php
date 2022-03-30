@@ -43,10 +43,6 @@
               <?php endif ?>
             </div>
             <div class="form-outline mb-2 col-md-5">
-              <?php //if ($applicant['status'] == 'Approved'): ?>
-                <!-- <label class="form-label" for="form1Example1">Safety Seal No.</label><br> -->
-                <!-- <input type="text" id="form1Example1" class="form-control" style="background-color: #008000e6; color: white; font-weight: bold;" value="<?php //echo $applicant['ss_no']; ?>" /> -->
-              <?php //endif ?>
             </div>
             <div class="form-outline mb-2 col-md-3">
                 <div class="form-group">
@@ -58,7 +54,6 @@
                       <input type="text" id="datepicker" name="date_registered" class="form-control" data-inputmask-alias="datetime" data-inputmask-inputformat="dd/mm/yyyy" value="<?php echo $applicant['date_created'] ?>" data-mask required  <?php echo $applicant['status'] == 'Approved' ? 'disabled' : ''; ?>>
                     <?php endif ?>
                   </div>
-                  <!-- /.input group -->
                 </div>
             </div>
           </div>
@@ -116,7 +111,6 @@
 
                   </select>
                 <?php endif ?>
-                <!-- <input type="text" id="form1Example1" name="nature" class="form-control" value="<?php //echo $applicant['nature']; ?>"/> -->
             </div>
           </div>
         </div>
@@ -157,8 +151,6 @@
           </div>
         </div>
       </div>
-      
-      <!-- /.card-body -->
 
     </div> 
 

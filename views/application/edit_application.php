@@ -137,7 +137,7 @@
       // session_start();
       if (isset($_SESSION['toastr'])) {
         echo 'tata.'.$_SESSION['toastr']['type'].'("'.$_SESSION['toastr']['title'].'", "'.$_SESSION['toastr']['message'].'", {
-          duration: 5000
+          duration: 20000
         })';
         unset($_SESSION['toastr']);
       }

@@ -17,12 +17,16 @@ $client_secret = $conn->googleSecret;
 $client = getGoogleClient($client_id, $client_secret, $url);
 // $client = getGoogleClient('https://safetyseal.calabarzon.dilg.gov.ph/verification_page.php');
 
-if (isset($_GET['code']) AND !empty($_GET['code'])) {
+if (isset($_GET['error'])) {
+    $_SESSION['toastr'] = $app->addFlash('error', 'System needs an active google account.', 'Account Not Verified!');
+
+    header('location:../admin_application_edit.php?appid='.$_SESSION['sss_id'].'&code=&scope=');exit;
+    
+} elseif (isset($_GET['code']) AND !empty($_GET['code'])) {
     $_SESSION['gcode'] = $_GET['code'];
     $_SESSION['gscope'] = $_GET['scope'];
     $_SESSION['accessToken'] = $client->authenticate($_GET['code']);
     header('location:'.$url);exit;
-    // header('location:../wbstapplication.php?ssid='.$token.'');exit;
 } elseif (!isset($_SESSION['accessToken'])) {
     $client->authenticate();
 }

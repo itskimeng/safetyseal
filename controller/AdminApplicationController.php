@@ -205,7 +205,7 @@ function getApplicationLists($conn, $province, $lgus, $status, $is_clusterhead)
     $bsql = "SELECT 
                 ac.id AS id,
                 ai.CMLGOO_NAME AS fname,
-                ui.GOV_AGENCY_NAME AS agency,
+                ui.GOV_AGENCY_NAME AS pagency,
                 ui.ADDRESS AS address,
                 DATE_FORMAT(ac.date_created, '%Y-%m-%d') AS date_created,
                 ac.date_created AS date_createds,
@@ -218,7 +218,8 @@ function getApplicationLists($conn, $province, $lgus, $status, $is_clusterhead)
                 ac.address AS ac_address,
                 ac.application_type AS app_type,
                 ac.token AS token,
-                ac.for_renewal AS for_renewal
+                ac.for_renewal AS for_renewal,
+                ac.status
             FROM tbl_app_checklist ac
             LEFT JOIN tbl_admin_info ai ON ai.id = ac.user_id
             LEFT JOIN tbl_userinfo ui ON ui.user_id = ai.id";
@@ -230,10 +231,10 @@ function getApplicationLists($conn, $province, $lgus, $status, $is_clusterhead)
 	$sql1 = " WHERE ai.PROVINCE = ".$province." AND ai.LGU IN (".$codes.") AND ac.application_type = 'Applied' AND ac.status <> '".$status."' AND ac.status <> 'Returned'";
     $sql1 .= " ORDER BY ai.id, ac.id DESC LIMIT 18446744073709551615";
 
-    $sub_qry = "SELECT * FROM (".$bsql.$sql1.") AS subqry GROUP BY aid" ;
+    // $sub_qry = "SELECT * FROM (".$bsql.$sql1.") AS subqry GROUP BY aid" ;
 
-    print_r($sub_qry);
-    die();
+    // print_r($sub_qry);
+    // die();
 
 	$query = mysqli_query($conn, $bsql.$sql1);
 	    
@@ -274,7 +275,8 @@ function getApplicationLists($conn, $province, $lgus, $status, $is_clusterhead)
             'ac_address' 	=> $row['ac_address'],
             'app_type' 		=> $row['app_type'],
             'token' 		=> $row['token'],
-            'validity_date' => !empty($row['date_approved']) ? date('F d, Y', strtotime("+6 months", strtotime($row['date_approved']))) : ''
+            'validity_date' => !empty($row['date_approved']) ? date('F d, Y', strtotime("+6 months", strtotime($row['date_approved']))) : '',
+            'issued_date'   => date('M d, Y', strtotime($row['date_approved']))
         ];    
     }
 
@@ -318,7 +320,8 @@ function getApplicationLists($conn, $province, $lgus, $status, $is_clusterhead)
             'ac_address' 	=> $row['ac_address'],
             'app_type' 		=> $row['app_type'],
             'token' 		=> $row['token'],
-            'validity_date' => !empty($row['date_approved']) ? date('F d, Y', strtotime("+6 months", strtotime($row['date_approved']))) : ''
+            'validity_date' => !empty($row['date_approved']) ? date('F d, Y', strtotime("+6 months", strtotime($row['date_approved']))) : '',
+            'issued_date'   => date('M d, Y', strtotime($row['date_approved']))
         ];    
     }
 
@@ -362,7 +365,8 @@ function getApplicationLists($conn, $province, $lgus, $status, $is_clusterhead)
             'ac_address' 	=> $row['ac_address'],
             'app_type' 		=> $row['app_type'],
             'token' 		=> $row['token'],
-            'validity_date' => !empty($row['date_approved']) ? date('F d, Y', strtotime("+6 months", strtotime($row['date_approved']))) : ''
+            'validity_date' => !empty($row['date_approved']) ? date('F d, Y', strtotime("+6 months", strtotime($row['date_approved']))) : '',
+            'issued_date'   => date('M d, Y', strtotime($row['date_approved']))
         ];    
     }
 

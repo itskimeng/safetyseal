@@ -18,7 +18,7 @@
                     <div class="btn-group w-100">
                       <button type="submit" id="btn-verify_acct" class="btn btn-success col fileinput-button">
                         <i class="fas fa-plus"></i>
-                        <span>Add files</span>
+                        <span>Sign-in to google account to continue.</span>
                       </button>
                     </div>
                   </div>
