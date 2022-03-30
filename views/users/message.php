@@ -14,7 +14,7 @@
 								<b>Welcome to DILG CALABARZON Safetyseal Portal!</b><br>
 								<br> To complete your Safetyseal profile, we need you to confirm your email address. Please click the button below to proceed.<br>
 							</p><br>
-							<a href="%burl%/safetyseal/application/functions/verify.php?vkey=%link%" style="padding: 0.25rem 0.5rem;font-size: .875rem;line-height: 1.5;border-radius: 0.2rem; background-color:#15c; color:white; text-decoration: none;"><i></i> Verify Account</a>
+							<a href="%burl%/application/functions/verify.php?vkey=%link%" style="padding: 0.25rem 0.5rem;font-size: .875rem;line-height: 1.5;border-radius: 0.2rem; background-color:#15c; color:white; text-decoration: none;"><i></i> Verify Account</a>
 						</td>
 					</tr>
 					<tr>
