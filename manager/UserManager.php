@@ -122,27 +122,38 @@ class UserManager extends Connection
     public function getUserInfo($userid)
     {
         $sql = "SELECT 
-            ai.id as id, 
-            ai.CMLGOO_NAME as name, 
-            user.GOV_AGENCY_NAME as agency, 
-            user.POSITION as position, 
-            user.ADDRESS as address, 
-            user.MOBILE_NO as phone_no, 
-            user.EMAIL_ADDRESS  as emailaddress,
-            ai.UNAME as username,
-            user.GOV_NATURE_NAME as nature,
-            ai.OFFICE as sub_office,
-            p.name as province,
-            p.id as province_id,
-            cm.name as lgu,
-            ai.UNAME as username,
-            cm.code as lgu_code
-            FROM `tbl_admin_info` ai
-            LEFT JOIN tbl_userinfo user on ai.id = user.USER_ID  
-            LEFT JOIN tbl_app_checklist chkl on ai.id = chkl.user_id 
-            LEFT JOIN tbl_province p on p.id = ai.PROVINCE
-            LEFT JOIN tbl_citymun cm on cm.code = ai.LGU AND cm.PROVINCE = ai.PROVINCE 
-            WHERE ai.ID = '$userid'";
+                    ai.id AS id, 
+                    ai.CMLGOO_NAME AS name, 
+                    user.GOV_AGENCY_NAME AS agency, 
+                    user.POSITION AS position, 
+                    user.ADDRESS AS address, 
+                    user.MOBILE_NO AS phone_no, 
+                    user.EMAIL_ADDRESS  AS emailaddress,
+                    ai.UNAME AS username,
+                    user.GOV_NATURE_NAME AS nature,
+                    ai.OFFICE AS sub_office,
+                    p.name AS province,
+                    p.id AS province_id,
+                    cm.name AS lgu,
+                    ai.UNAME AS username,
+                    cm.code AS lgu_code,
+                    ai.PASSWORD AS pw,
+                    ai.IS_VERIFIED AS is_verified,
+                    ai.ROLES AS roles,
+                    ai.LGU AS city_mun,
+                    ai.is_clusterhead AS is_clusterhead,
+                    ai.clusterhead_id AS ch_id,
+                    ai.is_pfp AS is_pfp
+                FROM `tbl_admin_info` ai
+                LEFT JOIN 
+                    tbl_userinfo user on ai.id = user.USER_ID  
+                LEFT JOIN 
+                    tbl_app_checklist chkl on ai.id = chkl.user_id 
+                LEFT JOIN 
+                    tbl_province p on p.id = ai.PROVINCE
+                LEFT JOIN 
+                    tbl_citymun cm on cm.code = ai.LGU AND cm.PROVINCE = ai.PROVINCE 
+                WHERE ai.ID = '$userid'";
 
         $getQry = $this->db->query($sql);
         $data = [];
@@ -150,22 +161,29 @@ class UserManager extends Connection
 
         while ($row = mysqli_fetch_assoc($getQry)) {
             $data = [
-                'id' => $row['id'],
-                'name' => $row['name'],
-                'position' => $row['position'],
-                'address' => !empty($row['address']) ? $row['address'] : 'Not Available',
-                'phone_no' => $row['phone_no'],
-                'emailladdress' => $row['emailaddress'],
-                'agency' => $row['agency'],
-                'est'=>$rowCount,
-                'username' => $row['username'],
-                'nature' => $row['nature'],
-                'sub_office' => $row['sub_office'],
-                'province' => $row['province'],
-                'province_id' => $row['province_id'],
-                'lgu' => $row['lgu'],
-                'lgu_code' => $row['lgu_code'],
-                'username' => $row['username']
+                'id'                => $row['id'],
+                'name'              => $row['name'],
+                'position'          => $row['position'],
+                'address'           => !empty($row['address']) ? $row['address'] : 'Not Available',
+                'phone_no'          => $row['phone_no'],
+                'emailladdress'     => $row['emailaddress'],
+                'agency'            => $row['agency'],
+                'est'               => $rowCount,
+                'username'          => $row['username'],
+                'nature'            => $row['nature'],
+                'sub_office'        => $row['sub_office'],
+                'province'          => $row['province'],
+                'province_id'       => $row['province_id'],
+                'lgu'               => $row['lgu'],
+                'lgu_code'          => $row['lgu_code'],
+                'username'          => $row['username'],
+                'password'          => $row['pw'],
+                'is_verified'       => $row['is_verified'],
+                'roles'             => $row['roles'],
+                'city_mun'          => $row['city_mun'],
+                'is_clusterhead'    => $row['is_clusterhead'],
+                'ch_id'             => $row['ch_id'],
+                'is_pfp'            => $row['is_pfp']
             ];    
         }
         return $data;
