@@ -2078,4 +2078,223 @@ class ApplicationManager extends Connection
         return $data;
     }
 
+    public function fetchAppliedCertifiedEstablishments()
+    {
+        $sql = "SELECT * FROM (
+                    SELECT 
+                        ac.id,
+                        p.id AS province_id,
+                        p.name AS province,
+                        cm.code AS lgu,
+                        ac.user_id,
+                        ac.establishment AS gov_estb_name,
+                        ui.GOV_NATURE_NAME AS nature,
+                        ac.address AS address,
+                        ac.safety_seal_no,
+                        DATE_FORMAT(ac.date_approved, '%b %d, %Y') AS date_approved,
+                        DATE_FORMAT(DATE_ADD(ac.date_approved, INTERVAL +6 MONTH), '%b %d, %Y') AS date_validity,
+                        ac.status,
+                        IF(ac.agency = '', ai.OFFICE, ac.agency) AS gov_agency_name
+                    FROM 
+                        tbl_app_checklist ac
+                    LEFT JOIN 
+                        tbl_admin_info ai ON ai.id = ac.user_id
+                    LEFT JOIN 
+                        tbl_userinfo ui ON ui.user_id = ai.id
+                    LEFT JOIN 
+                        tbl_province p ON p.id = ai.PROVINCE
+                    LEFT JOIN 
+                        tbl_citymun cm ON cm.province = ai.PROVINCE AND cm.code = ai.LGU
+                    WHERE
+                        ac.status IN('Approved', 'Renewed', 'Expired') AND ac.application_type = 'Applied'
+                    ORDER BY 
+                        ai.id, ac.id DESC 
+                    LIMIT 18446744073709551615) AS subqry
+                GROUP BY user_id";
+
+        $getQry = $this->db->query($sql);
+        $user_estabs = $this->fetchUserApplicationsApplied();
+        $data = [];
+        $history = '';
+
+        while ($row = mysqli_fetch_assoc($getQry)) {
+            $apps = $user_estabs[$row['user_id']];
+            if (!empty($apps)) {
+                foreach ($apps as $key => $app) {
+                    $history .= $app['date_approved'] .' - '. $app['date_validity'] .' '. $app['status'] .'<br>';
+                }
+            }
+
+            $data[$row['id']] = [
+                'agency'            => !empty($row['gov_agency_name']) ? '('.$row['gov_agency_name'].')' : '',
+                'province'          => $row['province'],
+                'province_id'       => $row['province_id'],
+                'gov_estb_name'     => $row['gov_estb_name'],
+                'address'           => $row['address'],
+                'safety_seal_no'    => $row['safety_seal_no'],
+                'date_approved'     => $row['date_approved'],
+                'date_validity'     => $row['date_validity'],
+                'nature'            => $row['nature'],
+                'status'            => $row['status'],
+                'history'           => $history
+            ];
+
+            $history = '';
+        }
+
+        return $data;
+    }
+
+    public function fetchUserApplicationsApplied()
+    {
+        $sql = "SELECT
+                    ai.id AS user_id,
+                    ac.id AS ac_id,
+                    ac.safety_seal_no AS ssc,
+                    DATE_FORMAT(ac.date_approved, '%b %d, %Y') AS date_approved,
+                    DATE_FORMAT(DATE_ADD(ac.date_approved, INTERVAL +6 MONTH), '%b %d, %Y') AS date_validity,
+                    IF(NOW() >= DATE_ADD(ac.date_approved, INTERVAL +6 MONTH), 'Expired', ac.status) AS status
+                FROM
+                    tbl_app_checklist ac
+                LEFT JOIN tbl_admin_info ai ON
+                    ai.ID = ac.user_id
+                LEFT JOIN tbl_userinfo ui ON
+                    ui.USER_ID = ai.id
+                LEFT JOIN tbl_province p ON
+                    p.id = ai.PROVINCE
+                LEFT JOIN tbl_citymun cm ON
+                    cm.province = ai.PROVINCE AND cm.code = ai.LGU
+                WHERE
+                    ac.status IN('Approved', 'Renewed', 'Expired') AND ac.application_type = 'Applied'
+                ORDER BY p.id, cm.id, ai.id, ac.date_approved DESC";
+
+        $getQry = $this->db->query($sql);
+        $data = [];
+
+        while ($row = mysqli_fetch_assoc($getQry)) {
+            $data[$row['user_id']][] = [
+                'ac_id'             => $row['ac_id'],
+                'date_approved'     => $row['date_approved'],
+                'date_validity'     => $row['date_validity'],
+                'status'            => $row['status'],
+                'ssc'               => $row['ssc']
+            ];
+        }
+
+        return $data;
+    }
+
+    public function fetchEncodedCertifiedEstablishments()
+    {
+        $sql = "SELECT * FROM (
+                    SELECT 
+                        ac.id AS ac_id,
+                        p.id AS province_id,
+                        p.name AS province,
+                        cm.code AS lgu,
+                        ac.user_id,
+                        ac.person,
+                        ac.establishment AS gov_estb_name,
+                        ui.GOV_NATURE_NAME AS nature,
+                        ac.address AS address,
+                        ac.safety_seal_no,
+                        DATE_FORMAT(ac.date_approved, '%b %d, %Y') AS date_approved,
+                        DATE_FORMAT(DATE_ADD(ac.date_approved, INTERVAL +6 MONTH), '%b %d, %Y') AS date_validity,
+                        ac.status,
+                        IF(ac.agency = '', ai.OFFICE, ac.agency) AS gov_agency_name
+                    FROM 
+                        tbl_app_checklist ac
+                    LEFT JOIN 
+                        tbl_admin_info ai ON ai.id = ac.user_id
+                    LEFT JOIN 
+                        tbl_userinfo ui ON ui.user_id = ai.id
+                    LEFT JOIN 
+                        tbl_province p ON p.id = ai.PROVINCE
+                    LEFT JOIN 
+                        tbl_citymun cm ON cm.province = ai.PROVINCE AND cm.code = ai.LGU
+                    WHERE
+                        ac.status IN('Approved', 'Renewed', 'Expired') AND ac.application_type = 'Encoded'
+                    ORDER BY 
+                        ai.id, ac.id DESC 
+                    LIMIT 18446744073709551615) AS subqry
+                GROUP BY person";
+
+        $getQry = $this->db->query($sql);
+        $user_estabs = $this->fetchUserApplicationsEncoded();
+        $data = [];
+        $history = $app_user = '';
+
+        while ($row = mysqli_fetch_assoc($getQry)) {
+            $apps = $user_estabs;
+            $history = '';
+            $app_user = $row['person'];
+
+            if (!empty($apps)) {
+                foreach ($apps as $key => $app) {
+                    if ($app_user == $app['person']) {
+                        $history .= $app['date_approved'] .' - '. $app['date_validity'] .' '. $app['status'] .'<br>';
+                    }
+                }
+            }
+
+            $data[$row['ac_id']] = [
+                'agency'            => !empty($row['gov_agency_name']) ? '('.$row['gov_agency_name'].')' : '',
+                'province'          => $row['province'],
+                'province_id'       => $row['province_id'],
+                'gov_estb_name'     => $row['gov_estb_name'],
+                'address'           => $row['address'],
+                'safety_seal_no'    => $row['safety_seal_no'],
+                'date_approved'     => $row['date_approved'],
+                'date_validity'     => $row['date_validity'],
+                'nature'            => $row['nature'],
+                'status'            => $row['status'],
+                'history'           => $history
+            ];
+
+            // $history = '';
+        }
+
+        return $data;
+    }
+
+    public function fetchUserApplicationsEncoded()
+    {
+        $sql = "SELECT
+                    ac.person,
+                    ac.id AS ac_id,
+                    ac.safety_seal_no AS ssc,
+                    DATE_FORMAT(ac.date_approved, '%b %d, %Y') AS date_approved,
+                    DATE_FORMAT(DATE_ADD(ac.date_approved, INTERVAL +6 MONTH), '%b %d, %Y') AS date_validity,
+                    IF(NOW() >= DATE_ADD(ac.date_approved, INTERVAL +6 MONTH), 'Expired', ac.status) AS status
+                FROM
+                    tbl_app_checklist ac
+                LEFT JOIN tbl_admin_info ai ON
+                    ai.ID = ac.user_id
+                LEFT JOIN tbl_userinfo ui ON
+                    ui.USER_ID = ai.id
+                LEFT JOIN tbl_province p ON
+                    p.id = ai.PROVINCE
+                LEFT JOIN tbl_citymun cm ON
+                    cm.province = ai.PROVINCE AND cm.code = ai.LGU
+                WHERE
+                    ac.status IN('Approved', 'Renewed', 'Expired') AND ac.application_type = 'Encoded'
+                ORDER BY p.id, cm.id, ac.person, ac.date_approved DESC";
+
+        $getQry = $this->db->query($sql);
+        $data = [];
+
+        while ($row = mysqli_fetch_assoc($getQry)) {
+            $data[] = [
+                'person'             => $row['person'],
+                'ac_id'             => $row['ac_id'],
+                'date_approved'     => $row['date_approved'],
+                'date_validity'     => $row['date_validity'],
+                'status'            => $row['status'],
+                'ssc'               => $row['ssc']
+            ];
+        }
+
+        return $data;
+    }
+
 }

@@ -24,23 +24,10 @@ require_once 'controller/UserAccountsController.php'; ?>
     <div class="container">
         
         <?php include 'user_table.php'; ?>
-
         <?php include 'views/dashboard/custom_style.css'; ?>
-
-        <script>
+        </body>
+<script>
             $(function() {
-                // $("#list_table").DataTable({
-                //     "order": [[ 1, "desc" ]],
-                //     "columnDefs": [
-                //         {
-                //             "targets": [ 1 ],
-                //             "visible": false
-                //         }
-                //     ]
-
-                //   // "responsive": true, "lengthChange": false, "autoWidth": false,
-                //   // "buttons": ["copy", "csv", "excel", "pdf", "print", "colvis"]
-                // }).buttons().container().appendTo('#list_table_wrapper .col-md-6:eq(0)');
                 $('#list_table').DataTable({
                   "paging": true,
                   "lengthChange": true,
@@ -62,10 +49,6 @@ require_once 'controller/UserAccountsController.php'; ?>
                     $('.quezon-zoom').addClass('zoom2');
                 });
 
-                
-
             })
         </script>
-        </body>
-
         </html>
