@@ -86,7 +86,7 @@
                   </div>
                 </div>
               </div>
-              
+
               <div class="item">
                 <div class="card">
                   <div class="card-header" style="background-color: #480272; color:white; height: 65px;">
@@ -127,22 +127,6 @@
                   <div class="card-body cardRecentEstablishment">
                     <div style="height: 250px;">
                       <img src="files/certified/244215180_10223564493053815_7492280162438710750_n.jpg" alt="" style="height: 100%; width: 100%; object-fit: cover;">
-                    </div>
-                  </div>
-                  <div class="card-footer text-muted">
-                    Certified: <b>Nov. 02, 2021</b>
-                  </div>
-                </div>
-              </div>
-
-              <div class="item">
-                <div class="card">
-                  <div class="card-header" style="background-color: #480272; color:white; height: 65px;">
-                    <center><i class="fa fa-check"></i> Brgy. Tejeros Convention, Rosario, Cavite</center>
-                  </div>
-                  <div class="card-body cardRecentEstablishment">
-                    <div style="height: 250px;">
-                      <img src="files/certified/243991908_10223564307969188_1549961670428728214_n.jpg" alt="" style="height: 100%; width: 100%; object-fit: cover;">
                     </div>
                   </div>
                   <div class="card-footer text-muted">
@@ -382,7 +366,7 @@
                   </div>
                   <div class="card-body cardRecentEstablishment">
                     <div style="height: 250px;">
-                      <img src="files/certified/City of General Trias.jpg" alt="" style="height: 100%; width: 100%; object-fit: cover;">
+                      <img src="files/certified/gen_trias1.jpg" alt="" style="height: 100%; width: 100%; object-fit: cover;">
                     </div>
                   </div>
                   <div class="card-footer text-muted">
@@ -398,7 +382,7 @@
                   </div>
                   <div class="card-body cardRecentEstablishment">
                     <div style="height: 250px;">
-                      <img src="files/certified/City of General Trias..jpg" alt="" style="height: 100%; width: 100%; object-fit: cover;">
+                      <img src="files/certified/gen_trias2.jpg" alt="" style="height: 100%; width: 100%; object-fit: cover;">
                     </div>
                   </div>
                   <div class="card-footer text-muted">
@@ -407,7 +391,7 @@
                 </div>
               </div>
 
-              <div class="item">
+              <!-- <div class="item">
                 <div class="card">
                   <div class="card-header" style="background-color: #480272; color:white; height: 65px;">
                     <center><i class="fa fa-check"></i> Brgy. Sta. Catalina Sur, Candelaria, Quezon</center>
@@ -437,9 +421,9 @@
                     Certified: <b>July 26, 2021</b>
                   </div>
                 </div>
-              </div>
+              </div> -->
 
-              <div class="item">
+              <!-- <div class="item">
                 <div class="card">
                   <div class="card-header" style="background-color: #480272; color:white; height: 65px;">
                     <center><i class="fa fa-check"></i> Brgy. Sta. Catalina Sur, Candelaria, Quezon</center>
@@ -453,7 +437,7 @@
                     Certified: <b>July 26, 2021</b>
                   </div>
                 </div>
-              </div>
+              </div> -->
 
               <div class="item">
                 <div class="card">
