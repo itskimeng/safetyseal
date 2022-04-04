@@ -67,14 +67,350 @@
 
       <div class="row my-5">
         <!-- Set up your HTML -->
-
         <div class="main-content">
           <div class="owl-carousel owl-theme">
+            
 
               <div class="item">
                 <div class="card">
                   <div class="card-header" style="background-color: #480272; color:white; height: 65px;">
-                    <center>Brgy. Sta. Catalina Sur, Candelaria, Quezon <i class="fa fa-check"></i></center>
+                    <center><i class="fa fa-check"></i> Pagsanjan, Laguna</center>
+                  </div>
+                  <div class="card-body cardRecentEstablishment">
+                    <div style="height: 250px;">
+                      <img src="files/certified/251865902_1230057277506178_1083551404420742154_n.jpg" alt="" style="height: 100%; width: 100%; object-fit: cover;">
+                    </div>
+                  </div>
+                  <div class="card-footer text-muted">
+                    Certified: <b>Nov. 02, 2021</b>
+                  </div>
+                </div>
+              </div>
+              
+              <div class="item">
+                <div class="card">
+                  <div class="card-header" style="background-color: #480272; color:white; height: 65px;">
+                    <center><i class="fa fa-check"></i> Pagsanjan, Laguna</center>
+                  </div>
+                  <div class="card-body cardRecentEstablishment">
+                    <div style="height: 250px;">
+                      <img src="files/certified/251985762_4661823697173947_2715597585228024987_n.jpg" alt="" style="height: 100%; width: 100%; object-fit: cover;">
+                    </div>
+                  </div>
+                  <div class="card-footer text-muted">
+                    Certified: <b>Nov. 02, 2021</b>
+                  </div>
+                </div>
+              </div>
+
+              <div class="item">
+                <div class="card">
+                  <div class="card-header" style="background-color: #480272; color:white; height: 65px;">
+                    <center><i class="fa fa-check"></i> MPS Kawit, Cavite</center>
+                  </div>
+                  <div class="card-body cardRecentEstablishment">
+                    <div style="height: 250px;">
+                      <img src="files/certified/Kawit MPS awarding of safety seal cert 10_25.jpg" alt="" style="height: 100%; width: 100%; object-fit: cover;">
+                    </div>
+                  </div>
+                  <div class="card-footer text-muted">
+                    Certified: <b>Nov. 02, 2021</b>
+                  </div>
+                </div>
+              </div>
+            
+              <div class="item">
+                <div class="card">
+                  <div class="card-header" style="background-color: #480272; color:white; height: 65px;">
+                    <center><i class="fa fa-check"></i> Brgy. Wawa 1, Rosario, Cavite</center>
+                  </div>
+                  <div class="card-body cardRecentEstablishment">
+                    <div style="height: 250px;">
+                      <img src="files/certified/244215180_10223564493053815_7492280162438710750_n.jpg" alt="" style="height: 100%; width: 100%; object-fit: cover;">
+                    </div>
+                  </div>
+                  <div class="card-footer text-muted">
+                    Certified: <b>Nov. 02, 2021</b>
+                  </div>
+                </div>
+              </div>
+
+              <div class="item">
+                <div class="card">
+                  <div class="card-header" style="background-color: #480272; color:white; height: 65px;">
+                    <center><i class="fa fa-check"></i> Brgy. Tejeros Convention, Rosario, Cavite</center>
+                  </div>
+                  <div class="card-body cardRecentEstablishment">
+                    <div style="height: 250px;">
+                      <img src="files/certified/243991908_10223564307969188_1549961670428728214_n.jpg" alt="" style="height: 100%; width: 100%; object-fit: cover;">
+                    </div>
+                  </div>
+                  <div class="card-footer text-muted">
+                    Certified: <b>Nov. 02, 2021</b>
+                  </div>
+                </div>
+              </div>
+
+              <div class="item">
+                <div class="card">
+                  <div class="card-header" style="background-color: #480272; color:white; height: 65px;">
+                    <center><i class="fa fa-check"></i> Brgy. Tejeros Convention, Rosario, Cavite</center>
+                  </div>
+                  <div class="card-body cardRecentEstablishment">
+                    <div style="height: 250px;">
+                      <img src="files/certified/243991908_10223564307969188_1549961670428728214_n.jpg" alt="" style="height: 100%; width: 100%; object-fit: cover;">
+                    </div>
+                  </div>
+                  <div class="card-footer text-muted">
+                    Certified: <b>Nov. 02, 2021</b>
+                  </div>
+                </div>
+              </div>
+
+              <div class="item">
+                <div class="card">
+                  <div class="card-header" style="background-color: #480272; color:white; height: 65px;">
+                    <center><i class="fa fa-check"></i> Brgy. Silangan 2, Rosario, Cavite</center>
+                  </div>
+                  <div class="card-body cardRecentEstablishment">
+                    <div style="height: 250px;">
+                      <img src="files/certified/251809423_1963698400462108_5530797705491563267_n.jpg" alt="" style="height: 100%; width: 100%; object-fit: cover;">
+                    </div>
+                  </div>
+                  <div class="card-footer text-muted">
+                    Certified: <b>Nov. 02, 2021</b>
+                  </div>
+                </div>
+              </div>
+
+              <div class="item">
+                <div class="card">
+                  <div class="card-header" style="background-color: #480272; color:white; height: 65px;">
+                    <center><i class="fa fa-check"></i> Brgy. Silangan 1, Rosario, Cavite</center>
+                  </div>
+                  <div class="card-body cardRecentEstablishment">
+                    <div style="height: 250px;">
+                      <img src="files/certified/243941292_10223564400291496_8689890743018896743_n.jpg" alt="" style="height: 100%; width: 100%; object-fit: cover;">
+                    </div>
+                  </div>
+                  <div class="card-footer text-muted">
+                    Certified: <b>Nov. 02, 2021</b>
+                  </div>
+                </div>
+              </div>
+
+              <div class="item">
+                <div class="card">
+                  <div class="card-header" style="background-color: #480272; color:white; height: 65px;">
+                    <center><i class="fa fa-check"></i> Brgy. Silangan 1, Rosario, Cavite</center>
+                  </div>
+                  <div class="card-body cardRecentEstablishment">
+                    <div style="height: 250px;">
+                      <img src="files/certified/243941292_10223564400291496_8689890743018896743_n.jpg" alt="" style="height: 100%; width: 100%; object-fit: cover;">
+                    </div>
+                  </div>
+                  <div class="card-footer text-muted">
+                    Certified: <b>Nov. 02, 2021</b>
+                  </div>
+                </div>
+              </div>
+             
+              <div class="item">
+                <div class="card">
+                  <div class="card-header" style="background-color: #480272; color:white; height: 65px;">
+                    <center><i class="fa fa-check"></i> Brgy. Sapa 3, Rosario, Cavite</center>
+                  </div>
+                  <div class="card-body cardRecentEstablishment">
+                    <div style="height: 250px;">
+                      <img src="files/certified/251270146_1153461891725023_6164698521084444726_n.jpg" alt="" style="height: 100%; width: 100%; object-fit: cover;">
+                    </div>
+                  </div>
+                  <div class="card-footer text-muted">
+                    Certified: <b>Nov. 02, 2021</b>
+                  </div>
+                </div>
+              </div>
+
+              <div class="item">
+                <div class="card">
+                  <div class="card-header" style="background-color: #480272; color:white; height: 65px;">
+                    <center><i class="fa fa-check"></i> Brgy. Sapa 2, Rosario, Cavite</center>
+                  </div>
+                  <div class="card-body cardRecentEstablishment">
+                    <div style="height: 250px;">
+                      <img src="files/certified/sapa2.jpg" alt="" style="height: 100%; width: 100%; object-fit: cover;">
+                    </div>
+                  </div>
+                  <div class="card-footer text-muted">
+                    Certified: <b>Nov. 02, 2021</b>
+                  </div>
+                </div>
+              </div>
+
+              <div class="item">
+                <div class="card">
+                  <div class="card-header" style="background-color: #480272; color:white; height: 65px;">
+                    <center><i class="fa fa-check"></i> Brgy. Kanluran, Rosario, Cavite</center>
+                  </div>
+                  <div class="card-body cardRecentEstablishment">
+                    <div style="height: 250px;">
+                      <img src="files/certified/brgy_kanluran1.jpg" alt="" style="height: 100%; width: 100%; object-fit: cover;">
+                    </div>
+                  </div>
+                  <div class="card-footer text-muted">
+                    Certified: <b>Nov. 02, 2021</b>
+                  </div>
+                </div>
+              </div>
+
+              <div class="item">
+                <div class="card">
+                  <div class="card-header" style="background-color: #480272; color:white; height: 65px;">
+                    <center><i class="fa fa-check"></i> Brgy. Kanluran, Rosario, Cavite</center>
+                  </div>
+                  <div class="card-body cardRecentEstablishment">
+                    <div style="height: 250px;">
+                      <img src="files/certified/brgy_kanluran2.jpg" alt="" style="height: 100%; width: 100%; object-fit: cover;">
+                    </div>
+                  </div>
+                  <div class="card-footer text-muted">
+                    Certified: <b>Nov. 02, 2021</b>
+                  </div>
+                </div>
+              </div>
+
+              <div class="item">
+                <div class="card">
+                  <div class="card-header" style="background-color: #480272; color:white; height: 65px;">
+                    <center><i class="fa fa-check"></i> Mendez Nunez, Cavite</center>
+                  </div>
+                  <div class="card-body cardRecentEstablishment">
+                    <div style="height: 250px;">
+                      <img src="files/certified/ss_nunez.jpg" alt="" style="height: 100%; width: 100%; object-fit: cover;">
+                    </div>
+                  </div>
+                  <div class="card-footer text-muted">
+                    Certified: <b>Nov. 02, 2021</b>
+                  </div>
+                </div>
+              </div>
+
+              <div class="item">
+                <div class="card">
+                  <div class="card-header" style="background-color: #480272; color:white; height: 65px;">
+                    <center><i class="fa fa-check"></i> General Mariano Alvarez, Cavite</center>
+                  </div>
+                  <div class="card-body cardRecentEstablishment">
+                    <div style="height: 250px;">
+                      <img src="files/certified/gma_1.jpg" alt="" style="height: 100%; width: 100%; object-fit: cover;">
+                    </div>
+                  </div>
+                  <div class="card-footer text-muted">
+                    Certified: <b>Nov. 02, 2021</b>
+                  </div>
+                </div>
+              </div>
+
+              <div class="item">
+                <div class="card">
+                  <div class="card-header" style="background-color: #480272; color:white; height: 65px;">
+                    <center><i class="fa fa-check"></i> General Mariano Alvarez, Cavite</center>
+                  </div>
+                  <div class="card-body cardRecentEstablishment">
+                    <div style="height: 250px;">
+                      <img src="files/certified/gma_2.jpg" alt="" style="height: 100%; width: 100%; object-fit: cover;">
+                    </div>
+                  </div>
+                  <div class="card-footer text-muted">
+                    Certified: <b>Nov. 02, 2021</b>
+                  </div>
+                </div>
+              </div>
+
+              <div class="item">
+                <div class="card">
+                  <div class="card-header" style="background-color: #480272; color:white; height: 65px;">
+                    <center><i class="fa fa-check"></i> City of Dasmariñas, Cavite</center>
+                  </div>
+                  <div class="card-body cardRecentEstablishment">
+                    <div style="height: 250px;">
+                      <img src="files/certified/241104466_332864341965087_2052280706106030737_n.jpg" alt="" style="height: 100%; width: 100%; object-fit: cover;">
+                    </div>
+                  </div>
+                  <div class="card-footer text-muted">
+                    Certified: <b>Nov. 02, 2021</b>
+                  </div>
+                </div>
+              </div>
+
+              <div class="item">
+                <div class="card">
+                  <div class="card-header" style="background-color: #480272; color:white; height: 65px;">
+                    <center><i class="fa fa-check"></i> City of Dasmariñas, Cavite</center>
+                  </div>
+                  <div class="card-body cardRecentEstablishment">
+                    <div style="height: 250px;">
+                      <img src="files/certified/241084150_332862608631927_3127057238470676673_n.jpg" alt="" style="height: 100%; width: 100%; object-fit: cover;">
+                    </div>
+                  </div>
+                  <div class="card-footer text-muted">
+                    Certified: <b>Nov. 02, 2021</b>
+                  </div>
+                </div>
+              </div>
+
+              <div class="item">
+                <div class="card">
+                  <div class="card-header" style="background-color: #480272; color:white; height: 65px;">
+                    <center><i class="fa fa-check"></i> City of Dasmariñas</center>
+                  </div>
+                  <div class="card-body cardRecentEstablishment">
+                    <div style="height: 250px;">
+                      <img src="files/certified/241059718_332862288631959_6922667179586363783_n.jpg" alt="" style="height: 100%; width: 100%; object-fit: cover;">
+                    </div>
+                  </div>
+                  <div class="card-footer text-muted">
+                    Certified: <b>Nov. 02, 2021</b>
+                  </div>
+                </div>
+              </div>
+
+              <div class="item">
+                <div class="card">
+                  <div class="card-header" style="background-color: #480272; color:white; height: 65px;">
+                    <center><i class="fa fa-check"></i> City of General Trias, Cavite</center>
+                  </div>
+                  <div class="card-body cardRecentEstablishment">
+                    <div style="height: 250px;">
+                      <img src="files/certified/City of General Trias.jpg" alt="" style="height: 100%; width: 100%; object-fit: cover;">
+                    </div>
+                  </div>
+                  <div class="card-footer text-muted">
+                    Certified: <b>Nov. 02, 2021</b>
+                  </div>
+                </div>
+              </div>
+
+              <div class="item">
+                <div class="card">
+                  <div class="card-header" style="background-color: #480272; color:white; height: 65px;">
+                    <center><i class="fa fa-check"></i> City of General Trias, Cavite</center>
+                  </div>
+                  <div class="card-body cardRecentEstablishment">
+                    <div style="height: 250px;">
+                      <img src="files/certified/City of General Trias..jpg" alt="" style="height: 100%; width: 100%; object-fit: cover;">
+                    </div>
+                  </div>
+                  <div class="card-footer text-muted">
+                    Certified: <b>Nov. 02, 2021</b>
+                  </div>
+                </div>
+              </div>
+
+              <div class="item">
+                <div class="card">
+                  <div class="card-header" style="background-color: #480272; color:white; height: 65px;">
+                    <center><i class="fa fa-check"></i> Brgy. Sta. Catalina Sur, Candelaria, Quezon</center>
                   </div>
                   <div class="card-body cardRecentEstablishment">
                     <div style="height: 250px;">
@@ -90,7 +426,7 @@
               <div class="item">
                 <div class="card">
                   <div class="card-header" style="background-color: #480272; color:white; height: 65px;">
-                    <center>Brgy. Sta. Catalina Sur, Candelaria, Quezon <i class="fa fa-check"></i></center>
+                    <center><i class="fa fa-check"></i> Brgy. Sta. Catalina Sur, Candelaria, Quezon</center>
                   </div>
                   <div class="card-body cardRecentEstablishment">
                     <div style="height: 250px;">
@@ -106,7 +442,7 @@
               <div class="item">
                 <div class="card">
                   <div class="card-header" style="background-color: #480272; color:white; height: 65px;">
-                    <center>Brgy. Sta. Catalina Sur, Candelaria, Quezon <i class="fa fa-check"></i></center>
+                    <center><i class="fa fa-check"></i> Brgy. Sta. Catalina Sur, Candelaria, Quezon</center>
                   </div>
                   <div class="card-body cardRecentEstablishment">
                     <div style="height: 250px;">
@@ -122,7 +458,7 @@
               <div class="item">
                 <div class="card">
                   <div class="card-header" style="background-color: #480272; color:white; height: 65px;">
-                    <center>Bauan Municipal Building <i class="fa fa-check"></i></center>
+                    <center><i class="fa fa-check"></i> Bauan Municipal Building</center>
                   </div>
                   <div class="card-body cardRecentEstablishment">
                     <div style="height: 250px;">
@@ -138,7 +474,7 @@
               <div class="item">
                 <div class="card">
                   <div class="card-header" style="background-color: #480272; color:white; height: 65px;">
-                    <center>BJMP City of Cabuyao <i class="fa fa-check"></i></center>
+                    <center><i class="fa fa-check"></i> BJMP City of Cabuyao</center>
                   </div>
                   <div class="card-body cardRecentEstablishment">
                     <div style="height: 250px;">
@@ -154,7 +490,7 @@
               <div class="item">
                 <div class="card">
                   <div class="card-header" style="background-color: #480272; color:white; height: 65px;">
-                    <center>BFP Calamba City Station <i class="fa fa-check"></i></center>
+                    <center><i class="fa fa-check"></i> BFP Calamba City Station</center>
                   </div>
                   <div class="card-body cardRecentEstablishment">
                     <div style="height: 250px;">
@@ -170,7 +506,7 @@
               <div class="item">
                 <div class="card">
                   <div class="card-header" style="background-color: #480272; color:white; height: 65px;">
-                    <center>BFP Laguna Provincial Satellite Office <i class="fa fa-check"></i></center>
+                    <center><i class="fa fa-check"></i> BFP Laguna Provincial Satellite Office</center>
                   </div>
                   <div class="card-body cardRecentEstablishment">
                     <div style="height: 250px;">

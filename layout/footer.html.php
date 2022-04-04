@@ -203,15 +203,6 @@ h1, h2, h3, h4, h5, h6 {
                         </div>
                         <div class="col-lg-2 col-md-6">
                             <div class="f_widget about-widget pl_70 wow fadeInLeft" data-wow-delay="0.4s" style="visibility: visible; animation-delay: 0.4s; animation-name: fadeInLeft;">
-                                <!-- <h3 class="f-title f_600 t_color f_size_18">NAVIGATE</h3>
-                                <ul class="list-unstyled f_list">
-                                    <li><a href="#">Company</a></li>
-                                    <li><a href="#">Android App</a></li>
-                                    <li><a href="#">ios App</a></li>
-                                    <li><a href="#">Desktop</a></li>
-                                    <li><a href="#">Projects</a></li>
-                                    <li><a href="#">My tasks</a></li>
-                                </ul> -->
                             </div>
                         </div>
             
