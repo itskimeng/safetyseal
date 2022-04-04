@@ -12,9 +12,26 @@
         </div>
         <div class="col-md-8 justify-content-center align-self-center">
           <h1 class="align-middle text-success">CERTIFIED</h1>
-          <h3 class="align-middle"><span class="text-muted">Safety Seal No :</span> <?= $resultApplication['safety_seal_no']; ?></h3>
-          <h3 class="align-middle"><span class="text-muted">Issued On :</span> <?= date('F d, Y',strtotime($resultApplication['date_approved'])); ?></h3>
-          <h3 class="align-middle"><span class="text-muted">Valid Until :</span> <?= date('F d, Y', strtotime("+6 months", strtotime($resultApplication['date_approved']))); ?></h3>
+          <table>
+            <tbody>
+              <tr>
+                <td style="width:300px;"><span class="text-muted" style="font-size:16pt;">Safety Seal No :</span></td>
+                <td class="text-right" style="width:300px; font-size: 15pt;"><?= $resultApplication['safety_seal_no']; ?></td>
+              </tr>
+              <tr>
+                <td style="width:300px;"><span class="text-muted" style="font-size:16pt;">Issued On :</span></td>
+                <td class="text-right" style="width:300px; font-size: 15pt;"><?= date('F d, Y',strtotime($resultApplication['date_approved'])); ?></td>
+              </tr>
+              <tr>
+                <td style="width:300px;"><span class="text-muted" style="font-size:16pt;">Valid Until :</span></td>
+                <td class="text-right" style="width:300px; font-size: 15pt;"><?= date('F d, Y', strtotime("+6 months", strtotime($resultApplication['date_approved']))); ?></td>
+              </tr>
+              <tr>
+                <td style="width:300px;"><span class="text-muted" style="font-size:16pt;">Status :</span></td>
+                <td class="text-right" style="width:300px; font-size: 15pt;"><?= $status; ?></td>
+              </tr>
+            </tbody>
+          </table>
         </div>
       </div>
       <hr>
@@ -23,13 +40,13 @@
           <h4 class="mt-3"><span class="text-muted">Agency:</span> <?= $agency; ?></h4>
           <h6 class="mt-3"><span class="text-muted">Establishment:</span> <?= $resultApplication['establishment']; ?></h6>
           <h6 class="mt-3"><span class="text-muted">Address:</span> <?= $resultApplication['address']; ?></h6>
-          <br>
+          <hr> 
           <h6 class="mt-3"><span class="text-muted">Name of Person In Charge:</span> <?= !empty($resultApplication['person']) ? $resultApplication['person'] : 'None'; ?></h6>
           <center><span class="text-muted"><?= !empty($resultApplication['person']) ? 'Person-in-charge' : ''; ?></span></center>
           <h6 class="mt-3"><span class="text-muted">Contact Number:</span> <?= $resultApplication['contact_details']; ?></h6>
           <!-- <h6 class="mt-3"><span class="text-muted">Email Address:</span> <?= $resultApplicantDetails['EMAIL']; ?></h6> -->
           <h6 class="mt-3"><span class="text-muted">Operating Hours:</span> 8AM - 5PM</h6>
-          <br>
+          <hr>
           <h6 class="mt-3"> INSPECTION AND CERTIFICATION TEAMS</h6>
           <h6 class="mt-3"><span class="text-muted">DILG:</span> <?= $resultInspection['NAME']; ?></h6>
           <h6 class="mt-3"><span class="text-muted">PNP:</span> <?= $resultInspection['PNP']; ?></h6>

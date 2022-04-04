@@ -10,7 +10,8 @@ $am = new ApplicationManager;
 
 $establishmentId = $_GET['id'];
 
-$selectApplication = ' SELECT `id`, `control_no`, `user_id`, agency, `establishment`, `nature`, `address`, person, contact_details, `status`, `has_consent`, `date_created`, `date_proceed`, `receiver_id`, `date_received`, `approver_id`, `date_approved`, `safety_seal_no`, `reassessed_by`, `date_reassessed`, `date_modified`, `token` FROM `tbl_app_checklist` WHERE status IN ("Approved", "Renewed", "Expired") AND `id` = "'.$establishmentId.'" ';
+$selectApplication = ' SELECT `id`, `control_no`, `user_id`, agency, `establishment`, `nature`, `address`, person, contact_details, `has_consent`, `date_created`, `date_proceed`, `receiver_id`, `date_received`, `approver_id`, `date_approved`, `safety_seal_no`, `reassessed_by`, `date_reassessed`, `date_modified`, `token`, IF(NOW() >= DATE_ADD(date_approved, INTERVAL +6 MONTH), "Expired", status) AS status FROM `tbl_app_checklist` WHERE status IN ("Approved", "Renewed", "Expired") AND `id` = "'.$establishmentId.'" ';
+
 $execSelectApplication = $conn->query($selectApplication);
 $resultApplication = $execSelectApplication->fetch_assoc();
 
@@ -39,6 +40,8 @@ $selectInspection = ' SELECT `ID`, `PROVINCE`, `LGU`, `NAME`, `EMAIL_ADDRESS`, `
 $execInspection = $conn->query($selectInspection);
 $resultInspection = $execInspection->fetch_assoc();
 
+
+$status = $resultApplication['status'];
 
 
 if ($resultApplication['agency'] == '') 
