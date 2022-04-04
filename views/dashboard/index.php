@@ -240,7 +240,7 @@ require_once 'controller/DashboardController.php'; ?>
                 var areaChartData = {
                     // labels: ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'],
 
-                    labels: ['January', 'February', 'March', 'April', 'May'],
+                    labels: ['January', 'February', 'March', 'April', 'May', 'June'],
 
                     datasets: [{
                             labels: 'Applicants',
@@ -252,7 +252,7 @@ require_once 'controller/DashboardController.php'; ?>
                             pointHighlightStroke: 'rgba(220,220,220,1)',
                             // data: [<?= $receiving['1'] . ',' . $receiving['2'] . ',' . $receiving['3'] . ',' . $receiving['4'] . ',' . $receiving['5'] . ',' . $receiving['6'] . ',' . $receiving['7'] . ',' . $receiving['8'] . ',' . $receiving['9'] . ',' . $receiving['10'] . ',' . $receiving['11'] . ',' . $receiving['12']; ?>],
 
-                            data: [<?= $receiving['1'] . ',' . $receiving['2'] . ',' . $receiving['3'] . ',' . $receiving['4'] . ',' . $receiving['5']; ?>],
+                            data: [<?= $receiving['1'] . ',' . $receiving['2'] . ',' . $receiving['3'] . ',' . $receiving['4'] . ',' . $receiving['5'] . ',' . $receiving['6']; ?>]
                         },
                         {
                             label: 'Approved Applicants',
@@ -264,8 +264,7 @@ require_once 'controller/DashboardController.php'; ?>
                             pointHighlightStroke: 'rgba(60,141,188,1)',
                             // data: [<?= $approved['1'] . ',' . $approved['2'] . ',' . $approved['3'] . ',' . $approved['4'] . ',' . $approved['5'] . ',' . $approved['6'] . ',' . $approved['7'] . ',' . $approved['8'] . ',' . $approved['9'] . ',' . $approved['10'] . ',' . $approved['11'] . ',' . $approved['12']; ?>],
 
-                            data: [<?= $approved['1'] . ',' . $approved['2'] . ',' . $approved['3'] . ',' . $approved['4'] . ',' . $approved['5']; ?>],
-
+                            data: [<?= $approved['1'] . ',' . $approved['2'] . ',' . $approved['3'] . ',' . $approved['4'] . ',' . $approved['5'] . ',' . $approved['6']; ?>]
 
                         }
                     ],
