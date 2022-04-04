@@ -29,18 +29,18 @@
                 </thead>
                 <tbody>
                     <?php foreach ($establishments as $key => $establishment): ?>
-                        <tr class="clickable-row" data-href="establishment-profile.php?unique_id=<?= $key; ?>">
+                        <tr class="clickable-row" data-href="establishment-profile.php?id=<?= $establishment['ac_id']; ?>">
                             <td hidden>
                                 <?= $establishment['province_id']; ?>        
                             </td>
                             <td class="align-middle">
-                                <!-- <a href="establishment-profile.php?unique_id=<?= $key; ?>" class="" style="text-decoration:none; color:black;"> -->
+                                <a href="establishment-profile.php?id=<?= $establishment['ac_id']; ?>" class="" style="text-decoration:none; color:black;" target="_blank">
                                     <span style="font-size:10pt;"><?= $establishment['agency']; ?></span>
                                     <div class="font-weight-bold">
                                        <?= $establishment['gov_estb_name']; ?>
                                     </div>
                                     <span class="text-muted" style="font-size:10pt;"><?= $establishment['nature']; ?></span>
-                                <!-- </a> -->
+                                </a>
                             </td>
                             <td class="align-middle">
                                  <?= $establishment['address']; ?>

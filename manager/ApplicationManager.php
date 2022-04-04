@@ -2126,6 +2126,7 @@ class ApplicationManager extends Connection
             }
 
             $data[$row['id']] = [
+                'ac_id'             => $row['id'],
                 'agency'            => !empty($row['gov_agency_name']) ? '('.$row['gov_agency_name'].')' : '',
                 'province'          => $row['province'],
                 'province_id'       => $row['province_id'],
@@ -2238,6 +2239,7 @@ class ApplicationManager extends Connection
             }
 
             $data[$row['ac_id']] = [
+                'ac_id'             => $row['ac_id'],
                 'agency'            => !empty($row['gov_agency_name']) ? '('.$row['gov_agency_name'].')' : '',
                 'province'          => $row['province'],
                 'province_id'       => $row['province_id'],

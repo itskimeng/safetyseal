@@ -10,6 +10,3 @@ $applied_establishments = $am->fetchAppliedCertifiedEstablishments();
 $encoded_establishments = $am->fetchEncodedCertifiedEstablishments();
 
 $establishments = array_merge($applied_establishments, $encoded_establishments);
-
-
-
