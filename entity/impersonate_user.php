@@ -5,10 +5,12 @@ date_default_timezone_set('Asia/Manila');
 require '../Model/Connection.php';
 require '../application/config/connection.php';
 require '../manager/UserManager.php';	
+require '../manager/ApplicationManager.php';
 
 $um = new UserManager;
+$am = new ApplicationManager();
 
-$id = $_GET['id'];
+$id = $_POST['user_id'];
 
 $data = $um->getUserInfo($id);
 $uname = $data['username'];
@@ -28,7 +30,8 @@ if($data['is_verified']) {
 			'position'			=> $data['position']
 		];
 
-      header("location: ../dashboard.v2.php?username=" . md5($data['username']) . "");
+		$_SESSION['toastr'] = $am->addFlash('warn', 'Account has been impersonated successfully!', 'Success');
+      	header("location: ../dashboard.v2.php?username=" . md5($data['username']) . "");
     } else if ($data['roles'] == 'user') {
         $_SESSION = [
 			'name'				=> $data['name'],
@@ -39,6 +42,7 @@ if($data['is_verified']) {
 			'email'				=> $data['email']
 		];
 
+		$_SESSION['toastr'] = $am->addFlash('warn', 'Account has been impersonated successfully!', 'Success');
         header("location:../dashboard_user.php?username=" . md5($data['username']) . "");
     }
 }

@@ -42,7 +42,7 @@
                     <?= $user['status']; ?>    
                   </span>
                 </td>
-                <td>
+                <td class="text-center">
                   <div class="btn-group">
                     <a href="uac_edit.php?id=<?= $id; ?>" class="btn btn-info btn-block btn-sm" style="margin-bottom: -2%;" title="View Checklist">
                           <i class="fa fa-clipboard-list"></i> Edit
@@ -50,12 +50,12 @@
                   </div>
 
                   <div class="btn-group">
-                    <a href="entity/impersonate_user.php?id=<?= $id; ?>" class="btn btn-warning btn-block btn-sm" style="margin-bottom: -2%;" title="Impersonate selected user">
+                    <!-- <a href="entity/impersonate_user.php?id=<?= $id; ?>" class="btn btn-warning btn-block btn-sm" style="margin-bottom: -2%;" title="Impersonate selected user">
                           <i class="fa fa-sign-in-alt" aria-hidden="true"></i> Impersonate
-                    </a>
-                    <!-- <button type="button" class="btn btn-default" data-toggle="modal" data-target="#modal-impersonate">
+                    </a> -->
+                    <button type="button" class="btn btn-warning btn-sm btn-impersonate" data-toggle="modal" data-target="#modal-impersonate" data-user_id="<?= $id; ?>">
                     <i class="fa fa-sign-in-alt" aria-hidden="true"></i> Impersonate
-                    </button> -->
+                    </button>
                   </div>
                 </td>
 

@@ -16,6 +16,15 @@
 
 <script>
         $(document).ready(function(){
+            <?php
+                if (isset($_SESSION['toastr'])) {
+                  echo 'tata.' . $_SESSION['toastr']['type'] . '("' . $_SESSION['toastr']['title'] . '", "' . $_SESSION['toastr']['message'] . '", {
+                      duration: 5000
+                    })';
+                  unset($_SESSION['toastr']);
+                }
+            ?>
+            
             $(".owl-carousel").owlCarousel({
                 stagePadding: 50,
                 loop:true,

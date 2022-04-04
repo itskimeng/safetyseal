@@ -25,30 +25,41 @@ require_once 'controller/UserAccountsController.php'; ?>
         
         <?php include 'user_table.php'; ?>
         <?php include 'views/dashboard/custom_style.css'; ?>
-        </body>
+    </div>
+</div>       
+
+<?php include 'modal_impersonate.php'; ?>
+
 <script>
-            $(function() {
-                $('#list_table').DataTable({
-                  "paging": true,
-                  "lengthChange": true,
-                  "searching": true,
-                  "ordering": true,
-                  "info": true,
-                  "autoWidth": false,
-                  "responsive": true,
-                  "columnDefs": [
-                        {
-                            "targets": [ 0 ],
-                            "visible": false
-                        }
-                    ]
-                });
+    $(function() {
+        $('#list_table').DataTable({
+          "paging": true,
+          "lengthChange": true,
+          "searching": true,
+          "ordering": true,
+          "info": true,
+          "autoWidth": false,
+          "responsive": true,
+          "columnDefs": [
+                {
+                    "targets": [ 0 ],
+                    "visible": false
+                }
+            ]
+        });
+
+        $(document).on('click', '.btn-impersonate', function(){
+            let user_id = $(this).data('user_id');
+            let modal = $('#modal-impersonate');
+
+            modal.find('#user-id').val(user_id);
+        });
 
 
-                $('#cavite-province').on('hover', function(){
-                    $('.quezon-zoom').addClass('zoom2');
-                });
+        $('#cavite-province').on('hover', function(){
+            $('.quezon-zoom').addClass('zoom2');
+        });
 
-            })
-        </script>
-        </html>
+    })
+</script>
+</html>
