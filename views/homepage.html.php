@@ -366,7 +366,7 @@
                   </div>
                   <div class="card-body cardRecentEstablishment">
                     <div style="height: 250px;">
-                      <img src="files/certified/gen_trias1.jpg" alt="" style="height: 100%; width: 100%; object-fit: cover;">
+                      <img src="files/certified/gen_trias1-min.JPG" alt="" style="height: 100%; width: 100%; object-fit: cover;">
                     </div>
                   </div>
                   <div class="card-footer text-muted">
@@ -382,7 +382,7 @@
                   </div>
                   <div class="card-body cardRecentEstablishment">
                     <div style="height: 250px;">
-                      <img src="files/certified/gen_trias2.jpg" alt="" style="height: 100%; width: 100%; object-fit: cover;">
+                      <img src="files/certified/gen_trias2-min.JPG" alt="" style="height: 100%; width: 100%; object-fit: cover;">
                     </div>
                   </div>
                   <div class="card-footer text-muted">
