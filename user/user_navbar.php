@@ -23,7 +23,11 @@
           </li>
         
           <li class="nav-item">
-            <a class="nav-link" href="certified-establishments.php" id="navcertified">Certified Establishments </a>
+            <?php if (isset($_SESSION['username'])): ?>
+              <a class="nav-link" href="../certified-establishments.php" id="navcertified">Certified Establishment </a>
+            <?php else: ?>
+              <a class="nav-link" href="certified-establishments.php" id="navcertified">Certified Establishment </a>
+            <?php endif ?>
           </li>
           <li class="nav-item">
             <a class="nav-link" href="../inspection-and-certification-team.php" id="navinspection">Inspection and Certification Teams </a>
