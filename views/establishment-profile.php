@@ -15,20 +15,20 @@
           <table>
             <tbody>
               <tr>
-                <td style="width:300px;"><span class="text-muted" style="font-size:16pt;">Safety Seal No :</span></td>
-                <td class="text-right" style="width:300px; font-size: 15pt;"><?= $resultApplication['safety_seal_no']; ?></td>
+                <td style="width:300px;"><span class="text-muted" style="font-size:16pt;">Safety Seal No </span></td>
+                <td class="text-right" style="width:300px; font-size: 15pt;">: <?= $resultApplication['safety_seal_no']; ?></td>
               </tr>
               <tr>
-                <td style="width:300px;"><span class="text-muted" style="font-size:16pt;">Issued On :</span></td>
-                <td class="text-right" style="width:300px; font-size: 15pt;"><?= date('F d, Y',strtotime($resultApplication['date_approved'])); ?></td>
+                <td style="width:300px;"><span class="text-muted" style="font-size:16pt;">Issued On </span></td>
+                <td class="text-right" style="width:300px; font-size: 15pt;">: <?= date('F d, Y',strtotime($resultApplication['date_approved'])); ?></td>
               </tr>
               <tr>
-                <td style="width:300px;"><span class="text-muted" style="font-size:16pt;">Valid Until :</span></td>
-                <td class="text-right" style="width:300px; font-size: 15pt;"><?= date('F d, Y', strtotime("+6 months", strtotime($resultApplication['date_approved']))); ?></td>
+                <td style="width:300px;"><span class="text-muted" style="font-size:16pt;">Valid Until </span></td>
+                <td class="text-right" style="width:300px; font-size: 15pt;">: <?= date('F d, Y', strtotime("+6 months", strtotime($resultApplication['date_approved']))); ?></td>
               </tr>
               <tr>
-                <td style="width:300px;"><span class="text-muted" style="font-size:16pt;">Status :</span></td>
-                <td class="text-right" style="width:300px; font-size: 15pt;"><?= $status; ?></td>
+                <td style="width:300px;"><span class="text-muted" style="font-size:16pt;">Status </span></td>
+                <td class="text-right" style="width:300px; font-size: 15pt;">: <?= $status; ?></td>
               </tr>
             </tbody>
           </table>
