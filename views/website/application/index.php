@@ -13,15 +13,14 @@
       <div class="row align-items-center heading">
 
         <?php if ($count_ent == 14 AND $count_answeredlist == 9): ?>
-          
-        <?php endif ?>
-        <div class="col-md-12">
-          <div class="form-box shadow px-5 mb-2 bg-body rounded box">
-            <div class="bg-white pt-2 pb-2" style="color:#b56501">
-              <i class="fa fa-exclamation-triangle" aria-hidden="true"></i> Your province has been updated to  <b><u>Alert Level <?= $alert_level; ?></u></b>. Delete this application and create a new application.
+          <div class="col-md-12">
+            <div class="form-box shadow px-5 mb-2 bg-body rounded box">
+              <div class="bg-white pt-2 pb-2" style="color:#b56501">
+                <i class="fa fa-exclamation-triangle" aria-hidden="true"></i> Your province has been updated to  <b><u>Alert Level <?= $alert_level; ?></u></b>. Delete this application and create a new application.
+              </div>
             </div>
           </div>
-        </div>
+        <?php endif ?>
         
         <div class="col-md-12">
           <div class="form-box shadow px-5 mb-2 bg-body rounded box">
