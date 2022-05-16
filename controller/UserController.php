@@ -11,6 +11,12 @@ $am = new ApplicationManager();
 $cm = new ComponentsManager();
 
 $id = $_SESSION['userid'];
+$province = $_SESSION['province'];
+$lgu = $_SESSION['city_mun'];
+$alert_level = $am->getLGULevel($province, $lgu);
+
+$count_entries = $alert_level >= 2 ? 14 : 9;
+
 $token = isset($_GET['ssid']) ? $_GET['ssid'] : ''; 
 $user_est = $app->fetchEstablishments($id, $token);
 $user_ssno = '';
@@ -28,7 +34,7 @@ if (isset($user_est[0]['acid'])) {
 	$answered_checklist = $am->getAnsweredChecklist($user_est[0]['acid']);
 	$count_answeredyes = $am->getAnsweredChecklistYes($user_est[0]['acid']);
 	
-	$is_complete_asessment = count($answered_checklist) == 14 ? true : false;
+	$is_complete_asessment = count($answered_checklist) == $count_entries ? true : false;
 	$complete_percentage = 0;
 	foreach ($answered_checklist as $key => $answer) {
 		if ($answer != null) {
@@ -42,10 +48,10 @@ if (isset($user_est[0]['acid'])) {
 	$attachments = $am->getUserChecklistsAttachments($token, false);
 	$upload_count = count($am->getUserChecklistsAttachmentsYES($user_est[0]['acid']));
 
-	// $is_complete_attachments = count($attachments) == 14 ? true : false;
+	// $is_complete_attachments = count($attachments) == $count_entries ? true : false;
 	$is_complete_attachments = $upload_count == $count_answeredyes ? true : false;
 
-	$complete_percentage = ($complete_percentage / 14) * 100;
+	$complete_percentage = ($complete_percentage / $count_entries) * 100;
 	$complete_percentage = number_format($complete_percentage, 0, ',', ' ');
 
 	$other_tool = $am->getContactTracingTool($user_est[0]['acid']);

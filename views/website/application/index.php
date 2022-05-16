@@ -11,6 +11,17 @@
   <div class="container">
     <div class="pt-4">
       <div class="row align-items-center heading">
+
+        <?php if ($count_ent == 14 AND $count_answeredlist == 9): ?>
+          
+        <?php endif ?>
+        <div class="col-md-12">
+          <div class="form-box shadow px-5 mb-2 bg-body rounded box">
+            <div class="bg-white pt-2 pb-2" style="color:#b56501">
+              <i class="fa fa-exclamation-triangle" aria-hidden="true"></i> Your province has been updated to  <b><u>Alert Level <?= $alert_level; ?></u></b>. Delete this application and create a new application.
+            </div>
+          </div>
+        </div>
         
         <div class="col-md-12">
           <div class="form-box shadow px-5 mb-2 bg-body rounded box">
@@ -559,6 +570,8 @@
     let tbody = $('#chklist_body tr');
     $counter = 0;
     checker = true;
+    let count_entries = '<?= $count_ent; ?>';
+    let count_answeredlist = '<?= $count_answeredlist; ?>';
     
     $.each(tbody, function(){
       let tr = $(this);
@@ -576,9 +589,19 @@
       // if (asmnt.is(':checked') || other_tool.val() != undefined && other_tool.val() != '') {
       // }
     });
-
-    if ($counter < 14) {
-      tata.warn('Warning', 'All items in the checklist must be assess.');
+ 
+    if (count_entries == 14 && count_answeredlist == 9) {
+      tata.warn('Alert', 'Your province has been updated to  Alert Level '+ '<?= $alert_level; ?>'+'. Delete this application and create a new application.', {
+          duration: 20000
+        });
+      checker = false;
+    } else if ($counter < count_entries) {
+      tata.warn('Alert', 'All items in the checklist must be assess.');
+      checker = false;
+    } else if ($counter != count_entries) {
+      tata.warn('Alert', 'Your province has updated to  Alert Level '+ '<?= $alert_level; ?>'+'. Delete this application and create a new application.', {
+          duration: 20000
+        });
       checker = false;
     }
 
@@ -674,4 +697,3 @@
     });
   }
 </script>
-<!-- <script src="frontend/js/ajax.js"></script> -->

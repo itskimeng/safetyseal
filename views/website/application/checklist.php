@@ -32,7 +32,8 @@
         </td>
         <td>
           <?php echo $list['requirement']; ?>
-          <?php if ($key == 0): ?>
+
+          <?php if ($key == 0 AND $alert_level >= 2): ?>
             <div class="wrapper">
 
               <?php if (in_array($userinfo['status'], ['Draft', 'Disapproved', 'Reassess', 'For Renewal'])): ?>

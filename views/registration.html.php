@@ -32,7 +32,7 @@
                 </div>
                 <p class="text-muted">
                   New Here?
-                  <a href="#!" data-bs-toggle="modal" data-bs-target="#exampleModal">Create an account</a>
+                  <a href="#!" data-bs-toggle="modal" data-bs-target="#exampleModal" style="color:black;"><b>Create an account</b>.</a>
                 </p>
               </div>
               <div class="alert-messages text-center">

@@ -99,7 +99,7 @@
                       </td>
                       <td>
                         <?= $list['requirement']; ?>
-                        <?php if ($key == 0) : ?>
+                        <?php if ($key == 0 AND $alert_level >= 2) : ?>
                           <br><br>Other contact tracing tool:<br>
                           <span class="badge badge-info right" style="font-size:10pt;"><?= $list['other_tool']; ?></span>
                         <?php endif ?>
@@ -374,6 +374,8 @@
     $(document).on('click', '.btn-proceed', function() {
       let tbody = $('#checklist_form tr');
       $counter = 0;
+      let count_entries = '<?= $count_entries;?>';
+
       $.each(tbody, function() {
         let tr = $(this);
         let asmnt = tr.find('.assessments');
@@ -382,7 +384,7 @@
         }
       });
 
-      if ($counter < 14) {
+      if ($counter < count_entries) {
         tata.warn('Warning', 'All items in the checklist must be assess.');
       } else {
         $('#modal_evaluation').modal('show');

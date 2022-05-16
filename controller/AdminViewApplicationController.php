@@ -17,6 +17,9 @@ $nature = $_SESSION['nature'];
 $userid = $_SESSION['userid'];
 $ssid = $_GET['appid'];
 
+$alert_level = $app->getLGULevel($province, $citymun);
+$count_ent = $alert_level >= 2 ? 14 : 9;
+
 $province_opts = $app->getProvinces();
 $citymun_opts = $app->getCityMuns($province);
 $applicants = $app->getApplicationLists($province,$citymun,ApplicationManager::STATUS_DRAFT);
@@ -50,7 +53,7 @@ $encoded_checklist = $app->getEncodedAttachmentChecklist($applicant['ssid']);
 $answered_checklist = $app->getAnsweredChecklist($ssid);
 $count_answeredyes = $app->getAnsweredChecklistYes($ssid);
 
-$is_complete_asessment = count($answered_checklist) == 14 ? true : false;
+$is_complete_asessment = count($answered_checklist) == $count_ent ? true : false;
 $complete_percentage = 0;
 foreach ($answered_checklist as $key => $answer) {
     if ($answer != null) {
@@ -64,10 +67,10 @@ $application_history = $app->getApplicationHistory($ssid);
 $attachments = $app->getUserChecklistsAttachments($applicant['ssid'], false);
 $upload_count = count($app->getUserChecklistsAttachmentsYES($ssid));
 
-// $is_complete_attachments = count($attachments) == 14 ? true : false;
+// $is_complete_attachments = count($attachments) == $count_ent ? true : false;
 $is_complete_attachments = $upload_count == $count_answeredyes ? true : false;
 
-$complete_percentage = ($complete_percentage / 14) * 100;
+$complete_percentage = ($complete_percentage / $count_ent) * 100;
 $complete_percentage = number_format($complete_percentage, 0, ',', ' ');
 
 $other_tool = $app->getContactTracingTool($ssid);
@@ -85,6 +88,7 @@ if (in_array($applicant['status'], ['Approved', 'Disapproved', 'Revoked', 'Expir
     $is_readonly = true;
 }
 $applicants_data = getUserChecklistsEntry($conn, $appid, $applicant['for_renewal']); 
+$count_entries = count($applicants_data);
 $appchecklists_attchmnt = $app->getUserChecklistsAttachments($applicant['ssid'], $applicant['for_renewal']);
 $app_notes = getUserChecklistsValidations($conn, $appid);
 

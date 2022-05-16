@@ -1407,15 +1407,21 @@ class ApplicationManager extends Connection
         return $id;
     }
 
-    public function getCertChecklists() 
+    public function getCertChecklists($alert_level=null) 
     {
         $sql = "SELECT id FROM tbl_app_certchecklist";
         $getQry = $this->db->query($sql);
-
+        $skip_levels = [1, 2, 3, 4, 7];
         $data = [];
 
         while ($row = mysqli_fetch_assoc($getQry)) {
-            $data[$row['id']] = $row['id'];    
+            if ($alert_level <= 0) {
+                if (!in_array($row['id'], $skip_levels)) {
+                    $data[$row['id']] = $row['id'];   
+                }
+            } else {
+                $data[$row['id']] = $row['id'];    
+            }
         }
         
         return $data;    
@@ -2297,6 +2303,140 @@ class ApplicationManager extends Connection
         }
 
         return $data;
+    }
+
+    public function getClusters($province, $id=null)
+    {
+        $sql = "SELECT 
+                    * 
+                FROM tbl_cluster_head ch 
+                WHERE province = $province";
+
+        if (!empty($id)) {
+            $sql .= " AND id = $id";
+        }
+        
+        $getQry = $this->db->query($sql);
+        $data = [];
+        
+        while ($row = mysqli_fetch_assoc($getQry)) {
+            $data[$row['id']] = [
+                'province'      => $row['province'],
+                'lgu'           => $row['citymun']
+            ];    
+        }
+
+        return $data;
+    }
+
+    public function fetchProvinces($lgus)
+    {
+
+        $data = [];
+
+        foreach ($lgus as $key => $lgu) {
+            $clusters = json_decode($lgu['lgu']);
+            $codes = implode(',', $clusters);
+
+            $sql = "SELECT 
+                    p.id AS province_id,
+                    p.name AS province,
+                    ch.id AS cluster_head,
+                    cm.id AS cm_id,
+                    cm.name AS lgu,
+                    ch.alert_level AS ch_alert_level, 
+                    cm.alert_level AS cm_alert_level 
+                FROM tbl_cluster_head ch 
+                LEFT JOIN tbl_province p ON p.id = ch.province 
+                LEFT JOIN tbl_citymun cm ON cm.province = p.id 
+                WHERE ch.id = $key AND cm.id IN (".$codes.")";
+
+            $getQry = $this->db->query($sql);
+
+            while ($row = mysqli_fetch_assoc($getQry)) {
+                $data[$key][] = [
+                    'province'          => $row['province'],
+                    'lgu'               => $row['lgu'],
+                    'lgu_id'            => $row['cm_id'],
+                    'ch_alert_level'    => $row['ch_alert_level'],
+                    'cm_alert_level'    => $row['cm_alert_level']
+                ];    
+            }
+
+        }
+
+        return $data;
+    }
+
+    public function updateSettingsProvince($id, $level) 
+    {
+        $sql = "UPDATE tbl_province SET alert_level = $level WHERE id = $id";
+        $result = $this->db->query($sql);
+
+        $sql = "UPDATE tbl_cluster_head SET alert_level = $level WHERE province = $id";
+        $result = $this->db->query($sql);
+
+        $sql = "UPDATE tbl_citymun SET alert_level = $level WHERE province = $id";
+        $result = $this->db->query($sql);
+
+        return $result;
+    }
+
+    public function updateSettingsCluster($id, $level) 
+    {
+        $sql = "UPDATE tbl_cluster_head SET alert_level = $level WHERE id = $id";
+        $result = $this->db->query($sql);
+
+        $clusters_raw = $this->getClusterLGUs($id);
+
+        $sql = "UPDATE tbl_citymun SET alert_level = $level WHERE id IN ($clusters_raw)";
+        $result = $this->db->query($sql);
+    
+        return $result;
+    }
+
+    public function getClusterLGUs($id) 
+    {
+        $sql = "SELECT citymun FROM tbl_cluster_head WHERE id = $id";
+        $getQry = $this->db->query($sql);
+        $data = mysqli_fetch_assoc($getQry);
+
+        $rr = json_decode($data['citymun']);
+        $cc = implode(', ', $rr);
+
+        return $cc;
+    }
+
+    public function updateSettingsLGU($id, $level) 
+    {
+        $sql = "UPDATE tbl_citymun SET alert_level = $level WHERE id = $id";
+        $result = $this->db->query($sql);
+    
+        return $result;
+    }
+
+    public function getProvincesList() 
+    {
+        $sql = "SELECT id, name, alert_level FROM tbl_province";
+        $getQry = $this->db->query($sql);
+
+        while ($row = mysqli_fetch_assoc($getQry)) {
+            $data[$row['id']] = [
+                'name'          => $row['name'],
+                'alert_level'   => $row['alert_level']
+            ];
+        }
+
+        return $data;
+    }
+
+    public function getLGULevel($province, $lgu)
+    {
+        $sql = "SELECT alert_level FROM tbl_citymun WHERE province = $province AND code = '".$lgu."'";
+        $getQry = $this->db->query($sql);
+        $result = mysqli_fetch_assoc($getQry);
+
+        return $result['alert_level'];    
     }
 
 }

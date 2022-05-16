@@ -130,7 +130,7 @@
                                                                                 
                                                                             <?php endif ?>
 
-                                                                          <a type="button" class="btn btn-danger btn-sm btn-delete_app rounded-circle" data-bs-toggle="modal" data-target="#modal-delete_app"><i class="fas fa-trash"></i></a>
+                                                                          <a type="button" class="btn btn-danger btn-sm btn-delete_app rounded-circle" data-bs-toggle="modal" data-target="#modal-delete_app" data-ssid="<?= $est['token']; ?>"><i class="fas fa-trash"></i></a>
                                                                         </div>
 
                                                                     <?php } else if (in_array($est['ac_status'], ['Approved', 'Renewed'])) { ?>
@@ -142,11 +142,6 @@
 
                                                                             <a href="../entity/checklist_form.php?control_no=<?= $est['control_no']; ?>" target="_blank" type="button" class="btn btn-warning btn-block btn-sm rounded-circle" title="Print Checklist"><i class="fa fa-print"></i>
                                                                             </a>
-
-                                                                            <?php if ($est['interval'] == 0): ?>
-                                                                                <!-- <a href="../entity/renew_application.php?ssid=<?php //echo $est['token']; ?>&code=<?php //echo $gcode; ?>&scope=<?php //echo $gscope; ?>" type="button" class="btn btn-secondary btn-block btn-sm rounded-circle btn-renew" title="Apply for Renewal"><i class="fa fa-print"></i>
-                                                                                </a> -->
-                                                                            <?php endif ?>
                                                                         </div>
 
                                                                     <?php } else { ?>
@@ -154,12 +149,9 @@
                                                                             <a href="application.php?ssid=<?= $est['token']; ?>&code=<?= $gcode; ?>&scope=<?= $gscope; ?>" type="button" class="btn btn-primary btn-block btn-sm rounded-circle" title="View Application"><i class="fas fa-eye"></i></a>
 
                                                                             <?php if (in_array($user_est[0]['ac_status'], ['Draft','Disapproved', 'Returned', 'Revoked'])): ?>
-                                                                                <a type="button" class="btn btn-danger btn-sm btn-delete_app rounded-circle" data-bs-toggle="modal" data-target="#modal-delete_app"><i class="fas fa-trash"></i></a>
+                                                                                <a type="button" class="btn btn-danger btn-sm btn-delete_app rounded-circle" data-bs-toggle="modal" data-target="#modal-delete_app" data-ssid="<?= $est['token']; ?>"><i class="fas fa-trash"></i></a>
                                                                             <?php endif ?>
 
-                                                                            <!-- <a href="../certificate.php?token=<?= $est['token']; ?>&status=<?= $est['ac_status']; ?>" target="_blank" type="button" class="btn btn-success btn-block btn-sm rounded-circle" data-toggle="tooltip" data-placement="top" title="View Certificate"><i class="fas fa-certificate"></i>
-                                                                            </a>
- -->
                                                                             <?php if ($est['ac_status'] != 'Draft'): ?>
                                                                                 <a href="../entity/checklist_form.php?control_no=<?= $est['control_no']; ?>" type="button" target="_blank" class="btn btn-warning btn-block btn-sm rounded-circle" title="Print Checklist"><i class="fa fa-print"></i></a>
                                                                             <?php endif ?>
@@ -328,11 +320,14 @@
 
     $(document).on('click', '.btn-delete_app', function(e){
         let row = $(this).closest('tr');
+        let ssid = $(this).data('ssid');
         let connum = row.find('td:eq(0)').html();
         let modal = $('#modal-delete_app');
         let control_label = modal.find('.con_num');
+        let app_ssid = modal.find('#app_ssid');
 
         control_label.html($.trim(connum));
+        app_ssid.val(ssid);
 
         $('#modal-delete_app').modal('show'); 
     });
