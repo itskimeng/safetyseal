@@ -7,7 +7,7 @@
       <div class="row">
         <div class="col-md-4">
           <center>
-            <img src="https://chart.googleapis.com/chart?chs=300x300&cht=qr&chl=http%3A%2F%2Fsafetyseal.calabarzon.dilg.gov.ph/establishment-profile.php?unique_id=<?= $establishmentId; ?>%2F&choe=UTF-8" title="Link to Google.com" />
+            <img src="https://chart.googleapis.com/chart?chs=300x300&cht=qr&chl=http%3A%2F%2Fsafetyseal.calabarzon.dilg.gov.ph/establishment-profile.php?id=<?= $establishmentId; ?>%2F&choe=UTF-8" title="Link to Google.com" />
           </center>
         </div>
         <div class="col-md-8 justify-content-center align-self-center">
