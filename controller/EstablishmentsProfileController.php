@@ -30,7 +30,8 @@ $resultProvince = $execProvince->fetch_assoc();
 $province = strtoupper($resultProvince['name']);
 
 
-$selectLgu = ' SELECT `id`, `province`, `code`, `name`, `date_created` FROM `tbl_citymun` WHERE `id` = "'.$resultApplicantDetails['LGU'].'" AND `province` = "'.$resultApplicantDetails['PROVINCE'].'" ';
+$selectLgu = ' SELECT `id`, `province`, `code`, `name`, `date_created` FROM `tbl_citymun` WHERE `code` = "'.$resultApplicantDetails['LGU'].'" AND `province` = "'.$resultApplicantDetails['PROVINCE'].'" ';
+
 $execLgu = $conn->query($selectLgu);
 $resultLgu = $execLgu->fetch_assoc();
 $lgu = strtoupper($resultLgu['name']);
