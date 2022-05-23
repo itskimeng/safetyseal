@@ -15,7 +15,6 @@ else
 $execSelectApplication = $conn->query($selectApplication);
 $resultApplication = $execSelectApplication->fetch_assoc();
 
-
 $selectApplicantDetails = ' SELECT `ID`, `REGION`, `PROVINCE`, `LGU`, `OFFICE`, `CMLGOO_NAME`, `UNAME`, `PASSWORD`, `VERIFICATION_CODE`, `IS_APPROVED`, `IS_VERIFIED`, `ROLES`, `EMAIL` FROM `tbl_admin_info` WHERE `ID` = "'.$resultApplication['user_id'].'" ';
 $execApplicantDetails = $conn->query($selectApplicantDetails);
 $resultApplicantDetails = $execApplicantDetails->fetch_assoc();
@@ -40,7 +39,7 @@ if ($status == 'Expired') {
 	$pdf->Image('fpdf/safetyseallogo2.png',8,-26,193.5);
 }
 
-$pdf->Image('https://chart.googleapis.com/chart?chs=300x300&cht=qr&chl=http%3A%2F%2Fsafetyseal.calabarzon.dilg.gov.ph/establishment-profile.php?unique_id='.$resultApplication['id'].'%2F&choe=UTF-8',30,255,30,0,'png');
+$pdf->Image('https://chart.googleapis.com/chart?chs=300x300&cht=qr&chl=http%3A%2F%2Fsafetyseal.calabarzon.dilg.gov.ph/establishment-profile.php?id='.$resultApplication['id'].'%2F&choe=UTF-8',30,255,30,0,'png');
 $pdf->Image('fpdf/dilg.png',62,255,30);
 
 $pdf->SetFont('Arial','',12);
