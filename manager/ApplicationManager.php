@@ -1415,7 +1415,7 @@ class ApplicationManager extends Connection
         $data = [];
 
         while ($row = mysqli_fetch_assoc($getQry)) {
-            if ($alert_level <= 0) {
+            if ($alert_level <= 1) {
                 if (!in_array($row['id'], $skip_levels)) {
                     $data[$row['id']] = $row['id'];   
                 }
