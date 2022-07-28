@@ -84,11 +84,25 @@
       tr+= item['control_no'];
       tr+= '</td>';
       tr+= '<td>'+item['fname']+'</td>';
-      tr+= '<td>'+item['agency']+'</td>';
       tr+= '<td>'+item['address']+'</td>';
       tr+= '<td>'+item['date_created']+'</td>';
+      tr+= '<td>';
+      tr+= '<span class="label label-sm bg-'+item['color']+' label-inline font-weight-bold py-3"><i class="fa fa-certificate"></i>&nbsp;'+item['ss_no']+'</span>';
+      tr+= '<table class="table table-bordered dataTable dtr-inline">';
+      tr+= '<tbody>';
+      tr+= '<tr>';
+      tr+= '<td><strong>Issued</strong></td>';
+      tr+= '<td>'+item['date_created']+'</td>';
+      tr+= '</tr>';
+      tr+= '<tr>';
+      tr+= '<td><strong>Valid Until</strong></td>';
       tr+= '<td>'+item['validity_date']+'</td>';
-      tr+= '<td>'+item['ss_no']+'</td>';
+      tr+= '</tr>';
+      tr+= '</tbody>';
+      tr+= '</table>';
+
+
+      tr+= '</td>';
       tr+= '<td>';
 
       if (item['app_type'] == 'Encoded') {

@@ -2,7 +2,6 @@
 session_start();
 date_default_timezone_set('Asia/Manila');
 
-require '../manager/ApplicationManager.php';
 require '../application/config/connection.php';
 
 $province = $_SESSION['province'];
@@ -43,6 +42,7 @@ echo $lists;
 function filterApplicants($conn, $province, $lgu, $options) {
 	$date_from = $options['date_from'];
 	$date_to = $options['date_to'];
+    $app_type = $options['app_type'];
 	$data = [];
 
 	$sql = "SELECT
@@ -224,7 +224,7 @@ function filterApplicants($conn, $province, $lgu, $options) {
         FROM tbl_app_checklist ac
         LEFT JOIN tbl_userinfo ui on ui.id = ac.user_id
         LEFT JOIN tbl_admin_info ai on ui.user_id = ai.id
-        WHERE ai.PROVINCE = '".$province."' AND ac.lgu = '".$lgu."' AND ac.date_created >= '$date_from' AND ac.date_created <= '$date_to' AND ac.application_type = 'Encoded'";
+        WHERE  ac.date_created >= '$date_from' AND ac.date_created <= '$date_to' AND ac.application_type = '$app_type'";
 
     if (!empty($options['name'])) {
         $sql.= " AND ai.CMLGOO_NAME = '".$options['name']."'"; 
@@ -265,7 +265,6 @@ function filterApplicants($conn, $province, $lgu, $options) {
             'agency' => $row['app_type'] == 'Applied' ? $row['agency'] : $row['r_agency'],
             'address' => $row['app_type'] == 'Applied' ? $row['address'] : $row['r_address'],
             'date_created' => date('F d, Y',strtotime($row['date_created'])),
-            'validity_date' => $validity_date,
             'control_no' => $row['control_no'],
             'status' => $row['status'],
             'app_type' => $row['app_type'],
@@ -275,7 +274,6 @@ function filterApplicants($conn, $province, $lgu, $options) {
             'validity_date' => !empty($row['date_approved']) ? date('F d, Y', strtotime("+6 months", strtotime($row['date_approved']))) : ''
         ];    
     }
-   
     return json_encode($data);
 }
 
