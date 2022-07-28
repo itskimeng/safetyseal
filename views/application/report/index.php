@@ -224,6 +224,7 @@
                 row+= '<td style="text-align: center; vertical-align: middle;"><b>TOTAL</b></td>';
                 row+= '<td style="font-size:20pt; text-align: center; vertical-align: middle;"><b>'+$data['total_application']+'</b></td>';
                 row+= '<td style="font-size:20pt; text-align: center; vertical-align: middle;"><b>'+$data['total_approved']+'</b></td>';
+                row+= '<td style="font-size:20pt; text-align: center; vertical-align: middle;"><b>'+$data['total_renewed']+'</b></td>';
                 row+= '<td style="font-size:20pt; text-align: center; vertical-align: middle;"><b>'+$data['total_received']+'</b></td>';
                 row+= '<td style="font-size:20pt; text-align: center; vertical-align: middle;"><b>'+$data['total_disapproved']+'</b></td>';
                 // row+= '<td style="font-size:20pt; text-align: center; vertical-align: middle;"><b>0</b></td>';
@@ -240,6 +241,7 @@
                 row+= '<td style="text-align: center; vertical-align: middle;"><b>BATANGAS</b></td>';
                 row+= '<td style="font-size:20pt; text-align: center; vertical-align: middle;"><b>'+$data['batangas_application']+'</b></td>';
                 row+= '<td style="font-size:20pt; text-align: center; vertical-align: middle;"><b>'+$data['batangas_approved']+'</b></td>';
+                row+= '<td style="font-size:20pt; text-align: center; vertical-align: middle;"><b>'+$data['batangas_renewed']+'</b></td>';
                 row+= '<td style="font-size:20pt; text-align: center; vertical-align: middle;"><b>'+$data['batangas_received']+'</b></td>';
                 row+= '<td style="font-size:20pt; text-align: center; vertical-align: middle;"><b>'+$data['batangas_disapproved']+'</b></td>';
                 // row+= '<td style="font-size:20pt; text-align: center; vertical-align: middle;"><b>0</b></td>';
@@ -256,6 +258,7 @@
                 row+= '<td style="text-align: center; vertical-align: middle;"><b>CAVITE</b></td>';
                 row+= '<td style="font-size:20pt; text-align: center; vertical-align: middle;"><b>'+$data['cavite_application']+'</b></td>';
                 row+= '<td style="font-size:20pt; text-align: center; vertical-align: middle;"><b>'+$data['cavite_approved']+'</b></td>';
+                row+= '<td style="font-size:20pt; text-align: center; vertical-align: middle;"><b>'+$data['cavite_renewed']+'</b></td>';
                 row+= '<td style="font-size:20pt; text-align: center; vertical-align: middle;"><b>'+$data['cavite_received']+'</b></td>';
                 row+= '<td style="font-size:20pt; text-align: center; vertical-align: middle;"><b>'+$data['cavite_disapproved']+'</b></td>';
                 // row+= '<td style="font-size:20pt; text-align: center; vertical-align: middle;"><b>0</b></td>';
@@ -272,6 +275,7 @@
                 row+= '<td style="text-align: center; vertical-align: middle;"><b>LAGUNA</b></td>';
                 row+= '<td style="font-size:20pt; text-align: center; vertical-align: middle;"><b>'+$data['laguna_application']+'</b></td>';
                 row+= '<td style="font-size:20pt; text-align: center; vertical-align: middle;"><b>'+$data['laguna_approved']+'</b></td>';
+                row+= '<td style="font-size:20pt; text-align: center; vertical-align: middle;"><b>'+$data['laguna_renewed']+'</b></td>';
                 row+= '<td style="font-size:20pt; text-align: center; vertical-align: middle;"><b>'+$data['laguna_received']+'</b></td>';
                 row+= '<td style="font-size:20pt; text-align: center; vertical-align: middle;"><b>'+$data['laguna_disapproved']+'</b></td>';
                 // row+= '<td style="font-size:20pt; text-align: center; vertical-align: middle;"><b>0</b></td>';
@@ -288,6 +292,7 @@
                 row+= '<td style="text-align: center; vertical-align: middle;"><b>RIZAL</b></td>';
                 row+= '<td style="font-size:20pt; text-align: center; vertical-align: middle;"><b>'+$data['rizal_application']+'</b></td>';
                 row+= '<td style="font-size:20pt; text-align: center; vertical-align: middle;"><b>'+$data['rizal_approved']+'</b></td>';
+                row+= '<td style="font-size:20pt; text-align: center; vertical-align: middle;"><b>'+$data['rizal_renewed']+'</b></td>';
                 row+= '<td style="font-size:20pt; text-align: center; vertical-align: middle;"><b>'+$data['rizal_received']+'</b></td>';
                 row+= '<td style="font-size:20pt; text-align: center; vertical-align: middle;"><b>'+$data['rizal_disapproved']+'</b></td>';
                 // row+= '<td style="font-size:20pt; text-align: center; vertical-align: middle;"><b>0</b></td>';
@@ -304,6 +309,7 @@
                 row+= '<td style="text-align: center; vertical-align: middle;"><b>QUEZON (including Lucena HUC)</b></td>';
                 row+= '<td style="font-size:20pt; text-align: center; vertical-align: middle;"><b>'+$data['huc_application']+'</b></td>';
                 row+= '<td style="font-size:20pt; text-align: center; vertical-align: middle;"><b>'+$data['huc_approved']+'</b></td>';
+                row+= '<td style="font-size:20pt; text-align: center; vertical-align: middle;"><b>'+$data['huc_renewed']+'</b></td>';
                 row+= '<td style="font-size:20pt; text-align: center; vertical-align: middle;"><b>'+$data['huc_received']+'</b></td>';
                 row+= '<td style="font-size:20pt; text-align: center; vertical-align: middle;"><b>'+$data['huc_disapproved']+'</b></td>';
                 // row+= '<td style="font-size:20pt; text-align: center; vertical-align: middle;"><b>0</b></td>';
