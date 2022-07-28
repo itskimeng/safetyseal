@@ -1,5 +1,5 @@
 <?php
-
+require 'Model/Connection.php';
 require 'application/config/connection.php';
 require 'manager/DashboardManager.php';
 require 'manager/ApplicationManager.php';
