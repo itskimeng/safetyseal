@@ -19,9 +19,10 @@ class ApplicationManager extends Connection
     const STATUS_REVOKED            = "Revoked";
     const TYPE_APPLIED              = "Applied";
     const TYPE_ENCODED              = "Encoded";
-    
 
-    function __construct() {
+
+    function __construct()
+    {
         if (!isset($this->db)) {
             $conn = new mysqli($this->hostname, $this->dbUser, $this->dbPassword, $this->dbName);
             if ($conn->connect_error) {
@@ -37,7 +38,6 @@ class ApplicationManager extends Connection
         $sql = "SELECT id, requirement, description FROM tbl_app_certchecklist";
         $getQry = $this->db->query($sql);
         $data = [];
-
         while ($row = mysqli_fetch_assoc($getQry)) {
             $data[] = [
                 'clist_id' => $row['id'],
@@ -47,11 +47,12 @@ class ApplicationManager extends Connection
                 'answer' => '',
                 'reason' => '',
                 'other_tool' => ''
-            ];    
+            ];
         }
-        
+
         return $data;
     }
+
 
     public function findChecklist($token)
     {
@@ -69,7 +70,7 @@ class ApplicationManager extends Connection
                 safety_seal_no,
                 lgu,
                 person 
-                FROM tbl_app_checklist WHERE token = '".$token."'";
+                FROM tbl_app_checklist WHERE token = '" . $token . "'";
 
         $getQry = $this->db->query($sql);
         $result = mysqli_fetch_assoc($getQry);
@@ -79,7 +80,7 @@ class ApplicationManager extends Connection
 
     public function insertChecklist($control_no, $establishment, $nature, $address, $userid, $date_created, $token)
     {
-        $sql = 'INSERT INTO tbl_app_checklist (control_no, establishment, nature, address, user_id, date_created, token) VALUES ("'.$control_no.'", "'.$establishment.'", "'.$nature.'", "'.$address.'", '.$userid.', "'.$date_created.'", "'.$token.'")';
+        $sql = 'INSERT INTO tbl_app_checklist (control_no, establishment, nature, address, user_id, date_created, token) VALUES ("' . $control_no . '", "' . $establishment . '", "' . $nature . '", "' . $address . '", ' . $userid . ', "' . $date_created . '", "' . $token . '")';
 
         $result = $this->db->query($sql);
         $last_id = mysqli_insert_id($this->db);
@@ -90,7 +91,7 @@ class ApplicationManager extends Connection
 
     public function insertChecklist2($control_no, $establishment, $nature, $address, $userid, $date_created, $token, $ss_no)
     {
-        $sql = 'INSERT INTO tbl_app_checklist (control_no, establishment, nature, address, user_id, date_created, token, for_renewal, status, safety_seal_no) VALUES ("'.$control_no.'", "'.$establishment.'", "'.$nature.'", "'.$address.'", '.$userid.', "'.$date_created.'", "'.$token.'", true, "For Renewal", "'.$ss_no.'")';
+        $sql = 'INSERT INTO tbl_app_checklist (control_no, establishment, nature, address, user_id, date_created, token, for_renewal, status, safety_seal_no) VALUES ("' . $control_no . '", "' . $establishment . '", "' . $nature . '", "' . $address . '", ' . $userid . ', "' . $date_created . '", "' . $token . '", true, "For Renewal", "' . $ss_no . '")';
 
         $result = $this->db->query($sql);
         $last_id = mysqli_insert_id($this->db);
@@ -100,7 +101,7 @@ class ApplicationManager extends Connection
 
     public function updateChecklist($token, $establishment, $nature, $address, $date_modified)
     {
-        $sql = "UPDATE tbl_app_checklist SET date_modified = '".$date_modified."', establishment = '".$establishment."', nature = '".$nature."', address = '".$address."' WHERE token = '".$token."'";
+        $sql = "UPDATE tbl_app_checklist SET date_modified = '" . $date_modified . "', establishment = '" . $establishment . "', nature = '" . $nature . "', address = '" . $address . "' WHERE token = '" . $token . "'";
         $result = $this->db->query($sql);
 
         return $result;
@@ -108,33 +109,33 @@ class ApplicationManager extends Connection
 
     public function insertChecklistEntry($data)
     {
-        $sql = 'INSERT INTO tbl_app_checklist_entry (parent_id, chklist_id, answer, reason, date_created) VALUES ('.$data["parent_id"].', '.$data["chklist_id"].', "'.$data["answer"].'", "'.$data["reason"].'", "'.$data["date_created"].'")';
+        $sql = 'INSERT INTO tbl_app_checklist_entry (parent_id, chklist_id, answer, reason, date_created) VALUES (' . $data["parent_id"] . ', ' . $data["chklist_id"] . ', "' . $data["answer"] . '", "' . $data["reason"] . '", "' . $data["date_created"] . '")';
         $result = $this->db->query($sql);
 
         return $result;
     }
 
-    public function notifyApprover($province, $lgu){
+    public function notifyApprover($province, $lgu)
+    {
         $sql = "SELECT `PROVINCE`, `LGU`, `EMAIL`, ui.MOBILE_NO, ai.ROLES AS roles FROM `tbl_admin_info` ai
         left join tbl_userinfo ui on ai.ID = ui.USER_ID
-        WHERE PROVINCE = '".$province."' and LGU = '".$lgu."' and roles = 'admin'";
-       
+        WHERE PROVINCE = '" . $province . "' and LGU = '" . $lgu . "' and roles = 'admin'";
+
         $data = [];
         $getQry = $this->db->query($sql);
 
-        while ($row = mysqli_fetch_assoc($getQry)) {        
+        while ($row = mysqli_fetch_assoc($getQry)) {
             $data[] = [
                 'email' => $row['EMAIL'],
                 'mobile' => $row['MOBILE_NO']
             ];
         }
-            return $data;
-
+        return $data;
     }
 
     public function updateChecklistEntry($data, $table)
     {
-        $sql = "UPDATE $table SET tracing_tool = '".$data['tracing_tool']."', other_tool = '".$data['other_tool']."', answer = '".$data['answer']."', reason = '".$data['reason']."' WHERE id = ".$data['chklist_id']."";
+        $sql = "UPDATE $table SET tracing_tool = '" . $data['tracing_tool'] . "', other_tool = '" . $data['other_tool'] . "', answer = '" . $data['answer'] . "', reason = '" . $data['reason'] . "' WHERE id = " . $data['chklist_id'] . "";
         $result = $this->db->query($sql);
 
         return $result;
@@ -146,6 +147,7 @@ class ApplicationManager extends Connection
             c.id as clist_id,  
             c.requirement as requirement,
             c.description as description,
+            c.parent as parent,
             e.id as ulist_id,
             e.answer as answer,
             e.reason as reason,
@@ -158,20 +160,24 @@ class ApplicationManager extends Connection
             LEFT JOIN tbl_app_checklist a on a.id = e.parent_id
             LEFT JOIN tbl_app_certchecklist c on c.id = e.chklist_id
             LEFT JOIN tbl_admin_info ai on ai.id = a.user_id
-            WHERE a.token = '".$token."'";
+            WHERE a.token = '" . $token . "'";
+
+
 
         $getQry = $this->db->query($sql);
         $data = [];
 
         $is_disabled = true;
-        
+        $counter = 1;
         while ($row = mysqli_fetch_assoc($getQry)) {
             if (in_array($row['status'], array('Draft', 'Disapproved', 'Reassess', 'For Renewal'))) {
                 $is_disabled = false;
             }
 
             $data[] = [
+                'id' => $counter++,
                 'clist_id' => $row['clist_id'],
+                'parent'    => $row['parent'],
                 'requirement' => $row['requirement'],
                 'description' => explode('~ ', $row['description']),
                 'ulist_id' => $row['ulist_id'],
@@ -180,9 +186,9 @@ class ApplicationManager extends Connection
                 'assessment' => $row['assessment'],
                 'other_tool' => $row['other_tool'],
                 'is_disabled' => $is_disabled,
-                'otherTool_disabled' => empty($row['answer']) OR $row['answer'] == 'other' ? false : true,
+                'otherTool_disabled' => empty($row['answer']) or $row['answer'] == 'other' ? false : true,
                 'tracing_tool' => $row['tracing_tool']
-            ];    
+            ];
         }
 
         return $data;
@@ -199,10 +205,10 @@ class ApplicationManager extends Connection
         // if ($for_renewal) {
         //     $sql .= " LEFT JOIN tbl_app_checklist_renewal_entry e on e.id = ca.renewal_id";
         // } else {
-            $sql .= " LEFT JOIN tbl_app_checklist_entry e on e.id = ca.entry_id";
+        $sql .= " LEFT JOIN tbl_app_checklist_entry e on e.id = ca.entry_id";
         // }    
-        
-        $sql .= " LEFT JOIN tbl_app_checklist a on a.id = e.parent_id WHERE a.token = '".$token."'";
+
+        $sql .= " LEFT JOIN tbl_app_checklist a on a.id = e.parent_id WHERE a.token = '" . $token . "'";
 
         $getQry = $this->db->query($sql);
         $data = [];
@@ -212,13 +218,13 @@ class ApplicationManager extends Connection
                 'eid' => $row['eid'],
                 'caid' => $row['caid'],
                 'file_name' => $row['file_name']
-            ];    
+            ];
         }
 
         return $data;
     }
 
-    public function getUserChecklistsAttachmentsYES($token, $for_renewal=false)
+    public function getUserChecklistsAttachmentsYES($token, $for_renewal = false)
     {
         $sql = "SELECT 
             e.id as eid,
@@ -230,9 +236,9 @@ class ApplicationManager extends Connection
             $sql .= " LEFT JOIN tbl_app_checklist_renewal_entry e on e.id = ca.renewal_id";
         } else {
             $sql .= " LEFT JOIN tbl_app_checklist_entry e on e.id = ca.entry_id";
-        }    
-        
-        $sql .= " LEFT JOIN tbl_app_checklist a on a.id = e.parent_id WHERE e.answer = 'yes' AND a.id = '".$token."'";
+        }
+
+        $sql .= " LEFT JOIN tbl_app_checklist a on a.id = e.parent_id WHERE e.answer = 'yes' AND a.id = '" . $token . "'";
 
         $getQry = $this->db->query($sql);
         $data = [];
@@ -242,7 +248,7 @@ class ApplicationManager extends Connection
                 'eid' => $row['eid'],
                 'caid' => $row['caid'],
                 'file_name' => $row['file_name']
-            ];    
+            ];
         }
 
         return $data;
@@ -277,7 +283,7 @@ class ApplicationManager extends Connection
                 'reason' => $row['reason'],
                 'ss_no' => $row['ss_no'],
                 'date_created' => $row['date_created']
-            ];    
+            ];
         }
 
         return $data;
@@ -319,8 +325,8 @@ class ApplicationManager extends Connection
             LEFT JOIN tbl_province p on p.id = ai.PROVINCE
             LEFT JOIN tbl_citymun m on m.id = ai.LGU
             LEFT JOIN tbl_app_checklist_onsitevalidations aco on aco.chklist_id = ac.id
-            WHERE ac.token = '".$token."'";
-        
+            WHERE ac.token = '" . $token . "'";
+
         $getQry = $this->db->query($sql);
         $data = [];
         // $today = new DateTime();
@@ -335,13 +341,13 @@ class ApplicationManager extends Connection
                 $date_created = $today;
             }
 
-            if (($row['status'] == "Approved") AND ($row['for_renewal']) AND (!empty($row['date_renewed']))) {
+            if (($row['status'] == "Approved") and ($row['for_renewal']) and (!empty($row['date_renewed']))) {
                 $date_validity = date('Y-m-d', strtotime("+6 months", strtotime($row['date_renewed'])));
             } else {
                 $date_validity = date('Y-m-d', strtotime("+6 months", strtotime($row['date_approved'])));
             }
 
-            if (($row['status'] == "Approved") AND ($row['for_renewal']) AND (!empty($row['date_renewed']))) {
+            if (($row['status'] == "Approved") and ($row['for_renewal']) and (!empty($row['date_renewed']))) {
                 $date_validity_f = date('M d, Y', strtotime("+6 months", strtotime($row['date_renewed'])));
             } else {
                 $date_validity_f = date('M d, Y', strtotime("+6 months", strtotime($row['date_approved'])));
@@ -350,7 +356,7 @@ class ApplicationManager extends Connection
             $date1 = date_create($date_today);
             $date2 = date_create($date_validity);
             $interval = $date1->diff($date2);
-            
+
             $status = $row['status'];
             if (!empty($row['date_approved'])) {
                 if ($row['status'] == 'For Renewal') {
@@ -377,14 +383,14 @@ class ApplicationManager extends Connection
                 'mcode'             => $row['mcode'],
                 'defects'           => $row['defects'],
                 'recommendations'   => $row['recommendations'],
-                'code'              => !empty($row['control_no']) ? $row['control_no'] : '2021-'.'_____',
+                'code'              => !empty($row['control_no']) ? $row['control_no'] : '2021-' . '_____',
                 'date_proceed'      => $row['date_proceed'],
                 'remarks'           => $row['remarks'],
                 'token'             => $row['token'],
                 'for_renewal'       => $row['for_renewal'],
                 'ssc_no'            => $row['ssc_no'],
                 'renew_count'       => $row['renew_count']
-            ];      
+            ];
         }
 
         return $data;
@@ -393,15 +399,15 @@ class ApplicationManager extends Connection
 
     public function setUserApplicationDate($user, $date)
     {
-        $sql = "UPDATE tbl_userinfo SET DATE_APPLICATION_CREATED = '".$date."' WHERE id = ".$user."";
+        $sql = "UPDATE tbl_userinfo SET DATE_APPLICATION_CREATED = '" . $date . "' WHERE id = " . $user . "";
         $result = $this->db->query($sql);
 
-        return $result; 
+        return $result;
     }
 
     public function proceedChecklist($checklist_id, $contact_details, $has_consent, $status, $date_modified)
     {
-        $sql = "UPDATE tbl_app_checklist SET contact_details = '".$contact_details."', date_proceed = '".$date_modified."', date_modified = '".$date_modified."', has_consent = '".$has_consent."', sms_sending_status = '1',email_sending_status = '1',pnp_sending_status = '1',bfp_sending_status = '1', status = '".$status."' WHERE id = ".$checklist_id."";
+        $sql = "UPDATE tbl_app_checklist SET contact_details = '" . $contact_details . "', date_proceed = '" . $date_modified . "', date_modified = '" . $date_modified . "', has_consent = '" . $has_consent . "', sms_sending_status = '1',email_sending_status = '1',pnp_sending_status = '1',bfp_sending_status = '1', status = '" . $status . "' WHERE id = " . $checklist_id . "";
         $result = $this->db->query($sql);
 
         return $result;
@@ -409,23 +415,23 @@ class ApplicationManager extends Connection
 
     public function reassessChecklist($user, $token, $status, $date_modified)
     {
-        $sql = "UPDATE tbl_app_checklist SET reassessed_by = ".$user.", date_reassessed = '".$date_modified."', date_modified = '".$date_modified."', status = '".$status."' WHERE token = '".$token."'";
+        $sql = "UPDATE tbl_app_checklist SET reassessed_by = " . $user . ", date_reassessed = '" . $date_modified . "', date_modified = '" . $date_modified . "', status = '" . $status . "' WHERE token = '" . $token . "'";
         $result = $this->db->query($sql);
 
         return $result;
     }
 
-    public function receiveChecklist($checklist_id, $status, $date_modified, $receiver, $remarks='')
+    public function receiveChecklist($checklist_id, $status, $date_modified, $receiver, $remarks = '')
     {
-        $sql = "UPDATE tbl_app_checklist SET date_received = '".$date_modified."', date_modified = '".$date_modified."', receiver_id = ".$receiver.", status = '".$status."' WHERE id = ".$checklist_id."";
+        $sql = "UPDATE tbl_app_checklist SET date_received = '" . $date_modified . "', date_modified = '" . $date_modified . "', receiver_id = " . $receiver . ", status = '" . $status . "' WHERE id = " . $checklist_id . "";
         $result = $this->db->query($sql);
 
         return $result;
     }
 
-    public function returnChecklist($checklist_id, $status, $date_modified, $receiver, $remarks='')
+    public function returnChecklist($checklist_id, $status, $date_modified, $receiver, $remarks = '')
     {
-        $sql = "UPDATE tbl_app_checklist SET date_returned = '".$date_modified."', date_modified = '".$date_modified."', status = '".$status."', undoer = '".$receiver."', remarks = '".$remarks."' WHERE id = ".$checklist_id."";
+        $sql = "UPDATE tbl_app_checklist SET date_returned = '" . $date_modified . "', date_modified = '" . $date_modified . "', status = '" . $status . "', undoer = '" . $receiver . "', remarks = '" . $remarks . "' WHERE id = " . $checklist_id . "";
         $result = $this->db->query($sql);
 
         return $result;
@@ -433,7 +439,7 @@ class ApplicationManager extends Connection
 
     public function insertValidationChecklist($appid, $defects, $receommendations, $date_created)
     {
-        $sql = 'INSERT INTO tbl_app_checklist_onsitevalidations (chklist_id, defects, recommendations) VALUES ("'.$appid.'", "'.$defects.'", "'.$receommendations.'")';
+        $sql = 'INSERT INTO tbl_app_checklist_onsitevalidations (chklist_id, defects, recommendations) VALUES ("' . $appid . '", "' . $defects . '", "' . $receommendations . '")';
         $result = $this->db->query($sql);
 
         return $result;
@@ -442,13 +448,13 @@ class ApplicationManager extends Connection
 
     public function updateValidationChecklist($checklist_id, $defects, $recommendations, $date_modified)
     {
-        $sql = 'UPDATE tbl_app_checklist_onsitevalidations SET defects = "'.utf8_encode($defects).'", recommendations = "'.utf8_encode($recommendations).'", date_modified = "'.$date_modified.'" WHERE chklist_id = '.$checklist_id.'';
+        $sql = 'UPDATE tbl_app_checklist_onsitevalidations SET defects = "' . utf8_encode($defects) . '", recommendations = "' . utf8_encode($recommendations) . '", date_modified = "' . $date_modified . '" WHERE chklist_id = ' . $checklist_id . '';
         $result = $this->db->query($sql);
 
         return $result;
     }
 
-    public function addFlash($type, $message, $title) 
+    public function addFlash($type, $message, $title)
     {
         $data = [
             'type'      => $type, // or 'success' or 'info' or 'warning'
@@ -462,15 +468,15 @@ class ApplicationManager extends Connection
     public function getProvinces()
     {
         $sql = "SELECT id, code, name FROM tbl_province";
-        
+
         $getQry = $this->db->query($sql);
         $data = [];
-        
+
         while ($row = mysqli_fetch_assoc($getQry)) {
             $data[$row['id']] = [
                 'code' => $row['code'],
                 'name' => $row['name']
-            ];    
+            ];
         }
 
         return $data;
@@ -479,18 +485,17 @@ class ApplicationManager extends Connection
     public function getCityMuns($province)
     {
         mysqli_set_charset($this->db, "utf8");
-        $sql = "SELECT id, province, code, name FROM tbl_citymun where province  = $province";
-        
+        $sql = "SELECT id, province, code, name FROM tbl_citymun where province  = '$province'";
+
         $getQry = $this->db->query($sql);
         $data = [];
-        
+
         while ($row = mysqli_fetch_assoc($getQry)) {
             $data[$row['id']] = [
                 'province' => $row['province'],
                 'code' => $row['code'],
                 'name' => $row['name']
-            ];    
-           
+            ];
         }
 
         return $data;
@@ -499,18 +504,17 @@ class ApplicationManager extends Connection
     public function getCityMuns2()
     {
         $sql = "SELECT id, province, code, name FROM tbl_citymun";
-        
+
         $getQry = $this->db->query($sql);
         $data = [];
-        
+
         while ($row = mysqli_fetch_assoc($getQry)) {
             $data[$row['province']][$row['id']] = [
                 'province' => $row['province'],
                 'id' => $row['id'],
                 'code' => $row['code'],
                 'name' => $row['name']
-            ];    
-           
+            ];
         }
 
         return $data;
@@ -521,7 +525,7 @@ class ApplicationManager extends Connection
         $date_today = new DateTime();
         $date_today = date('Y-m-d', strtotime($date_today->format('Y-m-d')));
         $data = [];
-        
+
         $sql = "SELECT * FROM (
                     SELECT 
                         ac.id AS id,
@@ -543,17 +547,19 @@ class ApplicationManager extends Connection
                     FROM tbl_app_checklist ac
                     LEFT JOIN tbl_admin_info ai ON ai.id = ac.user_id
                     LEFT JOIN tbl_userinfo ui ON ui.user_id = ai.id
-                    WHERE ai.PROVINCE = $province AND ai.LGU = $lgu AND ac.application_type = 'Applied' AND ac.status NOT IN ('Draft', 'Returned', 'Reassess') 
+                    WHERE ai.PROVINCE = '$province' AND ai.LGU = '$lgu' AND ac.application_type = 'Applied' AND ac.status NOT IN ('Draft', 'Returned', 'Reassess') 
                     ORDER BY ai.id, ac.id DESC 
                     LIMIT 18446744073709551615
                 ) AS subqry
                 GROUP BY aid";
 
         $getQry = $this->db->query($sql);
-        
+
         while ($row = mysqli_fetch_assoc($getQry)) {
+            $checklist_form = (date('Y-m-d', strtotime($row['date_created'])) < '2022-07-01') ? '1' : '0';
+
             $color = 'green';
-            if (($row['stats'] == "Approved") AND ($row['for_renewal']) AND (!empty($row['date_renewed']))) {
+            if (($row['stats'] == "Approved") and ($row['for_renewal']) and (!empty($row['date_renewed']))) {
                 $date_validity = date('Y-m-d', strtotime("+6 months", strtotime($row['date_renewed'])));
                 $date_validity_f = date('M d, Y', strtotime("+6 months", strtotime($row['date_renewed'])));
             } else {
@@ -564,7 +570,7 @@ class ApplicationManager extends Connection
             $date1 = date_create($date_today);
             $date2 = date_create($date_validity);
             $interval = $date1->diff($date2);
-            
+
             $status = $row['stats'];
             if (!empty($row['date_approved'])) {
                 if ($row['stats'] == 'For Renewal') {
@@ -598,8 +604,9 @@ class ApplicationManager extends Connection
                 'token'         => $row['token'],
                 'for_renewal'   => $row['for_renewal'],
                 'issued_date'   => date('M d, Y', strtotime($row['date_approved'])),
-                'validity_date' => $date_validity_f
-            ];    
+                'validity_date' => $date_validity_f,
+                'checklist_form' => $checklist_form
+            ];
         }
 
         $sql2 = "SELECT * FROM (
@@ -624,7 +631,7 @@ class ApplicationManager extends Connection
                     FROM tbl_app_checklist ac
                     LEFT JOIN tbl_admin_info ai on ai.id = ac.user_id
                     LEFT JOIN tbl_userinfo ui on ui.user_id = ai.id
-                    WHERE ai.PROVINCE = $province AND ai.LGU = $lgu AND ac.application_type = 'Encoded'
+                    WHERE ai.PROVINCE = '$province' AND ai.LGU = '$lgu' AND ac.application_type = 'Encoded'
                     ORDER BY ac.person, ac.id DESC 
                     LIMIT 18446744073709551615
                 ) AS subqry
@@ -633,9 +640,11 @@ class ApplicationManager extends Connection
         $getQry = $this->db->query($sql2);
 
         while ($row = mysqli_fetch_assoc($getQry)) {
+            $checklist_form = (date('Y-m-d', strtotime($row['date_created'])) < '2022-07-01') ? '1' : '0';
+
             $color = 'green';
 
-            if (($row['stats'] == "Approved") AND ($row['for_renewal']) AND (!empty($row['date_renewed']))) {
+            if (($row['stats'] == "Approved") and ($row['for_renewal']) and (!empty($row['date_renewed']))) {
                 $date_validity = date('Y-m-d', strtotime("+6 months", strtotime($row['date_renewed'])));
                 $date_validity_f = date('M d, Y', strtotime("+6 months", strtotime($row['date_renewed'])));
             } else {
@@ -646,7 +655,7 @@ class ApplicationManager extends Connection
             $date1 = date_create($date_today);
             $date2 = date_create($date_validity);
             $interval = $date1->diff($date2);
-            
+
             $status = $row['stats'];
             if (!empty($row['date_approved'])) {
                 if ($row['stats'] == 'For Renewal') {
@@ -680,8 +689,9 @@ class ApplicationManager extends Connection
                 'token'         => $row['token'],
                 'issued_date'   => date('M d, Y', strtotime($row['date_approved'])),
                 'validity_date' => $date_validity_f,
-                'for_renewal'   => $row['for_renewal']
-            ];    
+                'for_renewal'   => $row['for_renewal'],
+                'checklist_form' => $checklist_form
+            ];
         }
 
         $sql3 = "SELECT * FROM (
@@ -706,7 +716,7 @@ class ApplicationManager extends Connection
                     FROM tbl_app_checklist ac
                     LEFT JOIN tbl_admin_info ai on ai.id = ac.user_id
                     LEFT JOIN tbl_userinfo ui on ui.user_id = ai.id
-                    WHERE ai.PROVINCE = $province AND ac.lgu = $lgu AND ac.application_type = 'Encoded'
+                    WHERE ai.PROVINCE = '$province' AND ac.lgu = '$lgu' AND ac.application_type = 'Encoded'
                     ORDER BY ac.person, ac.id DESC 
                     LIMIT 18446744073709551615
                 ) AS subqry
@@ -714,9 +724,11 @@ class ApplicationManager extends Connection
         $getQry = $this->db->query($sql3);
 
         while ($row = mysqli_fetch_assoc($getQry)) {
+            $checklist_form = (date('Y-m-d', strtotime($row['date_created'])) < '2022-07-01') ? '1' : '0';
+
             $color = 'green';
 
-            if (($row['stats'] == "Approved") AND ($row['for_renewal']) AND (!empty($row['date_renewed']))) {
+            if (($row['stats'] == "Approved") and ($row['for_renewal']) and (!empty($row['date_renewed']))) {
                 $date_validity = date('Y-m-d', strtotime("+6 months", strtotime($row['date_renewed'])));
                 $date_validity_f = date('M d, Y', strtotime("+6 months", strtotime($row['date_renewed'])));
             } else {
@@ -727,7 +739,7 @@ class ApplicationManager extends Connection
             $date1 = date_create($date_today);
             $date2 = date_create($date_validity);
             $interval = $date1->diff($date2);
-            
+
             $status = $row['stats'];
             if (!empty($row['date_approved'])) {
                 if ($row['stats'] == 'For Renewal') {
@@ -762,12 +774,12 @@ class ApplicationManager extends Connection
                 'token'         => $row['token'],
                 'issued_date'   => date('M d, Y', strtotime($row['date_approved'])),
                 'validity_date' => $date_validity_f,
-                'for_renewal'   => $row['for_renewal']
-            ];    
+                'for_renewal'   => $row['for_renewal'],
+                'checklist_form' => $checklist_form
+            ];
         }
 
         return $data;
-
     }
 
     public function getApplicationLists($province, $lgu, $status)
@@ -794,11 +806,11 @@ class ApplicationManager extends Connection
         FROM tbl_app_checklist ac
         LEFT JOIN tbl_admin_info ai on ai.id = ac.user_id
         LEFT JOIN tbl_userinfo ui on ui.user_id = ai.id
-        WHERE ai.PROVINCE = ".$province." AND ai.LGU = ".$lgu." AND ac.application_type = 'Applied' AND ac.status <> '".$status."' AND ac.status <> 'Returned' AND ac.status <> 'Reassess'";
-     
+        WHERE ai.PROVINCE = " . $province . " AND ai.LGU = " . $lgu . " AND ac.application_type = 'Applied' AND ac.status <> '" . $status . "' AND ac.status <> 'Returned' AND ac.status <> 'Reassess'";
+
         $getQry = $this->db->query($sql);
         $data = [];
-        
+
         while ($row = mysqli_fetch_assoc($getQry)) {
             $color = 'green';
             // if ($row['status'] == 'For Receiving' OR $row['status'] == 'For Reassessment') {
@@ -808,7 +820,7 @@ class ApplicationManager extends Connection
             // } elseif (in_array($row['status'], ['Disapproved', 'Revoked', 'Expired'])) {
             //     $color = 'red';
             // }
-            
+
             // $validity = '';
 
             // if (!empty($row['date_approved'])) {
@@ -817,7 +829,7 @@ class ApplicationManager extends Connection
             //     }
             // 
 
-            if (($row['status'] == "Approved") AND ($row['for_renewal']) AND (!empty($row['date_renewed']))) {
+            if (($row['status'] == "Approved") and ($row['for_renewal']) and (!empty($row['date_renewed']))) {
                 $date_validity = date('Y-m-d', strtotime("+6 months", strtotime($row['date_renewed'])));
                 $date_validity_f = date('M d, Y', strtotime("+6 months", strtotime($row['date_renewed'])));
             } else {
@@ -828,7 +840,7 @@ class ApplicationManager extends Connection
             $date1 = date_create($date_today);
             $date2 = date_create($date_validity);
             $interval = $date1->diff($date2);
-            
+
             $status = $row['status'];
             if (!empty($row['date_approved'])) {
                 if ($row['status'] == 'For Renewal') {
@@ -864,7 +876,7 @@ class ApplicationManager extends Connection
                 'issued_date'   => date('M d, Y', strtotime($row['date_approved'])),
                 'validity_date' => $date_validity_f,
                 // 'validity_date' => !empty($row['date_approved']) ? date('F d, Y', strtotime("+6 months", strtotime($row['date_approved']))) : ''
-            ];    
+            ];
         }
 
         $sql2 = "SELECT 
@@ -887,12 +899,12 @@ class ApplicationManager extends Connection
         FROM tbl_app_checklist ac
         LEFT JOIN tbl_admin_info ai on ai.id = ac.user_id
         LEFT JOIN tbl_userinfo ui on ui.user_id = ai.id
-        WHERE ai.PROVINCE = ".$province." AND ai.LGU = ".$lgu." AND ac.application_type = 'Encoded'";
-     
+        WHERE ai.PROVINCE = " . $province . " AND ai.LGU = " . $lgu . " AND ac.application_type = 'Encoded'";
+
         $getQry = $this->db->query($sql2);
 
         // $data = [];
-        
+
         while ($row = mysqli_fetch_assoc($getQry)) {
             $color = 'green';
             // if ($row['status'] == 'For Receiving') {
@@ -911,7 +923,7 @@ class ApplicationManager extends Connection
             //     }
             // }
 
-            if (($row['status'] == "Approved") AND ($row['for_renewal']) AND (!empty($row['date_renewed']))) {
+            if (($row['status'] == "Approved") and ($row['for_renewal']) and (!empty($row['date_renewed']))) {
                 $date_validity = date('Y-m-d', strtotime("+6 months", strtotime($row['date_renewed'])));
                 $date_validity_f = date('M d, Y', strtotime("+6 months", strtotime($row['date_renewed'])));
             } else {
@@ -922,7 +934,7 @@ class ApplicationManager extends Connection
             $date1 = date_create($date_today);
             $date2 = date_create($date_validity);
             $interval = $date1->diff($date2);
-            
+
             $status = $row['status'];
             if (!empty($row['date_approved'])) {
                 if ($row['status'] == 'For Renewal') {
@@ -957,7 +969,7 @@ class ApplicationManager extends Connection
                 'issued_date'   => date('M d, Y', strtotime($row['date_approved'])),
                 'validity_date' => $date_validity_f,
                 'for_renewal'   => $row['for_renewal']
-            ];    
+            ];
         }
 
         $sql3 = "SELECT 
@@ -980,14 +992,14 @@ class ApplicationManager extends Connection
         FROM tbl_app_checklist ac
         LEFT JOIN tbl_admin_info ai on ai.id = ac.user_id
         LEFT JOIN tbl_userinfo ui on ui.user_id = ai.id
-        WHERE ai.PROVINCE = ".$province." AND ac.lgu = ".$lgu." AND ac.application_type = 'Encoded'";
-     
+        WHERE ai.PROVINCE = " . $province . " AND ac.lgu = " . $lgu . " AND ac.application_type = 'Encoded'";
+
         $getQry = $this->db->query($sql3);
         // $data = [];
-        
+
         while ($row = mysqli_fetch_assoc($getQry)) {
             $color = 'green';
-        
+
             // $validity = '';
 
             // if (!empty($row['date_approved'])) {
@@ -996,7 +1008,7 @@ class ApplicationManager extends Connection
             //     }
             // }
 
-            if (($row['status'] == "Approved") AND ($row['for_renewal']) AND (!empty($row['date_renewed']))) {
+            if (($row['status'] == "Approved") and ($row['for_renewal']) and (!empty($row['date_renewed']))) {
                 $date_validity = date('Y-m-d', strtotime("+6 months", strtotime($row['date_renewed'])));
                 $date_validity_f = date('M d, Y', strtotime("+6 months", strtotime($row['date_renewed'])));
             } else {
@@ -1007,7 +1019,7 @@ class ApplicationManager extends Connection
             $date1 = date_create($date_today);
             $date2 = date_create($date_validity);
             $interval = $date1->diff($date2);
-            
+
             $status = $row['status'];
             if (!empty($row['date_approved'])) {
                 if ($row['status'] == 'For Renewal') {
@@ -1043,13 +1055,12 @@ class ApplicationManager extends Connection
                 'issued_date'   => date('M d, Y', strtotime($row['date_approved'])),
                 'validity_date' => $date_validity_f,
                 'for_renewal'   => $row['for_renewal']
-            ];    
+            ];
         }
 
         return $data;
-
     }
-    
+
     public function getNotifDetailsClients($status)
     {
         $sql = "SELECT 
@@ -1072,12 +1083,12 @@ class ApplicationManager extends Connection
         FROM tbl_app_checklist ac
         LEFT JOIN tbl_admin_info ai on ai.id = ac.user_id
         LEFT JOIN tbl_userinfo ui on ui.user_id = ai.id
-        WHERE  ac.status = '".$status."'";
+        WHERE  ac.status = '" . $status . "'";
 
-     
+
         $getQry = $this->db->query($sql);
         $data = [];
-        
+
         while ($row = mysqli_fetch_assoc($getQry)) {
             $color = 'green';
             if ($row['status'] == 'For Receiving') {
@@ -1106,7 +1117,7 @@ class ApplicationManager extends Connection
                 'email_sending_status' => $row['email_sending_status'],
                 'pnp_sending_status' => $row['pnp_sending_status'],
                 'bfp_sending_status' => $row['bfp_sending_status']
-            ];    
+            ];
         }
         return $data;
     }
@@ -1121,11 +1132,11 @@ class ApplicationManager extends Connection
         LEFT JOIN tbl_admin_info ai on ai.id = ac.user_id
         LEFT JOIN tbl_userinfo ui on ui.user_id = ai.id
         LEFT JOIN tbl_province tp on tp.id = ai.PROVINCE
-        ORDER BY ai.PROVINCE";
+        ORDER BY ai.CMLGOO_NAME";
 
         $getQry = $this->db->query($sql);
         $data = [];
-        
+
         while ($row = mysqli_fetch_assoc($getQry)) {
             $color = 'green';
             // if ($row['status'] == 'For Receiving') {
@@ -1138,7 +1149,7 @@ class ApplicationManager extends Connection
             //     $color = 'secondary';
             // }
 
-            if (($row['stats'] == "Approved") AND ($row['for_renewal']) AND (!empty($row['date_renewed']))) {
+            if (($row['stats'] == "Approved") and ($row['for_renewal']) and (!empty($row['date_renewed']))) {
                 $date_validity = date('Y-m-d', strtotime("+6 months", strtotime($row['date_renewed'])));
                 $date_validity_f = date('M d, Y', strtotime("+6 months", strtotime($row['date_renewed'])));
             } else {
@@ -1149,7 +1160,7 @@ class ApplicationManager extends Connection
             $date1 = date_create($date_today);
             $date2 = date_create($date_validity);
             $interval = $date1->diff($date2);
-            
+
             $status = $row['stats'];
             if (!empty($row['date_approved'])) {
                 if ($row['stats'] == 'For Renewal') {
@@ -1166,6 +1177,7 @@ class ApplicationManager extends Connection
             } elseif (in_array($status, ['Disapproved', 'Expired', 'Returned'])) {
                 $color = 'red';
             }
+            $checklist_form = (date('Y-m-d', strtotime($row['date_created'])) < '2022-07-01') ? '1' : '0';
 
             $data[$row['id']] = [
                 'id'                => $row['id'],
@@ -1185,39 +1197,217 @@ class ApplicationManager extends Connection
                 'issued_date'       => date('M d, Y', strtotime($row['date_approved'])),
                 'validity_date'     => $date_validity_f,
                 'province'          => $row['province'],
-                'for_renewal'       => $row['for_renewal']
-            ];    
+                'for_renewal'       => $row['for_renewal'],
+                'checklist_form' => $checklist_form
+
+            ];
+        }
+
+        return $data;
+    }
+    public function getApplicationListsInfo($status)
+    {
+        switch ($status) {
+            case 'Draft':
+                $status = 'For Receiving';
+                break;
+            
+            default:
+                # code...
+                break;
+        }
+        $today = new DateTime();
+        $date_today = $today->format('Y-m-d');
+
+        $sql = "SELECT ac.id as id, ai.CMLGOO_NAME as fname, ui.GOV_AGENCY_NAME as agency, ui.ADDRESS as address, DATE_FORMAT(ac.date_created, '%b %d, %Y') as date_created, DATE_FORMAT(ac.date_approved, '%Y-%m-%d') as date_approved, ui.id as userid, ac.control_no as control_no, ac.safety_seal_no as ss_no, ac.status as stats, ac.address as ac_address, ac.application_type as app_type, ac.token as token, tp.name as province, ac.for_renewal, ac.person
+        FROM tbl_app_checklist ac
+        LEFT JOIN tbl_admin_info ai on ai.id = ac.user_id
+        LEFT JOIN tbl_userinfo ui on ui.user_id = ai.id
+        LEFT JOIN tbl_province tp on tp.id = ai.PROVINCE
+        WHERE ac.status = '$status'
+        ORDER BY ai.CMLGOO_NAME";
+
+        $getQry = $this->db->query($sql);
+        $data = [];
+        while ($row = mysqli_fetch_assoc($getQry)) {
+            $color = 'green';
+            // if ($row['status'] == 'For Receiving') {
+            //     $color = 'primary';
+            // } elseif ($row['status'] == 'Received') {
+            //     $color = 'yellow';
+            // } elseif ($row['status'] == 'Disapproved') {
+            //     $color = 'red';
+            // } elseif ($row['status'] == 'Draft') {
+            //     $color = 'secondary';
+            // }
+
+            if (($row['stats'] == "Approved") and ($row['for_renewal']) and (!empty($row['date_renewed']))) {
+                $date_validity = date('Y-m-d', strtotime("+6 months", strtotime($row['date_renewed'])));
+                $date_validity_f = date('M d, Y', strtotime("+6 months", strtotime($row['date_renewed'])));
+            } else {
+                $date_validity_f = date('M d, Y', strtotime("+6 months", strtotime($row['date_approved'])));
+                $date_validity = date('Y-m-d', strtotime("+6 months", strtotime($row['date_approved'])));
+            }
+
+            $date1 = date_create($date_today);
+            $date2 = date_create($date_validity);
+            $interval = $date1->diff($date2);
+
+            $status = $row['stats'];
+            if (!empty($row['date_approved'])) {
+                if ($row['stats'] == 'For Renewal') {
+                    $status = $row['stats'];
+                } elseif ($date_today >= $date_validity) {
+                    $status = 'Expired';
+                }
+            }
+
+            if ($status == 'For Receiving') {
+                $color = 'primary';
+            } elseif ($status == 'Received') {
+                $color = 'yellow';
+            } elseif (in_array($status, ['Disapproved', 'Expired', 'Returned'])) {
+                $color = 'red';
+            }
+            $checklist_form = (date('Y-m-d', strtotime($row['date_created'])) < '2022-07-01') ? '1' : '0';
+
+            $data[$row['id']] = [
+                'id'                => $row['id'],
+                'userid'            => $row['userid'],
+                'fname'             => $row['app_type'] == 'Applied' ? $row['fname'] : $row['person'],
+                'agency'            => $row['agency'],
+                'address'           => $row['address'],
+                'date_created'      => $row['date_created'],
+                'date_approved'     => !empty($row['date_approved']) ? $row['date_approved'] : '',
+                'control_no'        => $row['control_no'],
+                'ss_no'             => $row['ss_no'],
+                'status'            => $status,
+                'color'             => $color,
+                'ac_address'        => $row['ac_address'],
+                'app_type'          => $row['app_type'],
+                'token'             => $row['token'],
+                'issued_date'       => date('M d, Y', strtotime($row['date_approved'])),
+                'validity_date'     => $date_validity_f,
+                'province'          => $row['province'],
+                'for_renewal'       => $row['for_renewal'],
+                'checklist_form' => $checklist_form
+
+            ];
         }
 
         return $data;
     }
 
-    public function showAllApplications($province='',$timestamp, $status='')
+    public function getDraftApplicationList($status)
+    {
+        $today = new DateTime();
+        $date_today = $today->format('Y-m-d');
+
+        $sql = "SELECT ac.id as id, ai.CMLGOO_NAME as fname, ui.GOV_AGENCY_NAME as agency, ui.ADDRESS as address, DATE_FORMAT(ac.date_created, '%b %d, %Y') as date_created, DATE_FORMAT(ac.date_approved, '%Y-%m-%d') as date_approved, ui.id as userid, ac.control_no as control_no, ac.safety_seal_no as ss_no, ac.status as stats, ac.address as ac_address, ac.application_type as app_type, ac.token as token, tp.name as province, ac.for_renewal, ac.person
+        FROM tbl_app_checklist ac
+        LEFT JOIN tbl_admin_info ai on ai.id = ac.user_id
+        LEFT JOIN tbl_userinfo ui on ui.user_id = ai.id
+        LEFT JOIN tbl_province tp on tp.id = ai.PROVINCE
+        WHERE ac.status = '$status'
+        ORDER BY ai.CMLGOO_NAME";
+
+        $getQry = $this->db->query($sql);
+        $data = [];
+        while ($row = mysqli_fetch_assoc($getQry)) {
+            $color = 'green';
+            // if ($row['status'] == 'For Receiving') {
+            //     $color = 'primary';
+            // } elseif ($row['status'] == 'Received') {
+            //     $color = 'yellow';
+            // } elseif ($row['status'] == 'Disapproved') {
+            //     $color = 'red';
+            // } elseif ($row['status'] == 'Draft') {
+            //     $color = 'secondary';
+            // }
+
+            if (($row['stats'] == "Approved") and ($row['for_renewal']) and (!empty($row['date_renewed']))) {
+                $date_validity = date('Y-m-d', strtotime("+6 months", strtotime($row['date_renewed'])));
+                $date_validity_f = date('M d, Y', strtotime("+6 months", strtotime($row['date_renewed'])));
+            } else {
+                $date_validity_f = date('M d, Y', strtotime("+6 months", strtotime($row['date_approved'])));
+                $date_validity = date('Y-m-d', strtotime("+6 months", strtotime($row['date_approved'])));
+            }
+
+            $date1 = date_create($date_today);
+            $date2 = date_create($date_validity);
+            $interval = $date1->diff($date2);
+
+            $status = $row['stats'];
+            if (!empty($row['date_approved'])) {
+                if ($row['stats'] == 'For Renewal') {
+                    $status = $row['stats'];
+                } elseif ($date_today >= $date_validity) {
+                    $status = 'Expired';
+                }
+            }
+
+            if ($status == 'For Receiving') {
+                $color = 'primary';
+            } elseif ($status == 'Received') {
+                $color = 'yellow';
+            } elseif (in_array($status, ['Disapproved', 'Expired', 'Returned'])) {
+                $color = 'red';
+            }
+            $checklist_form = (date('Y-m-d', strtotime($row['date_created'])) < '2022-07-01') ? '1' : '0';
+
+            $data[$row['id']] = [
+                'id'                => $row['id'],
+                'userid'            => $row['userid'],
+                'fname'             => $row['app_type'] == 'Applied' ? $row['fname'] : $row['person'],
+                'agency'            => $row['agency'],
+                'address'           => $row['address'],
+                'date_created'      => $row['date_created'],
+                'date_approved'     => !empty($row['date_approved']) ? $row['date_approved'] : '',
+                'control_no'        => $row['control_no'],
+                'ss_no'             => $row['ss_no'],
+                'status'            => $status,
+                'color'             => $color,
+                'ac_address'        => $row['ac_address'],
+                'app_type'          => $row['app_type'],
+                'token'             => $row['token'],
+                'issued_date'       => date('M d, Y', strtotime($row['date_approved'])),
+                'validity_date'     => $date_validity_f,
+                'province'          => $row['province'],
+                'for_renewal'       => $row['for_renewal'],
+                'checklist_form' => $checklist_form
+
+            ];
+        }
+
+        return $data;
+    }
+
+    public function showAllApplications($province = '', $timestamp, $status = '')
     {
         $sql = "SELECT count(*) as total FROM tbl_app_checklist ac 
                 JOIN tbl_admin_info ai on ai.id = ac.user_id
                 JOIN tbl_province tp on tp.id = ai.PROVINCE 
                 JOIN tbl_citymun cm on cm.province = ai.PROVINCE AND cm.code = ai.LGU
-                WHERE ac.date_created <= '".$timestamp."' AND ai.id IS NOT NULL AND tp.id IS NOT NULL";
+                WHERE ac.date_created <= '" . $timestamp . "' AND ai.id IS NOT NULL AND tp.id IS NOT NULL";
 
         if (!empty($status)) {
             if ($status == 'Disapproved') {
-                $sql.= " AND ac.status IN ('Reassess', 'Disapproved', 'Returned', 'For Reassessment')";
+                $sql .= " AND ac.status IN ('Reassess', 'Disapproved', 'Returned', 'For Reassessment')";
             } elseif ($status == 'Approved') {
-                $sql.= " AND ac.status IN ('Approved')";
+                $sql .= " AND ac.status IN ('Approved')";
             } elseif ($status == 'Received') {
-                $sql.= " AND ac.status IN ('Received', 'For Renewal')";
+                $sql .= " AND ac.status IN ('Received', 'For Renewal')";
             } else {
-                $sql.= " AND ac.status = '".$status."'";
+                $sql .= " AND ac.status = '" . $status . "'";
             }
         } else {
-            $sql.= " AND ac.status IN ('Received', 'Approved', 'Returned', 'For Reassessment', 'Reassess', 'Disapproved', 'Renewed', 'For Renewal')";
+            $sql .= " AND ac.status IN ('Received', 'Approved', 'Returned', 'For Reassessment', 'Reassess', 'Disapproved', 'Renewed', 'For Renewal')";
         }
 
         if ($province == 'huc') {
-            $sql.= " AND tp.id IN (5, 8)";
+            $sql .= " AND tp.id IN (5, 8)";
         } elseif (!empty($province)) {
-            $sql.= " AND tp.id = $province";
+            $sql .= " AND tp.id = $province";
         }
 
         $getQry = $this->db->query($sql);
@@ -1226,77 +1416,77 @@ class ApplicationManager extends Connection
         return number_format($row['total']);
     }
 
-    public function getValidationLists($appid) {
-        $sql = "SELECT * FROM tbl_app_checklist_onsitevalidations where chklist_id = $appid";
-        $getQry = $this->db->query($sql);   
-        $result = mysqli_fetch_array($getQry);
-        
-        return $result; 
-    }
-
-    public function insertAssessment($id, $assessment, $for_renewal) 
+    public function getValidationLists($appid)
     {
-        $sql = "UPDATE tbl_app_checklist_entry SET assessment = '".$assessment."' WHERE id = ".$id."";
+        $sql = "SELECT * FROM tbl_app_checklist_onsitevalidations where chklist_id = $appid";
         $getQry = $this->db->query($sql);
-         
-        return $getQry; 
+        $result = mysqli_fetch_array($getQry);
+
+        return $result;
     }
 
-    public function evaluateChecklist($checklist_id, $status, $safety_seal_no, $date_modified, $approver, $for_renewal=false, $is_new=true)
+    public function insertAssessment($id, $assessment, $for_renewal)
+    {
+        $sql = "UPDATE tbl_app_checklist_entry SET assessment = '" . $assessment . "' WHERE id = " . $id . "";
+        $getQry = $this->db->query($sql);
+
+        return $getQry;
+    }
+
+    public function evaluateChecklist($checklist_id, $status, $safety_seal_no, $date_modified, $approver, $for_renewal = false, $is_new = true)
     {
         if ($for_renewal) {
-            $sql = "UPDATE tbl_app_checklist SET date_modified = '".$date_modified."', approver_id = ".$approver.", status = '".$status."' WHERE id = ".$checklist_id."";
+            $sql = "UPDATE tbl_app_checklist SET date_modified = '" . $date_modified . "', approver_id = " . $approver . ", status = '" . $status . "' WHERE id = " . $checklist_id . "";
         } else {
 
             if ($is_new) {
                 if ($status == 'Disapproved') {
-                    $sql = "UPDATE tbl_app_checklist SET safety_seal_no = '".$safety_seal_no."', date_modified = '".$date_modified."', approver_id = ".$approver.", status = '".$status."' WHERE id = ".$checklist_id."";
+                    $sql = "UPDATE tbl_app_checklist SET safety_seal_no = '" . $safety_seal_no . "', date_modified = '" . $date_modified . "', approver_id = " . $approver . ", status = '" . $status . "' WHERE id = " . $checklist_id . "";
                 } else {
-                    $sql = "UPDATE tbl_app_checklist SET safety_seal_no = '".$safety_seal_no."', date_approved = '".$date_modified."', date_modified = '".$date_modified."', approver_id = ".$approver.", status = '".$status."' WHERE id = ".$checklist_id."";
+                    $sql = "UPDATE tbl_app_checklist SET safety_seal_no = '" . $safety_seal_no . "', date_approved = '" . $date_modified . "', date_modified = '" . $date_modified . "', approver_id = " . $approver . ", status = '" . $status . "' WHERE id = " . $checklist_id . "";
                 }
-
             } else {
-                $sql = "UPDATE tbl_app_checklist SET date_modified = '".$date_modified."', approver_id = ".$approver.", status = '".$status."' WHERE id = ".$checklist_id."";
+                $sql = "UPDATE tbl_app_checklist SET date_modified = '" . $date_modified . "', approver_id = " . $approver . ", status = '" . $status . "' WHERE id = " . $checklist_id . "";
             }
         }
-        
+
         $result = $this->db->query($sql);
 
         return $result;
     }
 
-    public function evaluateChecklist2($checklist_id, $status, $safety_seal_no, $date_modified, $approver, $for_renewal=false, $is_new=true)
+    public function evaluateChecklist2($checklist_id, $status, $safety_seal_no, $date_modified, $approver, $for_renewal = false, $is_new = true)
     {
-        
+
         $sql = "UPDATE tbl_app_checklist 
-                SET date_modified = '".$date_modified."', 
+                SET date_modified = '" . $date_modified . "', 
                 for_renewal = false, 
-                date_renewed = '".$date_modified."',
-                date_approved = '".$date_modified."',
-                approver_id = ".$approver.", 
+                date_renewed = '" . $date_modified . "',
+                date_approved = '" . $date_modified . "',
+                approver_id = " . $approver . ", 
                 status = 'Renewed' 
-                WHERE id = ".$checklist_id."";
+                WHERE id = " . $checklist_id . "";
         $result = $this->db->query($sql);
 
         return $result;
     }
 
-    public function generateCode($user) 
+    public function generateCode($user)
     {
         $sql = "SELECT p.code as pcode, m.code as mcode
         FROM tbl_admin_info u
         LEFT JOIN tbl_province p on p.id = u.PROVINCE
         LEFT JOIN tbl_citymun m on m.id = u.LGU
-        WHERE u.ID = ".$user."";
+        WHERE u.ID = " . $user . "";
 
         $getQry = $this->db->query($sql);
         $result1 = mysqli_fetch_array($getQry);
 
-        $ccode = 'R4A-'.$result1['pcode'].'-'.$result1['mcode'];
+        $ccode = 'R4A-' . $result1['pcode'] . '-' . $result1['mcode'];
         // $ccode = '2021';
 
 
-        $sql = "SELECT counter, id FROM tbl_config WHERE code = '".$ccode."'";
+        $sql = "SELECT counter, id FROM tbl_config WHERE code = '" . $ccode . "'";
         $getQry = $this->db->query($sql);
         $result2 = mysqli_fetch_array($getQry);
 
@@ -1305,20 +1495,20 @@ class ApplicationManager extends Connection
         if ($cc > 9999) {
             $new_counter = $cc;
         } elseif ($cc > 999) {
-            $new_counter = '0'.$cc;
+            $new_counter = '0' . $cc;
         } elseif ($cc < 10) {
-            $new_counter = '0000'.$cc;
+            $new_counter = '0000' . $cc;
         } elseif ($cc < 99) {
-            $new_counter = '000'.$cc;
-        } elseif ($cc > 99 AND $cc <= 999) {
-            $new_counter = '00'.$cc;
+            $new_counter = '000' . $cc;
+        } elseif ($cc > 99 and $cc <= 999) {
+            $new_counter = '00' . $cc;
         }
 
-        $sql = "UPDATE tbl_config SET counter = '".$new_counter."' WHERE id = ".$result2['id']."";
+        $sql = "UPDATE tbl_config SET counter = '" . $new_counter . "' WHERE id = " . $result2['id'] . "";
         $result = $this->db->query($sql);
 
-        $control_no = $ccode.'-'.$new_counter;
-       
+        $control_no = $ccode . '-' . $new_counter;
+
         return $control_no;
     }
 
@@ -1330,7 +1520,7 @@ class ApplicationManager extends Connection
         $result = mysqli_fetch_array($getQry);
 
         $cc = $result['counter'];
-        
+
         if ($cc > 9999) {
             $new_counter = $cc;
         } elseif ($cc > 999) {
@@ -1353,12 +1543,12 @@ class ApplicationManager extends Connection
         return $control_no;
     }
 
-    public function getChecklistOrder($pointer) 
+    public function getChecklistOrder($pointer)
     {
         $id = '';
         switch ($pointer) {
             case 'CL1':
-                $id = '1ZzfOg9Lhem47BDEr8VdfL07hlfmEok9F';
+                $id = '1ZzfOg9Lhem47BDEr8VdfL07hlfmEok9F'; //gdrive  FOLDER ID 
                 break;
             case 'CL2':
                 $id = '1grbCqIy51mWyURe8E4BISnXVQ3ReSveA';
@@ -1399,6 +1589,90 @@ class ApplicationManager extends Connection
             case 'CL14':
                 $id = '1qDFdbB4Ju9CQ7yE673dNdb5GL46IT4Yh';
                 break;
+            case 'CL15':
+                $id = '15k6Wa1Q9_U8rUfPXCqy1gHKu1iWd6VjZ';
+                break;
+            case 'CL16':
+                $id = '1GxwR1zPqI-y1yPMbERRXVH8hTAr8cech';
+                break;
+            case 'CL17':
+                $id = '1iy_9NdVAyTsvaMntbkh-sDTC6IWIuNC-';
+                break;
+            case 'CL18':
+                $id = '1eVT3Ouu4GfKGeE7CdQs_zZpTijQAYysL';
+                break;
+            case 'CL19':
+                $id = '1eVT3Ouu4GfKGeE7CdQs_zZpTijQAYysL';
+                break;
+            case 'CL20':
+                $id = '1MemqG8-o8E1RNazkUBYY9H1bM-8MllcD';
+                break;
+            case 'CL21':
+                $id = '1hdVCGAmGgGdKYD5InaRMVuftzyOnUpBc';
+                break;
+            case 'CL22':
+                $id = '19AoBJXCNIdD4E63cw3mqhaVfzJLt0jim';
+                break;
+            case 'CL23':
+                $id = '1_hoQnLPezItXm4TcTXEHMJ_acGFE5oOU';
+                break;
+            case 'CL24':
+                $id = '1zrmprX_DRhLYc5pAoibCUcTHiu4_5ff0';
+                break;
+            case 'CL25':
+                $id = '1hlz40m5dEghQ_lNK0boEtEqRm1XHT9mC';
+                break;
+            case 'CL26':
+                $id = '168Q5duh8_JVZm-n3--qXNAnHF_lOV32G';
+                break;
+            case 'CL27':
+                $id = '13PjFs8QBAekSqszG0b3BAbTBdvqn6Rac';
+                break;
+            case 'CL28':
+                $id = '1A42g4mlheFS1uIgtVXkKpQWuZenEHWwX';
+                break;
+            case 'CL29':
+                $id = '1FYou8d-9pOn1SKB0zVea53yCqEfmYIyN';
+                break;
+            case 'CL30':
+                $id = '1ImCStBSuzWKuQQcoMDBn_ez5pE9Iht7m';
+                break;
+            case 'CL31':
+                $id = '1Oxcp2e4K57nVeaq2wF5D9ZjEIELYLodK';
+                break;
+            case 'CL32':
+                $id = '17e-5IwuoHowQ_BxIYvHDCq6qOKblmzY8';
+                break;
+            case 'CL33':
+                $id = '18Ec5rLHl98oQokVR8nuAWDYi_ebuN4Du';
+                break;
+            case 'CL34':
+                $id = '1CbPqboST8z1iTqvHbFAYMmf6a4Ksmhz7';
+                break;
+            case 'CL35':
+                $id = '1q_2CkfpBZnGJU1jVicGfFaXWnXWHG2pI';
+                break;
+            case 'CL36':
+                $id = '1idJLKKjY9UFZJ50mml9F6PIVSsCdL_Hq';
+                break;
+            case 'CL37':
+                $id = '1C0xdAkrg6An5IIscyfFojKYwxJNA5agy';
+                break;
+            case 'CL38':
+                $id = '18G4YQUUKeTCiHZ70G0Td7lwUXn4p2LiE';
+                break;
+            case 'CL39':
+                $id = '15Lr-w0BbNUMnrIVPmP5jY8Bp7ccuBzic';
+                break;
+            case 'CL40':
+                $id = '1Vjimo0ARqMTIy2_3xE7_tKqmDYotW2GD';
+                break;
+            case 'CL41':
+                $id = '1oo0efanqj0VP0alQbcZWt0JDGRrFwNYi';
+                break;
+            case 'CL42':
+                $id = '1CLtxOfJio-kBsXajN07vnHN8_Ro-wGy4';
+                break;
             default:
                 // code...
                 break;
@@ -1407,9 +1681,14 @@ class ApplicationManager extends Connection
         return $id;
     }
 
-    public function getCertChecklists($alert_level=null) 
+    public function getCertChecklists($alert_level = null, $checklist_form)
     {
-        $sql = "SELECT id FROM tbl_app_certchecklist";
+        $id = ($checklist_form == 'create_new') ? 'id <= 14' : 'id >= 15';
+
+        $sql = "SELECT id FROM tbl_app_certchecklist where $id";
+  
+
+
         $getQry = $this->db->query($sql);
         $skip_levels = [1, 2, 3, 4, 7];
         $data = [];
@@ -1417,29 +1696,31 @@ class ApplicationManager extends Connection
         while ($row = mysqli_fetch_assoc($getQry)) {
             if ($alert_level <= 1) {
                 if (!in_array($row['id'], $skip_levels)) {
-                    $data[$row['id']] = $row['id'];   
+                    $data[$row['id']] = $row['id'];
                 }
             } else {
-                $data[$row['id']] = $row['id'];    
+                $data[$row['id']] = $row['id'];
             }
         }
-        
-        return $data;    
+
+        return $data;
     }
-    function getStatus($conn, $id,$cn) {
+    function getStatus($conn, $id, $cn)
+    {
         $sql = "SELECT status,safety_seal_no FROM tbl_app_checklist where user_id = $id and control_no = '$cn'";
         $getQry = $this->db->query($sql);
 
         $data = [];
         while ($row = mysqli_fetch_assoc($getQry)) {
             $data[] = [
-                'status' =>$row['status'],
+                'status' => $row['status'],
                 'safety_seal_no' => $row['safety_seal_no']
             ];
-        return $data;
+            return $data;
+        }
     }
-    }
-    function getMessageInfoStatus($id) {
+    function getMessageInfoStatus($id)
+    {
         $sql = "SELECT 
         ai.id as id,
         ui.GOV_ESTB_NAME as establishment, 
@@ -1460,14 +1741,14 @@ class ApplicationManager extends Connection
         $data = [];
         while ($row = mysqli_fetch_assoc($getQry)) {
             $data[] = [
-                'status' =>$row['status'],
+                'status' => $row['status'],
                 'control_no' => $row['control_no'],
                 'safety_seal_no' => $row['ss_no'],
                 'for_sending' => $row['sms_sending_status'],
                 'contact_details' => $row['contact_details']
             ];
-        return $data;
-    }
+            return $data;
+        }
     }
     public function getApplicantDetails($user)
     {
@@ -1515,17 +1796,17 @@ class ApplicationManager extends Connection
                 'status'            => 'Draft',
                 'pcode'             => $row['pcode'],
                 'mcode'             => $row['mcode'],
-                'code'              => $yy.'-'.'_____',
+                'code'              => $yy . '-' . '_____',
                 'date_proceed'      => '',
                 'status'            => !empty($row['status']) ? $row['status'] : 'Draft',
                 'safetyseal_no'     => $row['ss_no']
-            ];      
+            ];
         }
 
         return $data;
     }
 
-    public function getApproverDetails($province,$lgu)
+    public function getApproverDetails($province, $lgu)
     {
         $sql = "SELECT 
         ui.EMAIL_ADDRESS as email,
@@ -1537,15 +1818,15 @@ class ApplicationManager extends Connection
         $getQry = $this->db->query($sql);
 
         $data = [];
-        
+
         while ($row = mysqli_fetch_assoc($getQry)) {
             $data = [
                 'email' => $row['email'],
                 'fname' => $row['fname'],
                 'mobile_no' => $row['contact_details']
-            ];   
+            ];
         }
-            return $data;
+        return $data;
     }
 
     public function getStatusOptions()
@@ -1570,7 +1851,7 @@ class ApplicationManager extends Connection
         return $options;
     }
 
-    public function getAllUsers($province='', $lgu='', $roles='')
+    public function getAllUsers($province = '', $lgu = '', $roles = '')
     {
         mysqli_set_charset($this->db, "utf8");
 
@@ -1591,7 +1872,7 @@ class ApplicationManager extends Connection
         $getQry = $this->db->query($sql);
 
         $data = [];
-        
+
         while ($row = mysqli_fetch_assoc($getQry)) {
             $data[$row['userid']] = [
                 'name' => $row['name'],
@@ -1601,10 +1882,10 @@ class ApplicationManager extends Connection
                 'province' => $row['province'],
                 'lgu' => $row['lgu'],
                 'status' => $row['is_verified'] ? 'Active' : 'Inactive',
-                'profile' => !empty($row['profile']) ? '_images/profile/'.$row['profile'] : '_images/logo.png'
-            ];   
+                'profile' => !empty($row['profile']) ? '_images/profile/' . $row['profile'] : '_images/logo.png'
+            ];
         }
-        
+
         return $data;
     }
 
@@ -1641,24 +1922,24 @@ class ApplicationManager extends Connection
         $data = [];
 
         $result = mysqli_fetch_assoc($getQry);
-        
+
         return $result;
     }
 
-    public function postUserAccount($data) 
+    public function postUserAccount($data)
     {
-        $sql = "UPDATE tbl_admin_info SET CMLGOO_NAME = '".$data['fullname']."', EMAIL = '".$data['email']."', OFFICE = '".$data['sub_office']."', IS_VERIFIED = '".$data['status']."', PROVINCE = '".$data['province']."', LGU = '".$data['lgu']."', ROLES = '".$data['role']."' WHERE id = '".$data['id']."'";
+        $sql = "UPDATE tbl_admin_info SET CMLGOO_NAME = '" . $data['fullname'] . "', EMAIL = '" . $data['email'] . "', OFFICE = '" . $data['sub_office'] . "', IS_VERIFIED = '" . $data['status'] . "', PROVINCE = '" . $data['province'] . "', LGU = '" . $data['lgu'] . "', ROLES = '" . $data['role'] . "' WHERE id = '" . $data['id'] . "'";
 
         $getQry = $this->db->query($sql);
 
-        $sql = "UPDATE tbl_userinfo SET ADDRESS = '".$data['address']."', POSITION = '".$data['position']."', MOBILE_NO = '".$data['mobile_no']."', EMAIL_ADDRESS = '".$data['email']."', GOV_AGENCY_NAME = '".$data['gov_agency']."', GOV_NATURE_NAME = '".$data['gov_nature']."' WHERE id = '".$data['id']."'";
+        $sql = "UPDATE tbl_userinfo SET ADDRESS = '" . $data['address'] . "', POSITION = '" . $data['position'] . "', MOBILE_NO = '" . $data['mobile_no'] . "', EMAIL_ADDRESS = '" . $data['email'] . "', GOV_AGENCY_NAME = '" . $data['gov_agency'] . "', GOV_NATURE_NAME = '" . $data['gov_nature'] . "' WHERE id = '" . $data['id'] . "'";
 
         $getQry = $this->db->query($sql);
 
 
         if (!empty($data['pw1'])) {
             // $hashed_pw = password_hash($data['pw1'], PASSWORD_DEFAULT);
-            $sql = "UPDATE tbl_admin_info SET PASSWORD = '".$data['pw1']."' WHERE id = '".$data['id']."'";
+            $sql = "UPDATE tbl_admin_info SET PASSWORD = '" . $data['pw1'] . "' WHERE id = '" . $data['id'] . "'";
 
             $getQry = $this->db->query($sql);
         }
@@ -1666,85 +1947,86 @@ class ApplicationManager extends Connection
         return $data;
     }
 
-    public function postUserEstablishment($data) 
+    public function postUserEstablishment($data)
     {
         $sql = "UPDATE tbl_admin_info 
-                SET OFFICE = '".$data['sub_office']."', 
-                PROVINCE = '".$data['gov_province']."', 
-                LGU = '".$data['gov_lgu']."' 
-                WHERE id = ".$data['userid']."";
+                SET OFFICE = '" . $data['sub_office'] . "', 
+                PROVINCE = '" . $data['gov_province'] . "', 
+                LGU = '" . $data['gov_lgu'] . "' 
+                WHERE id = " . $data['userid'] . "";
 
         $getQry = $this->db->query($sql);
 
         $sql = "UPDATE tbl_userinfo 
-                SET ADDRESS = '".$data['gov_address']."', 
-                GOV_AGENCY_NAME = '".$data['gov_agency']."',
-                GOV_NATURE_NAME = '".$data['gov_nature']."' 
-                WHERE id = ".$data['userid']."";
+                SET ADDRESS = '" . $data['gov_address'] . "', 
+                GOV_AGENCY_NAME = '" . $data['gov_agency'] . "',
+                GOV_NATURE_NAME = '" . $data['gov_nature'] . "' 
+                WHERE id = " . $data['userid'] . "";
 
-        $getQry = $this->db->query($sql);   
+        $getQry = $this->db->query($sql);
 
-        return $data; 
+        return $data;
     }
 
-    public function postUserAccountV2($data) 
+    public function postUserAccountV2($data)
     {
         $sql = "UPDATE tbl_admin_info 
-                SET CMLGOO_NAME = '".$data['fullname']."', 
-                EMAIL = '".$data['email']."', 
-                OFFICE = '".$data['sub_office']."',
-                UNAME = '".$data['username']."' 
-                WHERE id = '".$data['userid']."'";
+                SET CMLGOO_NAME = '" . $data['fullname'] . "', 
+                EMAIL = '" . $data['email'] . "', 
+                OFFICE = '" . $data['sub_office'] . "',
+                UNAME = '" . $data['username'] . "' 
+                WHERE id = '" . $data['userid'] . "'";
 
         $getQry = $this->db->query($sql);
 
         $sql = "UPDATE tbl_userinfo 
-                SET POSITION = '".$data['position']."', 
-                MOBILE_NO = '".$data['mobile_no']."', 
-                EMAIL_ADDRESS = '".$data['email']."' 
-                WHERE id = '".$data['userid']."'";
+                SET POSITION = '" . $data['position'] . "', 
+                MOBILE_NO = '" . $data['mobile_no'] . "', 
+                EMAIL_ADDRESS = '" . $data['email'] . "' 
+                WHERE id = '" . $data['userid'] . "'";
 
-        $getQry = $this->db->query($sql);   
+        $getQry = $this->db->query($sql);
 
 
         if (!empty($data['password'])) {
-            $sql = "UPDATE tbl_admin_info SET PASSWORD = '".$data['password']."' WHERE id = '".$data['userid']."'";
+            $sql = "UPDATE tbl_admin_info SET PASSWORD = '" . $data['password'] . "' WHERE id = '" . $data['userid'] . "'";
 
             $getQry = $this->db->query($sql);
         }
 
-        return $data; 
+        return $data;
     }
 
-    public function postUserProfile($filepath, $id) 
+    public function postUserProfile($filepath, $id)
     {
-        $sql = "UPDATE tbl_admin_info SET profile = '".$filepath."' WHERE id = '".$id."'";
+        $sql = "UPDATE tbl_admin_info SET profile = '" . $filepath . "' WHERE id = '" . $id . "'";
         $getQry = $this->db->query($sql);
 
         return 0;
     }
 
-    public function insertAttachments($entry_id, $file) {
-        $sql = 'INSERT INTO tbl_app_checklist_attachments SET entry_id = "'.$entry_id.'", file_name = "'.$file.'", date_created = NOW()';
+    public function insertAttachments($entry_id, $file)
+    {
+        $sql = 'INSERT INTO tbl_app_checklist_attachments SET entry_id = "' . $entry_id . '", file_name = "' . $file . '", date_created = NOW()';
         $getQry = $this->db->query($sql);
 
         return $data;
     }
 
-    public function getUserMOVS($id, $for_renewal='')
+    public function getUserMOVS($id, $for_renewal = '')
     {
         $sql = "SELECT * FROM tbl_app_checklist_attachments WHERE entry_id = $id";
         $getQry = $this->db->query($sql);
         $data = [];
 
         while ($row = mysqli_fetch_assoc($getQry)) {
-            $data[] = $row['file_name'];    
+            $data[] = $row['file_name'];
         }
 
         return $data;
     }
 
-    public function fileSizeChecker($size) 
+    public function fileSizeChecker($size)
     {
         $is_large = false;
         if ($size > 50000000) {
@@ -1756,26 +2038,26 @@ class ApplicationManager extends Connection
 
     public function getParentID($id)
     {
-        $sql = "SELECT parent_id FROM tbl_app_checklist_entry WHERE id = ".$id."";
+        $sql = "SELECT parent_id FROM tbl_app_checklist_entry WHERE id = " . $id . "";
         $getQry = $this->db->query($sql);
         $result = mysqli_fetch_assoc($getQry);
-            
+
         return $result['parent_id'];
     }
 
-    public function insertEntry($client_id, $client_secret, $entry, $file, $file_type, $for_renewal) 
+    public function insertEntry($client_id, $client_secret, $entry, $file, $file_type, $for_renewal)
     {
         $today = new DateTime();
 
         $sql = "INSERT INTO tbl_app_checklist_attachments 
-                SET file_id = '".$file['id']."',
-                file_name = '".$file['originalFilename']."',
-                location = '".$file['alternateLink']."',
-                date_created = '".$today->format('Y-m-d H:i:s')."',
-                client_id = '".$client_id."',
-                client_secret = '".$client_secret."',
-                file_type = '".$file_type."',
-                entry_id = '".$entry."'";
+                SET file_id = '" . $file['id'] . "',
+                file_name = '" . $file['originalFilename'] . "',
+                location = '" . $file['alternateLink'] . "',
+                date_created = '" . $today->format('Y-m-d H:i:s') . "',
+                client_id = '" . $client_id . "',
+                client_secret = '" . $client_secret . "',
+                file_type = '" . $file_type . "',
+                entry_id = '" . $entry . "'";
 
         $result = $this->db->query($sql);
 
@@ -1787,12 +2069,12 @@ class ApplicationManager extends Connection
         $sql = "SELECT e.id as eid, ca.id as caid, ca.file_id as file_id, ca.file_name as file_name, ca.location as location, ca.file_type as file_type FROM tbl_app_checklist_attachments ca ";
 
         // if ($for_renewal) {
-            // $sql .= " LEFT JOIN tbl_app_checklist_renewal_entry e on e.id = ca.renewal_id";
+        // $sql .= " LEFT JOIN tbl_app_checklist_renewal_entry e on e.id = ca.renewal_id";
         // } else {
-            $sql .= " LEFT JOIN tbl_app_checklist_entry e on e.id = ca.entry_id";
+        $sql .= " LEFT JOIN tbl_app_checklist_entry e on e.id = ca.entry_id";
         // }
-        
-        $sql .= " LEFT JOIN tbl_app_checklist a on a.id = e.parent_id WHERE e.id = ".$id."";
+
+        $sql .= " LEFT JOIN tbl_app_checklist a on a.id = e.parent_id WHERE e.id = " . $id . "";
 
         $getQry = $this->db->query($sql);
         $data = [];
@@ -1803,7 +2085,7 @@ class ApplicationManager extends Connection
                 $cover_page = 'files/certified/pdf_icon.png';
             } elseif (strpos($row['file_type'], 'spreadsheetml.sheet')) {
                 $cover_page = 'files/certified/excel_icon.png';
-            } elseif (strpos($row['file_type'], 'msword') OR strpos($row['file_type'], 'wordprocessing')) {
+            } elseif (strpos($row['file_type'], 'msword') or strpos($row['file_type'], 'wordprocessing')) {
                 $cover_page = 'files/certified/word_icon.png';
             }
 
@@ -1813,13 +2095,13 @@ class ApplicationManager extends Connection
                 'file_name' => $row['file_name'],
                 'url' => $row['location'],
                 'cover_page' => $cover_page
-            ];    
+            ];
         }
 
         return json_encode($data);
     }
 
-    public function getEntryClientID($id) 
+    public function getEntryClientID($id)
     {
         $sql = "SELECT client_id, client_secret FROM tbl_app_checklist_attachments WHERE id = $id";
         $getQry = $this->db->query($sql);
@@ -1828,46 +2110,56 @@ class ApplicationManager extends Connection
         return $row;
     }
 
-    public function removeAttachment($id) 
+    public function removeAttachment($id)
     {
-        $sql = 'DELETE FROM tbl_app_checklist_attachments WHERE id = '.$id.'';
+        $sql = 'DELETE FROM tbl_app_checklist_attachments WHERE id = ' . $id . '';
         $result = $this->db->query($sql);
 
-        return $result;   
+        return $result;
     }
 
-    public function getAnsweredChecklist($id)
+    public function getAnsweredChecklist($id, $alert_level)
     {
-        $sql = "SELECT answer FROM tbl_app_checklist_entry WHERE parent_id = ".$id." AND answer != ''";
+        if ($alert_level >= 2) {
+            $sql = "SELECT answer FROM tbl_app_checklist_entry WHERE parent_id = " . $id . " AND answer != ''";
+        } else {
+            $sql = "SELECT answer FROM tbl_app_checklist_entry WHERE parent_id = " . $id . "";
+        }
+
         $getQry = $this->db->query($sql);
         $data = [];
         while ($result = mysqli_fetch_assoc($getQry)) {
-            $data[] = $result['answer'];
+            if ($result['answer'] == '') {
+                $result = 'null';
+            } else {
+                $result = $result['answer'];
+            }
+            $data[] = $result;
         }
-            
+
         return $data;
     }
 
-     public function getEncodedAttachmentChecklist($id)
+    public function getEncodedAttachmentChecklist($id)
     {
-        $sql = "SELECT count(*) as answer FROM tbl_app_checklist_encoded_attachments WHERE parent_id = '".$id."'";
+        $sql = "SELECT count(*) as answer FROM tbl_app_checklist_encoded_attachments WHERE parent_id = '" . $id . "'";
         $getQry = $this->db->query($sql);
         $result = mysqli_fetch_assoc($getQry);
-            
+
         return $result['answer'];
     }
 
     public function getAnsweredChecklistYes($id)
     {
-        $sql = "SELECT count(*) as count FROM tbl_app_checklist_entry WHERE parent_id = ".$id." AND answer = 'yes'";
+        $sql = "SELECT count(*) as count FROM tbl_app_checklist_entry WHERE parent_id = " . $id . " AND answer = 'yes'";
         $getQry = $this->db->query($sql);
-    
+
         $result = mysqli_fetch_assoc($getQry);
-        
+
         return $result['count'];
     }
 
-    public function passwordMatchChecker($pw1, $pw2) 
+    public function passwordMatchChecker($pw1, $pw2)
     {
         if ($pw1 != $pw2) {
             throw new Exception('Password does not match!');
@@ -1880,7 +2172,7 @@ class ApplicationManager extends Connection
         return true;
     }
 
-    public function getApprovalHistory($id, $uid=null, $province=null, $cluster_id=null, $lgus=null) 
+    public function getApprovalHistory($id, $uid = null, $province = null, $cluster_id = null, $lgus = null)
     {
         $sql = "SELECT 
                     h.action AS action,
@@ -1906,18 +2198,18 @@ class ApplicationManager extends Connection
             $sql .= " WHERE h.uid = $uid";
         } elseif (!empty($id)) {
             $sql .= " WHERE h.fid = $id";
-        } elseif (!empty($province) AND !empty($cluster_id)) {
-            $sql .= " WHERE ai.PROVINCE = $province AND c.code IN ($lgus) GROUP BY ai.id";
+        } elseif (!empty($province) and !empty($cluster_id)) {
+            $sql .= " WHERE ai.PROVINCE = '$province' AND c.code IN ($lgus) GROUP BY ai.id";
         } elseif (!empty($province)) {
-            $sql .= " WHERE ai.PROVINCE = $province GROUP BY ai.id";
-        } elseif (empty($id) AND empty($uid)) {
+            $sql .= " WHERE ai.PROVINCE = '$province' GROUP BY ai.id";
+        } elseif (empty($id) and empty($uid)) {
             $sql .= " GROUP BY ai.id";
-        }      
-        
+        }
+
         $sql .= " ORDER BY h.id DESC";
 
         $getQry = $this->db->query($sql);
-        
+
         $date_today = new DateTime();
         $data = [];
 
@@ -1927,17 +2219,17 @@ class ApplicationManager extends Connection
             $interval = date_diff($date1, $date2);
 
             if ($interval->y > 0) {
-                $interval = $interval->y .' year(s) ago';
+                $interval = $interval->y . ' year(s) ago';
             } elseif ($interval->m > 0) {
-                $interval = $interval->m .' month(s) ago';
+                $interval = $interval->m . ' month(s) ago';
             } elseif ($interval->d > 0) {
-                $interval = $interval->d .' day(s) ago';
+                $interval = $interval->d . ' day(s) ago';
             } elseif ($interval->h > 0) {
-                $interval = $interval->h .' hour(s) ago';
+                $interval = $interval->h . ' hour(s) ago';
             } elseif ($interval->i > 0) {
-                $interval = $interval->i .' min(s) ago';
+                $interval = $interval->i . ' min(s) ago';
             } else {
-                $interval = $interval->s .' sec(s) ago';
+                $interval = $interval->s . ' sec(s) ago';
             }
 
             $data[] = [
@@ -1951,11 +2243,11 @@ class ApplicationManager extends Connection
                 'app_type'      => $result['application_type'],
             ];
         }
-        
+
         return $data;
     }
 
-    public function getApplicationHistory($id) 
+    public function getApplicationHistory($id)
     {
         $sql = "SELECT 
                 DATE_FORMAT(issued_date, '%b %d, %Y') as issued_date,
@@ -1981,7 +2273,7 @@ class ApplicationManager extends Connection
         return $data;
     }
 
-    public function getContactTracingTool($id) 
+    public function getContactTracingTool($id)
     {
         $sql = "SELECT 
                 CASE WHEN e.tracing_tool = 'staysafe' then 'StaySafe.ph' else e.other_tool end AS app_tool 
@@ -1993,13 +2285,13 @@ class ApplicationManager extends Connection
 
         $getQry = $this->db->query($sql);
         $result = mysqli_fetch_assoc($getQry);
-        
-        $tool = isset($result['app_tool']) ? $result['app_tool'] : ''; 
+
+        $tool = isset($result['app_tool']) ? $result['app_tool'] : '';
 
         return $tool;
     }
 
-    public function getAllChecklist($userid=null, $person=null) 
+    public function getAllChecklist($userid = null, $person = null)
     {
         $date_today = new DateTime();
         $date_today = date('Y-m-d', strtotime($date_today->format('Y-m-d')));
@@ -2019,23 +2311,24 @@ class ApplicationManager extends Connection
                 DATE_FORMAT(date_created, '%b %d, %Y %h:%i %p') as date_created, 
                 DATE_FORMAT(date_approved, '%b %d, %Y') as date_approved 
                 FROM tbl_app_checklist";
-        
+
         if (!empty($userid)) {
             $sql .= " WHERE user_id = $userid ORDER BY id DESC";
         } else {
-            $sql .= " WHERE person = '".$person."' ORDER BY id DESC";
-        } 
-        
+            $sql .= " WHERE person = '" . $person . "' ORDER BY id DESC";
+        }
+
 
         $getQry = $this->db->query($sql);
         $data = [];
         while ($row = mysqli_fetch_assoc($getQry)) {
+
             $color = "green";
             $date_validity_f = '';
             $status = $row['status'];
 
             if (!empty($row['date_approved'])) {
-                if (($row['status'] == "Approved") AND ($row['for_renewal']) AND (!empty($row['date_renewed']))) {
+                if (($row['status'] == "Approved") and ($row['for_renewal']) and (!empty($row['date_renewed']))) {
                     $date_validity = date('Y-m-d', strtotime("+6 months", strtotime($row['date_renewed'])));
                     $date_validity_f = date('M d, Y', strtotime("+6 months", strtotime($row['date_renewed'])));
                 } else {
@@ -2046,7 +2339,7 @@ class ApplicationManager extends Connection
                 $date1 = date_create($date_today);
                 $date2 = date_create($date_validity);
                 $interval = $date1->diff($date2);
-                
+
                 if (!empty($row['date_approved'])) {
                     if ($row['status'] == 'For Renewal') {
                         $status = $row['status'];
@@ -2064,7 +2357,7 @@ class ApplicationManager extends Connection
             } elseif (in_array($status, ['Disapproved', 'Expired'])) {
                 $color = 'red';
             }
-            
+
             $data[] = [
                 'token'             => $row['token'],
                 'id'                => $row['id'],
@@ -2077,7 +2370,7 @@ class ApplicationManager extends Connection
                 'date_created'      => $row['date_created'],
                 'expiration_date'   => in_array($status, ['Draft', 'For Renewal']) ? '' : $date_validity_f,
                 'status'            => $status,
-                'color'             => $color
+                'color'             => $color,
             ];
         }
 
@@ -2127,13 +2420,13 @@ class ApplicationManager extends Connection
             $apps = $user_estabs[$row['user_id']];
             if (!empty($apps)) {
                 foreach ($apps as $key => $app) {
-                    $history .= $app['date_approved'] .' - '. $app['date_validity'] .' '. $app['status'] .'<br>';
+                    $history .= $app['date_approved'] . ' - ' . $app['date_validity'] . ' ' . $app['status'] . '<br>';
                 }
             }
 
             $data[$row['id']] = [
                 'ac_id'             => $row['id'],
-                'agency'            => !empty($row['gov_agency_name']) ? '('.$row['gov_agency_name'].')' : '',
+                'agency'            => !empty($row['gov_agency_name']) ? '(' . $row['gov_agency_name'] . ')' : '',
                 'province'          => $row['province'],
                 'province_id'       => $row['province_id'],
                 'gov_estb_name'     => $row['gov_estb_name'],
@@ -2239,14 +2532,14 @@ class ApplicationManager extends Connection
             if (!empty($apps)) {
                 foreach ($apps as $key => $app) {
                     if ($app_user == $app['person']) {
-                        $history .= $app['date_approved'] .' - '. $app['date_validity'] .' '. $app['status'] .'<br>';
+                        $history .= $app['date_approved'] . ' - ' . $app['date_validity'] . ' ' . $app['status'] . '<br>';
                     }
                 }
             }
 
             $data[$row['ac_id']] = [
                 'ac_id'             => $row['ac_id'],
-                'agency'            => !empty($row['gov_agency_name']) ? '('.$row['gov_agency_name'].')' : '',
+                'agency'            => !empty($row['gov_agency_name']) ? '(' . $row['gov_agency_name'] . ')' : '',
                 'province'          => $row['province'],
                 'province_id'       => $row['province_id'],
                 'gov_estb_name'     => $row['gov_estb_name'],
@@ -2305,7 +2598,7 @@ class ApplicationManager extends Connection
         return $data;
     }
 
-    public function getClusters($province, $id=null)
+    public function getClusters($province, $id = null)
     {
         $sql = "SELECT 
                     * 
@@ -2315,15 +2608,15 @@ class ApplicationManager extends Connection
         if (!empty($id)) {
             $sql .= " AND id = $id";
         }
-        
+
         $getQry = $this->db->query($sql);
         $data = [];
-        
+
         while ($row = mysqli_fetch_assoc($getQry)) {
             $data[$row['id']] = [
                 'province'      => $row['province'],
                 'lgu'           => $row['citymun']
-            ];    
+            ];
         }
 
         return $data;
@@ -2349,7 +2642,7 @@ class ApplicationManager extends Connection
                 FROM tbl_cluster_head ch 
                 LEFT JOIN tbl_province p ON p.id = ch.province 
                 LEFT JOIN tbl_citymun cm ON cm.province = p.id 
-                WHERE ch.id = $key AND cm.id IN (".$codes.")";
+                WHERE ch.id = $key AND cm.id IN (" . $codes . ")";
 
             $getQry = $this->db->query($sql);
 
@@ -2360,15 +2653,14 @@ class ApplicationManager extends Connection
                     'lgu_id'            => $row['cm_id'],
                     'ch_alert_level'    => $row['ch_alert_level'],
                     'cm_alert_level'    => $row['cm_alert_level']
-                ];    
+                ];
             }
-
         }
 
         return $data;
     }
 
-    public function updateSettingsProvince($id, $level) 
+    public function updateSettingsProvince($id, $level)
     {
         $sql = "UPDATE tbl_province SET alert_level = $level WHERE id = $id";
         $result = $this->db->query($sql);
@@ -2382,7 +2674,7 @@ class ApplicationManager extends Connection
         return $result;
     }
 
-    public function updateSettingsCluster($id, $level) 
+    public function updateSettingsCluster($id, $level)
     {
         $sql = "UPDATE tbl_cluster_head SET alert_level = $level WHERE id = $id";
         $result = $this->db->query($sql);
@@ -2391,11 +2683,11 @@ class ApplicationManager extends Connection
 
         $sql = "UPDATE tbl_citymun SET alert_level = $level WHERE id IN ($clusters_raw)";
         $result = $this->db->query($sql);
-    
+
         return $result;
     }
 
-    public function getClusterLGUs($id) 
+    public function getClusterLGUs($id)
     {
         $sql = "SELECT citymun FROM tbl_cluster_head WHERE id = $id";
         $getQry = $this->db->query($sql);
@@ -2407,15 +2699,15 @@ class ApplicationManager extends Connection
         return $cc;
     }
 
-    public function updateSettingsLGU($id, $level) 
+    public function updateSettingsLGU($id, $level)
     {
         $sql = "UPDATE tbl_citymun SET alert_level = $level WHERE id = $id";
         $result = $this->db->query($sql);
-    
+
         return $result;
     }
 
-    public function getProvincesList() 
+    public function getProvincesList()
     {
         $sql = "SELECT id, name, alert_level FROM tbl_province";
         $getQry = $this->db->query($sql);
@@ -2432,11 +2724,10 @@ class ApplicationManager extends Connection
 
     public function getLGULevel($province, $lgu)
     {
-        $sql = "SELECT alert_level FROM tbl_citymun WHERE province = $province AND code = '".$lgu."'";
+        $sql = "SELECT alert_level FROM tbl_citymun WHERE province = $province AND code = '" . $lgu . "'";
         $getQry = $this->db->query($sql);
         $result = mysqli_fetch_assoc($getQry);
 
-        return $result['alert_level'];    
+        return $result['alert_level'];
     }
-
 }
