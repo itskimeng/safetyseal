@@ -7,6 +7,7 @@
           <!-- <button type="button" class="btn btn-tool btn-tool-filter" data-card-widget="collapse"> -->
 
           <?php
+          
           if ($_SESSION['username'] == 'jdtorres') {
                     echo ' <label class="switch">
         <input type="checkbox" data-toggle="modal" data-target="#exampleModal">
