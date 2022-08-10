@@ -4,7 +4,7 @@ date_default_timezone_set('Asia/Manila');
 
 require '../application/config/connection.php';
 
-$province = $_SESSION['province'];
+$province = $_GET['province'];
 $is_clusterhead = $_SESSION['is_clusterhead'];
 $clusterhead_id = $_SESSION['clusterhead_id'];
 $is_pfp = $_SESSION['is_pfp'];
@@ -70,7 +70,7 @@ function filterApplicants($conn, $province, $lgu, $options) {
 		WHERE ai.PROVINCE = '".$province."' AND ai.LGU = '".$lgu."' AND ac.date_created >= '$date_from' AND ac.date_created <= '$date_to' AND ac.status <> 'Draft'";
 
 	if (!empty($options['name'])) {
-		$sql.= " AND ai.CMLGOO_NAME = '".$options['name']."'"; 
+		$sql.= " AND ai.CMLGOO_NAME LIKE '%".$options['name']."%'"; 
 	}	
 
 	if (!empty($options['agency'])) {
@@ -100,6 +100,7 @@ function filterApplicants($conn, $province, $lgu, $options) {
         } elseif ($row['status'] == 'Disapproved') {
             $color = 'red';
         }
+        $checklist_form = (date('Y-m-d', strtotime($row['date_created'])) < '2022-07-01') ? '1' : '0';
 
         $data[$row['id']] = [
             'id' => $row['id'],
@@ -108,6 +109,7 @@ function filterApplicants($conn, $province, $lgu, $options) {
             'agency' => $row['app_type'] == 'Applied' ? $row['agency'] : $row['r_agency'],
             'address' => $row['app_type'] == 'Applied' ? $row['address'] : $row['r_address'],
             'date_created' => $row['date_created'],
+            'form' => $checklist_form,
             'control_no' => $row['control_no'],
             'status' => $row['status'],
             'app_type' => $row['app_type'],
@@ -144,7 +146,7 @@ function filterApplicants($conn, $province, $lgu, $options) {
 		WHERE ai.PROVINCE = '".$province."' AND ai.LGU = '".$lgu."' AND ac.date_created >= '$date_from' AND ac.date_created <= '$date_to' AND ac.application_type = 'Encoded'";
 
 	if (!empty($options['name'])) {
-		$sql.= " AND ai.CMLGOO_NAME = '".$options['name']."'"; 
+		$sql.= " AND ai.CMLGOO_NAME LIKE'%".$options['name']."%'"; 
 	}	
 
 	if (!empty($options['agency'])) {
@@ -166,6 +168,7 @@ function filterApplicants($conn, $province, $lgu, $options) {
 	$query = mysqli_query($conn, $sql);
 
     while ($row = mysqli_fetch_assoc($query)) {
+        $checklist_form = (date('Y-m-d', strtotime($row['date_created'])) < '2022-07-01') ? '1' : '0';
         
         if ($row['status'] == 'For Receiving') {
             $color = 'primary';
@@ -192,6 +195,7 @@ function filterApplicants($conn, $province, $lgu, $options) {
             'agency' => $row['app_type'] == 'Applied' ? $row['agency'] : $row['r_agency'],
             'address' => $row['app_type'] == 'Applied' ? $row['address'] : $row['r_address'],
             'date_created' => $row['date_created'],
+            'form' => $checklist_form,
             'control_no' => $row['control_no'],
             'status' => $row['status'],
             'app_type' => $row['app_type'],
@@ -224,10 +228,10 @@ function filterApplicants($conn, $province, $lgu, $options) {
         FROM tbl_app_checklist ac
         LEFT JOIN tbl_userinfo ui on ui.id = ac.user_id
         LEFT JOIN tbl_admin_info ai on ui.user_id = ai.id
-        WHERE  ac.date_created >= '$date_from' AND ac.date_created <= '$date_to' AND ac.application_type = '$app_type'";
+        WHERE  ai.PROVINCE = '".$province."' AND ai.LGU = '".$lgu."' AND ac.date_created >= '$date_from' AND ac.date_created <= '$date_to' AND ac.application_type = '$app_type'";
 
     if (!empty($options['name'])) {
-        $sql.= " AND ai.CMLGOO_NAME = '".$options['name']."'"; 
+        $sql.= " AND ai.CMLGOO_NAME LIKE'%".$options['name']."%'"; 
     }   
 
     if (!empty($options['agency'])) {
@@ -250,6 +254,8 @@ function filterApplicants($conn, $province, $lgu, $options) {
 
     while ($row = mysqli_fetch_assoc($query)) {
         $color = 'green';
+        $checklist_form = (date('Y-m-d', strtotime($row['date_created'])) < '2022-07-01') ? '1' : '0';
+
         if ($row['status'] == 'For Receiving') {
             $color = 'primary';
         } elseif ($row['status'] == 'Received') {
@@ -265,6 +271,7 @@ function filterApplicants($conn, $province, $lgu, $options) {
             'agency' => $row['app_type'] == 'Applied' ? $row['agency'] : $row['r_agency'],
             'address' => $row['app_type'] == 'Applied' ? $row['address'] : $row['r_address'],
             'date_created' => date('F d, Y',strtotime($row['date_created'])),
+            'form' => $checklist_form,
             'control_no' => $row['control_no'],
             'status' => $row['status'],
             'app_type' => $row['app_type'],
@@ -274,6 +281,7 @@ function filterApplicants($conn, $province, $lgu, $options) {
             'validity_date' => !empty($row['date_approved']) ? date('F d, Y', strtotime("+6 months", strtotime($row['date_approved']))) : ''
         ];    
     }
+   
     return json_encode($data);
 }
 

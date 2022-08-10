@@ -11,6 +11,7 @@ $province = $_SESSION['province'];
 $citymun = $_SESSION['city_mun'];
 $is_clusterhead = $_SESSION['is_clusterhead'];
 $clusterhead_id = $_SESSION['clusterhead_id'];
+
 $is_pfp = $_SESSION['is_pfp'];
 $is_rofp = (($province == 0) && ($citymun == 00));
 $hlbl = ""; 
@@ -56,6 +57,7 @@ if (!$is_adminro) {
 	if ($is_pfp) {
        // FOR PROVINCIAL FOCAL PERSONS
 	   $applicants = getPFPApplicationLists($conn, $province, ApplicationManager::STATUS_DRAFT);
+       
 	} elseif (!$is_clusterhead) {
        // FOR MLGOO ACCOUNTS
         $applicants = $app->getUserApplications($province, $citymun, ApplicationManager::STATUS_DRAFT); 
@@ -66,6 +68,10 @@ if (!$is_adminro) {
 	// $client_details = $app->getNotifDetailsClients(ApplicationManager::STATUS_APPROVED);
 } else {
 	$applicants = $app->getAllApplicationLists();
+    $status = (isset($_GET['status'])) ? $_GET['status']: '';
+    $application_info = $app->getApplicationListsInfo($status);
+    $application_draftlist = $app->getDraftApplicationList('Draft');
+
 	$reports['total_application'] = $app->showAllApplications('',$timestamp);
 	$reports['total_received'] = $app->showAllApplications('',$timestamp,ApplicationManager::STATUS_RECEIVED);
     $reports['total_approved'] = $app->showAllApplications('',$timestamp,ApplicationManager::STATUS_APPROVED);
@@ -103,6 +109,7 @@ if (!$is_adminro) {
 	$reports['huc_disapproved'] = $app->showAllApplications('huc',$timestamp,ApplicationManager::STATUS_DISAPPROVED);
 }
 
+            
 if ($is_pfp) {
 	$citymun = '';	
 }
