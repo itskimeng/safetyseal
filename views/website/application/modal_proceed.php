@@ -6,8 +6,13 @@
         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
       </div>
 
-   
+
       <form method="post" enctype="multipart/form-data" action="entity/post_proceed.php">
+        <?php if (isset($_GET['create_new']) || $_GET['form'] == 'create_new') : ?>
+          <input type="hidden" name="checklist" value="create_new">
+        <?php else : ?>
+          <input type="hidden" name="checklist" value="create_newv1">
+        <?php endif ?>
         <input type="hidden" name="chklist_id" value="<?php echo $userinfo['acid']; ?>">
         <input type="hidden" name="token" value="<?php echo !empty($_GET['ssid']) ? $_GET['ssid'] : ''; ?>">
         <input type="hidden" name="name" value="<?php echo $_SESSION['name']; ?>">
@@ -84,6 +89,6 @@
     } else {
       btn_consent.attr('disabled', true);
     }
-    
+
   });
 </script>

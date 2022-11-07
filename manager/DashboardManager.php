@@ -87,7 +87,7 @@ class DashboardManager
 
     public function getCityMuns($province)
     {
-        $sql = "SELECT id, province, code, name FROM tbl_citymun where province  = $province order by name";
+        $sql = "SELECT id, province, code, name FROM tbl_citymun where province  = '$province' order by name";
 
         $query = mysqli_query($this->conn, $sql);
         $data = [];

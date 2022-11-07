@@ -99,24 +99,26 @@
             <div class="col-md-4">
               <div class="form-group">
                 <label>Agency</label>
-                <select id="cform-agency" class="form-control select2bs4 select2-hidden-accessible" style="width: 100%;" data-select2-id="17" tabindex="-1" aria-hidden="true">
+                <input type="text" id="cform-agency" class="form-control" />
+                <!-- <select id="cform-agency" class="form-control select2bs4 select2-hidden-accessible" style="width: 100%;" data-select2-id="17" tabindex="-1" aria-hidden="true">
                   <option></option>
                   <?php foreach ($applicants as $key => $app) : ?>
                     <option value="<?php echo $app['agency']; ?>"><?php echo $app['agency'] ?></option>
                   <?php endforeach ?>
-                </select>
+                </select> -->
               </div>
             </div>
 
             <div class="col-md-4">
               <div class="form-group">
                 <label>Location</label>
-                <select id="cform-location" class="form-control select2bs4 select2-hidden-accessible" style="width: 100%;" data-select2-id="17" tabindex="-1" aria-hidden="true">
+                <input type="text" id="cform-location" class="form-control" />
+                <!-- <select id="cform-location" class="form-control select2bs4 select2-hidden-accessible" style="width: 100%;" data-select2-id="17" tabindex="-1" aria-hidden="true">
                   <option></option>
                   <?php foreach ($applicants as $key => $app) : ?>
                     <option value="<?php echo $app['address']; ?>"><?php echo $app['address']; ?></option>
                   <?php endforeach ?>
-                </select>
+                </select> -->
               </div>
             </div>
           </div>

@@ -108,11 +108,12 @@
                                   </td>
                                   <td style="vertical-align: bottom; text-align: center;">
                                     <div class="col-md-12">
-                                      <a href="admin_application_summary.php?appid=<?= $dd['id']; ?>&ussir=<?= $userid; ?>" class="btn btn-info btn-sm" title="View Checklist"><i class="fa fa-eye"></i></a>
+                                      <a href="admin_application_summary.php?form=<?= $_GET['form'];?>&appid=<?= $dd['id']; ?>&ussir=<?= $userid; ?>" class="btn btn-info btn-sm" title="View Checklist"><i class="fa fa-eye"></i></a>
 
                                       <?php if (in_array($dd['status'], ['Draft'])): ?>
                                         <a href="entity/delete_admin_application.php?token=<?= $dd['token']; ?>" class="btn btn-danger btn-sm" style="margin-bottom: -2%;" title="Remove Application">
-                                          <i class="fa fa-trash"></i></a>
+                                         
+                                        <i class="fa fa-trash"></i></a>
                                       <?php endif ?>
 
                                     </div>

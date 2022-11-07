@@ -14,9 +14,10 @@ $today = new DateTime();
 $userid = $_SESSION['userid'];
 $uname = $_SESSION['username'];
 $province = $_POST['province'];
+$checklist_form = $_POST['checklist'];
 $lgu = $_POST['city_mun'];
 $alert_level = $am->getLGULevel($province, $lgu);
-$checklists = isset($_POST['chklist_id']) ? $_POST['chklist_id'] : $am->getCertChecklists($alert_level);
+$checklists = isset($_POST['chklist_id']) ? $_POST['chklist_id'] : $am->getCertChecklists($alert_level,$checklist_form);
 $is_new = $_POST['is_new'];
 $establishment = $_POST['establishment'];
 $nature = $_POST['nature'];
@@ -79,4 +80,4 @@ $shm->insert(['fid'=>$parent['id'], 'mid'=>SafetysealHistoryManager::MENU_PUBLIC
 
 $_SESSION['toastr'] = $am->addFlash('success', 'Successfully updated the checklist.', 'Checklist');
 
-header('location:../wbstapplication.php?ssid='.$token.'&code=&scope=');
+header('location:../wbstapplication.php?form='.$checklist_form.'&ssid='.$token.'&code=&scope=');

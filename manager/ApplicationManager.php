@@ -111,7 +111,6 @@ class ApplicationManager extends Connection
     {
         $sql = 'INSERT INTO tbl_app_checklist_entry (parent_id, chklist_id, answer, reason, date_created) VALUES (' . $data["parent_id"] . ', ' . $data["chklist_id"] . ', "' . $data["answer"] . '", "' . $data["reason"] . '", "' . $data["date_created"] . '")';
         $result = $this->db->query($sql);
-
         return $result;
     }
 
@@ -161,6 +160,7 @@ class ApplicationManager extends Connection
             LEFT JOIN tbl_app_certchecklist c on c.id = e.chklist_id
             LEFT JOIN tbl_admin_info ai on ai.id = a.user_id
             WHERE a.token = '" . $token . "'";
+         
 
 
 
@@ -2118,6 +2118,7 @@ class ApplicationManager extends Connection
         return $result;
     }
 
+    
     public function getAnsweredChecklist($id, $alert_level)
     {
         if ($alert_level >= 2) {

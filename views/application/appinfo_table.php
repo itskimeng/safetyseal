@@ -26,7 +26,7 @@
           </thead>
           <tbody id="list_body">
    
-            <?php foreach ($applicants as $key => $applicant): ?>
+            <?php foreach ($application_info as $key => $applicant): ?>
               <tr>
                 <td>
                   <?= $applicant['app_type']; ?>

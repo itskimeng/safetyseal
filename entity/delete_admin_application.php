@@ -19,7 +19,7 @@ $dd = deleteApplication($conn, $token);
 
 $_SESSION['toastr'] = $app->addFlash('error', 'Application <b>'.$dd['cn'].'</b> has been successfully deleted.', 'Remove');
 
-// header('location:../admin_application.php');
+header('location:../admin_application.php');
 if ($dd['type'] == 'Applied') {
 	header('location:../admin_view_application.php?userid='.$dd['user'].'&type=Applied&_view');
 } else {
@@ -38,13 +38,25 @@ function deleteApplication($conn, $id)
     	'person'	=>	$result1['person'], 
     	'type'		=>	$result1['application_type']
     ];
-    
-    $sql = "DELETE FROM tbl_app_checklist_encoded_attachments WHERE parent_id = '".$result1['id']."'";
-	$result = mysqli_query($conn, $sql);
-
-	$sql = "DELETE FROM tbl_app_checklist WHERE token = '".$id."'";
+	$sql = "SELECT id FROM tbl_app_checklist_entry WHERE parent_id = '".$result1['id']."'";
 	$query = mysqli_query($conn, $sql);
+    $rows = mysqli_fetch_assoc($query);
+	$res = [];
+	while ($row = mysqli_fetch_assoc($query)) {
+        $res[] = $row['id'];
+    }
+    $ss = implode(', ', $res);
 
+
+
+    $sql1 = "DELETE FROM tbl_app_checklist_attachments WHERE entry_id IN (".$ss.")";
+	$result = mysqli_query($conn, $sql1);
+
+    $sql2 = "DELETE FROM tbl_app_checklist_encoded_attachments WHERE parent_id = '".$result1['id']."'";
+	$result = mysqli_query($conn, $sql2);
+
+	$sql3 = "DELETE FROM tbl_app_checklist WHERE token = '".$id."'";
+	$query = mysqli_query($conn, $sql3);
 
 
 	return $data;

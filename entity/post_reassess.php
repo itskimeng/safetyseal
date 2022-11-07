@@ -16,6 +16,7 @@ $uname = $_SESSION['username'];
 $act_stat = SafetysealHistoryManager::ACTION_REASSESS;
 
 $token = $_GET['ssid'];
+$form = $_GET['form'];
 $status = $_GET['stt'] == 'FA' ? ApplicationManager::STATUS_FOR_REASSESSMENT: $_GET['stt'];
 
 $application = findID($conn, $token);
@@ -31,7 +32,7 @@ if ($application['status'] == ApplicationManager::STATUS_REASSESS) {
 
 $shm->insert(['fid'=>$application['id'], 'mid'=>SafetysealHistoryManager::MENU_PUBLIC_APPLICATION, 'uid'=>$userid, 'action'=> $act_stat, 'message'=> $msg, 'action_date'=> $today->format('Y-m-d H:i:s')]);
 
-header('location:../wbstapplication.php?ssid='.$token.'&code='.$_SESSION['gcode'].'&scope='.$_SESSION['gscope'].'');
+header('location:../wbstapplication.php?form='.$form.'&ssid='.$token.'&code='.$_SESSION['gcode'].'&scope='.$_SESSION['gscope'].'');
 
 
 function findID($conn, $id) 

@@ -32,7 +32,7 @@ $shm->insert(['fid'=>$checklist_id, 'mid'=>SafetysealHistoryManager::MENU_PUBLIC
 
 
 // header('location:../wbstapplication.php?ssid='.$token.'');
-header('location:../wbstapplication.php?ssid='.$token.'&code='.$gcode.'&scope='.$scope);
+header('location:../wbstapplication.php?form='.$_POST['checklist'].'&ssid='.$token.'&code='.$gcode.'&scope='.$scope);
 
 function findID($conn, $id) 
 {

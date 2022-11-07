@@ -15,7 +15,22 @@ $province = $_SESSION['province'];
 $lgu = $_SESSION['city_mun'];
 $alert_level = $am->getLGULevel($province, $lgu);
 
-$count_entries = $alert_level >= 2 ? 14 : 9;
+if (isset($_GET['form'])|| isset($_GET['create_new'])) {
+	if($_GET['form'] == 'create_new' || $_GET['form'] == 1)
+	{
+		$count_entries = $alert_level >= 2 ? 14 : 9;
+	}else{
+		$count_entries = $alert_level <= 1 ? 42 : 42;
+	}
+}else{
+	if(isset($_GET['form']))
+	{
+		$count_entries = $alert_level >= 2 ? 14 : 9;
+	}else{
+		$count_entries = $alert_level <= 2 ? 42 : 42;
+	}
+}
+echo $count_entries;
 
 $token = isset($_GET['ssid']) ? $_GET['ssid'] : ''; 
 $user_est = $app->fetchEstablishments($id, $token);
@@ -24,14 +39,14 @@ if (!empty($user_est[0]['ss_no'])) {
 	$user_ssno = $user_est[0]['ss_no'];
 }
 
-$has_renewal_entry = $app->getRenewalEntry($user_ssno);
+$has_renewal_entry = $app->getRenewalEntry($user_ssno);	
 $application_history = array();
 $other_tool = '';
 $count_answeredyes = 0;
 $is_complete_asessment = $is_complete_attachments = false;
 
 if (isset($user_est[0]['acid'])) {
-	$answered_checklist = $am->getAnsweredChecklist($user_est[0]['acid']);
+	$answered_checklist = $am->getAnsweredChecklist($user_est[0]['acid'],$alert_level);
 	$count_answeredyes = $am->getAnsweredChecklistYes($user_est[0]['acid']);
 	
 	$is_complete_asessment = count($answered_checklist) == $count_entries ? true : false;
@@ -68,4 +83,6 @@ $has_applied = false;
 if (count($user_est) > 0) {
 	$has_applied = true;
 }
+
+// 1. Application
 ?>

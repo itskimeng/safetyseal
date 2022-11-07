@@ -29,6 +29,7 @@ class LoginManager
         FROM `tbl_admin_info` ai 
         LEFT JOIN tbl_userinfo ui on ai.ID = ui.USER_ID 
         WHERE ai.UNAME = '$username' AND ai.PASSWORD = '$password'";
+       
         $query = mysqli_query($this->conn, $sql);
         $data = [];
         while ($row = mysqli_fetch_assoc($query)) {

@@ -45,7 +45,7 @@ function filterApplicants($conn, $province, $lgu, $options) {
     $app_type = $options['app_type'];
 	$data = [];
 
-	$sql = "SELECT
+	$sql1 = "SELECT
 	  	ac.id as id,
         ai.CMLGOO_NAME as fname,
         ui.GOV_AGENCY_NAME as agency,
@@ -67,29 +67,29 @@ function filterApplicants($conn, $province, $lgu, $options) {
 		FROM tbl_app_checklist ac
 		LEFT JOIN tbl_userinfo ui on ui.id = ac.user_id
   		LEFT JOIN tbl_admin_info ai on ui.user_id = ai.id
-		WHERE ai.PROVINCE = '".$province."' AND ai.LGU = '".$lgu."' AND ac.date_created >= '$date_from' AND ac.date_created <= '$date_to' AND ac.status <> 'Draft'";
+		WHERE  ac.date_created >= '$date_from' AND ac.date_created <= '$date_to' AND ac.status <> 'Draft'";
 
-	if (!empty($options['name'])) {
-		$sql.= " AND ai.CMLGOO_NAME LIKE '%".$options['name']."%'"; 
-	}	
+        if (!empty($options['name'])) {
+            $sql1.= " AND ai.CMLGOO_NAME LIKE '%".$options['name']."%'"; 
+        }	
 
-	if (!empty($options['agency'])) {
-		$sql.= " AND ui.GOV_AGENCY_NAME = '".$options['agency']."'"; 
-	}
+        if (!empty($options['agency'])) {
+            $sql1.= " AND ui.GOV_AGENCY_NAME = '".$options['agency']."'"; 
+        }
 
-	if (!empty($options['location'])) {
-		$sql.= " AND ui.ADDRESS = '".$options['location']."'"; 
-	}	
+        if (!empty($options['location'])) {
+            $sql1.= " AND ui.ADDRESS LIKE '%".$options['location']."%'"; 
+        }	
 
-	if (!empty($options['status'])) {
-		$sql.= " AND ac.status = '".$options['status']."'"; 
-	}
+        if (!empty($options['status'])) {
+            $sql1.= " AND ac.status = '".$options['status']."'"; 
+        }
 
-	if (!empty($options['app_type'])) {
-		$sql.= " AND ac.application_type = '".$options['app_type']."'"; 
-	}	
+        if (!empty($options['app_type'])) {
+            $sql1.= " AND ac.application_type = '".$options['app_type']."'"; 
+        }	
 
-	$query = mysqli_query($conn, $sql);
+	$query = mysqli_query($conn, $sql1);
 
     while ($row = mysqli_fetch_assoc($query)) {
     	$color = 'green';
@@ -121,7 +121,7 @@ function filterApplicants($conn, $province, $lgu, $options) {
     }
 
 
-    $sql = "SELECT
+    $sql2 = "SELECT
 	  	ac.id as id,
         ai.CMLGOO_NAME as fname,
         ui.GOV_AGENCY_NAME as agency,
@@ -143,29 +143,29 @@ function filterApplicants($conn, $province, $lgu, $options) {
 		FROM tbl_app_checklist ac
 		LEFT JOIN tbl_userinfo ui on ui.id = ac.user_id
   		LEFT JOIN tbl_admin_info ai on ui.user_id = ai.id
-		WHERE ai.PROVINCE = '".$province."' AND ai.LGU = '".$lgu."' AND ac.date_created >= '$date_from' AND ac.date_created <= '$date_to' AND ac.application_type = 'Encoded'";
+		WHERE  ac.date_created >= '$date_from' AND ac.date_created <= '$date_to' AND ac.application_type = 'Encoded'";
 
-	if (!empty($options['name'])) {
-		$sql.= " AND ai.CMLGOO_NAME LIKE'%".$options['name']."%'"; 
-	}	
+        if (!empty($options['name'])) {
+            $sql2.= " AND ai.CMLGOO_NAME LIKE'%".$options['name']."%'"; 
+        }	
 
-	if (!empty($options['agency'])) {
-		$sql.= " AND ui.GOV_AGENCY_NAME = '".$options['agency']."'"; 
-	}
+        if (!empty($options['agency'])) {
+            $sql2.= " AND ui.GOV_AGENCY_NAME = '".$options['agency']."'"; 
+        }
 
-	if (!empty($options['location'])) {
-		$sql.= " AND ui.ADDRESS = '".$options['location']."'"; 
-	}	
+        if (!empty($options['location'])) {
+            $sql2.= " AND ui.ADDRESS LIKE '%".$options['location']."%'"; 
+        }	
 
-	if (!empty($options['status'])) {
-		$sql.= " AND ac.status = '".$options['status']."'"; 
-	}
+        if (!empty($options['status'])) {
+            $sql2.= " AND ac.status = '".$options['status']."'"; 
+        }
 
-	if (!empty($options['app_type'])) {
-		$sql.= " AND ac.application_type = '".$options['app_type']."'"; 
-	}	
+        if (!empty($options['app_type'])) {
+            $sql2.= " AND ac.application_type = '".$options['app_type']."'"; 
+        }	
 
-	$query = mysqli_query($conn, $sql);
+	$query = mysqli_query($conn, $sql2);
 
     while ($row = mysqli_fetch_assoc($query)) {
         $checklist_form = (date('Y-m-d', strtotime($row['date_created'])) < '2022-07-01') ? '1' : '0';
@@ -206,7 +206,7 @@ function filterApplicants($conn, $province, $lgu, $options) {
         ];    
     }
 
-    $sql = "SELECT
+    $sql3 = "SELECT
         ac.id as id,
         ai.CMLGOO_NAME as fname,
         ui.GOV_AGENCY_NAME as agency,
@@ -228,29 +228,29 @@ function filterApplicants($conn, $province, $lgu, $options) {
         FROM tbl_app_checklist ac
         LEFT JOIN tbl_userinfo ui on ui.id = ac.user_id
         LEFT JOIN tbl_admin_info ai on ui.user_id = ai.id
-        WHERE  ai.PROVINCE = '".$province."' AND ai.LGU = '".$lgu."' AND ac.date_created >= '$date_from' AND ac.date_created <= '$date_to' AND ac.application_type = '$app_type'";
+        WHERE   ac.date_created >= '$date_from' AND ac.date_created <= '$date_to' AND ac.application_type = '$app_type'";
 
-    if (!empty($options['name'])) {
-        $sql.= " AND ai.CMLGOO_NAME LIKE'%".$options['name']."%'"; 
-    }   
+        if (!empty($options['name'])) {
+            $sql3.= " AND ai.CMLGOO_NAME LIKE'%".$options['name']."%'"; 
+        }   
 
-    if (!empty($options['agency'])) {
-        $sql.= " AND ui.GOV_AGENCY_NAME = '".$options['agency']."'"; 
-    }
+        if (!empty($options['agency'])) {
+            $sql3.= " AND ui.GOV_AGENCY_NAME = '".$options['agency']."'"; 
+        }
 
-    if (!empty($options['location'])) {
-        $sql.= " AND ui.ADDRESS = '".$options['location']."'"; 
-    }   
+        if (!empty($options['location'])) {
+            $sql3.= " AND ui.ADDRESS LIKE '%".$options['location']."%'"; 
+        }   
 
-    if (!empty($options['status'])) {
-        $sql.= " AND ac.status = '".$options['status']."'"; 
-    }
+        if (!empty($options['status'])) {
+            $sql3.= " AND ac.status = '".$options['status']."'"; 
+        }
 
-    if (!empty($options['app_type'])) {
-        $sql.= " AND ac.application_type = '".$options['app_type']."'"; 
-    }   
+        if (!empty($options['app_type'])) {
+            $sql3.= " AND ac.application_type = '".$options['app_type']."'"; 
+        }   
 
-    $query = mysqli_query($conn, $sql);
+    $query = mysqli_query($conn, $sql3);
 
     while ($row = mysqli_fetch_assoc($query)) {
         $color = 'green';
@@ -281,7 +281,7 @@ function filterApplicants($conn, $province, $lgu, $options) {
             'validity_date' => !empty($row['date_approved']) ? date('F d, Y', strtotime("+6 months", strtotime($row['date_approved']))) : ''
         ];    
     }
-   
+   echo $sql1.'<br>'.$sql2.'<br>'.$sql3;
     return json_encode($data);
 }
 

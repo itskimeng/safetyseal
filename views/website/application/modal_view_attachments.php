@@ -8,6 +8,7 @@
       <form method="POST" enctype="multipart/form-data" action="entity/delete_movs.php">
         <input type="hidden" name="checklist_order" value="CL01"/>
         <input type="hidden" id="cform-entry_id" name="entry_id" value=""/>
+        <input type="hidden"  name="form" value="<?= $_GET['form'];?>"/>
         <input type="hidden" name="control_no" value="<?php echo $userinfo['code']; ?>"/>  
         <input type="hidden" name="token_id" value="<?php if(isset($_GET['ssid'])){echo $_GET['ssid'];}else{}?>"/>        
 

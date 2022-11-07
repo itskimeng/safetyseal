@@ -5,7 +5,7 @@
         <h5 class="modal-title" id="exampleModalLabel" style="color:white;"><i class="fas fa-exclamation-triangle"></i> Confirmation</h5>
       </div>
 
-      <form method="POST" enctype="multipart/form-data" action="entity/delete_application2.php">
+      <form method="POST" enctype="multipart/form-data" action="../entity/delete_application.php">
         <div class="modal-body">
           <div class="mb-3">
             <div class="row mb-1">
@@ -16,6 +16,7 @@
               <div class="col-md-12" style="font-size:14px;">
                 <p style="text-align:center; font-size: 19px;">
                   Do you really want to delete application <u><strong class="con_num"></strong></u>? This process cannot be undone.
+                  <input type="hidden" id="app_ssid" name="ssid" />
                 </p>
               </div>
 

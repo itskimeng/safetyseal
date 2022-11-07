@@ -67,7 +67,14 @@
                                     <h3 class="box-title"><i class="fas fa-clipboard-list"></i> <b>Application List</b></h3>
                                     <div class="box-tools">
                                         <?php if (!$has_applied): ?>
-                                            <a href="../wbstapplication.php?create_new" class="btn btn-primary btn-sm">
+                                            <!-- <a href="../wbstapplication.php?create_new" class="btn btn-primary btn-sm">
+                                                <i class="fa fa-plus-square"></i> Apply
+                                            </a> -->
+
+                                            <!-- checklist form v2 -->
+                                            <!-- Date: July 11, 2022 -->
+                                            <!-- Task: Change checklist form  -->
+                                            <a href="../wbstapplication.php?create_newv1" class="btn btn-primary btn-sm">
                                                 <i class="fa fa-plus-square"></i> Apply
                                             </a>
                                         <?php endif ?>
@@ -123,10 +130,10 @@
                                                                 <td style="vertical-align:bottom; text-align: center;">
                                                                     <?php if (in_array($est['ac_status'], ['Disapproved', 'Returned', 'Revoked', 'For Renewal'])) { ?>
                                                                         <div class="col-md-12">
-                                                                            <a href="application.php?ssid=<?= $est['token']; ?>&code=<?= $gcode; ?>&scope=<?= $gscope; ?>" type="button" class="btn btn-primary btn-block btn-sm rounded-circle" title="View Application"><i class="fa fa-eye"></i></a>
+                                                                            <a href="application.php?form=<?=$est['checklist_form'];?>&ssid=<?= $est['token']; ?>&code=<?= $gcode; ?>&scope=<?= $gscope; ?>" type="button" class="btn btn-primary btn-block btn-sm rounded-circle" title="View Application"><i class="fa fa-eye"></i></a>
 
                                                                             <?php if (in_array($est['ac_status'], ['Disapproved', 'Returned', 'Revoked'])): ?>
-                                                                                <a href="../entity/post_reassess.php?ssid=<?= $est['token']; ?>&stt=Reassess" type="button" class="btn btn-warning btn-block btn-sm rounded-circle" title="Reassess Application"><i class="fa fa-redo" aria-hidden="true"></i></a>
+                                                                                <a href="../entity/post_reassess.php?form=<?=$est['checklist_form'];?>&ssid=<?= $est['token']; ?>&stt=Reassess" type="button" class="btn btn-warning btn-block btn-sm rounded-circle" title="Reassess Application"><i class="fa fa-redo" aria-hidden="true"></i></a>
                                                                                 
                                                                             <?php endif ?>
 
@@ -135,26 +142,29 @@
 
                                                                     <?php } else if (in_array($est['ac_status'], ['Approved', 'Renewed'])) { ?>
                                                                         <div class="col-md-12">
-                                                                            <a href="application.php?ssid=<?= $est['token']; ?>&code=<?= $gcode; ?>&scope=<?= $gscope; ?>" type="button" class="btn btn-primary btn-sm rounded-circle" data-toggle="tooltip" data-placement="top" title="View Application"><i class="fa fa-eye"></i></a>
+                                                                            <a href="application.php?form=<?=$est['checklist_form'];?>&ssid=<?= $est['token']; ?>&code=<?= $gcode; ?>&scope=<?= $gscope; ?>" type="button" class="btn btn-primary btn-sm rounded-circle" data-toggle="tooltip" data-placement="top" title="View Application"><i class="fa fa-eye"></i></a>
 
                                                                             <a href="../certificate.php?token=<?= $est['token']; ?>&status=<?= $est['ac_status']; ?>" target="_blank" type="button" class="btn btn-success btn-block btn-sm rounded-circle" data-toggle="tooltip" data-placement="top" title="View Certificate"><i class="fas fa-certificate"></i>
                                                                             </a>
 
-                                                                            <a href="../entity/checklist_form.php?control_no=<?= $est['control_no']; ?>" target="_blank" type="button" class="btn btn-warning btn-block btn-sm rounded-circle" title="Print Checklist"><i class="fa fa-print"></i>
+                                                                            <a href="../entity/checklist_form.php?form=<?=$est['checklist_form'];?>&control_no=<?= $est['control_no']; ?>" target="_blank" type="button" class="btn btn-warning btn-block btn-sm rounded-circle" title="Print Checklist"><i class="fa fa-print"></i>
                                                                             </a>
                                                                         </div>
 
                                                                     <?php } else { ?>
                                                                         <div class="col-md-12">
-                                                                            <a href="application.php?ssid=<?= $est['token']; ?>&code=<?= $gcode; ?>&scope=<?= $gscope; ?>" type="button" class="btn btn-primary btn-block btn-sm rounded-circle" title="View Application"><i class="fas fa-eye"></i></a>
+                                                                            <a href="application.php?form=<?=$est['checklist_form'];?>&ssid=<?= $est['token']; ?>&code=<?= $gcode; ?>&scope=<?= $gscope; ?>" type="button" class="btn btn-primary btn-block btn-sm rounded-circle" title="View Application"><i class="fas fa-eye"></i></a>
 
                                                                             <?php if (in_array($user_est[0]['ac_status'], ['Draft','Disapproved', 'Returned', 'Revoked'])): ?>
                                                                                 <a type="button" class="btn btn-danger btn-sm btn-delete_app rounded-circle" data-bs-toggle="modal" data-target="#modal-delete_app" data-ssid="<?= $est['token']; ?>"><i class="fas fa-trash"></i></a>
                                                                             <?php endif ?>
 
                                                                             <?php if ($est['ac_status'] != 'Draft'): ?>
-                                                                                <a href="../entity/checklist_form.php?control_no=<?= $est['control_no']; ?>" type="button" target="_blank" class="btn btn-warning btn-block btn-sm rounded-circle" title="Print Checklist"><i class="fa fa-print"></i></a>
+                                                                                <a href="../entity/checklist_form.php?form=<?=$est['checklist_form'];?>&control_no=<?= $est['control_no']; ?>" type="button" target="_blank" class="btn btn-warning btn-block btn-sm rounded-circle" title="Print Checklist"><i class="fa fa-print"></i></a>
                                                                             <?php endif ?>
+                                                                            <?php if($_SESSION['username'] == 'jdtorres'):?>
+                                                                            <a type="button" class="btn btn-danger btn-sm btn-delete_app rounded-circle" data-bs-toggle="modal" data-target="#modal-delete_app" data-ssid="<?= $est['token']; ?>"><i class="fas fa-trash"></i></a>
+                                                                            <?php endif;?>
                                                                         </div>
 
                                                                     <?php } ?>   

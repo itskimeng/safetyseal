@@ -67,3 +67,11 @@
     </div>
   </div>
 </div>  
+<script>
+  let is_verified = '<?= $_GET['is_verified']; ?>';
+  if(is_verified == 0)
+  {
+    tata.warn('warn', 'Due to its verification status, this account cannot be impersonated.');
+  }
+
+</script>

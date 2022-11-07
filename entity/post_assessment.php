@@ -60,7 +60,7 @@ $msg = 'updated application ' .$application['control_no'];
 
 $shm->insert(['fid'=>$checklist_id, 'mid'=>SafetysealHistoryManager::MENU_ADMIN_APPLICATION, 'uid'=>$userid, 'action'=> SafetysealHistoryManager::ACTION_UPDATE, 'message'=> $msg, 'action_date'=> $today->format('Y-m-d H:i:s')]);
 
-header('location:../admin_application_view.php?appid='.$checklist_id.''.'&ussir='.$userid.'');
+header('location:../admin_application_view.php?form='.$_POST['form'].'&appid='.$checklist_id.''.'&ussir='.$userid.'');
 
 function getValidationLists($conn, $appid) {
 	$sql = "SELECT * FROM tbl_app_checklist_onsitevalidations where chklist_id = $appid";
@@ -75,14 +75,14 @@ function insertAssessment($conn, $id, $assessment, $for_renewal)
 {
 	$sql = "UPDATE tbl_app_checklist_entry SET assessment = '".$assessment."' WHERE id = ".$id."";
 	$query = mysqli_query($conn, $sql);
-     
-	return $result;	
+
 }
 
 function insertRemarks($conn, $id, $prefix, $remarks) {
 	$sql = "UPDATE tbl_app_checklist_entry SET ".$prefix."_remarks = '".$remarks."' WHERE id = ".$id."";
 	$query = mysqli_query($conn, $sql);
-     
+	$result = mysqli_fetch_array($query);
+
 	return $result;	
 }
 

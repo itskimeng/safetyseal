@@ -17,7 +17,7 @@ $userid = $_SESSION['userid'];
 $token = $_GET['ssid'];
 $parent = $am->findChecklist($token);
 
-$checklists = $am->getCertChecklists();
+$checklists = $am->getCertChecklists(null,$_GET['form']);
 // $renew_count = 1 + $parent['renew_count'];
 
 $code = $am->generateControlNumber($userid);
@@ -57,4 +57,4 @@ $shm->insert(['fid'=>$last_id, 'mid'=>SafetysealHistoryManager::MENU_PUBLIC_APPL
 
 $_SESSION['toastr'] = $am->addFlash('success', 'Successfully applied for renewal.', 'Success');
 
-header('location:../wbstapplication.php?ssid='.$new_token.'&code='.$_SESSION['gcode'].'&scope='.$_SESSION['gscope'].'');
+header('location:../wbstapplication.php?form='.$_GET['form'].'&ssid='.$new_token.'&code='.$_SESSION['gcode'].'&scope='.$_SESSION['gscope'].'');

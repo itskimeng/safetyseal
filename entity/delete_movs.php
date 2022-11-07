@@ -74,10 +74,10 @@ if (!empty($_POST)) {
 
     $shm->insert(['fid'=>$fid, 'mid'=>SafetysealHistoryManager::MENU_PUBLIC_APPLICATION, 'uid'=>$userid, 'action'=> SafetysealHistoryManager::ACTION_UPDATE, 'message'=> $msg, 'action_date'=> $today->format('Y-m-d H:i:s')]);
 
-    header('location:../wbstapplication.php?ssid='.$ssid.'&code='.$_SESSION['gcode'].'&scope='.$_SESSION['gscope'].'');exit;
+    header('location:../wbstapplication.php?form='.$_POST['form'].'&ssid='.$ssid.'&code='.$_SESSION['gcode'].'&scope='.$_SESSION['gscope'].'');exit;
 } else {
     $_SESSION['toastr'] = $am->addFlash('success', 'Please try to reupload the movs.', 'Account Verified!');
-    header('location:../wbstapplication.php?ssid='.$_SESSION['ssid'].'&code='.$_SESSION['gcode'].'&scope='.$_SESSION['gscope'].'');exit;
+    header('location:../wbstapplication.php?form='.$_POST['form'].'&ssid='.$_SESSION['ssid'].'&code='.$_SESSION['gcode'].'&scope='.$_SESSION['gscope'].'');exit;
 }
 
 

@@ -14,6 +14,7 @@ $today = new DateTime();
 $userid = $_SESSION['userid'];
 $uname = $_SESSION['username'];
 $checklist_id = $_GET['appid'];
+$form = $_GET['form'];
 
 $application = findID($conn, $checklist_id);
 $app->receiveChecklist($checklist_id, ApplicationManager::STATUS_RECEIVED, $today->format('Y-m-d H:i:s'), $userid);	
@@ -24,7 +25,7 @@ $msg = 'received application ' .$application['control_no'];
 
 $shm->insert(['fid'=>$checklist_id, 'mid'=>SafetysealHistoryManager::MENU_ADMIN_APPLICATION, 'uid'=>$userid, 'action'=> SafetysealHistoryManager::ACTION_RECEIVE, 'message'=> $msg, 'action_date'=> $today->format('Y-m-d H:i:s')]);
 
-header('location:../admin_application_view.php?appid='.$checklist_id.''.'&ussir='.$userid.'');
+header('location:../admin_application_view.php?form='.$form.'&appid='.$checklist_id.''.'&ussir='.$userid.'');
 
 function findID($conn, $id) 
 {

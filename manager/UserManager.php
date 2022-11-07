@@ -91,6 +91,12 @@ class UserManager extends Connection
                     $status = 'Expired';
                 }   
             }
+                
+            // if date created is greater than July 01, 2022
+            // new checklist form
+            // else
+            // old checklist form
+            $checklist_form = (date('Y-m-d',strtotime($row['date_created'])) < '2022-07-01') ? '1' : '0' ;
 
 
             $data[] = [
@@ -112,7 +118,8 @@ class UserManager extends Connection
                 'ac_status'         => $status,
                 'username'          => $row['username'],
                 'for_renewal'       => $row['for_renewal'],
-                'date_renewed'      => $date_renewed
+                'date_renewed'      => $date_renewed,
+                'checklist_form'    => $checklist_form
             ];    
         }
 
@@ -154,6 +161,7 @@ class UserManager extends Connection
                 LEFT JOIN 
                     tbl_citymun cm on cm.code = ai.LGU AND cm.PROVINCE = ai.PROVINCE 
                 WHERE ai.ID = '$userid'";
+         
 
         $getQry = $this->db->query($sql);
         $data = [];

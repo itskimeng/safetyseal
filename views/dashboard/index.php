@@ -32,7 +32,7 @@ require_once 'controller/DashboardController.php'; ?>
                     <div class="icon">
                         <img class="zoom" src="frontend/images/dash_received.png" style="width:100px;margin-top:-100px;margin-right:10px;" align="right" alt="">
                     </div>
-                    <a href="#" class="small-box-footer">......&nbsp;</a>
+                    <a href="admin_application.php?status=Draft" class="small-box-footer">......&nbsp;</a>
                 </div>
             </div>
 
@@ -47,9 +47,9 @@ require_once 'controller/DashboardController.php'; ?>
                         <img class="zoom" src="frontend/images/dash_receiving.png" style="width:100px;margin-top:-100px;margin-right:10px;" align="right" alt="">
                     </div>
                     <?php if ($is_rofp): ?>
-                        <a href="#" class="small-box-footer"><i class="fas fa-plus"></i> View More</a>
+                        <a href="admin_application.php?status=Received" class="small-box-footer"><i class="fas fa-plus"></i> View More</a>
                     <?php else: ?>
-                        <a href="#" class="small-box-footer">......&nbsp;</a>
+                        <a href="admin_application.php?status=Received" class="small-box-footer">......&nbsp;</a>
                     <?php endif ?>
                 </div>
             </div>
@@ -67,9 +67,9 @@ require_once 'controller/DashboardController.php'; ?>
 
                     </div>
                     <?php if ($is_rofp): ?>
-                        <a href="#" class="small-box-footer"><i class="fas fa-plus"></i> View More</a>
+                        <a href="admin_application.php?status=Approved" class="small-box-footer"><i class="fas fa-plus"></i> View More</a>
                     <?php else: ?>
-                        <a href="#" class="small-box-footer">......&nbsp;</a>
+                        <a href="admin_application.php?status=Approved" class="small-box-footer">......&nbsp;</a>
                     <?php endif ?>
                 </div>
             </div>
@@ -86,9 +86,9 @@ require_once 'controller/DashboardController.php'; ?>
 
                     </div>
                     <?php if ($is_rofp): ?>
-                        <a href="#" class="small-box-footer"><i class="fas fa-plus"></i> View More
+                        <a href="admin_application.php?status=Disapproved" class="small-box-footer"><i class="fas fa-plus"></i> View More
                     <?php else: ?>
-                        <a href="#" class="small-box-footer">
+                        <a href="admin_application.php?status=Disapproved" class="small-box-footer">
                     <?php endif ?>
                         &nbsp;
 

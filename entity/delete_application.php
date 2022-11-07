@@ -14,7 +14,7 @@ $today = new DateTime();
 $userid = $_SESSION['userid'];
 $uname = $_SESSION['username'];
 
-$token = $_GET['ssid'];
+$token = $_POST['ssid'];
 $application = deleteApplication($conn, $token);
 
 $_SESSION['toastr'] = $app->addFlash('error', 'Application <b>'.$application['control_no'].'</b> has been successfully deleted.', 'Remove');
@@ -28,6 +28,7 @@ header('location:../user/application_list.php');
 function deleteApplication($conn, $id) 
 {
 	$sql = "SELECT id, control_no FROM tbl_app_checklist WHERE token = '".$id."'";
+
 	$query = mysqli_query($conn, $sql);
     $result1 = mysqli_fetch_assoc($query);
 

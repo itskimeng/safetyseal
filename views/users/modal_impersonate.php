@@ -10,6 +10,7 @@
                 </div>
                 <div class="modal-body">
                     <input type="hidden" id="user-id" name="user_id" value="">
+                    <input type="hidden"  name="clusterhead_id" value="<?= $_SESSION['clusterhead_id'];?>">
                     <p>Continue impersonate this user?</p>
                 </div>
                 <div class="modal-footer justify-content-between">

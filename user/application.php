@@ -41,7 +41,7 @@
                             </a>
 
                             <a href="../user/application_list.php" class="nav-link mb-2 p-3 shadow active" id="v-pills-messages-tab" data-toggle="pill" role="tab" aria-controls="v-pills-messages" aria-selected="false">
-                                <i class="fas fa-clipboard-list"></i> 
+                                <i class="fas fa-clipboard-list"></i>
                                 <span class="font-weight-bold small">Application</span>
                             </a>
 
@@ -69,23 +69,23 @@
                                         <h3 class="box-title"><i class="fas fa-info-circle"></i> <b>Application</b></h3>
                                         <div class="box-tools">
                                             <div class="col-md-12" style="margin-bottom:3%;">
-                                                <a href="../wbstapplication.php?ssid=<?php echo $_GET['ssid']; ?>&code=<?php echo $gcode; ?>&scope=<?php echo $gscope; ?>" type="button" class="btn btn-primary btn-block btn-sm rounded-circle" title="Edit Application"><i class="fa fa-edit"></i></a>
+                                                <a href="../wbstapplication.php?form=<?= $_GET['form']; ?>&ssid=<?php echo $_GET['ssid']; ?>&code=<?php echo $gcode; ?>&scope=<?php echo $gscope; ?>" type="button" class="btn btn-primary btn-block btn-sm rounded-circle" title="Edit Application"><i class="fa fa-edit"></i></a>
 
-                                                <?php if (in_array($user_est[0]['ac_status'], ['Expired']) AND !$user_est[0]['for_renewal'] AND $has_renewal_entry == 0): ?>
-                                                    <a href="../entity/renew_application.php?ssid=<?= $_GET['ssid']; ?>" type="button" class="btn btn-warning btn-block btn-sm rounded-circle" title="Apply For Renewal"><i class="fas fa-retweet"></i></a>
+                                                <?php if (in_array($user_est[0]['ac_status'], ['Expired']) and !$user_est[0]['for_renewal'] and $has_renewal_entry == 0) : ?>
+                                                    <a href="../entity/renew_application.php?form=<?= $_GET['form']; ?>&ssid=<?= $_GET['ssid']; ?>" type="button" class="btn btn-warning btn-block btn-sm rounded-circle" title="Apply For Renewal"><i class="fas fa-retweet"></i></a>
                                                 <?php endif ?>
 
-                                                <?php if (in_array($user_est[0]['ac_status'], ['Disapproved', 'Returned', 'Revoked'])): ?>
-                                                    <a href="../entity/post_reassess.php?ssid=<?= $_GET['ssid']; ?>&stt=Reassess" type="button" class="btn btn-warning btn-block btn-sm rounded-circle" title="Reassess Application"><i class="fa fa-redo" aria-hidden="true"></i></a>
+                                                <?php if (in_array($user_est[0]['ac_status'], ['Disapproved', 'Returned', 'Revoked'])) : ?>
+                                                    <a href="../entity/post_reassess.php?form=<?= $_GET['form']; ?>&ssid=<?= $_GET['ssid']; ?>&stt=Reassess" type="button" class="btn btn-warning btn-block btn-sm rounded-circle" title="Reassess Application"><i class="fa fa-redo" aria-hidden="true"></i></a>
                                                 <?php endif ?>
 
-                                                <?php if (in_array($user_est[0]['ac_status'], ['Disapproved', 'Returned', 'Draft', 'For Renewal'])): ?>
+                                                <?php if (in_array($user_est[0]['ac_status'], ['Disapproved', 'Returned', 'Draft', 'For Renewal'])) : ?>
                                                     <a type="button" class="btn btn-danger btn-sm btn-delete_app rounded-circle" data-bs-toggle="modal" data-target="#modal-delete_app" title="Delete Application"><i class="fas fa-trash"></i></a>
 
                                                 <?php endif ?>
                                             </div>
                                         </div>
-                                    </div> 
+                                    </div>
                                     <div class="box-body">
                                         <div class="row">
 
@@ -117,11 +117,11 @@
                                                                         <tr>
                                                                             <td style="width: 55%;">Safetyseal No</td>
                                                                             <td>
-                                                                                <?php if (in_array($user_est[0]['ac_status'], ['Approved', 'Renewed'])): ?>
+                                                                                <?php if (in_array($user_est[0]['ac_status'], ['Approved', 'Renewed'])) : ?>
                                                                                     <a href="../certificate.php?token=<?php echo $_GET['ssid']; ?>&status=<?= $user_est[0]['ac_status']; ?>" target="_blank" type="button" class="btn btn-success btn-block btn-sm" title="Print Certificate"> <?= $user_est[0]['ss_no']; ?></a>
-                                                                                <?php elseif ($user_est[0]['ac_status'] == 'Expired'): ?>
+                                                                                <?php elseif ($user_est[0]['ac_status'] == 'Expired') : ?>
                                                                                     <label class="control-label"><strong><?= $user_est[0]['ss_no']; ?></strong></label>
-                                                                                <?php else: ?>
+                                                                                <?php else : ?>
                                                                                     <strong>---</strong>
                                                                                 <?php endif ?>
                                                                             </td>
@@ -129,9 +129,9 @@
                                                                         <tr>
                                                                             <td style="width: 55%;">Issued On</td>
                                                                             <td>
-                                                                                <?php if (!empty($user_est[0]['date_issued'])): ?>
+                                                                                <?php if (!empty($user_est[0]['date_issued'])) : ?>
                                                                                     <label class="control-label"><strong><?= $user_est[0]['date_issued']; ?></strong></label>
-                                                                                <?php else: ?>
+                                                                                <?php else : ?>
                                                                                     ---
                                                                                 <?php endif ?>
                                                                             </td>
@@ -139,13 +139,13 @@
                                                                         <tr>
                                                                             <td style="width: 55%;">Valid Until</td>
                                                                             <td>
-                                                                                <?php if ($user_est[0]['ac_status'] == 'Expired'): ?>
+                                                                                <?php if ($user_est[0]['ac_status'] == 'Expired') : ?>
                                                                                     <span class="label label-danger" style="font-size:13px;">
                                                                                         <b><?= $user_est[0]['date_validity']; ?></b>
                                                                                     </span>
-                                                                                <?php elseif (empty($user_est[0]['ss_no'])): ?>
+                                                                                <?php elseif (empty($user_est[0]['ss_no'])) : ?>
                                                                                     ---
-                                                                                <?php else: ?>
+                                                                                <?php else : ?>
                                                                                     <label class="control-label"><strong><?= $user_est[0]['date_validity']; ?></strong></label>
                                                                                 <?php endif ?>
                                                                             </td>
@@ -165,41 +165,45 @@
                                                                         <tr>
                                                                             <td style="width: 50%; vertical-align: middle;">Status</td>
                                                                             <td>
-                                                                                <?php if (in_array($user_est[0]['ac_status'], ['Revoked', 'Disapproved', 'Returned'])): ?>
+                                                                                <?php if (in_array($user_est[0]['ac_status'], ['Revoked', 'Disapproved', 'Returned'])) : ?>
                                                                                     <span class="badge badge-danger mb-1" style="background-color: #d60b0b; font-size: 13.5px;"><?= $user_est[0]['ac_status']; ?></span>
-                                                                                <?php elseif (in_array($user_est[0]['ac_status'], ['Approved', 'Renewed'])): ?>
+                                                                                <?php elseif (in_array($user_est[0]['ac_status'], ['Approved', 'Renewed'])) : ?>
                                                                                     <span class="badge badge-success mb-1" style="background-color: #00a65a; font-size: 13.5px;"><?= $user_est[0]['ac_status']; ?></span>
-                                                                                <?php elseif ($user_est[0]['ac_status'] == 'Expired'): ?>
+                                                                                <?php elseif ($user_est[0]['ac_status'] == 'Expired') : ?>
                                                                                     <span class="badge bg-danger" style="font-size:13.5px;"><?= $user_est[0]['ac_status']; ?></span>
-                                                                                <?php else: ?>
+                                                                                <?php else : ?>
                                                                                     <span class="badge badge-info mb-1" style="background-color: #243866; font-size: 13.5px;"><?= $user_est[0]['ac_status']; ?></span>
                                                                                 <?php endif ?>
                                                                                 <br>
-                                                                
-                                                                                <?php if ($is_complete_attachments AND $upload_count > 0): ?>
-                                                                                    <label class="mb-1" style="font-size:14px;"><i class="fas fa-check-circle" style="color:#00a65a;"></i><strong> <?= $upload_count; ?>/<?= $count_answeredyes; ?> Uploaded MOVS</strong></label><br>
-                                                                                <?php else: ?>
-                                                                                    <label class="mb-1" style="font-size:14px;"><i class="fas fa-times-circle" style="color:#d25555;"></i><strong> <?= $upload_count; ?>/<?= $count_answeredyes; ?> Uploaded MOVS</strong></label><br>
-                                                                                <?php endif ?>
 
-                                                                                <?php if ($is_complete_asessment): ?>
+                                                                                <?php if ($is_complete_attachments AND $upload_count > 0): 
+                                                                                ?>
+                                                                                <label class="mb-1" style="font-size:14px;"><i class="fas fa-check-circle" style="color:#00a65a;"></i><strong> <?= $upload_count; ?>/<?= $count_answeredyes; ?> Uploaded MOVS</strong></label><br>
+                                                                                <?php else: 
+                                                                                ?>
+                                                                                <label class="mb-1" style="font-size:14px;"><i class="fas fa-times-circle" style="color:#d25555;"></i><strong> <?= $upload_count; ?>/<?= $count_answeredyes; ?> Uploaded MOVS</strong></label><br>
+                                                                                <?php endif 
+                                                                                ?>
+
+                                                                                <?php if ($is_complete_asessment) : ?>
                                                                                     <label class="mb-1" style="font-size:14px;"><i class="fas fa-check-circle" style="color:#00a65a;"></i><strong> 100% Self Asessment</strong></label><br>
-                                                                                <?php else: ?>
+                                                                                <?php else : ?>
                                                                                     <label class="mb-1" style="font-size:14px;"><i class="fas fa-times-circle" style="color:#d25555;"></i><strong> <?= $complete_percentage; ?>% Self Asessment</strong></label><br>
                                                                                 <?php endif ?>
 
 
-                                                                                <?php if (in_array($user_est[0]['ac_status'], ['Revoked', 'Disapproved', 'Returned'])): ?>
-                                                                                    <p class="text-danger" style="font-size:10.5px;">There seems to be a problem in your application.</p> 
-                                                                                <?php elseif (!$is_complete_asessment OR !$is_complete_attachments): ?>
-                                                                                    <p class="text-danger" style="font-size:10.5px;">Your application is not yet ready to submit.</p>
-                                                                                <?php elseif ($user_est[0]['ac_status'] == 'Draft'): ?>
+                                                                                <?php if (in_array($user_est[0]['ac_status'], ['Revoked', 'Disapproved', 'Returned'])) : ?>
+                                                                                    <p class="text-danger" style="font-size:10.5px;">There seems to be a problem in your application.</p>
+                                                                                    <?php //elseif (!$is_complete_asessment OR !$is_complete_attachments): 
+                                                                                    ?>
+                                                                                    <!-- <p class="text-danger" style="font-size:10.5px;">Your application is not yet ready to submit.</p> -->
+                                                                                <?php elseif ($user_est[0]['ac_status'] == 'Draft') : ?>
                                                                                     <p class="text-success" style="font-size:10.5px;">Your application is now ready to submit.</p>
-                                                                                <?php elseif ($user_est[0]['ac_status'] == 'Received'): ?>
+                                                                                <?php elseif ($user_est[0]['ac_status'] == 'Received') : ?>
                                                                                     <p class="text-success" style="font-size:10.5px;">Application is now being assessed.</p>
-                                                                                <?php elseif (in_array($user_est[0]['ac_status'], ['For Receiving', 'For Reassessment'])): ?>
+                                                                                <?php elseif (in_array($user_est[0]['ac_status'], ['For Receiving', 'For Reassessment'])) : ?>
                                                                                     <p class="text-success" style="font-size:10.5px;">Application is now waiting for CMLGOO's response.</p>
-                                                                                <?php elseif ($is_complete_asessment AND $is_complete_attachments AND $user_est[0]['ac_status'] == 'For Renewal'): ?>
+                                                                                <?php elseif ($is_complete_asessment and $is_complete_attachments and $user_est[0]['ac_status'] == 'For Renewal') : ?>
                                                                                     <p class="text-success" style="font-size:10.5px;">Your application is now ready to submit.</p>
                                                                                 <?php endif ?>
                                                                             </td>
@@ -209,14 +213,14 @@
                                                             </td>
                                                         </tr>
 
-                                                    </tbody>    
+                                                    </tbody>
                                                 </table>
                                             </div>
 
                                         </div>
-                                        
+
                                     </div>
-                                    
+
                                 </div>
                             </div>
 
@@ -224,7 +228,7 @@
                                 <div class="box tab-pane fade shadow rounded bg-white show active p-1" id="v-pills-home" role="tabpanel" aria-labelledby="v-pills-home-tab">
                                     <div class="box-header">
                                         <h3 class="box-title"><i class="fas fa-history"></i> <b>Approval History</b></h3>
-                                    </div> 
+                                    </div>
                                     <div class="box-body custom-box-body" style="max-height: 500px; overflow-y: auto; overflow-x: hidden;">
                                         <div class="row">
 
@@ -237,7 +241,7 @@
                                                             <td style="color: #c0c0c0; text-align: center; width: 20%;"><b>ACTION</b></td>
                                                             <td style="color: #c0c0c0; text-align: center;"><b>REMARK</b></td>
                                                         </tr>
-                                                        <?php foreach ($approval_history as $key => $history): ?>
+                                                        <?php foreach ($approval_history as $key => $history) : ?>
                                                             <tr>
                                                                 <td style="vertical-align:bottom;">
                                                                     <small><?= $history['interval']; ?></small><br>
@@ -250,18 +254,18 @@
                                                                     <?= ucfirst($history['action']); ?>
                                                                 </td>
                                                                 <td style="vertical-align:bottom;">
-                                                                   <?= ucfirst($history['message']); ?> 
+                                                                    <?= ucfirst($history['message']); ?>
                                                                 </td>
                                                             </tr>
                                                         <?php endforeach ?>
-                                                        
+
                                                     </tbody>
                                                 </table>
                                             </div>
                                         </div>
-                                        
+
                                     </div>
-                                    
+
                                 </div>
                             </div>
 
@@ -269,7 +273,7 @@
                                 <div class="box tab-pane fade shadow rounded bg-white show active p-1" id="v-pills-home" role="tabpanel" aria-labelledby="v-pills-home-tab">
                                     <div class="box-header">
                                         <h3 class="box-title"><i class="fas fa-calendar-check"></i> <b>Application History</b></h3>
-                                    </div> 
+                                    </div>
                                     <div class="box-body">
                                         <div class="row">
 
@@ -283,8 +287,8 @@
                                                             <td style="color: #c0c0c0;"><b>EXPIRATION DATE</b></td>
                                                             <td style="color: #c0c0c0;"><b>STATUS</b></td>
                                                         </tr>
-                                                        <?php if (!empty($application_history)): ?>
-                                                            <?php foreach ($application_history as $key => $history): ?>
+                                                        <?php if (!empty($application_history)) : ?>
+                                                            <?php foreach ($application_history as $key => $history) : ?>
                                                                 <tr>
                                                                     <td style="vertical-align:bottom;">
                                                                         <?= $user_est[0]['ss_no']; ?>
@@ -299,22 +303,22 @@
                                                                         <?= $history['expiration_date']; ?>
                                                                     </td>
                                                                     <td style="vertical-align:bottom;">
-                                                                       <?= $history['status']; ?> 
+                                                                        <?= $history['status']; ?>
                                                                     </td>
                                                                 </tr>
                                                             <?php endforeach ?>
-                                                        <?php else: ?>
+                                                        <?php else : ?>
                                                             <tr>
                                                                 <td colspan="5" style="text-align:center;">No data available</td>
-                                                            </tr>   
+                                                            </tr>
                                                         <?php endif ?>
                                                     </tbody>
                                                 </table>
                                             </div>
                                         </div>
-                                        
+
                                     </div>
-                                    
+
                                 </div>
                             </div>
 
@@ -326,17 +330,17 @@
 </body>
 <?php include '../layout/footer.html.v2.php'; ?>
 <?php include '../layout/custom_page-above.php'; ?>
-<?php include 'modal_delete_app_edit.php'; ?>    
+<?php include 'modal_delete_app_edit.php'; ?>
 
 </html>
 <style type="text/css">
     #establishmentsTable {
         /*max-width: 2500px;*/
         /*overflow-x: scroll;*/
-        font-family: poppins,sans-serif;
+        font-family: poppins, sans-serif;
     }
 
-    #establishmentsTable > tbody > tr {
+    #establishmentsTable>tbody>tr {
         background-color: white;
     }
 
@@ -346,46 +350,90 @@
     }
 
     .btn-renew {
-      background-color: #004A7F;
-      -webkit-border-radius: 10px;
-      border-radius: 10px;
-      border: none;
-      color: #FFFFFF;
-      cursor: pointer;
-      display: inline-block;
-      font-family: Arial;
-      font-size: 20px;
-      padding: 5px 10px;
-      text-align: center;
-      text-decoration: none;
-      -webkit-animation: glowing 1500ms infinite;
-      -moz-animation: glowing 1500ms infinite;
-      -o-animation: glowing 1500ms infinite;
-      animation: glowing 1500ms infinite;
+        background-color: #004A7F;
+        -webkit-border-radius: 10px;
+        border-radius: 10px;
+        border: none;
+        color: #FFFFFF;
+        cursor: pointer;
+        display: inline-block;
+        font-family: Arial;
+        font-size: 20px;
+        padding: 5px 10px;
+        text-align: center;
+        text-decoration: none;
+        -webkit-animation: glowing 1500ms infinite;
+        -moz-animation: glowing 1500ms infinite;
+        -o-animation: glowing 1500ms infinite;
+        animation: glowing 1500ms infinite;
     }
 
     @-webkit-keyframes glowing {
-      0% { background-color: #B20000; -webkit-box-shadow: 0 0 3px #B20000; }
-      50% { background-color: #FF0000; -webkit-box-shadow: 0 0 5px #FF0000; }
-      100% { background-color: #B20000; -webkit-box-shadow: 0 0 3px #B20000; }
+        0% {
+            background-color: #B20000;
+            -webkit-box-shadow: 0 0 3px #B20000;
+        }
+
+        50% {
+            background-color: #FF0000;
+            -webkit-box-shadow: 0 0 5px #FF0000;
+        }
+
+        100% {
+            background-color: #B20000;
+            -webkit-box-shadow: 0 0 3px #B20000;
+        }
     }
 
     @-moz-keyframes glowing {
-      0% { background-color: #B20000; -moz-box-shadow: 0 0 3px #B20000; }
-      50% { background-color: #FF0000; -moz-box-shadow: 0 0 5px #FF0000; }
-      100% { background-color: #B20000; -moz-box-shadow: 0 0 3px #B20000; }
+        0% {
+            background-color: #B20000;
+            -moz-box-shadow: 0 0 3px #B20000;
+        }
+
+        50% {
+            background-color: #FF0000;
+            -moz-box-shadow: 0 0 5px #FF0000;
+        }
+
+        100% {
+            background-color: #B20000;
+            -moz-box-shadow: 0 0 3px #B20000;
+        }
     }
 
     @-o-keyframes glowing {
-      0% { background-color: #B20000; box-shadow: 0 0 3px #B20000; }
-      50% { background-color: #FF0000; box-shadow: 0 0 5px #FF0000; }
-      100% { background-color: #B20000; box-shadow: 0 0 3px #B20000; }
+        0% {
+            background-color: #B20000;
+            box-shadow: 0 0 3px #B20000;
+        }
+
+        50% {
+            background-color: #FF0000;
+            box-shadow: 0 0 5px #FF0000;
+        }
+
+        100% {
+            background-color: #B20000;
+            box-shadow: 0 0 3px #B20000;
+        }
     }
 
     @keyframes glowing {
-      0% { background-color: #B20000; box-shadow: 0 0 3px #B20000; }
-      50% { background-color: #FF0000; box-shadow: 0 0 5px #FF0000; }
-      100% { background-color: #B20000; box-shadow: 0 0 3px #B20000; }
+        0% {
+            background-color: #B20000;
+            box-shadow: 0 0 3px #B20000;
+        }
+
+        50% {
+            background-color: #FF0000;
+            box-shadow: 0 0 5px #FF0000;
+        }
+
+        100% {
+            background-color: #B20000;
+            box-shadow: 0 0 3px #B20000;
+        }
     }
 
     /*
@@ -395,7 +443,8 @@
     * ==========================================
     */
 
-    .nav-pills .nav-link.active, .nav-pills .show >.nav-link {
+    .nav-pills .nav-link.active,
+    .nav-pills .show>.nav-link {
         color: #fff;
         background-color: #243866 !important;
     }
@@ -458,29 +507,27 @@
     div.custom-box-body::-webkit-scrollbar {
         width: 10px;
     }
-     
+
     div.custom-box-body::-webkit-scrollbar-track {
-        -webkit-box-shadow: inset 0 0 2px rgba(0,0,0,0.3); 
+        -webkit-box-shadow: inset 0 0 2px rgba(0, 0, 0, 0.3);
         border-radius: 2px;
     }
-     
+
     div.custom-box-body::-webkit-scrollbar-thumb {
         border-radius: 2px;
-        -webkit-box-shadow: inset 0 0 2px rgba(0,0,0,0.5); 
+        -webkit-box-shadow: inset 0 0 2px rgba(0, 0, 0, 0.5);
     }
-
-
 </style>
 <script>
     <?php
-        if (isset($_SESSION['toastr'])) {
-          echo 'tata.' . $_SESSION['toastr']['type'] . '("' . $_SESSION['toastr']['title'] . '", "' . $_SESSION['toastr']['message'] . '", {
+    if (isset($_SESSION['toastr'])) {
+        echo 'tata.' . $_SESSION['toastr']['type'] . '("' . $_SESSION['toastr']['title'] . '", "' . $_SESSION['toastr']['message'] . '", {
               duration: 5000
             })';
-          unset($_SESSION['toastr']);
-        }
+        unset($_SESSION['toastr']);
+    }
     ?>
-    $(document).on('click', '.btn-delete_app', function(e){
-        $('#modal-delete_app').modal('show'); 
+    $(document).on('click', '.btn-delete_app', function(e) {
+        $('#modal-delete_app').modal('show');
     });
 </script>

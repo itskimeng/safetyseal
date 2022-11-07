@@ -1,6 +1,7 @@
 <?php
-session_start();
 date_default_timezone_set('Asia/Manila');
+session_destroy();
+session_start();
 
 require '../Model/Connection.php';
 require '../application/config/connection.php';
@@ -13,24 +14,26 @@ $am = new ApplicationManager();
 $id = $_POST['user_id'];
 
 $data = $um->getUserInfo($id);
+
 $uname = $data['username'];
 $pword = $data['password'];
-
 if($data['is_verified']) {
     if ($data['roles'] == 'admin') {
+
 		$_SESSION = [
 			'username'			=> $data['username'],
-			'province'			=> $data['province'],
+			'province'			=> $data['province_id'],
 			'city_mun'			=> $data['city_mun'],
 			'userid'			=> $id,
 			'nature'			=> $data['nature'],
 			'is_clusterhead'	=> $data['is_clusterhead'],
-			'ch_id'				=> $data['ch_id'],
+			'clusterhead_id'	=> $data['ch_id'],
 			'is_pfp'		    => $data['is_pfp'],
 			'position'			=> $data['position']
 		];
 
 		$_SESSION['toastr'] = $am->addFlash('warn', 'Account has been impersonated successfully!', 'Success');
+		
       	header("location: ../dashboard.v2.php?username=" . md5($data['username']) . "");
     } else if ($data['roles'] == 'user') {
         $_SESSION = [
@@ -45,5 +48,7 @@ if($data['is_verified']) {
 		$_SESSION['toastr'] = $am->addFlash('warn', 'Account has been impersonated successfully!', 'Success');
         header("location:../dashboard_user.php?username=" . md5($data['username']) . "");
     }
+}else{
+	header("location: ../uac.php?is_verified=0");
 }
 

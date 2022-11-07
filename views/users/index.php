@@ -22,7 +22,6 @@ require_once 'controller/UserAccountsController.php'; ?>
 <!-- Main content -->
 <div class="content">
     <div class="container">
-        
         <?php include 'user_table.php'; ?>
         <?php include 'views/dashboard/custom_style.css'; ?>
     </div>

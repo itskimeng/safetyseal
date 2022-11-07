@@ -23,52 +23,52 @@
 <div class="content">
   <div class="container">
 
-    <?php if ($useraccess['nature'] == 'PNP' OR $useraccess['position'] == 'PNP' OR $useraccess['nature'] == 'BFP' OR $useraccess['position'] == 'BFP'): ?>
+    <?php if ($useraccess['nature'] == 'PNP' or $useraccess['position'] == 'PNP' or $useraccess['nature'] == 'BFP' or $useraccess['position'] == 'BFP') : ?>
       <div class="callout callout-warning">
         <h5>Reminder!</h5>
         <p>Assessment for the PNP and BFP Inspection Team will start once <b>CMLGOO</b> has <b>RECEIVED</b> the application.</p>
       </div>
     <?php endif ?>
 
-    <?php if ($useraccess['nature'] != 'PNP' AND $useraccess['position'] != 'PNP' AND $useraccess['nature'] != 'BFP' AND $useraccess['position'] != 'BFP'): ?>
+    <?php if ($useraccess['nature'] != 'PNP' and $useraccess['position'] != 'PNP' and $useraccess['nature'] != 'BFP' and $useraccess['position'] != 'BFP') : ?>
 
-    <div class="row mb-3">
-      <div class="col-md-12 col-sm-3">
-        <div class="row">
+      <div class="row mb-3">
+        <div class="col-md-12 col-sm-3">
+          <div class="row">
 
-          <div class="col-md-6">
-            <div class="btn-group">
-              <a href="admin_application_summary.php?appid=<?= $_GET['appid']; ?>&ussir=<?= $_GET['ussir']; ?>" class="btn btn-secondary btn-sm">
-                <i class="fa fa-arrow-circle-left"></i> Back
-              </a>
-            </div>  
-          </div>
-
-          <div class="col-md-6">
-            <div class="row text-right">
-              <div class="col-md-12">
-                <div class="btn-group">
-                  <a type="button" id="btn-return_modal" class="btn btn-danger btn-sm btn-return_modal">
-                    <i class="fa fa-undo-alt"></i> Return
-                  </a>
-                </div>
-
-                <div class="btn-group">
-                  <a href="entity/post_received.php?appid=<?= $_GET['appid']; ?>&ussir=<?= $_GET['appid']; ?>&status=For Receiving" class="btn btn-primary btn-sm">
-                    <i class="fa fa-box"></i> Receive
-                  </a>
-                </div>
-                
+            <div class="col-md-6">
+              <div class="btn-group">
+                <a href="admin_application_summary.php?appid=<?= $_GET['appid']; ?>&ussir=<?= $_GET['ussir']; ?>" class="btn btn-secondary btn-sm">
+                  <i class="fa fa-arrow-circle-left"></i> Back
+                </a>
               </div>
-              
             </div>
 
-          </div> 
-        </div>
+            <div class="col-md-6">
+              <div class="row text-right">
+                <div class="col-md-12">
+                  <div class="btn-group">
+                    <a type="button" id="btn-return_modal" class="btn btn-danger btn-sm btn-return_modal">
+                      <i class="fa fa-undo-alt"></i> Return
+                    </a>
+                  </div>
 
-      </div>  
-    </div>
-  <?php endif ?>
+                  <div class="btn-group">
+                    <a href="entity/post_received.php?appid=<?= $_GET['appid']; ?>&ussir=<?= $_GET['appid']; ?>&status=For Receiving" class="btn btn-primary btn-sm">
+                      <i class="fa fa-box"></i> Receive
+                    </a>
+                  </div>
+
+                </div>
+
+              </div>
+
+            </div>
+          </div>
+
+        </div>
+      </div>
+    <?php endif ?>
 
     <?php include 'form/applicant_details.php'; ?>
 
@@ -90,88 +90,187 @@
               <table class="table table-hover table-striped" style="font-size:9.5pt;">
                 <thead class="text-center" style="background-color: #1da6da; color: white;">
                   <tr>
-                    <th width="3%">#</th>
-                    <th width="15%">REQUIREMENTS</th>
-                    <th width="20%">MOVs to be<br>Produced/ Uploaded</th>
-                    <th class="text-center" width="5%">ANSWER</th>
-                    <th width="11%">REASON WHY N/A</th>
-                    <th width="5%">ATTACHMENTS</th>
-                    <th width="13%">REMARKS FROM PNP</th>
-                    <th width="13%">REMARKS FROM BFP</th>
-                    <?php if ($applicant['status'] <> 'For Receiving' AND $applicant['status'] <> 'Draft' AND $applicant['status'] <> 'For Reassessment') : ?>
-                      <th>ASSESSMENT</th>
-                    <?php endif ?>
+                    <?=setHeader($_GET['form'],$applicant);?>
                   </tr>
                 </thead>
-                <tbody id="checklist_form">
-                  <?php foreach ($applicants_data as $key => $list) : ?>
+                <?php
+                function setEditChecklist($applicants_data)
+                {
+                  ?>
+                  <tbody id="checklist_form">
+                    <?php foreach ($applicants_data as $key => $list) : ?>
 
-                    <tr>
-                      <td>
-                        <b><?= $key + 1; ?>.</b>
-                        <input type="hidden" id="cform-hidden_entid" name="hidden_entid" value="<?= $list['ulist_id']; ?>" />
-                      </td>
-                      <td>
-                        <?= $list['requirement']; ?>
-                        <?php if ($key == 0) : ?>
-                          <br><br>Other contact tracing tool:<br>
-                          <span class="badge badge-info right" style="font-size:10pt;"><?= $list['other_tool']; ?></span>
-                        <?php endif ?>
-                      </td>
-                      <td>
-                        <ul>
-                          <?php foreach ($list['description'] as $description) : ?>
-                            <li><?= $description ?></li>
-                          <?php endforeach ?>
-                        </ul>
-                      </td>
-                      <td class="text-center" style="font-size: 15pt;">
-                        <span class="badge bg-<?= $list['badge']; ?>"><?= $list['answer']; ?></span>
-                      </td>
-                      <td><?= $list['reason']; ?></td>
-                      <td class="text-center">
-                        <div class="col-md-12">
-                          <?php if (!empty($appchecklists_attchmnt[$list['ulist_id']])) : ?>
-                            <input type="hidden" id="cform-ulist_id" name="ulist_id[<?= $list['ulist_id']; ?>]" value="<?= $list['ulist_id']; ?>">
-
-                            <input type="hidden" name="checklist-order" id="checklist-order" value="<?= $key+1; ?>"/>
-
-                            <button type="button" class="btn btn-warning btn-sm btn-attachments_view" data-bs-toggle="modal" style="font-size: 9.5pt;">
-                              <i class="fa fa-link"></i> View
-                            </button>
-                          <?php else : ?>
-                            <p>No Attachments Available</p>
+                      <tr>
+                        <td>
+                          <b><?= $key + 1; ?>.</b>
+                          <input type="hidden" id="cform-hidden_entid" name="hidden_entid" value="<?= $list['ulist_id']; ?>" />
+                        </td>
+                        <td>
+                          <?= $list['requirement']; ?>
+                          <?php if ($key == 0) : ?>
+                            <br><br>Other contact tracing tool:<br>
+                            <span class="badge badge-info right" style="font-size:10pt;"><?= $list['other_tool']; ?></span>
                           <?php endif ?>
-                        </div>
-                      </td>
-                      <td>
-                        <div class="col-md-12">
-                          <div class="form-group">
-                            <?php if ($list['nature'] == 'pnp') : ?>
-                              <textarea class="form-control" rows="3" name="pnp_remarks[<?= $list['ulist_id']; ?>]" placeholder="Enter ..." style="font-size: 9.5pt;" <?= $is_readonly ? 'disabled' : ''; ?> value="<?= isset($list['pnp_remarks']) ? $list['pnp_remarks'] : ''; ?>"><?= isset($list['pnp_remarks']) ? $list['pnp_remarks'] : ''; ?></textarea>
-                            <?php else : ?>
-                              <?= isset($list['pnp_remarks']) ? $list['pnp_remarks'] : ''; ?>
-                            <?php endif ?>
-                          </div>
-                        </div>
-                      </td>
-                      <td>
-                        <div class="col-md-12">
-                          <div class="form-group">
-                            <?php if ($list['nature'] == 'pnp') : ?>
-                              <textarea class="form-control" rows="3" name="bfp_remarks[<?= $list['ulist_id']; ?>]" placeholder="Enter ..." style="font-size: 9.5pt;" <?= $is_readonly ? 'disabled' : ''; ?> value="<?= isset($list['bfp_remarks']) ? $list['bfp_remarks'] : ''; ?>"><?= isset($list['bfp_remarks']) ? $list['bfp_remarks'] : ''; ?></textarea>
-                            <?php else : ?>
-                              <?= isset($list['bfp_remarks']) ? $list['bfp_remarks'] : ''; ?>
-                            <?php endif ?>
+                        </td>
+                        <!-- <td>
+                        <ul>
+                           foreach ($list['description'] as $description) : ?>
+                            <li>$description ?></li>
+                          endforeach ?>
+                        </ul>
+                      </td> -->
+                        <td class="text-center" style="font-size: 15pt;">
+                          <span class="badge bg-<?= $list['badge']; ?>"><?= $list['answer']; ?></span>
+                        </td>
+                        <td><?= $list['reason']; ?></td>
+                        <td class="text-center">
+                          <div class="col-md-12">
+                            <?php if (!empty($appchecklists_attchmnt[$list['ulist_id']])) : ?>
+                              <input type="hidden" id="cform-ulist_id" name="ulist_id[<?= $list['ulist_id']; ?>]" value="<?= $list['ulist_id']; ?>">
 
+                              <input type="hidden" name="checklist-order" id="checklist-order" value="<?= $key + 1; ?>" />
+
+                              <button type="button" class="btn btn-warning btn-sm btn-attachments_view" data-bs-toggle="modal" style="font-size: 9.5pt;">
+                                <i class="fa fa-link"></i> View
+                              </button>
+                            <?php else : ?>
+                              <p>No Attachments Available</p>
+                            <?php endif ?>
                           </div>
-                        </div>
-                      </td>
-                      
-                        
-                    </tr>
-                  <?php endforeach; ?>
-                </tbody>
+                        </td>
+                        <td>
+                          <div class="col-md-12">
+                            <div class="form-group">
+                              <?php if ($list['nature'] == 'pnp') : ?>
+                                <textarea class="form-control" rows="3" name="pnp_remarks[<?= $list['ulist_id']; ?>]" placeholder="Enter ..." style="font-size: 9.5pt;" <?= $is_readonly ? 'disabled' : ''; ?> value="<?= isset($list['pnp_remarks']) ? $list['pnp_remarks'] : ''; ?>"><?= isset($list['pnp_remarks']) ? $list['pnp_remarks'] : ''; ?></textarea>
+                              <?php else : ?>
+                                <?= isset($list['pnp_remarks']) ? $list['pnp_remarks'] : ''; ?>
+                              <?php endif ?>
+                            </div>
+                          </div>
+                        </td>
+                        <td>
+                          <div class="col-md-12">
+                            <div class="form-group">
+                              <?php if ($list['nature'] == 'pnp') : ?>
+                                <textarea class="form-control" rows="3" name="bfp_remarks[<?= $list['ulist_id']; ?>]" placeholder="Enter ..." style="font-size: 9.5pt;" <?= $is_readonly ? 'disabled' : ''; ?> value="<?= isset($list['bfp_remarks']) ? $list['bfp_remarks'] : ''; ?>"><?= isset($list['bfp_remarks']) ? $list['bfp_remarks'] : ''; ?></textarea>
+                              <?php else : ?>
+                                <?= isset($list['bfp_remarks']) ? $list['bfp_remarks'] : ''; ?>
+                              <?php endif ?>
+
+                            </div>
+                          </div>
+                        </td>
+
+
+                      </tr>
+                    <?php endforeach; ?>
+                  </tbody>
+                <?php
+                }
+                function setChecklistFormv1($applicants_data)
+                {
+                  ?>
+                  <tbody id="chklist_body" >
+                    <?php $x = 1; ?>
+                    <td colspan="9" class="parent-header"><strong>STAFF</strong></td>
+                    <?php foreach ($applicants_data as $key => $list) : ?>
+                      <tr id="chklist_tr">
+                        <td>
+                          <?php if ($list['parent'] == 1) : ?>
+                          <?php elseif ($list['parent'] == 2) : ?>
+                          <?php elseif ($list['parent'] == 3) : ?>
+                          <?php elseif ($list['parent'] == 4) : ?>
+                          <?php else : ?>
+                            <?php echo '<strong>' . $x++ . '.</strong>'; ?>
+                          <?php endif; ?>
+                          <input type="hidden" name="chklist_id[<?php echo $list['clist_id']; ?>]" value="<?php echo $list['clist_id']; ?>">
+                          <input type="hidden" id="cform-ulist_id" name="ulist_id[<?php echo $list['clist_id']; ?>]" value="<?php echo $list['ulist_id']; ?>">
+                        </td>
+                        <td colspan=3>
+                          <?= $list['requirement']; ?>
+                          <?php if ($key == 0) : ?>
+                            <br><br>Other contact tracing tool:<br>
+                            <span class="badge badge-info right" style="font-size:10pt;"><?= $list['other_tool']; ?></span>
+                          <?php endif ?>
+                        </td>
+                        <!-- <td>
+                        <ul>
+                           foreach ($list['description'] as $description) : ?>
+                            <li>$description ?></li>
+                          endforeach ?>
+                        </ul>
+                      </td> -->
+                        <td class="text-center" style="font-size: 15pt;">
+                          <span class="badge bg-<?= $list['badge']; ?>"><?= $list['answer']; ?></span>
+                        </td>
+                        <td><?= $list['reason']; ?></td>
+                        <td>
+                          <div class="col-md-12">
+                            <div class="form-group">
+                              <?php if ($list['nature'] == 'pnp') : ?>
+                                <textarea class="form-control" rows="3" name="pnp_remarks[<?= $list['ulist_id']; ?>]" placeholder="Enter ..." style="font-size: 9.5pt;" <?= $is_readonly ? 'disabled' : ''; ?> value="<?= isset($list['pnp_remarks']) ? $list['pnp_remarks'] : ''; ?>"><?= isset($list['pnp_remarks']) ? $list['pnp_remarks'] : ''; ?></textarea>
+                              <?php else : ?>
+                                <?= isset($list['pnp_remarks']) ? $list['pnp_remarks'] : ''; ?>
+                              <?php endif ?>
+                            </div>
+                          </div>
+                        </td>
+                        <td>
+                          <div class="col-md-12">
+                            <div class="form-group">
+                              <?php if ($list['nature'] == 'pnp') : ?>
+                                <textarea class="form-control" rows="3" name="bfp_remarks[<?= $list['ulist_id']; ?>]" placeholder="Enter ..." style="font-size: 9.5pt;" <?= $is_readonly ? 'disabled' : ''; ?> value="<?= isset($list['bfp_remarks']) ? $list['bfp_remarks'] : ''; ?>"><?= isset($list['bfp_remarks']) ? $list['bfp_remarks'] : ''; ?></textarea>
+                              <?php else : ?>
+                                <?= isset($list['bfp_remarks']) ? $list['bfp_remarks'] : ''; ?>
+                              <?php endif ?>
+
+                            </div>
+                          </div>
+                        </td>
+
+
+                      </tr>
+                      <?php if ($key == 1) : ?>
+                        <td colspan="9" class="parent-header"><strong>ESTABLISHMENT</strong></td>
+                      <?php endif; ?>
+                    <?php endforeach ?>
+                  </tbody>
+                  <?php
+                }
+                function setHeader($form, $applicant)
+                {
+                  if ($form == 'create_new' || $form == 1) {
+                    $th = '<th width="3%">#</th>';
+                    $th .= '<th width="15%">REQUIREMENTS</th>';
+                    $th .= '<th class="text-center" width="5%">ANSWER</th>';
+                    $th .= '<th width="11%">REASON WHY N/A</th>';
+                    $th .= '<th width="5%">ATTACHMENTS</th>';
+                    $th .= '<th width="13%">REMARKS FROM PNP</th>';
+                    $th .= '<th width="13%">REMARKS FROM BFP</th>';
+                    if ($applicant['status'] <> 'For Receiving' and $applicant['status'] <> 'Draft' and $applicant['status'] <> 'For Reassessment') : ?>
+                      <?php $th .= '<th>ASSESSMENT</th>' ?>
+                    <?php endif ?>
+                  <?php
+                  } else {
+                    $th = '<th class="text-center" colspan="4">MINIMUM PUBLIC HEALTH STANDARDS</th>';
+                    $th .= '<th class="text-center" style="width:2%;">ANSWER</th>';
+                    $th .= '<th class="text-center" style="width:10%;">Reason why N/A</th>';
+                    $th .= '<th width="13%">REMARKS FROM PNP</th>';
+                    $th .= '<th width="13%">REMARKS FROM BFP</th>';
+                    if ($applicant['status'] <> 'For Receiving' and $applicant['status'] <> 'Draft' and $applicant['status'] <> 'For Reassessment'){
+                      $th .= '<th>ASSESSMENT</th>';
+
+                    }
+                  }
+                  return $th;
+                }
+                ?>
+                <?php 
+                $checklistTable = ($_GET['form'] == 'create_new' || $_GET['form'] == 1) ? setEditChecklist($applicants_data) : setChecklistFormv1($applicants_data) ;
+                ?>
+
+
               </table>
             </div>
             <!-- /.card-body -->
@@ -220,14 +319,14 @@
             <div class="panel panel-default">
               <div class="row">
                 <?php if (in_array($applicant['status'], ['For Receiving', 'Draft', 'For Reassessment'])) : ?>
-                  <?php if ($useraccess['nature'] != 'PNP' AND $useraccess['position'] != 'PNP' AND $useraccess['nature'] != 'BFP' AND $useraccess['position'] != 'BFP'): ?>
-                  <div class="col-md-12">
-                    
-                    <a href="entity/post_received.php?appid=<?= $_GET['appid']; ?>&ussir=<?= $_GET['appid']; ?>&status=For Receiving" class="btn btn-primary btn-block btn-sm" style="margin-bottom: -2%;">
-                      <i class="fa fa-box"></i> Receive
-                    </a>
-                  </div>
-                <?php endif ?>
+                  <?php if ($useraccess['nature'] != 'PNP' and $useraccess['position'] != 'PNP' and $useraccess['nature'] != 'BFP' and $useraccess['position'] != 'BFP') : ?>
+                    <div class="col-md-12">
+
+                      <a href="entity/post_received.php?appid=<?= $_GET['appid']; ?>&ussir=<?= $_GET['appid']; ?>&status=For Receiving" class="btn btn-primary btn-block btn-sm" style="margin-bottom: -2%;">
+                        <i class="fa fa-box"></i> Receive
+                      </a>
+                    </div>
+                  <?php endif ?>
                 <?php else : ?>
 
                   <div class="<?= $is_new ? 'col-md-12' : 'col-md-12'; ?> pull-right">
@@ -272,7 +371,7 @@
 
   <?php include 'modal_evaluation.php'; ?>
   <?php include 'modal_view_attachments.php'; ?>
-  <?php include 'modal_returned.php';?> 
+  <?php include 'modal_returned.php'; ?>
 
 </div>
 
@@ -341,7 +440,7 @@
       "responsive": true,
     });
 
-    $(document).on('click', '.btn-return_modal', function(){
+    $(document).on('click', '.btn-return_modal', function() {
       let $modal = $("#modal_return_remarks");
       $modal.modal('show');
     });
@@ -388,7 +487,8 @@
     //   let id = tr.find('#cform-ulist_id');
     //   let $modal = $("#modal-view_attachments");
     //   let form_id = $modal.find('#cform-entry_id');
-    //   let path = 'entity/get_attachments.php?id='+id.val()+'&for_renewal=<?php //echo $applicant['for_renewal']; ?>';
+    //   let path = 'entity/get_attachments.php?id='+id.val()+'&for_renewal=<?php //echo $applicant['for_renewal']; 
+                                                                            ?>';
 
     //   $.get(path, function(data, key) {
     //     let dd = JSON.parse(data);
@@ -400,19 +500,19 @@
     //   $modal.modal('show');
     // });
 
-    $(document).on('click', '.btn-attachments_view', function(){
+    $(document).on('click', '.btn-attachments_view', function() {
       let tr = $(this).closest('tr');
       let id = tr.find('#cform-ulist_id');
       let $modal = $("#modal-view_attachments");
       let form_id = $modal.find('#cform-entry_id');
       let list_order = tr.find('#checklist-order');
-      let caption = 'Checklist #'+list_order.val();
+      let caption = 'Checklist #' + list_order.val();
       let modal_label = $modal.find('#exampleModalLabel');
-      modal_label.html('<i class="fa fa-link"></i> Attachments - '+caption);
+      modal_label.html('<i class="fa fa-link"></i> Attachments - ' + caption);
 
-      let path = 'entity/get_bucket_uploads.php?id='+id.val()+'&for_renewal=<?= $applicant['for_renewal']; ?>&list_order='+list_order.val();
+      let path = 'entity/get_bucket_uploads.php?id=' + id.val() + '&for_renewal=<?= $applicant['for_renewal']; ?>&list_order=' + list_order.val();
 
-      $.get(path, function(data, key){
+      $.get(path, function(data, key) {
         let dd = JSON.parse(data);
         generateAttachments(dd);
       })
@@ -421,7 +521,7 @@
       $modal.modal('show');
     });
 
-    $(document).on('hidden.bs.modal', '#modal-view_attachments', function (e) {
+    $(document).on('hidden.bs.modal', '#modal-view_attachments', function(e) {
       $('.cont').empty();
       $('.cont').append(generateSpinner());
     })
@@ -470,9 +570,9 @@
       }
     });
 
-    $(document).on('click', '.btn-open-exlink', function(e){ 
-      e.preventDefault(); 
-      var url = $(this).attr('href'); 
+    $(document).on('click', '.btn-open-exlink', function(e) {
+      e.preventDefault();
+      var url = $(this).attr('href');
       window.open(url);
     });
 
@@ -523,7 +623,7 @@
     //     } else {
     //       tr+= '<img src="https://drive.google.com/uc?export=view&id='+item['file_id']+'" class="card-img-top" alt="..." style="max-width: 100%; max-height: 100%; object-fit: cover;">';
     //     }
-        
+
     //     tr+= '</div>';
     //     tr+= '<div class="card-body" style="text-overflow: ellipsis;white-space: nowrap;overflow: hidden;height: 3.5rem;padding: 0.3rem 0.3rem;">';
     //     tr+= '<div class="row">';
@@ -545,40 +645,40 @@
 
     function generateAttachments($data) {
       let tr = '';
-      tr+= '<div class="col-sm-12">';
-      tr+= '<div class="row">';
-      $.each($data, function(key, item){
-        tr+= '<div class="col-sm-2 mb-1">';
-        tr+= '<div class="card" style="/* width: 15rem; */ background-color: #c9c9c9;">';
-        tr+= '<div class="checkers" style="padding-left: 1.5rem; padding-bottom: .3rem;">';
-        tr+= '<div class="form-group">';
+      tr += '<div class="col-sm-12">';
+      tr += '<div class="row">';
+      $.each($data, function(key, item) {
+        tr += '<div class="col-sm-2 mb-1">';
+        tr += '<div class="card" style="/* width: 15rem; */ background-color: #c9c9c9;">';
+        tr += '<div class="checkers" style="padding-left: 1.5rem; padding-bottom: .3rem;">';
+        tr += '<div class="form-group">';
 
-        tr+= '<input class="form-check-input chklist_na up-attachment" name="filename[]" type="checkbox" value="'+item.filename+'">';
-        tr+= '</div>';
-        tr+= '</div>';
-        tr+= '<div class="pic-holder" style="padding-top: 5%;height: 8rem; overflow: hidden;">';
+        tr += '<input class="form-check-input chklist_na up-attachment" name="filename[]" type="checkbox" value="' + item.filename + '">';
+        tr += '</div>';
+        tr += '</div>';
+        tr += '<div class="pic-holder" style="padding-top: 5%;height: 8rem; overflow: hidden;">';
 
         if (item['cover_page'] == null) {
-          tr+= '<img src="'+item.url+'" class="card-img-top" alt="..." style="max-width: 100%; max-height: 100%; object-fit: cover; transform: scale(2);">';  
+          tr += '<img src="' + item.url + '" class="card-img-top" alt="..." style="max-width: 100%; max-height: 100%; object-fit: cover; transform: scale(2);">';
         } else {
-          tr+= '<img src="'+item.cover_page+'" class="card-img-top" alt="..." style="max-width: 100%; max-height: 100%; object-fit: cover;">';
+          tr += '<img src="' + item.cover_page + '" class="card-img-top" alt="..." style="max-width: 100%; max-height: 100%; object-fit: cover;">';
         }
-        
-        tr+= '</div>';
-        tr+= '<div class="card-body" style="text-overflow: ellipsis;white-space: nowrap;overflow: hidden;height: 3.5rem;padding: 0.3rem 0.3rem;">';
-        tr+= '<div class="row">';
-        tr+= '<div class="col-sm-12" style="text-align:center;">';
-        tr+= '<a class="btn btn-md btn-success" href="'+item.url+'" target="_blank" rel="noopener noreferrer" style="width:100%">';
-        tr+= '<i class="fa fa-eye"></i> View';
-        tr+= '</a>';
-        tr+= '</div>';
-        tr+= '</div>';
-        tr+= '</div>';
-        tr+= '</div>';
-        tr+= '</div>';
+
+        tr += '</div>';
+        tr += '<div class="card-body" style="text-overflow: ellipsis;white-space: nowrap;overflow: hidden;height: 3.5rem;padding: 0.3rem 0.3rem;">';
+        tr += '<div class="row">';
+        tr += '<div class="col-sm-12" style="text-align:center;">';
+        tr += '<a class="btn btn-md btn-success" href="' + item.url + '" target="_blank" rel="noopener noreferrer" style="width:100%">';
+        tr += '<i class="fa fa-eye"></i> View';
+        tr += '</a>';
+        tr += '</div>';
+        tr += '</div>';
+        tr += '</div>';
+        tr += '</div>';
+        tr += '</div>';
       });
-      tr+= '</div>';
-      tr+= '</div>';
+      tr += '</div>';
+      tr += '</div>';
 
       // $('').
 

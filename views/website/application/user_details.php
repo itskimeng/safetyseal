@@ -11,7 +11,7 @@
         <input type="hidden" name="application_id" id="application_id" value="<?php echo $userinfo['acid']; ?>">
       </div>
 
-      <?php if (!isset($_GET['create_new']) AND !$userinfo['for_renewal'] AND $userinfo['status'] == 'Approved'): ?>
+      <?php if (!isset($_GET['form']) AND !isset($_GET['create_newv1'])AND !isset($_GET['create_new']) AND !$userinfo['for_renewal'] AND $userinfo['status'] == 'Approved'): ?>
         <div class="form-outline mb-2 col-md-4">
           <label class="form-label" for="form1Example1">SSC No.:</label><br>
           <input type="text" id="form1Example1" class="form-control" value="<?php echo $userinfo['ssc_no']; ?>" disabled />

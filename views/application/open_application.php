@@ -26,11 +26,11 @@
     <div class="row">
       <div class="col-md-12 mb-2">
         <?php if ($applicant['application_type'] == 'Applied'): ?>
-          <a href="admin_view_application.php?userid=<?= $applicant['user_id']; ?>&type=<?= $applicant['application_type'];?>&_view" class="btn btn-secondary btn-sm">
+          <a href="admin_view_application.php?form=<?= $_GET['form'];?>&userid=<?= $applicant['user_id']; ?>&type=<?= $applicant['application_type'];?>&_view" class="btn btn-secondary btn-sm">
             <i class="fa fa-arrow-circle-left"></i> Back
           </a>
         <?php else: ?>
-          <a href="admin_view_application.php?person=<?= $applicant['person']; ?>&type=<?= $applicant['application_type'];?>&_view" class="btn btn-secondary btn-sm">
+          <a href="admin_view_application.php?form=<?= $_GET['form'];?>&person=<?= $applicant['person']; ?>&type=<?= $applicant['application_type'];?>&_view" class="btn btn-secondary btn-sm">
             <i class="fa fa-arrow-circle-left"></i> Back
           </a>
         <?php endif ?>
@@ -51,7 +51,7 @@
 
                   <?php if ($is_expired AND !$applicant['for_renewal']): ?>
                     <div class="btn-group">
-                      <a href="entity/renew_admin_application.php?ssid=<?= $applicant['ssid']; ?>" type="button" class="btn btn-warning btn-block btn-sm rounded-circle" title="Apply For Renewal"><i class="fas fa-retweet"></i></a>
+                      <a href="entity/renew_admin_application.php?form=<?= $_GET['form'];?>&ssid=<?= $applicant['ssid']; ?>" type="button" class="btn btn-warning btn-block btn-sm rounded-circle" title="Apply For Renewal"><i class="fas fa-retweet"></i></a>
                     </div>  
                   <?php endif ?>
 
@@ -62,17 +62,17 @@
                   <?php endif ?>
 
                 <?php elseif (in_array($applicant['status'], ['For Receiving', 'For Reassessment'])): ?>
-                  <a href="admin_checklist_view.php?appid=<?= $_GET['appid']; ?>&ussir=<?= $_GET['ussir']; ?>" type="button" class="btn btn-primary btn-sm rounded-circle" data-toggle="tooltip" data-placement="left" title="Edit Application"><i class="fa fa-edit"></i></a>
+                  <a href="admin_checklist_view.php?form=<?= $_GET['form'];?>&appid=<?= $_GET['appid']; ?>&ussir=<?= $_GET['ussir']; ?>" type="button" class="btn btn-primary btn-sm rounded-circle" data-toggle="tooltip" data-placement="left" title="Edit Application"><i class="fa fa-edit"></i></a>
 
                   <div class="btn-group">
                     <a type="button" id="btn-return_modal" class="btn btn-danger btn-sm btn-return_modal btn-sm rounded-circle" data-toggle="tooltip" data-placement="top" title="Return Application">
                       <i class="fa fa-undo-alt"></i></a>
                   </div>
 
-                  <a href="entity/post_received.php?appid=<?= $_GET['appid']; ?>&ussir=<?= $_GET['appid']; ?>&status=For Receiving" type="button" class="btn btn-success btn-sm rounded-circle" data-toggle="tooltip" data-placement="right" title="Receive Application"><i class="fa fa-box"></i></a>
+                  <a href="entity/post_received.php?form=<?= $_GET['form'];?>&appid=<?= $_GET['appid']; ?>&ussir=<?= $_GET['appid']; ?>&status=For Receiving" type="button" class="btn btn-success btn-sm rounded-circle" data-toggle="tooltip" data-placement="right" title="Receive Application"><i class="fa fa-box"></i></a>
 
                 <?php else: ?>
-                  <a href="admin_application_view.php?appid=<?= $_GET['appid']; ?>&ussir=<?= $_GET['ussir']; ?>" type="button" class="btn btn-primary btn-sm rounded-circle" data-toggle="tooltip" data-placement="left" title="Edit Application"><i class="fa fa-edit"></i></a>
+                  <a href="admin_application_view.php?form=<?= $_GET['form'];?>&appid=<?= $_GET['appid']; ?>&ussir=<?= $_GET['ussir']; ?>" type="button" class="btn btn-primary btn-sm rounded-circle" data-toggle="tooltip" data-placement="left" title="Edit Application"><i class="fa fa-edit"></i></a>
 
                 <?php endif ?>
               </div>

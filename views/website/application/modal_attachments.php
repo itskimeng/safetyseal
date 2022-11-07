@@ -9,6 +9,7 @@
       <form method="POST" enctype="multipart/form-data" action="entity/upload_movs.php">
         <input type="hidden" id="cform-checklist_order" name="checklist_order" value=""/>
         <input type="hidden" id="cform-entry_id" name="entry_id" value=""/>
+        <input type="hidden" name="form" value="<?= $_GET['form'];?>"/>
         <input type="hidden" name="control_no" value="<?= $userinfo['code']; ?>"/>  
         <input type="hidden" name="token_id" value="<?= isset($_GET['ssid']) ? $_GET['ssid'] : ''; ?>"/>
         <input type="hidden" name="gcode" value="<?= isset($_GET['code']) ? $_GET['code'] : ''; ?>"/>  

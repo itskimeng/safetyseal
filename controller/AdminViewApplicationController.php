@@ -18,7 +18,11 @@ $userid = $_SESSION['userid'];
 $ssid = $_GET['appid'];
 
 $alert_level = $app->getLGULevel($province, $citymun);
-$count_ent = $alert_level >= 2 ? 14 : 9;
+if ($_GET['form'] == 'create_new' || isset($_GET['create_new']) || $_GET['form']==1) {
+    $count_ent = $alert_level >= 2 ? 14 : 9;
+} else{
+	$count_ent = $alert_level <= 2 ? 42 : 42;
+}
 
 $province_opts = $app->getProvinces();
 $citymun_opts = $app->getCityMuns($province);
@@ -50,7 +54,7 @@ if (!empty($applicant['date_approved']) AND in_array($applicant['status'], ['App
 }
 
 $encoded_checklist = $app->getEncodedAttachmentChecklist($applicant['ssid']);
-$answered_checklist = $app->getAnsweredChecklist($ssid);
+$answered_checklist = $app->getAnsweredChecklist($ssid,$alert_level);
 $count_answeredyes = $app->getAnsweredChecklistYes($ssid);
 
 $is_complete_asessment = count($answered_checklist) == $count_ent ? true : false;
@@ -148,7 +152,6 @@ function getUserChecklists($conn, $id)
         LEFT JOIN tbl_admin_info ai on ai.id = ac.user_id
         LEFT JOIN tbl_userinfo ui on ui.user_id = ai.id
         WHERE ac.id = $id";
-    
 
     $query = mysqli_query($conn, $sql);
     $data = mysqli_fetch_array($query);
@@ -162,6 +165,7 @@ function getUserChecklistsEntry($conn, $id, $for_renewal)
         c.id as clist_id,  
         c.requirement as requirement,
         c.description as description,
+        c.parent as parent,
         e.id as ulist_id,
         e.answer as answer,
         e.reason as reason,
@@ -188,6 +192,7 @@ function getUserChecklistsEntry($conn, $id, $for_renewal)
     $data = [];
 
     while ($row = mysqli_fetch_assoc($query)) {
+
     	$badge = 'secondary';
     	if ($row['answer'] == 'yes') {
     		$badge = 'success';
@@ -209,6 +214,7 @@ function getUserChecklistsEntry($conn, $id, $for_renewal)
             'clist_id' => $row['clist_id'],
             'requirement' => $row['requirement'],
             'description' => explode('~ ', $row['description']),
+            'parent'      => $row['parent'],
             'ulist_id' => $row['ulist_id'],
             'badge' => $badge,
             'answer' => strtoupper($row['answer']),

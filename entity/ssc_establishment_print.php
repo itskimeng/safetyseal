@@ -3,7 +3,7 @@ session_start();
 date_default_timezone_set('Asia/Manila');
 
 require '../tcpdfv02/tcpdf.php';
-require '../manager/ApplicationManager.php';
+// require '../manager/ApplicationManager.php';
 require '../application/config/connection.php';
 
 
